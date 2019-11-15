@@ -2,10 +2,10 @@
 
 namespace Ritmo
 {
-    public class TrackList
+    abstract class TrackList
     {
         public string Name { get; set; }
-        public LinkedList<Track> Tracks {get; set; }
+        public LinkedList<Track> Tracks { get; set; }
 
         public TrackList(string name)
         {
