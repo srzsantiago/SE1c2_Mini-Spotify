@@ -59,7 +59,8 @@ namespace Ritmo
         {
             playqueue.TrackWaitingList.Remove(track);     
         }
-        public void SetTrackWatingList(TrackList trackList) {
+        public void SetTrackWatingList(TrackList trackList)
+        {
             playqueue.TrackWaitingList = trackList;
         }
         public void ShuffleTrackWaitingList() { }

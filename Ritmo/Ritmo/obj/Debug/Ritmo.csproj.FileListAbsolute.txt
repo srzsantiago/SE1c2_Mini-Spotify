@@ -1,0 +1,15 @@
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo.csprojAssemblyReference.cache
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\MainWindow.g.cs
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\App.g.cs
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo_MarkupCompile.cache
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo_MarkupCompile.lref
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\bin\Debug\Ritmo.exe.config
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\bin\Debug\Ritmo.exe
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\bin\Debug\Ritmo.pdb
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\MainWindow.baml
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo.g.resources
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo.Properties.Resources.resources
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo.csproj.GenerateResource.cache
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo.csproj.CoreCompileInputs.cache
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo.exe
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo.pdb
