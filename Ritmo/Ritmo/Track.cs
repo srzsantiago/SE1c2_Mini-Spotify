@@ -8,9 +8,7 @@ namespace Ritmo
 {
     class Track
     {
-        private string Name;
-        private Uri AudioFile { get; set; } = new Uri("TestFiles/Powerup1.wav", UriKind.RelativeOrAbsolute);
-
-
+        public string Name { get; set; }
+        public Uri AudioFile { get; set; }
     }
 }

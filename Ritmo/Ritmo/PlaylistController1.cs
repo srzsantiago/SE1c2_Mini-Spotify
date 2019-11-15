@@ -6,28 +6,28 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class PlayListController
-    { 
-        private Playlist playlist; 
+    class PlaylistController
+    {
+        public Playlist Playlist { get; set; }
 
-        public PlayListController(string name) // creates a playlist with given name
+        public PlaylistController(string name) // creates a playlist with given name
         {
-            this.playlist = new Playlist(name);
+            this.Playlist = new Playlist(name);
         }
         
         public void AddTrack(Track track) // adds a track to the playlist
         {
-            playlist.Tracks.AddLast(track);
+            Playlist.Tracks.AddLast(track);
         }
 
         public void RemoveTrack(Track track) // removes a track from the playlist
         {
-            playlist.Tracks.Remove(track);
+            Playlist.Tracks.Remove(track);
         }
 
         public void SetName(string name) // changes the name of the playlist
         {
-            playlist.Name = name;
+            Playlist.Name = name;
         }
 
     }

@@ -8,15 +8,15 @@ namespace Ritmo
 {
     class PlayQueueController
     {
-        PlayQueue playqueue;
+        public PlayQueue PlayQueue { get; set; }
 
         public PlayQueueController()
         {
-            this.playqueue = new PlayQueue(); 
+            this.PlayQueue = new PlayQueue(); 
         }
 
         public void PlayTrack(Track track) {
-            playqueue.CurrentTrack = track;
+            PlayQueue.CurrentTrack = track;
         }
         public void PlayTrack(Track track, TrackList trackList)
         {
@@ -26,33 +26,33 @@ namespace Ritmo
         public void ResumeTrack() { }
         public void PauseTrack() { }
         public void NextTrack() {
-            if (playqueue.TrackQueueHasSongs())
-                playqueue.CurrentTrack = playqueue.TrackQueue.Dequeue();
+            if (PlayQueue.TrackQueueHasSongs())
+                PlayQueue.CurrentTrack = PlayQueue.TrackQueue.Dequeue();
             else
-                playqueue.CurrentTrack = playqueue.TrackWaitingList.Find(playqueue.CurrentTrack).Next.Value;
+                PlayQueue.CurrentTrack = PlayQueue.TrackWaitingList.Find(PlayQueue.CurrentTrack).Next.Value;
 
             //what will happen if there is no playlist linked to the WaitingList
         }
         public void PreviousTrack() {
-            if(playqueue.TrackWaitingList.Contains(playqueue.CurrentTrack))
-                playqueue.CurrentTrack = playqueue.TrackWaitingList.Find(playqueue.CurrentTrack).Previous.Value;
+            if(PlayQueue.TrackWaitingList.Contains(PlayQueue.CurrentTrack))
+                PlayQueue.CurrentTrack = PlayQueue.TrackWaitingList.Find(PlayQueue.CurrentTrack).Previous.Value;
             //there is some logica missing here
         }
         public void AddTrack(Track track) {
-            playqueue.TrackQueue.Enqueue(track);
+            PlayQueue.TrackQueue.Enqueue(track);
         }
         public void RemoveTrackFromQueue(Track track, int index) {
             int count = 0;
             Queue<Track> helpStack = new Queue<Track>();
             
-            while(playqueue.TrackQueue.Count > 0)
+            while(PlayQueue.TrackQueue.Count > 0)
             {
                 if (count != index)
-                    helpStack.Enqueue(playqueue.TrackQueue.Dequeue());
+                    helpStack.Enqueue(PlayQueue.TrackQueue.Dequeue());
                 else
                 {
-                    if (track.Equals(playqueue.TrackQueue.Peek()))
-                        playqueue.TrackQueue.Dequeue();
+                    if (track.Equals(PlayQueue.TrackQueue.Peek()))
+                        PlayQueue.TrackQueue.Dequeue();
                     else
                         throw new Exception("The track doesn't macht with the given index.");
                 }
@@ -61,26 +61,26 @@ namespace Ritmo
             
             while(helpStack.Count > 0)
             {
-                playqueue.TrackQueue.Enqueue(helpStack.Dequeue());
+                PlayQueue.TrackQueue.Enqueue(helpStack.Dequeue());
             }
         }
 
 
         public void RemoveTrackFromWaitingList(Track track)
         {
-            playqueue.TrackWaitingList.Remove(track);     
+            PlayQueue.TrackWaitingList.Remove(track);     
         }
         public void SetTrackWatingList(TrackList trackList) {
-            playqueue.TrackWaitingList = trackList.Tracks;
+            PlayQueue.TrackWaitingList = trackList.Tracks;
         }
         public void ShuffleTrackWaitingList() {}
         public void RepeatTrackWaitingList() { } //kan je een queue repeaten?
         public void RepeatTrack() { } //kan je een queue repeaten?
         public void SetVolume(double volume) {
-            playqueue.CurrentVolume = volume;
+            PlayQueue.CurrentVolume = volume;
         }
         public void SetMute() {
-            playqueue.isMute = !playqueue.isMute;
+            PlayQueue.IsMute = !PlayQueue.IsMute;
         }
     }
 }
