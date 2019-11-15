@@ -17,6 +17,7 @@ namespace Ritmo
         public Track WaitingListToQueueTrack { get; set; }
         public double CurrentVolume { get; set; }
         public bool isMute { get; set; }
+        public bool TrackWaitingListEnded { get; set; }
 
         public LoopModes LoopMode { get; set; }
 
@@ -32,6 +33,25 @@ namespace Ritmo
         public bool TrackQueueHasSongs()
         {
             return TrackQueue.Count > 0;
+        }
+
+
+        public void TrackEnded()
+        {
+            if (TrackQueueHasSongs())
+            {
+                //Set CurrentTrack to TrackQueue dequeue
+            }
+            else if (!CurrentTrack.Equals(TrackWaitingList.Last.Value))
+            {
+                CurrentTrack = TrackWaitingList.Find(CurrentTrack).Next.Value;
+                TrackWaitingListEnded = false;
+            }
+            else
+            {
+                CurrentTrack = TrackWaitingList.First.Value;
+                TrackWaitingListEnded = true;
+            }
         }
     }
 }

@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="100" Margin="419,159,0,0" VerticalAlignment="Top" Width="100"/>
+        <MediaElement x:Name="CurrentTrackElement" HorizontalAlignment="Left" Height="100" Margin="225,159,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left" Margin="326,301,0,0" VerticalAlignment="Top"/>
+
     </Grid>
 </Window>

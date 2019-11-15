@@ -8,7 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("testfiles/powerup1.wav")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("testfiles/powerup2.wav")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("audiotestfiles/powerup2.wav")]
 
 
