@@ -80,7 +80,7 @@ namespace Ritmo
             PlayQueue.CurrentVolume = volume;
         }
         public void SetMute() {
-            PlayQueue.isMute = !PlayQueue.isMute;
+            PlayQueue.IsMute = !PlayQueue.IsMute;
         }
     }
 }
