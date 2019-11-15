@@ -25,8 +25,19 @@ namespace Ritmo
         }
         public void ResumeTrack() { }
         public void PauseTrack() { }
-        public void NextTrack() { }
-        public void PreviousTrack() { }
+        public void NextTrack() {
+            if (playqueue.TrackQueueHasSongs())
+                playqueue.CurrentTrack = playqueue.TrackQueue.Dequeue();
+            else
+                playqueue.CurrentTrack = playqueue.TrackWaitingList.Find(playqueue.CurrentTrack).Next.Value;
+
+            //what will happen if there is no playlist linked to the WaitingList
+        }
+        public void PreviousTrack() {
+            if(playqueue.TrackWaitingList.Contains(playqueue.CurrentTrack))
+                playqueue.CurrentTrack = playqueue.TrackWaitingList.Find(playqueue.CurrentTrack).Previous.Value;
+            //there is some logica missing here
+        }
         public void AddTrack(Track track) {
             playqueue.TrackQueue.Enqueue(track);
         }
@@ -59,14 +70,17 @@ namespace Ritmo
         {
             playqueue.TrackWaitingList.Remove(track);     
         }
-        public void SetTrackWatingList(TrackList trackList)
-        {
-            playqueue.TrackWaitingList = trackList;
+        public void SetTrackWatingList(TrackList trackList) {
+            playqueue.TrackWaitingList = trackList.Tracks;
         }
-        public void ShuffleTrackWaitingList() { }
+        public void ShuffleTrackWaitingList() {}
         public void RepeatTrackWaitingList() { } //kan je een queue repeaten?
         public void RepeatTrack() { } //kan je een queue repeaten?
-        public void SetVolume() { }
-        public void SetMute() { }
+        public void SetVolume(double volume) {
+            playqueue.CurrentVolume = volume;
+        }
+        public void SetMute() {
+            playqueue.isMute = !playqueue.isMute;
+        }
     }
 }
