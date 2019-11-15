@@ -58,6 +58,7 @@
     <Compile Include="Playlist.cs" />
     <Compile Include="PlayQueueController.cs" />
     <Compile Include="Track.cs" />
+    <Compile Include="TrackList.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

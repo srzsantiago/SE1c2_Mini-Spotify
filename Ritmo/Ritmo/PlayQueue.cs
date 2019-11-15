@@ -8,14 +8,15 @@ namespace Ritmo
 {
     class PlayQueue
     {
-        LinkedList<Track> PlaylistQueue;
-        Queue<Track> TrackQueue;
+        public LinkedList<Track> TrackWaitingList{ get; set; }
+        public Queue<Track> TrackQueue { get; set; }
         public Track CurrentTrack { get; set; }
+        public Track WaitingListToQueueTrack { get; set; }
         public double CurrentVolume { get; set; }
 
         public PlayQueue()
         {
-            PlaylistQueue = new LinkedList<Track>();
+            TrackWaitingList = new LinkedList<Track>();
             TrackQueue = new Queue<Track>();
         }
 
