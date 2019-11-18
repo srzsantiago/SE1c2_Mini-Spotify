@@ -1,6 +1,6 @@
 ﻿namespace Ritmo
 {
-    class Playlist : TrackList
+    public class Playlist : TrackList
     {
         public Playlist(string name) : base(name)
         {

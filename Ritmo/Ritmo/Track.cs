@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class Track
+    public class Track
     {
         public string Name { get; set; }
         public Uri AudioFile { get; set; }

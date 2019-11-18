@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class PlaylistController
+    public class PlaylistController
     {
         public Playlist Playlist { get; set; }
 

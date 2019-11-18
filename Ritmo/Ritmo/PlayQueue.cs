@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class PlayQueue
+    public class PlayQueue
     {
 
         public enum LoopModes { TrackRepeat, PlaylistRepeat, off }
