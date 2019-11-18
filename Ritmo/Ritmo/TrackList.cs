@@ -7,8 +7,6 @@ namespace Ritmo
         public string Name { get; set; }
         public LinkedList<Track> Tracks { get; set; }
 
-       
-
         public TrackList(string name)
         {
             Name = name;
