@@ -101,7 +101,38 @@ namespace Ritmo
         public void SetTrackWatingList(TrackList trackList) {//Set the waitingList with a tracklist(playlist/album)
             playQueue.TrackWaitingList = trackList.Tracks;
         }
-        public void ShuffleTrackWaitingList() {}
+        public void ShuffleTrackWaitingList(TrackList trackList) {
+            // werkt niet helemaal en moet volgende sprint verder
+            Random rand = new Random();
+            int size = trackList.Tracks.Count;
+            int cijfer;
+            List<int> randomnummers = new List<int>();
+
+            for (int i = 1; i <= size; i++)
+            {
+                cijfer = rand.Next(0, size);
+                if (!randomnummers.Contains(cijfer))
+                {
+                    randomnummers.Add(cijfer);
+                }
+                else
+                {
+                    while (randomnummers.Contains(cijfer))
+                    {
+                        cijfer = rand.Next(0, size);
+                    }
+                    randomnummers.Add(cijfer);
+                }
+            }
+
+            LinkedList<Track> randomtracks = new LinkedList<Track>();
+            foreach (int i in randomnummers)
+            {
+                Track track = trackList.Tracks.ElementAt(i);
+                randomtracks.AddLast(track);
+            }
+            trackList.Tracks = randomtracks;
+        }
         public void RepeatTrackWaitingList() { } //Repeat the whole waitingList (the queue can't be repeated)
         public void RepeatTrack() { } //Repeat the currenttrack while its active.
         public void SetVolume(double volume) {//Set the volume to a given value
