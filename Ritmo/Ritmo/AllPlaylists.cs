@@ -8,7 +8,7 @@ namespace Ritmo
 {
     class AllPlaylists
     {
-        List<Playlist> playlists { get; set; }
+        public List<Playlist> playlists { get; set; } // the list where all the playlists go into.
 
         public AllPlaylists()
         {

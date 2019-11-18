@@ -4,16 +4,28 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\
+=======
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\
+>>>>>>> 93b3bb2b9b047180197265ba12e93e69888529a0
 Ritmo
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo\App.xaml
 11151548125
 4774992629
 12-1489341213
 14874262029
+=======
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\App.xaml
+11151548125
+
+19-2126345980
+131569487696
+>>>>>>> 93b3bb2b9b047180197265ba12e93e69888529a0
 MainWindow.xaml;
 
 False

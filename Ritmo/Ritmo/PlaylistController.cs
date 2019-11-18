@@ -22,7 +22,14 @@ namespace Ritmo
 
         public void RemoveTrack(Track track) // removes a track from the playlist
         {
-            Playlist.Tracks.Remove(track);
+            if(Playlist.Tracks.Contains(track))
+            {
+                Playlist.Tracks.Remove(track);
+            } else
+            {
+                Console.WriteLine("track bestaat niet in deze playlist");
+            }
+            
         }
 
         public void SetName(string name) // changes the name of the playlist
