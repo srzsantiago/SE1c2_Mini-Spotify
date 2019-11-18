@@ -9,13 +9,13 @@ namespace Ritmo
     public enum AccessLevel { Admin, Artist, User }
     class Person
     {
-        private string Username { get; set; }
-        private string Password { get; set; }
-        private AccessLevel Access { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public AccessLevel Access { get; set; }
 
-        public Person(string username, string password, AccessLevel access)
+        public Person(string email, string password, AccessLevel access)
         {
-            Username = username;
+            Email = email;
             Password = password;
             Access = access;
         }

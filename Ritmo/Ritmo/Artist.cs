@@ -11,7 +11,7 @@ namespace Ritmo
         public string Name { get; set; }
         public string Producer { get; set; }
 
-        public Artist(string username, string password, AccessLevel access, string name, string producer) : base(username, password, access)
+        public Artist(string email, string password, AccessLevel access, string name, string producer) : base(email, password, access)
         {
             Name = name;
             Producer = producer;
