@@ -27,6 +27,9 @@
         <DataTemplate x:Name="followingViewTemplate" DataType="{x:Type viewmodels:FollowingViewModel}">
             <views:FollowingView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="myPlaylistViewTemplate" DataType="{x:Type viewmodels:MyPlaylistViewModel}">
+            <views:MyPlaylistsView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -56,7 +59,9 @@
                 <Button x:Name="Categories_Button" Height="{StaticResource LftPaneBttnSize}" Content="Categories" Click="Categories_Clicked" HorizontalContentAlignment="Left" Padding="{StaticResource LftPaneBttnPadding}" FontSize="{StaticResource LftPaneBttnFontSize}"/>
                 <Button x:Name="Following_Button" Height="{StaticResource LftPaneBttnSize}"  Click="Following_Clicked" Content="Following" HorizontalContentAlignment="Left" Padding="{StaticResource LftPaneBttnPadding}" FontSize="{StaticResource LftPaneBttnFontSize}"/>
             </StackPanel>
-            
+            <StackPanel Grid.Row="2">
+                <Button x:Name="MyPlaylist_Button" Height="{StaticResource LftPaneBttnSize}" Click="MyPlaylists_Clicked" Content="My playlists" HorizontalContentAlignment="Left" Padding="{StaticResource LftPaneBttnPadding}" FontSize="{StaticResource LftPaneBttnFontSize}"/>
+            </StackPanel>
         </Grid>
 
 

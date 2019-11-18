@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Stefan\Desktop\Ritmo\Ritmo\Ritmo\App.xaml
-5812218069
+6-651301734
 41772976429
-20946059647
+22-2128363512
 14-1035362380
-MainWindow.xaml;Views\CategoriesView.xaml;Views\FollowingView.xaml;Views\HomeView.xaml;Views\SearchView.xaml;
+MainWindow.xaml;Views\CategoriesView.xaml;Views\FollowingView.xaml;Views\HomeView.xaml;Views\MyPlaylistsView.xaml;Views\SearchView.xaml;
 
-True
+False
 

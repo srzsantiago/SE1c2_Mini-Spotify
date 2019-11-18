@@ -88,5 +88,10 @@ namespace Ritmo
         {
             DataContext = new FollowingViewModel();
         }
+
+        private void MyPlaylists_Clicked(object sender, RoutedEventArgs e)
+        {
+            DataContext = new MyPlaylistViewModel();
+        }
     }
 }

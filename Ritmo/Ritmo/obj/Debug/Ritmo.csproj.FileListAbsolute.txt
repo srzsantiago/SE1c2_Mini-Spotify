@@ -68,3 +68,5 @@ C:\Users\Stefan\Desktop\Ritmo\Ritmo\Ritmo\obj\Debug\Views\SearchView.g.cs
 C:\Users\Stefan\Desktop\Ritmo\Ritmo\Ritmo\obj\Debug\Views\CategoriesView.baml
 C:\Users\Stefan\Desktop\Ritmo\Ritmo\Ritmo\obj\Debug\Views\FollowingView.baml
 C:\Users\Stefan\Desktop\Ritmo\Ritmo\Ritmo\obj\Debug\Views\SearchView.baml
+C:\Users\Stefan\Desktop\Ritmo\Ritmo\Ritmo\obj\Debug\Views\MyPlaylistsView.g.cs
+C:\Users\Stefan\Desktop\Ritmo\Ritmo\Ritmo\obj\Debug\Views\MyPlaylistsView.baml
