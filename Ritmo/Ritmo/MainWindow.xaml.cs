@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using Ritmo.ViewModels;
 
 namespace Ritmo
 {
@@ -66,6 +67,26 @@ namespace Ritmo
         public void OnClickPlay(object sender, EventArgs e)
         {
             CurrentTrackElement.Play();
+        }
+
+        private void Home_Clicked(object sender, RoutedEventArgs e)
+        {
+            DataContext = new HomeViewModel();
+        }
+
+        private void Search_Clicked(object sender, RoutedEventArgs e)
+        {
+            DataContext = new SearchViewModel();
+        }
+
+        private void Categories_Clicked(object sender, RoutedEventArgs e)
+        {
+            DataContext = new CategoriesViewModel();
+        }
+
+        private void Following_Clicked(object sender, RoutedEventArgs e)
+        {
+            DataContext = new FollowingViewModel();
         }
     }
 }

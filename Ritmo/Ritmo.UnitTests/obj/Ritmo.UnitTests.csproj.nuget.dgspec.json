@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Wilms-1\\Documents\\GitHub\\SE1c2_Mini-Spotify\\Ritmo\\Ritmo.UnitTests\\Ritmo.UnitTests.csproj": {}
+    "C:\\Users\\Stefan\\Desktop\\Ritmo\\Ritmo\\Ritmo.UnitTests\\Ritmo.UnitTests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Wilms-1\\Documents\\GitHub\\SE1c2_Mini-Spotify\\Ritmo\\Ritmo.UnitTests\\Ritmo.UnitTests.csproj": {
+    "C:\\Users\\Stefan\\Desktop\\Ritmo\\Ritmo\\Ritmo.UnitTests\\Ritmo.UnitTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Wilms-1\\Documents\\GitHub\\SE1c2_Mini-Spotify\\Ritmo\\Ritmo.UnitTests\\Ritmo.UnitTests.csproj",
+        "projectUniqueName": "C:\\Users\\Stefan\\Desktop\\Ritmo\\Ritmo\\Ritmo.UnitTests\\Ritmo.UnitTests.csproj",
         "projectName": "Ritmo.UnitTests",
-        "projectPath": "C:\\Users\\Wilms-1\\Documents\\GitHub\\SE1c2_Mini-Spotify\\Ritmo\\Ritmo.UnitTests\\Ritmo.UnitTests.csproj",
-        "packagesPath": "C:\\Users\\Wilms-1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Wilms-1\\Documents\\GitHub\\SE1c2_Mini-Spotify\\Ritmo\\Ritmo.UnitTests\\obj\\",
+        "projectPath": "C:\\Users\\Stefan\\Desktop\\Ritmo\\Ritmo\\Ritmo.UnitTests\\Ritmo.UnitTests.csproj",
+        "packagesPath": "C:\\Users\\Stefan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Stefan\\Desktop\\Ritmo\\Ritmo\\Ritmo.UnitTests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Wilms-1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Stefan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -30,8 +30,8 @@
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "C:\\Users\\Wilms-1\\Documents\\GitHub\\SE1c2_Mini-Spotify\\Ritmo\\Ritmo\\Ritmo.csproj": {
-                "projectPath": "C:\\Users\\Wilms-1\\Documents\\GitHub\\SE1c2_Mini-Spotify\\Ritmo\\Ritmo\\Ritmo.csproj"
+              "C:\\Users\\Stefan\\Desktop\\Ritmo\\Ritmo\\Ritmo\\Ritmo.csproj": {
+                "projectPath": "C:\\Users\\Stefan\\Desktop\\Ritmo\\Ritmo\\Ritmo\\Ritmo.csproj"
               }
             }
           }
@@ -44,20 +44,49 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.2.0, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            }
+          },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Wilms-1\\Documents\\GitHub\\SE1c2_Mini-Spotify\\Ritmo\\Ritmo\\Ritmo.csproj": {
+    "C:\\Users\\Stefan\\Desktop\\Ritmo\\Ritmo\\Ritmo\\Ritmo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Wilms-1\\Documents\\GitHub\\SE1c2_Mini-Spotify\\Ritmo\\Ritmo\\Ritmo.csproj",
+        "projectUniqueName": "C:\\Users\\Stefan\\Desktop\\Ritmo\\Ritmo\\Ritmo\\Ritmo.csproj",
         "projectName": "Ritmo",
-        "projectPath": "C:\\Users\\Wilms-1\\Documents\\GitHub\\SE1c2_Mini-Spotify\\Ritmo\\Ritmo\\Ritmo.csproj"
+        "projectPath": "C:\\Users\\Stefan\\Desktop\\Ritmo\\Ritmo\\Ritmo\\Ritmo.csproj"
       },
       "frameworks": {
         "net461": {}
