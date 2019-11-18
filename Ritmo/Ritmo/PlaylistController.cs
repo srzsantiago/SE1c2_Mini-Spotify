@@ -15,14 +15,21 @@ namespace Ritmo
             this.Playlist = new Playlist(name);
         }
         
-        public void AddTrack(Track track) // adds a track to the playlist
+        public void AddTrack(Track track) // adds a track to the playlist.
         {
-            Playlist.Tracks.AddLast(track);
+            if(Playlist.Tracks.Contains(track)) // checks if the track exists in the playlist (tracks cant appear more than once in a playlist)
+            {
+                Console.WriteLine("track already exists in this playlist");
+            } else
+            {
+                Playlist.Tracks.AddLast(track);
+            }
+            
         }
 
-        public void RemoveTrack(Track track) // removes a track from the playlist
+        public void RemoveTrack(Track track) // removes a track from the playlist.
         {
-            if(Playlist.Tracks.Contains(track))
+            if(Playlist.Tracks.Contains(track)) // checks if the given track is in the playlist.
             {
                 Playlist.Tracks.Remove(track);
             } else
