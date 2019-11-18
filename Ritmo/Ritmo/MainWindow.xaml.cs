@@ -48,7 +48,7 @@ namespace Ritmo
             playQueueController.PlayTrack(playlistController.Playlist.Tracks.First.Value, playlistController.Playlist);
 
             //Zet de CurrentTrack als audio die afgespeeld wordt
-            CurrentTrackElement.Source = playQueueController.PlayQueue.CurrentTrack.AudioFile;
+            CurrentTrackElement.Source = playQueueController.playQueue.CurrentTrack.AudioFile;
 
         }
 
@@ -56,10 +56,10 @@ namespace Ritmo
         //If the playQueue has played all tracks, CurrentTrack will be set to the first Track in TrackWaitingList and the audio will be paused.
         public void Track_Ended(Object sender, EventArgs e)
         {
-            playQueueController.PlayQueue.TrackEnded();
-            CurrentTrackElement.Source = playQueueController.PlayQueue.CurrentTrack.AudioFile;
+            playQueueController.playQueue.TrackEnded();
+            CurrentTrackElement.Source = playQueueController.playQueue.CurrentTrack.AudioFile;
 
-            if (playQueueController.PlayQueue.TrackWaitingListEnded)
+            if (playQueueController.playQueue.TrackWaitingListEnded)
                 CurrentTrackElement.Pause();
         }
 
