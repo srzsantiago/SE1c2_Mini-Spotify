@@ -4,74 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ritmo"
-        xmlns:System="clr-namespace:System;assembly=mscorlib"
-        xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
-        xmlns:views="clr-namespace:Ritmo.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" MinWidth="1000" MinHeight="900">
-    <Window.Resources>
-        <!-- Variables -->
-        <System:Double x:Key="LftPaneBttnSize">60</System:Double>
-        <Thickness x:Key="LftPaneBttnPadding" Left="10" Top="1" Right="1" Bottom="1"/>
-        <System:Double x:Key="LftPaneBttnFontSize">18</System:Double>
-        <!-- Views -->
-        <DataTemplate x:Name="homeViewTemplate" DataType="{x:Type viewmodels:HomeViewModel}">
-            <views:HomeView DataContext="{Binding}"/>
-        </DataTemplate>
-        <DataTemplate x:Name="searchViewTemplate" DataType="{x:Type viewmodels:SearchViewModel}">
-            <views:SearchView DataContext="{Binding}"/>
-        </DataTemplate>
-        <DataTemplate x:Name="categoriesViewTemplate" DataType="{x:Type viewmodels:CategoriesViewModel}">
-            <views:CategoriesView DataContext="{Binding}"/>
-        </DataTemplate>
-        <DataTemplate x:Name="followingViewTemplate" DataType="{x:Type viewmodels:FollowingViewModel}">
-            <views:FollowingView DataContext="{Binding}"/>
-        </DataTemplate>
-        <DataTemplate x:Name="myPlaylistViewTemplate" DataType="{x:Type viewmodels:MyPlaylistViewModel}">
-            <views:MyPlaylistsView DataContext="{Binding}"/>
-        </DataTemplate>
-    </Window.Resources>
-
+        Title="MainWindow" Height="1800" Width="2880">
     <Grid>
-        <!-- Main Layout -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MaxWidth="340" MinWidth="340" />
-            <ColumnDefinition/>
+            <ColumnDefinition Width="67*"/>
+            <ColumnDefinition Width="725*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition MinHeight="130" MaxHeight="130"/>
-        </Grid.RowDefinitions>
-
-        <!-- Left panel -->
-        <Grid Background="Gray" Grid.Row="0" Grid.Column="0">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="180"/>
-                <RowDefinition Height="240"/>
-                <RowDefinition Height="200"/>
-                <RowDefinition Height="200"/>
-            </Grid.RowDefinitions>
-
-            <StackPanel Grid.Row="1">
-                <Button x:Name="Home_Button" Height="{StaticResource LftPaneBttnSize}" Content="Home" Click="Home_Clicked" HorizontalContentAlignment="Left" Padding="{StaticResource LftPaneBttnPadding}" FontSize="{StaticResource LftPaneBttnFontSize}"/>
-                <Button x:Name="Search_Button" Height="{StaticResource LftPaneBttnSize}" Content="Search" Click="Search_Clicked" HorizontalContentAlignment="Left" Padding="{StaticResource LftPaneBttnPadding}" FontSize="{StaticResource LftPaneBttnFontSize}"/>
-                <Button x:Name="Categories_Button" Height="{StaticResource LftPaneBttnSize}" Content="Categories" Click="Categories_Clicked" HorizontalContentAlignment="Left" Padding="{StaticResource LftPaneBttnPadding}" FontSize="{StaticResource LftPaneBttnFontSize}"/>
-                <Button x:Name="Following_Button" Height="{StaticResource LftPaneBttnSize}"  Click="Following_Clicked" Content="Following" HorizontalContentAlignment="Left" Padding="{StaticResource LftPaneBttnPadding}" FontSize="{StaticResource LftPaneBttnFontSize}"/>
-            </StackPanel>
-            <StackPanel Grid.Row="2">
-                <Button x:Name="MyPlaylist_Button" Height="{StaticResource LftPaneBttnSize}" Click="MyPlaylists_Clicked" Content="My playlists" HorizontalContentAlignment="Left" Padding="{StaticResource LftPaneBttnPadding}" FontSize="{StaticResource LftPaneBttnFontSize}"/>
-            </StackPanel>
-        </Grid>
-
-
-        <!-- Page views -->
-        <ContentControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" Content="{Binding}"/>
-
-        <!-- Media control -->
-        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Center" Margin="106,56,0,0" VerticalAlignment="Top" Width="75" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="100" Margin="379,10,0,0" VerticalAlignment="Top" Width="100" Grid.Column="1" Grid.Row="1"/>
-        <MediaElement x:Name="CurrentTrackElement" HorizontalAlignment="Left" Height="100" Margin="506,10,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="-1.145,1.054" Grid.Column="1" Grid.Row="1"/>
+        <MediaElement x:Name="CurrentTrackElement" HorizontalAlignment="Left" Height="100" Margin="140.689,128,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="-1.145,1.054" Grid.Column="1"/>
+        <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="100" Margin="412.689,128,0,0" VerticalAlignment="Top" Width="100" Grid.Column="1"/>
+        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left" Margin="290.689,251,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
 
     </Grid>
 </Window>
