@@ -38,3 +38,4 @@ C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo_C
 C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo.csproj.CopyComplete
 C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\PlayListWindow.g.cs
 C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\PlayListWindow.baml
+C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\PlayListWindow.g.cs

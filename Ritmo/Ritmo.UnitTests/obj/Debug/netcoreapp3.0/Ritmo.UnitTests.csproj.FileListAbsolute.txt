@@ -1,7 +1,3 @@
-C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo.UnitTests\bin\Debug\netcoreapp3.0\NUnit3.TestAdapter.dll
-C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo.UnitTests\bin\Debug\netcoreapp3.0\NUnit3.TestAdapter.pdb
-C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo.UnitTests\bin\Debug\netcoreapp3.0\nunit.engine.dll
-C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo.UnitTests\bin\Debug\netcoreapp3.0\nunit.engine.api.dll
 C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo.UnitTests\bin\Debug\netcoreapp3.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
 C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo.UnitTests\bin\Debug\netcoreapp3.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
 C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo.UnitTests\bin\Debug\netcoreapp3.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
