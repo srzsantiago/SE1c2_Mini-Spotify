@@ -35,6 +35,7 @@ namespace Ritmo
             return TrackQueue.Count > 0;
         }
 
+        
         public void TrackEnded()
         {
             if (TrackQueueHasSongs())

@@ -8,7 +8,7 @@ namespace Ritmo.UnitTests
     [TestClass]
     public class PlayListControllerTest
     {
-        //Method: AddTrack(Track track) - 
+        //Method: AddTrack(Track track) - Add track to playlist, success scenario, returns true.
         [TestMethod]
         public void Add_SuccessScenario_ReturnsTrue()
         {
@@ -23,7 +23,7 @@ namespace Ritmo.UnitTests
             Assert.AreEqual(result, true);
         }
 
-        //Method: AddTrack(Track track)
+        //Method: AddTrack(Track track) - Add track to playlist twice, returns exception.
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void Add_TrackALreadyExists_ReturnsException()
@@ -36,7 +36,7 @@ namespace Ritmo.UnitTests
             playlistController.AddTrack(track);
         }
 
-        //Method: RemoveTrack(Track track)
+        //Method: RemoveTrack(Track track) -  Remove track from playlist, success scenario, returns false.
         [TestMethod]
         public void Remove_SuccessScenario_ReturnsFalse()
         {
@@ -52,7 +52,7 @@ namespace Ritmo.UnitTests
             Assert.AreEqual(result, false);
         }
 
-        //Method: RemoveTrack(Track track)
+        //Method: RemoveTrack(Track track) - Remove track from playlist, track does not exists, returns exception.
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void Remove_TrackDoesNotExists_ReturnsException()
@@ -65,7 +65,7 @@ namespace Ritmo.UnitTests
             playlistController.Playlist.Tracks.Contains(track);
         }
 
-        //Method: SetName(string name)
+        //Method: SetName(string name) - Sets playlist name, returns name
         [TestMethod]
         public void SetName_ChangeName_ReturnsName()
         {

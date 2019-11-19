@@ -15,7 +15,7 @@ namespace Ritmo
             this.playQueue = new PlayQueue(); 
         }
 
-        public void PlayTrack(Track track)//Set the currentTrack with a single track choiced by the user
+        public void PlayTrack(Track track)//Set the currentTrack with a single track chosen by the user
         {
             if (playQueue.TrackWaitingList.Contains(playQueue.CurrentTrack))
             {
