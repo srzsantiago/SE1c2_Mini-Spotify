@@ -17,24 +17,24 @@ namespace Ritmo
         
         public void AddTrack(Track track) // adds a track to the playlist.
         {
-            if(Playlist.Tracks.Contains(track)) // checks if the track exists in the playlist (tracks cant appear more than once in a playlist)
+            if (Playlist.Tracks.Contains(track))
             {
-                Console.WriteLine("track already exists in this playlist");
-            } else
+                throw new Exception("This track already contains in this playlist.");
+            }
+            else
             {
                 Playlist.Tracks.AddLast(track);
-            }
-            
+            }            
         }
 
         public void RemoveTrack(Track track) // removes a track from the playlist.
         {
-            if(Playlist.Tracks.Contains(track)) // checks if the given track is in the playlist.
+            if (Playlist.Tracks.Contains(track)) // checks if the given track is in the playlist.
             {
                 Playlist.Tracks.Remove(track);
             } else
             {
-                Console.WriteLine("track bestaat niet in deze playlist");
+                throw new Exception("This track does not exist in this playlist.");
             }
             
         }
