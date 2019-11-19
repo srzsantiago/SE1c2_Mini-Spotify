@@ -1,7 +1,10 @@
 Ritmo/.vs
 Ritmo/Ritmo/obj
+Ritmo/Ritmo/bin
 Ritmo/Ritmo.UnitTests/obj
+Ritmo/Ritmo.UnitTests/bin
 *.cache
 *.json
 *.dll
 *.props
+*.exe
