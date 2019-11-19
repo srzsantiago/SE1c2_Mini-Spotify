@@ -9,7 +9,7 @@ namespace Ritmo
     public class PlayQueue
     {
 
-        public enum LoopModes { TrackRepeat, PlaylistRepeat, Off }
+        public enum RepeatModes { TrackRepeat, TrackListRepeat, Off }
 
         public LinkedList<Track> TrackWaitingList{ get; set; }
         public Queue<Track> TrackQueue { get; set; }
@@ -18,10 +18,9 @@ namespace Ritmo
         public double CurrentVolume { get; set; }
         public bool IsMute { get; set; }
         public bool TrackWaitingListEnded { get; set; }
-
-        public LoopModes LoopMode { get; set; }
-
-        
+        public bool IsPaused { get; set; }
+        public RepeatModes RepeatMode { get; set; }
+               
 
         public PlayQueue()
         {

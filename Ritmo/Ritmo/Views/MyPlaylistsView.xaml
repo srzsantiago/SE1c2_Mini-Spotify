@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Ritmo.Views.MyPlaylistsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ritmo.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="GhostWhite">
+        <Grid Background="LightSlateGray" Height="48" VerticalAlignment="Top">
+            <Label HorizontalAlignment="Left" Width="172" Content="My Playlists" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="24" Height="44" VerticalAlignment="Top"/>
+        </Grid>
+        <Grid Background="GhostWhite" Margin="0,48,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="50" Width="50*"/>
+                <ColumnDefinition Width="325*"/>
+                <ColumnDefinition Width="125*"/>
+                <ColumnDefinition Width="125*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="1" Content="NAME" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Width="327" />
+            <Label Grid.Column="2" Content="DURATION" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Width="101" />
+            <Label Grid.Column="3" Content="CREATION DATE" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Width="101" />
+            <Border BorderBrush="Black" BorderThickness="1" Height="2" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="4" MinWidth="500"/>
+        </Grid>
+    </Grid>
+
+</UserControl>

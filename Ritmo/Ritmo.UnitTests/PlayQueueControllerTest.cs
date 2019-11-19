@@ -10,7 +10,7 @@ namespace Ritmo.UnitTests
     {
         //Method: PlayTrack(Track track) - Assign given track as current track playing, success scenario, returns true.
         [TestMethod]
-        public void PlayQueue_SuccessScenario()
+        public void PlayTrack_SuccessScenario()
         {
             //Arrange
             PlayQueueController playQueueController = new PlayQueueController();
@@ -22,6 +22,9 @@ namespace Ritmo.UnitTests
             Assert.AreEqual(result, track);
         }
 
-
+        //Method: PlayTrack(Track track, TrackList trackList) - set the currentTrack with a track from a tracklist(playlist/album) chosen by the user and at the whole list to the WaitingList
+        //
+        [TestMethod]
+        public void PlayTrack_SuccessScenario_
     }
 }
