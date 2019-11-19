@@ -26,7 +26,7 @@ namespace Ritmo
             
             //remember you have to do something to remember track if it was a track from waitinglist
         }
-        public void PlayTrack(Track track, TrackList trackList)//set the currentTrack with a track from a tracklist(playlist/album) choised by the user and at the whole list to the WaitingList
+        public void PlayTrack(Track track, TrackList trackList)//set the currentTrack with a track from a tracklist(playlist/album) chosen by the user and at the whole playlist will be added to the waitinglist
         {
             PlayTrack(track);
             SetTrackWatingList(trackList);
