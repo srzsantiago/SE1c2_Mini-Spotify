@@ -15,6 +15,7 @@ namespace Ritmo
 
         public Person(string email, string password, AccessLevel access)
         {
+
             Email = email;
             Password = password;
             Access = access;

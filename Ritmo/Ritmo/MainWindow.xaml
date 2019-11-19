@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ritmo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="1800" Width="2880">
     <Grid>
-        <MediaElement x:Name="CurrentTrackElement" HorizontalAlignment="Left" Height="100" Margin="208,128,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="-1.145,1.054"/>
-        <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="100" Margin="480,128,0,0" VerticalAlignment="Top" Width="100"/>
-        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left" Margin="358,251,0,0" VerticalAlignment="Top" Width="75"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="67*"/>
+            <ColumnDefinition Width="725*"/>
+        </Grid.ColumnDefinitions>
+        <MediaElement x:Name="CurrentTrackElement" HorizontalAlignment="Left" Height="100" Margin="140.689,128,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="-1.145,1.054" Grid.Column="1"/>
+        <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="100" Margin="412.689,128,0,0" VerticalAlignment="Top" Width="100" Grid.Column="1"/>
+        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left" Margin="290.689,251,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
 
     </Grid>
 </Window>

@@ -36,3 +36,5 @@ C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo\bin\Debug\nunit.f
 C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo\bin\Debug\nunit.framework.xml
 C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo_Content.g.cs
 C:\Users\marlo\source\repos\KBS\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\Ritmo.csproj.CopyComplete
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\PlayListWindow.g.cs
+C:\xampp\htdocs\SE1c2_Mini-Spotify\SE1c2_Mini-Spotify\Ritmo\Ritmo\obj\Debug\PlayListWindow.baml
