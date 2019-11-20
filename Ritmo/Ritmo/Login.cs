@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class Login
+    public class Login
     {
         private Person _user;
         public bool loggedin = false;
@@ -22,30 +22,33 @@ namespace Ritmo
         {
             if(this.email == email)
             {
-                if(this.password != password)
+                if (this.password != password)
                 {
-                    Console.WriteLine("password incorrect");
+                    loggedin = false;
                 }
-                this.email = email;
-                this.password = password;
-                this.access = accessdb;
-                loggedin = true;
-                // create new user with the loggedin bool and the access enum value
-                if(access == AccessLevel.user)
+                else
                 {
-                    _user = new User(this.loggedin);
-                }
-                else if (access == AccessLevel.artist)
-                {
-                    _user = new Artist(this.loggedin, "naam moet uit db", "Producer moet uit db");
-                }
-                else if (access == AccessLevel.admin)
-                {
-                    _user = new Administrator(this.loggedin);
-                }
-                
+                    this.email = email;
+                    this.password = password;
+                    this.access = accessdb;
+                    loggedin = true;
+                    // create new user with the loggedin bool and the access enum value
+                    if (access == AccessLevel.user)
+                    {
+                        _user = new User(this.loggedin);
+                    }
+                    else if (access == AccessLevel.artist)
+                    {
+                        _user = new Artist(this.loggedin, "naam moet uit db", "Producer moet uit db");
+                    }
+                    else if (access == AccessLevel.admin)
+                    {
+                        _user = new Administrator(this.loggedin);
+                    }
+                }  
             } else
             {
+                loggedin = false;
                 Console.WriteLine("Username not found in our database");
             }
         }

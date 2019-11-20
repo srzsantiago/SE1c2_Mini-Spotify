@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{44784E21-218C-4315-AA7A-D51491BA60C7}</ProjectGuid>
+    <ProjectGuid>{06BF6148-DD25-4A9F-9136-69B095422DD4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Ritmo</RootNamespace>
-    <AssemblyName>Ritmo</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>loginscherm</RootNamespace>
+    <AssemblyName>loginscherm</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -55,46 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AccessLevel.cs" />
-    <Compile Include="Administrator.cs" />
-    <Compile Include="AllPlaylists.cs" />
-    <Compile Include="AllPlaylistsController.cs" />
-    <Compile Include="Artist.cs" />
-    <Compile Include="Login.cs" />
-    <Compile Include="Person.cs" />
-    <Compile Include="Playlist.cs" />
-    <Compile Include="PlayListController.cs" />
-    <Compile Include="PlayListWindow.xaml.cs">
-      <DependentUpon>PlayListWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PlayQueueController.cs" />
-    <Compile Include="Track.cs" />
-    <Compile Include="TrackList.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="ViewModels\CategoriesViewModel.cs" />
-    <Compile Include="ViewModels\FollowingViewModel.cs" />
-    <Compile Include="ViewModels\HomeViewModel.cs" />
-    <Compile Include="ViewModels\AllPlaylistsViewModel.cs" />
-    <Compile Include="ViewModels\PlaylistViewModel.cs" />
-    <Compile Include="ViewModels\SearchViewModel.cs" />
-    <Compile Include="Views\CategoriesView.xaml.cs">
-      <DependentUpon>CategoriesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FollowingView.xaml.cs">
-      <DependentUpon>FollowingView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\HomeView.xaml.cs">
-      <DependentUpon>HomeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AllPlaylistsView.xaml.cs">
-      <DependentUpon>AllPlaylistsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PlaylistView.xaml.cs">
-      <DependentUpon>PlaylistView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SearchView.xaml.cs">
-      <DependentUpon>SearchView.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -107,37 +67,8 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PlayListWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CategoriesView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\FollowingView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\HomeView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\AllPlaylistsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PlaylistView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SearchView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PlayQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -162,6 +93,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ritmo\Ritmo.csproj">
+      <Project>{44784e21-218c-4315-aa7a-d51491ba60c7}</Project>
+      <Name>Ritmo</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

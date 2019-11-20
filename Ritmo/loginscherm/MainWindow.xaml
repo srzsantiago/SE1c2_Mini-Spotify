@@ -1,0 +1,18 @@
+﻿<Window x:Class="loginscherm.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:loginscherm"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="363,343,0,0" VerticalAlignment="Top" Width="75" Click="Login"/>
+        <TextBox x:Name="filled_password" HorizontalAlignment="Left" Height="23" Margin="410,278,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="filled_email" HorizontalAlignment="Left" Height="23" Margin="410,227,0,0" TextWrapping="Wrap" Text="Email@example.com" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Email" HorizontalAlignment="Left" Margin="363,223,0,0" VerticalAlignment="Top"/>
+        <Label Content="Password" HorizontalAlignment="Left" Margin="347,278,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="succesmessage" Content="" HorizontalAlignment="Left" Margin="64,68,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
