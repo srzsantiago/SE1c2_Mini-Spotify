@@ -26,23 +26,27 @@ namespace Ritmo
             
             //remember you have to do something to remember track if it was a track from waitinglist
         }
+
         public void PlayTrack(Track track, TrackList trackList)//set the currentTrack with a track from a tracklist(playlist/album) chosen by the user and at the whole playlist will be added to the waitinglist
         {
             PlayTrack(track);
             SetTrackWatingList(trackList);
         }
+
         public void ResumeTrack()
         {
             playQueue.IsPaused= false;
 
             //???????????????????????????//EVENT
         }
+
         public void PauseTrack()
         { 
             playQueue.IsPaused = true; 
             /////////////////////////////////EVENT
         }
-        public void NextTrack() {//Set the CurrentTrack as the next track
+
+        public void NextTrack(){    //Set the NextTrack as the CurrentTrack
             if (playQueue.TrackQueueHasSongs())
                 playQueue.CurrentTrack = playQueue.TrackQueue.Dequeue();
             else
@@ -79,15 +83,18 @@ namespace Ritmo
             }
             
         }
-        public void PreviousTrack() //Set the CurrentTrack as the previous track
+
+        public void PreviousTrack() //Set the PreviousTrack as the CurrentTrack
         {
                 if (playQueue.TrackWaitingList.Contains(playQueue.CurrentTrack) && !playQueue.CurrentTrack.Equals(playQueue.TrackWaitingList.Last.Value))
                     playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.CurrentTrack).Previous.Value;
         }
+
         public void AddTrack(Track track) //Add track to the queue
         {
             playQueue.TrackQueue.Enqueue(track);
         }
+
         public void RemoveTrackFromQueue(Track track, int index) //remove track from the queue
         {
             int count = 0;
@@ -131,6 +138,7 @@ namespace Ritmo
         {
             playQueue.RepeatMode = PlayQueue.RepeatModes.TrackRepeat;
         } 
+
         public void ShuffleTrackWaitingList(TrackList trackList) {
             // werkt niet helemaal en moet volgende sprint verder
             Random rand = new Random();
