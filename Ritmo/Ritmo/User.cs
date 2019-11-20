@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class User : Person
+    class User
     {
-        public User(string email, string password, AccessLevel access) : base(email, password, access)
+        bool loggedin { get; set; }
+        AccessLevel access { get; }
+
+        // create user after login, this user can be used to check the acces to other classes. 
+        public User(bool loggedin, AccessLevel access) 
         {
+            this.loggedin = loggedin;
+            this.access = access; 
         }
     }
 }

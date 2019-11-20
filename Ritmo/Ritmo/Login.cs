@@ -6,17 +6,38 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
+    // acceslevel enum to check what kind of user is logged in
+    public enum AccessLevel { Admin, Artist, User }
     class Login
     {
         private User _user;
         public bool loggedin = false;
-        public string typeofuser = "";
+        public AccessLevel access { get; set; }
 
-        string[,] array2d = new string[,]{{adminname1, adminpw1}, {adminname2, adminpw2}, {artistname1, artistpw1 }, {artistname2, artistpw2 },{username1,userpw1 }, {username2, userpw2 } };
-
-        public Login(string username, string password)
+        // moet uit db gehaald worden 
+        public string email = "gebruiker1@email.com";
+        public string password = "gebruiker1";
+        public string accessdb = "Admin";
+       
+        // login function
+        public Login(string email, string password)
         {
-            var poginlogin = array2d
+            if(this.email == email)
+            {
+                if(this.password != password)
+                {
+                    Console.WriteLine("password incorrect");
+                }
+                this.email = email;
+                this.password = password;
+                this.access = accessdb;
+                loggedin = true;
+                // create new user with the loggedin bool and the access enum value
+                _user = new User(this.loggedin, this.access);
+            } else
+            {
+                Console.WriteLine("Username not found in our database");
+            }
         }
     }
 }
