@@ -66,16 +66,16 @@ namespace Ritmo.UnitTests
             Assert.AreEqual(result, true);
         }
 
-        //NextTrack() -> Skip the currently palying track and set the next track as current track, success scenario, returns void.
+        /*//NextTrack() -> Skip the currently palying track and set the next track as current track, success scenario, returns void.
         [TestMethod]
         public void NextTrack_SuccessScenario()
         {
             //Arrange
             PlayQueueController playQueueController = new PlayQueueController();
             playQueueController.NextTrack();
-        }
+        }*/
 
-        /*//PreviousTrack() ->  Set the PreviousTrack as the CurrentTrack, success scenario, returns void.
+        //PreviousTrack() ->  Set the PreviousTrack as the CurrentTrack, success scenario, returns void.
         [TestMethod]
         public void PreviousTrack_SuccessScenario()
         {
@@ -83,14 +83,18 @@ namespace Ritmo.UnitTests
             PlayQueueController playQueueController = new PlayQueueController();
             Track track = new Track();
             Track track1 = new Track();
+            Playlist playlistnew = new Playlist("New");
             //Act
-            playQueueController.AddTrack(track);
-            playQueueController.AddTrack(track1);
+            playlistnew.Tracks.AddFirst(track);
+            playlistnew.Tracks.AddFirst(track1);
+            playQueueController.SetTrackWatingList(playlistnew);
+            playQueueController.PlayTrack(track);
+            playQueueController.PlayTrack(track1);
             var result = playQueueController.playQueue.TrackWaitingList.Find(playQueueController.playQueue.CurrentTrack).Previous.Value;
             playQueueController.PreviousTrack();
             //Assert
-            Assert.AreEqual(result, track);
-        }*/
+            Assert.AreEqual(result, track1);
+        }
 
         //Method: AddTrack(Track track) -> Add given track to queue, success scenario, returns void.
         [TestMethod]
