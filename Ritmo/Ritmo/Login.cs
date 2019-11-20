@@ -10,7 +10,7 @@ namespace Ritmo
     public enum AccessLevel { Admin, Artist, User }
     class Login
     {
-        private User _user;
+        private Person _user;
         public bool loggedin = false;
         public AccessLevel access { get; set; }
 
@@ -33,7 +33,7 @@ namespace Ritmo
                 this.access = accessdb;
                 loggedin = true;
                 // create new user with the loggedin bool and the access enum value
-                _user = new User(this.loggedin, this.access);
+                _user = new Person(this.loggedin, this.access);
             } else
             {
                 Console.WriteLine("Username not found in our database");
