@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccessLevel.cs" />
     <Compile Include="Administrator.cs" />
     <Compile Include="AllPlaylists.cs" />
     <Compile Include="AllPlaylistsController.cs" />
