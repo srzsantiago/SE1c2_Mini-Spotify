@@ -49,11 +49,17 @@ namespace Ritmo
             {
                 try
                 {
-
-                    if (playQueue.WaitingListToQueueTrack == null && !playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
-                        playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.CurrentTrack).Next.Value;
-                    else if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
-                        playQueue.CurrentTrack = playQueue.CurrentTrack;
+                    if (playQueue.WaitingListToQueueTrack == null)
+                    {
+                        if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat)) 
+                        {
+                            playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.CurrentTrack).Next.Value;
+                            playQueue.TrackWaitingListEnded = false;
+                        }
+                        if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
+                            playQueue.CurrentTrack = playQueue.CurrentTrack;
+                        
+                    }
                     else
                         playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.WaitingListToQueueTrack).Next.Value;
                 }
