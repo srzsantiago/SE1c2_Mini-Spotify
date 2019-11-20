@@ -69,7 +69,7 @@ namespace Ritmo
                 }
                 catch
                 {
-                    throw new Exception("There is no next track available");
+                    Console.WriteLine("There is no next track available");
                     //if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat)){
                     //    playQueue.CurrentTrack = playQueue.TrackWaitingList.First.Value;
                     //}
@@ -111,7 +111,7 @@ namespace Ritmo
                     if (track.Equals(playQueue.TrackQueue.Peek()))
                         playQueue.TrackQueue.Dequeue();
                     else
-                        throw new Exception("The track doesn't macht with the given index.");
+                        Console.WriteLine("The track doesn't macht with the given index.");
                 }
                 count++;
             }
