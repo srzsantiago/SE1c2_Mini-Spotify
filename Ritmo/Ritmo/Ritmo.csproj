@@ -74,6 +74,7 @@
     <Compile Include="ViewModels\FollowingViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\AllPlaylistsViewModel.cs" />
+    <Compile Include="ViewModels\MyQueueViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="Views\CategoriesView.xaml.cs">
@@ -87,6 +88,9 @@
     </Compile>
     <Compile Include="Views\AllPlaylistsView.xaml.cs">
       <DependentUpon>AllPlaylistsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyQueueView.xaml.cs">
+      <DependentUpon>MyQueueView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
@@ -125,6 +129,10 @@
     <Page Include="Views\AllPlaylistsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MyQueueView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PlaylistView.xaml">
       <Generator>MSBuild:Compile</Generator>

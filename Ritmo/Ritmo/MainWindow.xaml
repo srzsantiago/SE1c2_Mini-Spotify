@@ -30,6 +30,10 @@
         <DataTemplate x:Name="AllPlaylistsViewTemplate" DataType="{x:Type viewmodels:AllPlaylistsViewModel}">
             <views:MyPlaylistsView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="MyQueueViewTemplate" DataType="{x:Type viewmodels:MyQueueViewModel}">
+            <views:MyQueueView DataContext="{Binding}"/>
+        </DataTemplate>
+        
     </Window.Resources>
 
     <Grid>
@@ -61,6 +65,7 @@
             </StackPanel>
             <StackPanel Grid.Row="2">
                 <Button x:Name="AllPlaylist_Button" Height="{StaticResource LftPaneBttnSize}" Click="AllPlaylists_Clicked" Content="My playlists" HorizontalContentAlignment="Left" Padding="{StaticResource LftPaneBttnPadding}" FontSize="{StaticResource LftPaneBttnFontSize}"/>
+                <Button x:Name="MyQueue_Button" Height="{StaticResource LftPaneBttnSize}"  Click="MyQueue_Clicked" Content="My Queue" HorizontalContentAlignment="Left" Padding="{StaticResource LftPaneBttnPadding}" FontSize="{StaticResource LftPaneBttnFontSize}"/>
             </StackPanel>
         </Grid>
 
