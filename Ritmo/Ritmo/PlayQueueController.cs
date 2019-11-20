@@ -119,6 +119,7 @@ namespace Ritmo
         {
             playQueue.TrackWaitingList.Remove(track);     
         }
+
         public void SetTrackWatingList(TrackList trackList) //Set the waitingList with a tracklist(playlist/album)
         {
             playQueue.TrackWaitingList = trackList.Tracks;
@@ -128,6 +129,7 @@ namespace Ritmo
         {
             playQueue.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
         } 
+
         public void RepeatTrack()//Repeat the currenttrack while its active. 
         {
             playQueue.RepeatMode = PlayQueue.RepeatModes.TrackRepeat;
@@ -165,9 +167,11 @@ namespace Ritmo
             }
             trackList.Tracks = randomtracks;
         }
+         
         public void SetVolume(double volume) {//Set the volume to a given value
             playQueue.CurrentVolume = volume;
         }
+
         public void SetMute()  //Turn the Mutemode on en off.
         {
             playQueue.IsMute = !playQueue.IsMute;

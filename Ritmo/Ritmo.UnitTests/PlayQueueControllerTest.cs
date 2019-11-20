@@ -114,7 +114,7 @@ namespace Ritmo.UnitTests
             PlayQueueController playQueueController = new PlayQueueController();
             Track track = new Track();
             //Act
-            playQueueController.RemoveTrackFromQueue(track, -5);
+            playQueueController.RemoveTrackFromQueue(track, 1);
             var result = playQueueController.playQueue.TrackQueue.Contains(track);
             //Assert
             Assert.AreEqual(result, false);
