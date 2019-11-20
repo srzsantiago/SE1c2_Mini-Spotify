@@ -69,15 +69,16 @@ namespace Ritmo
                 }
                 catch
                 {
-                    if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat)){
-                        playQueue.CurrentTrack = playQueue.TrackWaitingList.First.Value;
-                    }
-                    if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.Off))
-                    {
-                        playQueue.TrackWaitingListEnded = true;
-                        playQueue.IsPaused = true;
-                        playQueue.CurrentTrack = playQueue.TrackWaitingList.First.Value;
-                    }
+                    throw new Exception("There is no next track available");
+                    //if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat)){
+                    //    playQueue.CurrentTrack = playQueue.TrackWaitingList.First.Value;
+                    //}
+                    //if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.Off))
+                    //{
+                    //    playQueue.TrackWaitingListEnded = true;
+                    //    playQueue.IsPaused = true;
+                    //    playQueue.CurrentTrack = playQueue.TrackWaitingList.First.Value;
+                    //}
                 }
 
             }
@@ -99,6 +100,7 @@ namespace Ritmo
         {
             int count = 0;
             Queue<Track> helpStack = new Queue<Track>();
+            
             
             while(playQueue.TrackQueue.Count > 0)
             {
