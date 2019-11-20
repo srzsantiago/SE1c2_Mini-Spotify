@@ -15,8 +15,8 @@ namespace Ritmo
         // moet uit db gehaald worden 
         public string email = "gebruiker1@email.com";
         public string password = "gebruiker1";
-        public string accessdb = "Admin";
-       
+        public AccessLevel accessdb = AccessLevel.admin;
+
         // login function
         public Login(string email, string password)
         {
@@ -31,7 +31,19 @@ namespace Ritmo
                 this.access = accessdb;
                 loggedin = true;
                 // create new user with the loggedin bool and the access enum value
-                _user = new Person(this.loggedin, this.access);
+                if(access == AccessLevel.user)
+                {
+                    _user = new User(this.loggedin);
+                }
+                else if (access == AccessLevel.artist)
+                {
+                    _user = new Artist(this.loggedin, "naam moet uit db", "Producer moet uit db");
+                }
+                else if (access == AccessLevel.admin)
+                {
+                    _user = new Administrator(this.loggedin);
+                }
+                
             } else
             {
                 Console.WriteLine("Username not found in our database");
