@@ -101,7 +101,6 @@ namespace Ritmo
             int count = 0;
             Queue<Track> helpStack = new Queue<Track>();
             
-            
             while(playQueue.TrackQueue.Count > 0)
             {
                 if (count != index)
@@ -111,7 +110,7 @@ namespace Ritmo
                     if (track.Equals(playQueue.TrackQueue.Peek()))
                         playQueue.TrackQueue.Dequeue();
                     else
-                        throw new Exception("The track doesn't macht with the given index.");
+                        throw new Exception("The track doesn't match with the given index.");
                 }
                 count++;
             }

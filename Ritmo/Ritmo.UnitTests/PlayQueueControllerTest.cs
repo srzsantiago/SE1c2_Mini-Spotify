@@ -131,9 +131,9 @@ namespace Ritmo.UnitTests
             bool result;
             //Act
             playQueueController.playQueue.TrackQueue.Enqueue(track);
-            playQueueController.RemoveTrackFromQueue(track, 0);
             if (playQueueController.playQueue.TrackQueue.Count > 0)
             {
+                playQueueController.RemoveTrackFromQueue(track, 0);
                 result = playQueueController.playQueue.TrackQueue.Contains(track);
             } else
             {
