@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    // acceslevel enum to check what kind of user is logged in
-    public enum AccessLevel { Admin, Artist, User }
     class Login
     {
         private Person _user;
         public bool loggedin = false;
-        public AccessLevel access { get; set; }
+        AccessLevel access { get; set; }
 
         // moet uit db gehaald worden 
         public string email = "gebruiker1@email.com";

@@ -6,5 +6,8 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class Artist { }
+    public enum AccessLevel
+    {
+         Admin, Artist, User 
+    }
 }

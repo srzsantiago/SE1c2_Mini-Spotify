@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    // acceslevel enum to check what kind of user is logged in
-    public enum AccessLevel { Admin, Artist, User }
 
-    class User
+    class Person
     {
         bool loggedin { get; set; }
-        AccessLevel access { get; }
+        AccessLevel access;
 
         // create user after login, this user can be used to check the acces to other classes. 
-        public User(bool loggedin, AccessLevel access) 
+        public Person(bool loggedin, AccessLevel access) 
         {
             this.loggedin = loggedin;
             this.access = access; 

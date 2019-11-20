@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class Administrator : Person
+    class Administrator
     {
-        public Administrator(string email, string password, AccessLevel access) : base(email, password, access)
-        {
-        }
     }
 }
