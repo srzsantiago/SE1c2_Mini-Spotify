@@ -72,7 +72,7 @@
     <Compile Include="ViewModels\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\FollowingViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
-    <Compile Include="ViewModels\MyPlaylistViewModel.cs" />
+    <Compile Include="ViewModels\AllPlaylistsViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="Views\CategoriesView.xaml.cs">
@@ -84,8 +84,8 @@
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MyPlaylistsView.xaml.cs">
-      <DependentUpon>MyPlaylistsView.xaml</DependentUpon>
+    <Compile Include="Views\AllPlaylistsView.xaml.cs">
+      <DependentUpon>AllPlaylistsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
@@ -121,7 +121,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MyPlaylistsView.xaml">
+    <Page Include="Views\AllPlaylistsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

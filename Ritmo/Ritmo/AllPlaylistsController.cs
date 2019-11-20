@@ -8,7 +8,7 @@ namespace Ritmo
 {
     class AllPlaylistsController
     {
-        private AllPlaylists allplaylists;
+        public AllPlaylists allplaylists { get; set; }
 
         public AllPlaylistsController()
         {
