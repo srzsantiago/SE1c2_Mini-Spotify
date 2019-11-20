@@ -17,14 +17,14 @@ namespace Ritmo
 
         public void PlayTrack(Track track)//Set the currentTrack with a single track chosen by the user
         {
-            if (playQueue.TrackWaitingList.Contains(playQueue.CurrentTrack))
+            if (playQueue.TrackWaitingList.Contains(playQueue.CurrentTrack)) //check if the tracklist contains the track
             {
-                playQueue.WaitingListToQueueTrack = playQueue.CurrentTrack;
+                playQueue.WaitingListToQueueTrack = playQueue.CurrentTrack;//remember the track so it can be use for the method next
             }
             playQueue.CurrentTrack = track;
+            playQueue.WaitingListToQueueTrack = null;
 
             
-            //remember you have to do something to remember track if it was a track from waitinglist
         }
 
         public void PlayTrack(Track track, TrackList trackList)//set the currentTrack with a track from a tracklist(playlist/album) chosen by the user and at the whole playlist will be added to the waitinglist
@@ -47,29 +47,31 @@ namespace Ritmo
         }
 
         public void NextTrack(){    //Set the NextTrack as the CurrentTrack
-            if (playQueue.TrackQueueHasSongs())
+            if (playQueue.TrackQueueHasSongs())//check if there are tracks in the queue(queue has priority)
                 playQueue.CurrentTrack = playQueue.TrackQueue.Dequeue();
             else
             {
                 try
                 {
-                    if (playQueue.WaitingListToQueueTrack == null)
+                    if (playQueue.WaitingListToQueueTrack == null)//check if the last played track has a value
                     {
+                        //play next song in the tracklist if the mode is off or trackrepeat
                         if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat)) 
                         {
                             playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.CurrentTrack).Next.Value;
                             playQueue.TrackWaitingListEnded = false;
                         }
+                        //play the same track again while mode is trackrepeat
                         if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
                             playQueue.CurrentTrack = playQueue.CurrentTrack;
                         
                     }
-                    else
+                    else//resume the tracklist at the last played track
                         playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.WaitingListToQueueTrack).Next.Value;
                 }
                 catch
                 {
-                    Console.WriteLine("There is no next track available");
+                    throw new Exception("There is no next track available");
                     //if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat)){
                     //    playQueue.CurrentTrack = playQueue.TrackWaitingList.First.Value;
                     //}
@@ -87,8 +89,11 @@ namespace Ritmo
 
         public void PreviousTrack() //Set the PreviousTrack as the CurrentTrack
         {
-                if (playQueue.TrackWaitingList.Contains(playQueue.CurrentTrack))
-                    playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.CurrentTrack).Previous.Value;
+            //check if tracklist contains the CurrentTrack
+            //(this must be checked because you can not use previous for the tracks in the queue)
+            //and check if the track is not the first track
+            if (playQueue.TrackWaitingList.Contains(playQueue.CurrentTrack) && !playQueue.CurrentTrack.Equals(playQueue.TrackWaitingList.First.Value))
+                playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.CurrentTrack).Previous.Value;
         }
 
         public void AddTrack(Track track) //Add track to the queue
@@ -98,24 +103,29 @@ namespace Ritmo
 
         public void RemoveTrackFromQueue(Track track, int index) //remove track from the queue
         {
-            int count = 0;
-            Queue<Track> helpStack = new Queue<Track>();
+            int count = 0;//count is used to find the track at the given index
+            Queue<Track> helpStack = new Queue<Track>();//queue is used as helpQueue to put the tracks in the queue temporaly.
             
             
             while(playQueue.TrackQueue.Count > 0)
             {
+                //all tracks that does not match the given index are temporally removed
                 if (count != index)
                     helpStack.Enqueue(playQueue.TrackQueue.Dequeue());
+                //given index
                 else
                 {
+                    //check if the track match with the track at this index
                     if (track.Equals(playQueue.TrackQueue.Peek()))
+                        //track is permanently deleted.
                         playQueue.TrackQueue.Dequeue();
                     else
-                        Console.WriteLine("The track doesn't macht with the given index.");
+                        throw new Exception("The track doesn't macht with the given index.");
                 }
                 count++;
             }
             
+            //restore all tracks in the queue.
             while(helpStack.Count > 0)
             {
                 playQueue.TrackQueue.Enqueue(helpStack.Dequeue());
