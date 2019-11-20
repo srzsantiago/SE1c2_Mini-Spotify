@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
+    // acceslevel enum to check what kind of user is logged in
+    public enum AccessLevel { Admin, Artist, User }
+
     class User
     {
         bool loggedin { get; set; }
