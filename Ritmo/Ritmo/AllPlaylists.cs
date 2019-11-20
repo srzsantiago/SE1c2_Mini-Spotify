@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class AllPlaylists
+    public class AllPlaylists
     {
         public List<Playlist> playlists { get; set; } // the list where all the playlists go into.
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class AllPlaylistsController
+    public class AllPlaylistsController
     {
         public AllPlaylists allplaylists { get; set; }
 
@@ -22,7 +22,14 @@ namespace Ritmo
 
         public void RemovePlaylist(Playlist playlist) // removes a playlist from the playlist list
         {
-            allplaylists.playlists.Remove(playlist);
+            if (allplaylists.playlists.Contains(playlist)) // checks if the given playlist exists.
+            {
+                allplaylists.playlists.Remove(playlist);
+            }
+            else
+            {
+                throw new Exception("This playlist does not exists.");
+            }
         }
     }
 }
