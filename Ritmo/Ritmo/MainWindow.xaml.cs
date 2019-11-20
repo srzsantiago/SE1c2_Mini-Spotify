@@ -57,7 +57,7 @@ namespace Ritmo
         //If the playQueue has played all tracks, CurrentTrack will be set to the first Track in TrackWaitingList and the audio will be paused.
         public void Track_Ended(Object sender, EventArgs e)
         {
-            playQueueController.playQueue.TrackEnded();
+            playQueueController.NextTrack();
             CurrentTrackElement.Source = playQueueController.playQueue.CurrentTrack.AudioFile;
 
             if (playQueueController.playQueue.TrackWaitingListEnded)
@@ -89,9 +89,9 @@ namespace Ritmo
             DataContext = new FollowingViewModel();
         }
 
-        private void MyPlaylists_Clicked(object sender, RoutedEventArgs e)
+        private void AllPlaylists_Clicked(object sender, RoutedEventArgs e)
         {
-            DataContext = new MyPlaylistViewModel();
+            DataContext = new AllPlaylistsViewModel();
         }
     }
 }

@@ -26,34 +26,44 @@ namespace Ritmo
             
             //remember you have to do something to remember track if it was a track from waitinglist
         }
+
         public void PlayTrack(Track track, TrackList trackList)//set the currentTrack with a track from a tracklist(playlist/album) chosen by the user and at the whole playlist will be added to the waitinglist
         {
             PlayTrack(track);
             SetTrackWatingList(trackList);
         }
+
         public void ResumeTrack()
         {
             playQueue.IsPaused= false;
 
             //???????????????????????????//EVENT
         }
+
         public void PauseTrack()
         { 
             playQueue.IsPaused = true; 
             /////////////////////////////////EVENT
         }
-        public void NextTrack() {//Set the CurrentTrack as the next track
+
+        public void NextTrack(){    //Set the NextTrack as the CurrentTrack
             if (playQueue.TrackQueueHasSongs())
                 playQueue.CurrentTrack = playQueue.TrackQueue.Dequeue();
             else
             {
                 try
                 {
-
-                    if (playQueue.WaitingListToQueueTrack == null && !playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
-                        playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.CurrentTrack).Next.Value;
-                    else if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
-                        playQueue.CurrentTrack = playQueue.CurrentTrack;
+                    if (playQueue.WaitingListToQueueTrack == null)
+                    {
+                        if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat)) 
+                        {
+                            playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.CurrentTrack).Next.Value;
+                            playQueue.TrackWaitingListEnded = false;
+                        }
+                        if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
+                            playQueue.CurrentTrack = playQueue.CurrentTrack;
+                        
+                    }
                     else
                         playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.WaitingListToQueueTrack).Next.Value;
                 }
@@ -73,15 +83,18 @@ namespace Ritmo
             }
             
         }
-        public void PreviousTrack() //Set the CurrentTrack as the previous track
+
+        public void PreviousTrack() //Set the PreviousTrack as the CurrentTrack
         {
                 if (playQueue.TrackWaitingList.Contains(playQueue.CurrentTrack) && !playQueue.CurrentTrack.Equals(playQueue.TrackWaitingList.Last.Value))
                     playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.CurrentTrack).Previous.Value;
         }
+
         public void AddTrack(Track track) //Add track to the queue
         {
             playQueue.TrackQueue.Enqueue(track);
         }
+
         public void RemoveTrackFromQueue(Track track, int index) //remove track from the queue
         {
             int count = 0;
@@ -112,6 +125,7 @@ namespace Ritmo
         {
             playQueue.TrackWaitingList.Remove(track);     
         }
+
         public void SetTrackWatingList(TrackList trackList) //Set the waitingList with a tracklist(playlist/album)
         {
             playQueue.TrackWaitingList = trackList.Tracks;
@@ -121,10 +135,12 @@ namespace Ritmo
         {
             playQueue.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
         } 
+
         public void RepeatTrack()//Repeat the currenttrack while its active. 
         {
             playQueue.RepeatMode = PlayQueue.RepeatModes.TrackRepeat;
         } 
+
         public void ShuffleTrackWaitingList(TrackList trackList) {
             // werkt niet helemaal en moet volgende sprint verder
             Random rand = new Random();
@@ -157,9 +173,11 @@ namespace Ritmo
             }
             trackList.Tracks = randomtracks;
         }
+         
         public void SetVolume(double volume) {//Set the volume to a given value
             playQueue.CurrentVolume = volume;
         }
+
         public void SetMute()  //Turn the Mutemode on en off.
         {
             playQueue.IsMute = !playQueue.IsMute;
