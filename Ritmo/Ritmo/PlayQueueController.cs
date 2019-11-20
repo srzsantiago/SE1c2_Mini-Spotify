@@ -86,7 +86,7 @@ namespace Ritmo
 
         public void PreviousTrack() //Set the PreviousTrack as the CurrentTrack
         {
-                if (playQueue.TrackWaitingList.Contains(playQueue.CurrentTrack) && !playQueue.CurrentTrack.Equals(playQueue.TrackWaitingList.Last.Value))
+                if (playQueue.TrackWaitingList.Contains(playQueue.CurrentTrack))
                     playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.CurrentTrack).Previous.Value;
         }
 
