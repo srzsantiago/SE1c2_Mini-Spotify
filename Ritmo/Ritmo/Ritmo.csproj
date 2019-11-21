@@ -63,9 +63,6 @@
     <Compile Include="Person.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="PlayListController.cs" />
-    <Compile Include="PlayListWindow.xaml.cs">
-      <DependentUpon>PlayListWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PlayQueueController.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="TrackList.cs" />
@@ -106,10 +103,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PlayListWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\CategoriesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

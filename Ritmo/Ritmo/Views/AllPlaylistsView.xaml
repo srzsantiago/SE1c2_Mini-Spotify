@@ -4,31 +4,46 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ritmo.Views"
+             
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
     <Grid Background="GhostWhite">
         <Grid Background="LightSlateGray" Height="48" VerticalAlignment="Top">
             <Label HorizontalAlignment="Left" Width="172" Content="My Playlists" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="24" Height="44" VerticalAlignment="Top"/>
         </Grid>
+
+
         <Grid Background="GhostWhite" Margin="0,48,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MaxWidth="50" Width="50*"/>
-                <ColumnDefinition Width="325*"/>
-                <ColumnDefinition Width="125*"/>
-                <ColumnDefinition Width="125*"/>
+                <ColumnDefinition Width="395*"/>
+                <ColumnDefinition Width="173*"/>
+                <ColumnDefinition Width="182*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="2"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
             <Label Grid.Column="1" Content="NAME" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Width="327" />
-            <Label Grid.Column="1" Content="DURATION" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Width="101" Grid.ColumnSpan="2" Margin="406,0,0,0" />
+            <Label Grid.Column="2" Content="DURATION" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Width="101" />
             <Label Grid.Column="3" Content="CREATION DATE" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Width="101" />
             <Border BorderBrush="Black" BorderThickness="1" Height="2" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="4" MinWidth="500"/>
-            <ScrollBar Grid.Column="3" HorizontalAlignment="Left" Margin="146,0,0,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.529,0.531" Height="370"/>
-        </Grid>
-    </Grid>
+            <ScrollBar Grid.Column="3" HorizontalAlignment="Left" Margin="165,0,0,0" Grid.Row="2" RenderTransformOrigin="0.529,0.531" Grid.RowSpan="2"/>
 
+            <StackPanel Name="NameColumn" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"></StackPanel>
+
+            <StackPanel Name="DurationColumn" Grid.Row="2" Grid.Column="2"></StackPanel>
+
+            <StackPanel Name="CreationDateColumn" Grid.Row="2" Grid.Column="3"></StackPanel>
+
+
+
+        </Grid>
+
+    </Grid>
+    
 </UserControl>
