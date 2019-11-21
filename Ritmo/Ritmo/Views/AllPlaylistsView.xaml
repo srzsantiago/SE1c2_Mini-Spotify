@@ -39,9 +39,6 @@
             <StackPanel Name="DurationColumn" Grid.Row="2" Grid.Column="2"></StackPanel>
 
             <StackPanel Name="CreationDateColumn" Grid.Row="2" Grid.Column="3"></StackPanel>
-
-
-
         </Grid>
 
     </Grid>
