@@ -12,7 +12,21 @@ namespace Ritmo
 
         public PlayQueueController()//Constructor that initializate a new playQueue and link this to the playqueuecontroller
         {
-            this.playQueue = new PlayQueue(); 
+            this.playQueue = new PlayQueue();
+
+            this.TestMethode();
+            
+        }
+
+        private void TestMethode()
+        {
+            playQueue.CurrentTrack = new Track("Ritmo");
+            this.AddTrack(new Track("Blanco"));
+            this.AddTrack(new Track("Contra la pared"));
+            TrackList testlist = new Playlist("TestPlaylist");
+            testlist.Tracks.AddLast(new Track("Con Calma"));
+            testlist.Tracks.AddLast(new Track("Despacito"));
+            this.SetTrackWatingList(testlist);
         }
 
         public void PlayTrack(Track track)//Set the currentTrack with a single track chosen by the user

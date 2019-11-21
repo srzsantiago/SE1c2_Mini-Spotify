@@ -8,6 +8,12 @@ namespace Ritmo
 {
     public class Track
     {
+        public Track(){}
+        public Track(string name)
+        {
+            Name = name;
+        }
+
         public string Name { get; set; }
         public Uri AudioFile { get; set; }
     }
