@@ -7,6 +7,8 @@ namespace Ritmo
     {
         public string Name { get; set; }
         public LinkedList<Track> Tracks { get; set; }
+
+
         
 
         public TrackList(string name)
@@ -18,24 +20,23 @@ namespace Ritmo
         public void SortTrackList(LinkedList<Track> tracks, string sortOption, bool isAscending)
         {
             var propertyInfo = typeof(Track).GetProperty(sortOption);
-            //var orderValues = tracks.OrderBy(x => propertyInfo.GetValue(x, null));
-
             var ordered = isAscending ? tracks.OrderBy(x => propertyInfo.GetValue(x, null)) : tracks.OrderByDescending(x => propertyInfo.GetValue(x, null));
-            this.Tracks = new LinkedList<Track>(ordered.ToList());
+            LinkedList<Track> transition = new LinkedList<Track>(ordered.ToList());
+            this.Tracks = transition;
+            
         }
 
         // testing the SortTrackList
 
         public void TestSortTrackList()
         {
-            Track track1 = new Track("track1", "santiago", 100);
-            Track track2 = new Track("track2", "Tristan", 120);
-            Track track3 = new Track("track3", "A", 1000);
-            Track track4 = new Track("ABC", "B", 20000);
+            Track track1 = new Track("B", "santiago", 100);
+            Track track2 = new Track("X", "Tristan", 120);
+            Track track3 = new Track("F", "A", 1000);
+            Track track4 = new Track("A", "B", 20000);
             Track track5 = new Track("Z", "F", 1);
 
             PlaylistController tracklist = new PlaylistController("tracklist1");
-            
 
             tracklist.AddTrack(track1);
             tracklist.AddTrack(track2);
@@ -43,12 +44,29 @@ namespace Ritmo
             tracklist.AddTrack(track4);
             tracklist.AddTrack(track5);
 
-            SortTrackList(tracklist.Playlist.Tracks, "Name", true);
+            System.Console.WriteLine("------------- de playlist voor het sorteren -------------");
 
             foreach (var item in tracklist.Playlist.Tracks)
             {
-                System.Console.WriteLine(item);
+                System.Console.WriteLine(item.Name);
+            }
+
+            SortTrackList(tracklist.Playlist.Tracks, "Name", true);
+
+            System.Console.WriteLine("------------- de playlist na het sorteren -------------");
+            foreach (var item in tracklist.Playlist.Tracks)
+            {
+                System.Console.WriteLine(item.Name);
             }
         }
+        //static void Main(string[] args)
+        //{
+        //    TrackList t1 = new Playlist("hallo");
+        //    Playlist p1 = new Playlist("ddd");
+        //    t1.TestSortTrackList();
+        //    p1.TestSortTrackList();
+            
+        //}
     }
-}
+    
+    }
