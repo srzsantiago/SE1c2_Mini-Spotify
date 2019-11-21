@@ -72,10 +72,21 @@ namespace Ritmo.UnitTests
         {
             //Arrange
             PlayQueueController playQueueController = new PlayQueueController();
+            Track track = new Track();
+            Track track1 = new Track();
+            Playlist playlistnew = new Playlist("New");
+            //Act
+            playlistnew.Tracks.AddLast(track);
+            playlistnew.Tracks.AddLast(track1);
+            playQueueController.SetTrackWatingList(playlistnew);
+            playQueueController.PlayTrack(track);
+            var result = playQueueController.playQueue.TrackWaitingList.Find(playQueueController.playQueue.CurrentTrack).Next.Value;
             playQueueController.NextTrack();
+            //Assert
+            Assert.AreEqual(result, track1);
         }
 
-        /*//PreviousTrack() ->  Set the PreviousTrack as the CurrentTrack, success scenario, returns void.
+        //PreviousTrack() ->  Set the PreviousTrack as the CurrentTrack, success scenario, returns void.
         [TestMethod]
         public void PreviousTrack_SuccessScenario()
         {
@@ -83,14 +94,18 @@ namespace Ritmo.UnitTests
             PlayQueueController playQueueController = new PlayQueueController();
             Track track = new Track();
             Track track1 = new Track();
+            Playlist playlistnew = new Playlist("New");
             //Act
-            playQueueController.AddTrack(track);
-            playQueueController.AddTrack(track1);
+            playlistnew.Tracks.AddLast(track);
+            playlistnew.Tracks.AddLast(track1);
+            playQueueController.SetTrackWatingList(playlistnew);
+            playQueueController.PlayTrack(track);
+            playQueueController.PlayTrack(track1);
             var result = playQueueController.playQueue.TrackWaitingList.Find(playQueueController.playQueue.CurrentTrack).Previous.Value;
             playQueueController.PreviousTrack();
             //Assert
             Assert.AreEqual(result, track);
-        }*/
+        }
 
         //Method: AddTrack(Track track) -> Add given track to queue, success scenario, returns void.
         [TestMethod]
@@ -113,9 +128,17 @@ namespace Ritmo.UnitTests
             //Arrange
             PlayQueueController playQueueController = new PlayQueueController();
             Track track = new Track();
+            bool result;
             //Act
-            playQueueController.RemoveTrackFromQueue(track, 1);
-            var result = playQueueController.playQueue.TrackQueue.Contains(track);
+            playQueueController.playQueue.TrackQueue.Enqueue(track);
+            if (playQueueController.playQueue.TrackQueue.Count > 0)
+            {
+                playQueueController.RemoveTrackFromQueue(track, 0);
+                result = playQueueController.playQueue.TrackQueue.Contains(track);
+            } else
+            {
+                result = true;
+            }
             //Assert
             Assert.AreEqual(result, false);
         }
