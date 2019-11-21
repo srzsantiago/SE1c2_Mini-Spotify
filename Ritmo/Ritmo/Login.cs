@@ -12,16 +12,41 @@ namespace Ritmo
         public bool loggedin = false;
         AccessLevel access { get; set; }
 
-        // moet uit db gehaald worden 
-        public string email = "gebruiker1@email.com";
+        // Hard-coded credentials, uncomment code in 'Login' to use database credentials. 
+        public string email = "gebruiker1@mail.com";
         public string password = "gebruiker1";
         public AccessLevel accessdb = AccessLevel.admin;
 
         // login function
         public Login(string email, string password)
         {
-            if(this.email == email)
+            /* SqlCommand command;
+             * SqlDataReader dataReader;
+             * String sql,Output = "";
+             * 
+             * GET EMAILADRESSES FROM DATABASE
+             * sql = "SELECT mail FROM users WHERE mail = email";
+             * command = new SqlCommand (sql, conn); // conn contains the connection with the database. 
+             * dataReader = command.ExecuteReader();
+             * 
+             * while (dataReader.Read()){
+             *  Output = Output + dataReader.GetValue(0)
+             * }
+             */
+
+            // if(Output == email)
+            if (this.email == email)
             {
+                /* sql = "SELECT password FROM users WHERE mail = email";
+                 * command = new SqlCommand (sql, conn); // conn contains the connection with the database. 
+                 * dataReader = command.ExecuteReader();
+                 * 
+                 * while (dataReader.Read()){
+                 *  Output = Output + dataReader.GetValue(0)
+                 * }
+                 */
+
+                // if (output != password)
                 if (this.password != password)
                 {
                     loggedin = false;
@@ -30,6 +55,16 @@ namespace Ritmo
                 {
                     this.email = email;
                     this.password = password;
+                    /* sql = "SELECT access FROM users WHERE mail = email";
+                    * command = new SqlCommand (sql, conn); // conn contains the connection with the database. 
+                    * dataReader = command.ExecuteReader();
+                    * 
+                    * while (dataReader.Read()){
+                    *  Output = Output + dataReader.GetValue(0)
+                    * }
+                    */
+
+                    //this.access = output;
                     this.access = accessdb;
                     loggedin = true;
                     // create new user with the loggedin bool and the access enum value
