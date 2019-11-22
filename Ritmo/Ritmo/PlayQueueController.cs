@@ -8,16 +8,16 @@ namespace Ritmo
 {
     public class PlayQueueController
     {
-        public PlayQueue playQueue { get; set; }
+        public PlayQueue PQ { get; set; }
 
         public PlayQueueController()//Constructor that initializate a new playQueue and link this to the playqueuecontroller
         {
-            this.playQueue = new PlayQueue();            
+            PQ = new PlayQueue();            
         }
 
         private void TestMethode()
         {
-            playQueue.CurrentTrack = new Track("Ritmo", "Jbalvin", 80);
+            PQ.CurrentTrack = new Track("Ritmo", "Jbalvin", 80);
             this.AddTrack(new Track("Blanco", "Jbalvin", 60));
             this.AddTrack(new Track("Contra la pared", "Jbalvin", 120));
             TrackList testlist = new Playlist("TestPlaylist");
@@ -28,14 +28,12 @@ namespace Ritmo
 
         public void PlayTrack(Track track)//Set the currentTrack with a single track chosen by the user
         {
-            if (playQueue.TrackWaitingList.Contains(playQueue.CurrentTrack)) //check if the tracklist contains the track
+            if (PQ.TrackWaitingList.Contains(PQ.CurrentTrack)) //check if the tracklist contains the track
             {
-                playQueue.WaitingListToQueueTrack = playQueue.CurrentTrack;//remember the track so it can be use for the method next
+                PQ.WaitingListToQueueTrack = PQ.CurrentTrack;//remember the track so it can be use for the method next
             }
-            playQueue.CurrentTrack = track;
-            playQueue.WaitingListToQueueTrack = null;
-
-            
+            PQ.CurrentTrack = track;
+            PQ.WaitingListToQueueTrack = null;
         }
 
         public void PlayTrack(Track track, TrackList trackList)//set the currentTrack with a track from a tracklist(playlist/album) chosen by the user and at the whole playlist will be added to the waitinglist
@@ -46,52 +44,52 @@ namespace Ritmo
 
         public void ResumeTrack()
         {
-            playQueue.IsPaused= false;
+            PQ.IsPaused= false;
 
             //???????????????????????????//EVENT
         }
 
         public void PauseTrack()
         { 
-            playQueue.IsPaused = true; 
+            PQ.IsPaused = true; 
             /////////////////////////////////EVENT
         }
 
         public void NextTrack(){    //Set the NextTrack as the CurrentTrack
-            if (playQueue.TrackQueueHasSongs())//check if there are tracks in the queue(queue has priority)
-                playQueue.CurrentTrack = playQueue.TrackQueue.Dequeue();
+            if (PQ.TrackQueueHasSongs())//check if there are tracks in the queue(queue has priority)
+                PQ.CurrentTrack = PQ.TrackQueue.Dequeue();
             else
             {
                 try
                 {
-                    if (playQueue.WaitingListToQueueTrack == null)//check if the last played track has a value
+                    if (PQ.WaitingListToQueueTrack == null)//check if the last played track has a value
                     {
                         //play next song in the tracklist if the mode is off or trackrepeat
-                        if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat)) 
+                        if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat)) 
                         {
-                            playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.CurrentTrack).Next.Value;
-                            playQueue.TrackWaitingListEnded = false;
+                            PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.CurrentTrack).Next.Value;
+                            PQ.TrackWaitingListEnded = false;
                         }
                         //play the same track again while mode is trackrepeat
-                        if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
-                            playQueue.CurrentTrack = playQueue.CurrentTrack;
+                        if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
+                            PQ.CurrentTrack = PQ.CurrentTrack;
                         
                     }
                     else//resume the tracklist at the last played track
-                        playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.WaitingListToQueueTrack).Next.Value;
+                        PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Next.Value;
                 }
                 catch
                 {
                     //throw new Exception("There is no next track available");
-                    if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
+                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
                     {
-                        playQueue.CurrentTrack = playQueue.TrackWaitingList.First.Value;
+                        PQ.CurrentTrack = PQ.TrackWaitingList.First.Value;
                     }
-                    if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.Off))
+                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.Off))
                     {
-                        playQueue.TrackWaitingListEnded = true;
-                        playQueue.IsPaused = true;
-                        playQueue.CurrentTrack = playQueue.TrackWaitingList.First.Value;
+                        PQ.TrackWaitingListEnded = true;
+                        PQ.IsPaused = true;
+                        PQ.CurrentTrack = PQ.TrackWaitingList.First.Value;
                     }
                 }
 
@@ -104,13 +102,15 @@ namespace Ritmo
             //check if tracklist contains the CurrentTrack
             //(this must be checked because you can not use previous for the tracks in the queue)
             //and check if the track is not the first track
-            if (playQueue.TrackWaitingList.Contains(playQueue.CurrentTrack) && !playQueue.CurrentTrack.Equals(playQueue.TrackWaitingList.First.Value))
-                playQueue.CurrentTrack = playQueue.TrackWaitingList.Find(playQueue.CurrentTrack).Previous.Value;
+            if (PQ.TrackWaitingList.Contains(PQ.CurrentTrack) && !PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First.Value))
+                PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.CurrentTrack).Previous.Value;
+            else if (PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First()))
+                PQ.CurrentTrack = PQ.TrackWaitingList.Last();
         }
 
         public void AddTrack(Track track) //Add track to the queue
         {
-            playQueue.TrackQueue.Enqueue(track);
+            PQ.TrackQueue.Enqueue(track);
         }
 
         public void RemoveTrackFromQueue(Track track, int index) //remove track from the queue
@@ -119,18 +119,18 @@ namespace Ritmo
             Queue<Track> helpStack = new Queue<Track>();//queue is used as helpQueue to put the tracks in the queue temporaly.
             
             
-            while(playQueue.TrackQueue.Count > 0)
+            while(PQ.TrackQueue.Count > 0)
             {
                 //all tracks that does not match the given index are temporally removed
                 if (count != index)
-                    helpStack.Enqueue(playQueue.TrackQueue.Dequeue());
+                    helpStack.Enqueue(PQ.TrackQueue.Dequeue());
                 //given index
                 else
                 {
                     //check if the track match with the track at this index
-                    if (track.Equals(playQueue.TrackQueue.Peek()))
+                    if (track.Equals(PQ.TrackQueue.Peek()))
                         //track is permanently deleted.
-                        playQueue.TrackQueue.Dequeue();
+                        PQ.TrackQueue.Dequeue();
                     else
                         throw new Exception("The track doesn't macht with the given index.");
                 }
@@ -140,29 +140,29 @@ namespace Ritmo
             //restore all tracks in the queue.
             while(helpStack.Count > 0)
             {
-                playQueue.TrackQueue.Enqueue(helpStack.Dequeue());
+                PQ.TrackQueue.Enqueue(helpStack.Dequeue());
             }
         }
 
 
         public void RemoveTrackFromWaitingList(Track track)//Remove track from the waitinglist(Copy of a tracklist)
         {
-            playQueue.TrackWaitingList.Remove(track);     
+            PQ.TrackWaitingList.Remove(track);     
         }
 
         public void SetTrackWatingList(TrackList trackList) //Set the waitingList with a tracklist(playlist/album)
         {
-            playQueue.TrackWaitingList = trackList.Tracks;
+            PQ.TrackWaitingList = trackList.Tracks;
         }
         
         public void RepeatTrackWaitingList()//Repeat the whole waitingList (the queue can't be repeated)
         {
-            playQueue.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
+            PQ.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
         } 
 
         public void RepeatTrack()//Repeat the currenttrack while its active. 
         {
-            playQueue.RepeatMode = PlayQueue.RepeatModes.TrackRepeat;
+            PQ.RepeatMode = PlayQueue.RepeatModes.TrackRepeat;
         } 
 
         public void ShuffleTrackWaitingList(TrackList trackList) {
@@ -199,12 +199,12 @@ namespace Ritmo
         }
          
         public void SetVolume(double volume) {//Set the volume to a given value
-            playQueue.CurrentVolume = volume;
+            PQ.CurrentVolume = volume;
         }
 
         public void SetMute()  //Turn the Mutemode on en off.
         {
-            playQueue.IsMute = !playQueue.IsMute;
+            PQ.IsMute = !PQ.IsMute;
         }
     }
 }

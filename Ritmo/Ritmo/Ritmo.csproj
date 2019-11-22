@@ -111,6 +111,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="StyleResources\MediaButtonsStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="StyleResources\ButtonStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -172,6 +176,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="ImageResources\playbutton.png" />
+    <Resource Include="ImageResources\nexttrackbutton.png" />
+    <Resource Include="ImageResources\prevtrackbutton.png" />
+    <Resource Include="ImageResources\pausebutton.png" />
     <Content Include="TestFiles\Powerup1.wav" />
     <Content Include="TestFiles\Powerup2.wav" />
     <Content Include="TestFiles\RingtoneRoundabout.mp3" />
