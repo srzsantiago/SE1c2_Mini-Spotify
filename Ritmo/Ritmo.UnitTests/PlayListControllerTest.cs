@@ -10,7 +10,7 @@ namespace Ritmo.UnitTests
     {
         //Method: AddTrack(Track track) - Add track to playlist, success scenario, returns true.
         [TestMethod]
-        public void Add_SuccessScenario_ReturnsTrue()
+        public void AddTrack_SuccessScenario_ReturnsTrue()
         {
             //Arrange
             bool result = false;
@@ -26,7 +26,7 @@ namespace Ritmo.UnitTests
         //Method: AddTrack(Track track) - Add track to playlist twice, returns exception.
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void Add_TrackALreadyExists_ReturnsException()
+        public void AddTrack_TrackALreadyExists_ReturnsException()
         {
             //Arrange
             Track track = new Track();
@@ -38,7 +38,7 @@ namespace Ritmo.UnitTests
 
         //Method: RemoveTrack(Track track) -  Remove track from playlist, success scenario, returns false.
         [TestMethod]
-        public void Remove_SuccessScenario_ReturnsFalse()
+        public void RemoveTrack_SuccessScenario_ReturnsFalse()
         {
             //Arrange
             bool result = false;
@@ -55,7 +55,7 @@ namespace Ritmo.UnitTests
         //Method: RemoveTrack(Track track) - Remove track from playlist, track does not exists, returns exception.
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void Remove_TrackDoesNotExists_ReturnsException()
+        public void RemoveTrack_TrackDoesNotExists_ReturnsException()
         {
             //Arrange
             Track track = new Track();

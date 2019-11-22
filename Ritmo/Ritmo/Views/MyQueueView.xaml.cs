@@ -28,7 +28,7 @@ namespace Ritmo.Views
 
 
             
-            if (playQueueController.playQueue.CurrentTrack != null)
+            if (playQueueController.PQ.CurrentTrack != null)
             {
                 Grid CurrentTrackPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
                 Button CurrentTrackBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = CurrentTrackPanel };
@@ -65,9 +65,9 @@ namespace Ritmo.Views
 
 
 
-            if (playQueueController.playQueue.TrackQueue.Count > 0)
+            if (playQueueController.PQ.TrackQueue.Count > 0)
             {
-                foreach (var item in playQueueController.playQueue.TrackQueue)
+                foreach (var item in playQueueController.PQ.TrackQueue)
                 {
                     Grid QueueItemPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
                     Button QueueItemBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = QueueItemPanel };
@@ -102,9 +102,9 @@ namespace Ritmo.Views
                     NextInQueueStackPanel.Children.Add(QueueItemBar);
                 }
             }
-            if (playQueueController.playQueue.TrackWaitingList.Count > 0)
+            if (playQueueController.PQ.TrackWaitingList.Count > 0)
             {
-                foreach (var item in playQueueController.playQueue.TrackWaitingList)
+                foreach (var item in playQueueController.PQ.TrackWaitingList)
                 {
                     Grid waitingListItemPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
                     Button waitingListItemBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = waitingListItemPanel };

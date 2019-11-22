@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Ritmo
@@ -8,9 +9,6 @@ namespace Ritmo
         public string Name { get; set; }
         public LinkedList<Track> Tracks { get; set; }
 
-
-        
-
         public TrackList(string name)
         {
             Name = name;
@@ -19,25 +17,33 @@ namespace Ritmo
 
         public void SortTrackList(LinkedList<Track> tracks, string sortOption, bool isAscending)
         {
+            // Track has 3 properties: Name, Artist and Duration. you can give one of to the method as a string and it will sort based on that input.
             var propertyInfo = typeof(Track).GetProperty(sortOption);
             var ordered = isAscending ? tracks.OrderBy(x => propertyInfo.GetValue(x, null)) : tracks.OrderByDescending(x => propertyInfo.GetValue(x, null));
-            LinkedList<Track> transition = new LinkedList<Track>(ordered.ToList());
-            this.Tracks = transition;
             
+            // goes through the ordered linkedlist, removes the items that were in the old one and adds the items from the ordered list named ordered
+            foreach (var item in ordered)
+            {
+                tracks.AddLast(item);
+                tracks.RemoveFirst();
+            }          
         }
 
         // testing the SortTrackList
-
         public void TestSortTrackList()
         {
+
+            // making tracks with a name, artist and duration in seconds
             Track track1 = new Track("B", "santiago", 100);
             Track track2 = new Track("X", "Tristan", 120);
             Track track3 = new Track("F", "A", 1000);
             Track track4 = new Track("A", "B", 20000);
             Track track5 = new Track("Z", "F", 1);
 
+            // making the tracklist (goes from playlistcontroller to playlist to tracklist)
             PlaylistController tracklist = new PlaylistController("tracklist1");
 
+            // adds the tracks to the tracklist 
             tracklist.AddTrack(track1);
             tracklist.AddTrack(track2);
             tracklist.AddTrack(track3);
@@ -46,26 +52,45 @@ namespace Ritmo
 
             System.Console.WriteLine("------------- de playlist voor het sorteren -------------");
 
+            // goes through the playlist with tracks before its sorted
             foreach (var item in tracklist.Playlist.Tracks)
             {
                 System.Console.WriteLine(item.Name);
+                
             }
 
+            // calls the method to sort the tracklist
             SortTrackList(tracklist.Playlist.Tracks, "Name", true);
 
             System.Console.WriteLine("------------- de playlist na het sorteren -------------");
+
+            // goes through the playlist with tracks after its sorted
             foreach (var item in tracklist.Playlist.Tracks)
             {
                 System.Console.WriteLine(item.Name);
             }
+
+            System.Console.WriteLine("------------- de playlist na het sorteren van duration -------------");
+
+            SortTrackList(tracklist.Playlist.Tracks, "Duration", true);
+
+            // goes through the playlist with tracks after it sorted the duration. to test if it also works with another property
+            foreach (var item in tracklist.Playlist.Tracks)
+            {
+                System.Console.WriteLine(item.Duration);
+            }
+
+
         }
+
+        // test main
         //static void Main(string[] args)
         //{
         //    TrackList t1 = new Playlist("hallo");
-        //    Playlist p1 = new Playlist("ddd");
+
         //    t1.TestSortTrackList();
-        //    p1.TestSortTrackList();
-            
+
+
         //}
     }
     

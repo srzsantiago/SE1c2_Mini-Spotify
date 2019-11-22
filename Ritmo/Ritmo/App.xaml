@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:Ritmo"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="StyleResources/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="StyleResources/MediaButtonsStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
