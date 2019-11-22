@@ -142,5 +142,71 @@ namespace Ritmo.UnitTests
             //Assert
             Assert.AreEqual(result, false);
         }
+
+        [TestMethod]
+        public void RemoveTRackFromWaitingList_SuccessScenario()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+            Track track = new Track();
+            bool result;
+            //Act
+            playQueueController.PQ.TrackWaitingList.AddLast(track);
+            playQueueController.PQ.TrackWaitingList.Remove(track);
+            result = playQueueController.PQ.TrackWaitingList.Contains(track) ;
+            //Assert
+            Assert.AreEqual(result, false);
+        }
+
+        [TestMethod]
+        public void RepeatTrackWaitingList_SuccessScenario()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+            //Act
+            playQueueController.RepeatTrackWaitingList();
+            var result = PlayQueue.RepeatModes.TrackListRepeat;
+            //Assert
+            Assert.AreEqual(playQueueController.PQ.RepeatMode, result);
+        }
+
+        [TestMethod]
+        public void RepeatTrack_SuccessScenario()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+            //Act
+            playQueueController.RepeatTrack();
+            var result = PlayQueue.RepeatModes.TrackRepeat;
+            //Assert
+            Assert.AreEqual(playQueueController.PQ.RepeatMode, result);
+        }
+
+        [TestMethod]
+        public void SetVolume_SuccessScenario_Returns30()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+            double result;
+            //Act
+            playQueueController.PQ.CurrentVolume = 20;
+            playQueueController.SetVolume(30);
+            result = playQueueController.PQ.CurrentVolume;
+            //Assert
+            Assert.AreEqual(result, 30);
+        }
+
+        [TestMethod]
+        public void SetMute_SuccessScenario()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+            bool result;
+            //Act
+            playQueueController.SetMute();
+            result = playQueueController.PQ.IsMute;
+            //Assert
+            Assert.AreEqual(result, true);
+        }
     }
 }
