@@ -27,17 +27,26 @@ namespace loginscherm
 
         private void Login(object sender, RoutedEventArgs e)
         {
-            string Filled_password = filled_password.Text;
+            string Filled_password = filled_password.Password;
             string Filled_email = filled_email.Text;
             Ritmo.Login loginAttemp = new Ritmo.Login(Filled_email, Filled_password);
-            if(loginAttemp.loggedin == true)
-            {
-                succesmessage.Content = "Succes";
+            SolidColorBrush brush = new SolidColorBrush();
+            brush.Color = Colors.LightYellow;
+            successblock.Fill = brush;
+            if (loginAttemp.loggedin == true)
+            {              
+                succeslabel.Content = "Success";
             }
             else
             {
-                succesmessage.Content = "failed";
+                succeslabel.Content = "Failed, incorrect email or password";
             }
         }
+
+        private void Newacc_link_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
     }
 }

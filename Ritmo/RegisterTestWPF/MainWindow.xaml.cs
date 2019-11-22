@@ -40,7 +40,16 @@ namespace RegisterTestWPF
 
         private void Createbutton_Click(object sender, RoutedEventArgs e)
         {
+            string filledName = nameField.Text;
+            string filledPassword = passwordField.Password;
+            string filledConfirmpw = confirmpwField.Password;
+            string filledEmail = emailField.Text;
 
+            Ritmo.Register register = new Ritmo.Register(filledName, filledEmail, filledPassword, filledConfirmpw);
+            SolidColorBrush brush = new SolidColorBrush();
+            brush.Color = Colors.LightYellow;
+            successblock.Fill = brush;
+            succeslabel.Content = register.ToString();
         }
     }
 }

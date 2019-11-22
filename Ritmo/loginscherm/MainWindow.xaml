@@ -6,13 +6,25 @@
         xmlns:local="clr-namespace:loginscherm"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="363,343,0,0" VerticalAlignment="Top" Width="75" Click="Login"/>
-        <TextBox x:Name="filled_password" HorizontalAlignment="Left" Height="23" Margin="410,278,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="filled_email" HorizontalAlignment="Left" Height="23" Margin="410,227,0,0" TextWrapping="Wrap" Text="Email@example.com" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Email" HorizontalAlignment="Left" Margin="363,223,0,0" VerticalAlignment="Top"/>
-        <Label Content="Password" HorizontalAlignment="Left" Margin="347,278,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="succesmessage" Content="" HorizontalAlignment="Left" Margin="64,68,0,0" VerticalAlignment="Top"/>
+    <Grid Background="LightBlue">
+        <Canvas HorizontalAlignment="Left" Height="358" Margin="248,26,0,0" VerticalAlignment="Top" Width="311" Background="White">
+            <Image Height="77" Canvas.Left="116" Canvas.Top="27" Width="79" Source="https://www.childhood.org.au/app/uploads/2017/07/ACF-logo-placeholder.png"/>
+            <Label Content="Password" Canvas.Left="32" Canvas.Top="160"/>
+            <Label Content="Email" Canvas.Left="32" Canvas.Top="129"/>
+            <PasswordBox x:Name="filled_password" BorderBrush="Transparent" Height="24" Canvas.Left="116" Canvas.Top="164" Width="159" Background="#E6E5E5"/>
+            <TextBox x:Name="filled_email" BorderBrush="Transparent" Height="24" Canvas.Left="116" TextWrapping="Wrap" Text="Email@example.com" Canvas.Top="131" Width="159" Background="#E6E5E5"/>
+            <Button x:Name="artistbutton" Content="SIGN IN" Canvas.Left="116" Canvas.Top="216" Width="79" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Click="Login" Height="25"/>
+            <Rectangle x:Name="successblock" Fill="White" Height="22" Width="311"/>
+            <Label Name="succeslabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="-4"/>
+            <TextBlock Canvas.Left="93" TextWrapping="Wrap" Canvas.Top="262" Width="123">
+                <Hyperlink x:Name="Forgot_link" Foreground="Gray">Forgot your password?</Hyperlink>
+            </TextBlock>
+            <Label Content="OR" Foreground="Gray" Canvas.Left="142" Canvas.Top="278"/>
+            <TextBlock Canvas.Left="105" TextWrapping="Wrap" Canvas.Top="304" Width="99">
+                <Hyperlink x:Name="Newacc_link" Foreground="Gray" Click="Newacc_link_Click">Create an account</Hyperlink>
+            </TextBlock>
+        </Canvas>
+
 
     </Grid>
 </Window>

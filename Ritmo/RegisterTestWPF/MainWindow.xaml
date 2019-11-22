@@ -15,14 +15,17 @@
             <Label Content="Confirm password" Canvas.Left="32" Canvas.Top="214"/>
             <Label Content="Email" Canvas.Left="32" Canvas.Top="244"/>
 
-            <TextBox Height="24" Canvas.Left="155" TextWrapping="Wrap" Text="TextBox" Canvas.Top="154" Width="120" Background="#E6E5E5"/>
-            <PasswordBox Height="24" Canvas.Left="155" Canvas.Top="186" Width="120" Background="#E6E5E5"/>
-            <PasswordBox Height="22" Canvas.Left="155" Canvas.Top="218" Width="120" Background="#E6E5E5"/>
-            <TextBox Height="24" Canvas.Left="155" TextWrapping="Wrap" Text="Email@example.com" Canvas.Top="248" Width="120" Background="#E6E5E5"/>
+            <TextBox x:Name="nameField" Height="24" Canvas.Left="155" TextWrapping="Wrap" Text="TextBox" Canvas.Top="154" Width="120" Background="#E6E5E5"/>
+            <PasswordBox x:Name="passwordField" Height="24" Canvas.Left="155" Canvas.Top="186" Width="120" Background="#E6E5E5"/>
+            <PasswordBox x:Name="confirmpwField" Height="22" Canvas.Left="155" Canvas.Top="218" Width="120" Background="#E6E5E5"/>
+            <TextBox x:Name="emailField" Height="24" Canvas.Left="155" TextWrapping="Wrap" Text="Email@example.com" Canvas.Top="248" Width="120" Background="#E6E5E5"/>
             <Button x:Name="artistbutton" Content="I'M AN ARTIST" Canvas.Left="32" Canvas.Top="280" Width="243" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Click="Artistbutton_Click"/>
             <Button x:Name="cancelbutton" Content="CANCEL" Canvas.Left="32" Canvas.Top="308" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Click="Cancelbutton_Click"/>
             <Button x:Name="createbutton" Content="CREATE ACCOUNT" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Canvas.Left="158" Canvas.Top="308" Click="Createbutton_Click"/>
+            <Rectangle x:Name="successblock" Fill="White" Height="22" Width="311"/>
+            <Label Name="succeslabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="-4"/>
         </Canvas>
+
 
     </Grid>
 </Window>

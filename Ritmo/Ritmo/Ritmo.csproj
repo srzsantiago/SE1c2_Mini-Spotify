@@ -68,6 +68,7 @@
       <DependentUpon>PlayListWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="PlayQueueController.cs" />
+    <Compile Include="Register.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="TrackList.cs" />
     <Compile Include="User.cs" />

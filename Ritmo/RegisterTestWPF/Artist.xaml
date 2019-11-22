@@ -11,9 +11,9 @@
             <Label Content="ARTIST" Canvas.Left="128" Canvas.Top="12"/>
             <Image Height="77" Canvas.Left="116" Canvas.Top="43" Width="79" Source="https://www.childhood.org.au/app/uploads/2017/07/ACF-logo-placeholder.png"/>
             <Label Content="Email" Canvas.Left="32" Canvas.Top="277"/>
-            <TextBox Height="24" Canvas.Left="75" TextWrapping="Wrap" Text="Email@example.com" Canvas.Top="277" Width="200" Background="#E6E5E5"/>
-            <Button x:Name="cancelbutton" Content="SEND REQUEST" Canvas.Left="32" Canvas.Top="308" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White"/>
-            <Button x:Name="createbutton" Content="CANCEL" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Canvas.Left="158" Canvas.Top="308"/>
+            <TextBox x:Name="filledmail" Height="24" Canvas.Left="75" TextWrapping="Wrap" Text="Email@example.com" Canvas.Top="277" Width="200" Background="#E6E5E5"/>
+            <Button x:Name="sendbutton" Content="SEND REQUEST" Canvas.Left="32" Canvas.Top="308" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Click="Sendbutton_Click"/>
+            <Button x:Name="cancelbutton" Content="CANCEL" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Canvas.Left="158" Canvas.Top="308" Click="Cancelbutton_Click_1"/>
             <TextBlock Canvas.Left="32" TextWrapping="Wrap" Canvas.Top="123" Height="149" Width="243"><Run Text="Hi,"/><LineBreak/><Run/><LineBreak/><Run Text="Are you an artist yourself? Or a content manager of an artist?"/><LineBreak/><Run Text="Would you like to upload your content to our platform?"/><LineBreak/><Run/><LineBreak/><Run Text="Please enter your email and send your request. "/></TextBlock>
         </Canvas>
     </Grid>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class Register
+    public class Register
     {
         /* SqlCommand command;
          * SqlDataReader dataReader;
@@ -16,6 +16,7 @@ namespace Ritmo
         private string  Email;
         private string  Password;
         private bool    Artist;
+        public string   Message;
 
         public string existingTestMail = "email@example.com"; 
 
@@ -41,16 +42,16 @@ namespace Ritmo
                     Email       = email;
                     Password    = password;
                     Artist      = false;
-                    return "Your account has been successfully created";
+                    Message = "Your account has been successfully created";
                 }
                 else
                 {
-                    return "This email already exists";
+                    Message = "This email already exists";
                 }
             }
             else
             {
-                return "The passwords do not match";
+                Message = "The passwords do not match";
             }
         }
 
@@ -72,7 +73,15 @@ namespace Ritmo
             {
                 Email   = email;
                 Artist  = true;
+            } else
+            {
+                Message = "This email already exists";
             }
+        }
+
+        public override string ToString()
+        {
+            return Message;
         }
     }
 }
