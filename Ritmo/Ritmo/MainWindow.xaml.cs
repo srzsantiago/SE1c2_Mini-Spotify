@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using Ritmo.ViewModels;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace Ritmo
 {
@@ -129,5 +132,20 @@ namespace Ritmo
         }
         #endregion
 
+
+        // test tristan volume
+
+        [DllImport("user32.dll")]
+        static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
+       
+        private void VolumeUp_Click(object sender, RoutedEventArgs e)
+        {
+            keybd_event((byte)Keys.VolumeUp, 0, 0, 0); // increase volume
+        }
+
+        private void VolumeDown_Click(object sender, RoutedEventArgs e)
+        {
+            keybd_event((byte)Keys.VolumeDown, 0, 0, 0); // decrease volume
+        }
     }
 }
