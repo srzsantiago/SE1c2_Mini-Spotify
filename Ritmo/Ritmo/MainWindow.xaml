@@ -77,8 +77,12 @@
         <Button x:Name="NextButton" Content="Next" HorizontalAlignment="Center" Margin="150,56,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Click="Next_Clicked"/>
         <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="100" Margin="379,10,0,0" VerticalAlignment="Top" Width="100" Grid.Column="1" Grid.Row="1"/>
         <MediaElement x:Name="CurrentTrackElement" HorizontalAlignment="Left" Height="100" Margin="506,10,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="-1.145,1.054" Grid.Column="1" Grid.Row="1"/>
-        <Button Content="+" Name="VolumeUp" Grid.Column="1" HorizontalAlignment="Left" Margin="216,95,0,0" Grid.Row="1" VerticalAlignment="Top" Width="26" Click="VolumeUp_Click"/>
-        <Button Content="-" Name="VolumeDown" Grid.Column="1" HorizontalAlignment="Left" Margin="68,95,0,0" Grid.Row="1" VerticalAlignment="Top" Width="26" Click="VolumeDown_Click"/>
+
+        <!-- Volume slider. This slider allows a Volume range between 0 and 1. -->
+        
+        <TextBlock Foreground="Black" VerticalAlignment="Center" Margin="136,113,471,1" Grid.Column="1" Grid.Row="1"  >Volume</TextBlock>
+        <Slider Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
+       Minimum="0" Maximum="1" Value="0.5" Grid.Column="1" Margin="68,95,410,17" Grid.Row="1"/>
 
 
     </Grid>

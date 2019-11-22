@@ -135,17 +135,14 @@ namespace Ritmo
 
         // test tristan volume
 
-        [DllImport("user32.dll")]
-        static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
-       
-        private void VolumeUp_Click(object sender, RoutedEventArgs e)
+        // changes volume based on slidebar, 0 is muted and 1 is the highest volume.
+        private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> args)
         {
-            keybd_event((byte)Keys.VolumeUp, 0, 0, 0); // increase volume
+            CurrentTrackElement.Volume = (double)volumeSlider.Value; // gets the slider value and puts it as volume
+            
         }
 
-        private void VolumeDown_Click(object sender, RoutedEventArgs e)
-        {
-            keybd_event((byte)Keys.VolumeDown, 0, 0, 0); // decrease volume
-        }
+
+
     }
 }
