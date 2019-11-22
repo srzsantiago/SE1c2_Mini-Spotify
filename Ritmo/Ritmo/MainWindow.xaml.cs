@@ -31,7 +31,6 @@ namespace Ritmo
             InitializeComponent();
             CurrentTrackElement.LoadedBehavior = MediaState.Manual;
             CurrentTrackElement.MediaEnded += Track_Ended;
-            PlayButton.Click += OnClickPlay;
 
             TestTrackMethod();
         }
@@ -53,23 +52,51 @@ namespace Ritmo
 
         }
 
+        public void PlayNextTrack()
+        {
+            playQueueController.NextTrack();
+            CurrentTrackElement.Source = playQueueController.playQueue.CurrentTrack.AudioFile;
+        }
 
-      
+        public void PlayPreviousTrack()
+        {
+            playQueueController.PreviousTrack();
+            CurrentTrackElement.Source = playQueueController.playQueue.CurrentTrack.AudioFile;
+        }
+
+        public void PauseTrack()
+        {
+            if (playQueueController.playQueue.TrackWaitingListEnded)
+            {
+                CurrentTrackElement.Pause();
+                return;
+            }
+        }
+
+        #region Events
 
         //Runs when the track has ended. The next track will be loaded and played.
         //If the playQueue has played all tracks, CurrentTrack will be set to the first Track in TrackWaitingList and the audio will be paused.
         public void Track_Ended(Object sender, EventArgs e)
         {
-            playQueueController.NextTrack();
-            CurrentTrackElement.Source = playQueueController.playQueue.CurrentTrack.AudioFile;
+            PlayNextTrack();
+            PauseTrack();
+        }        
 
-            if (playQueueController.playQueue.TrackWaitingListEnded)
-                CurrentTrackElement.Pause();
-        }
-
-        public void OnClickPlay(object sender, EventArgs e)
+        private void Play_Clicked(object sender, RoutedEventArgs e)
         {
             CurrentTrackElement.Play();
+        }
+
+        private void Next_Clicked(object sender, RoutedEventArgs e)
+        {
+            PlayNextTrack();
+            PauseTrack();
+        }
+
+        private void Prev_Clicked(object sender, RoutedEventArgs e)
+        {
+            PlayPreviousTrack();
         }
 
         private void Home_Clicked(object sender, RoutedEventArgs e)
@@ -100,6 +127,7 @@ namespace Ritmo
         {
             DataContext = new MyQueueViewModel();
         }
-        
+        #endregion
+
     }
 }

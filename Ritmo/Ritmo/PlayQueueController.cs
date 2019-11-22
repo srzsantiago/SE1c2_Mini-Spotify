@@ -12,10 +12,7 @@ namespace Ritmo
 
         public PlayQueueController()//Constructor that initializate a new playQueue and link this to the playqueuecontroller
         {
-            this.playQueue = new PlayQueue();
-
-            this.TestMethode();
-            
+            this.playQueue = new PlayQueue();            
         }
 
         private void TestMethode()
@@ -85,16 +82,17 @@ namespace Ritmo
                 }
                 catch
                 {
-                    throw new Exception("There is no next track available");
-                    //if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat)){
-                    //    playQueue.CurrentTrack = playQueue.TrackWaitingList.First.Value;
-                    //}
-                    //if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.Off))
-                    //{
-                    //    playQueue.TrackWaitingListEnded = true;
-                    //    playQueue.IsPaused = true;
-                    //    playQueue.CurrentTrack = playQueue.TrackWaitingList.First.Value;
-                    //}
+                    //throw new Exception("There is no next track available");
+                    if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
+                    {
+                        playQueue.CurrentTrack = playQueue.TrackWaitingList.First.Value;
+                    }
+                    if (playQueue.RepeatMode.Equals(PlayQueue.RepeatModes.Off))
+                    {
+                        playQueue.TrackWaitingListEnded = true;
+                        playQueue.IsPaused = true;
+                        playQueue.CurrentTrack = playQueue.TrackWaitingList.First.Value;
+                    }
                 }
 
             }
