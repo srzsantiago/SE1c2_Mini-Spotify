@@ -17,7 +17,7 @@ namespace Ritmo.UnitTests
             Track track = new Track();
             //Act
             playQueueController.PlayTrack(track);
-            var result = playQueueController.playQueue.CurrentTrack;
+            var result = playQueueController.PQ.CurrentTrack;
             //Assert
             Assert.AreEqual(result, track);
         }
@@ -33,7 +33,7 @@ namespace Ritmo.UnitTests
             Track track = new Track();
             //Act
             playQueueController.PlayTrack(track, new Playlist("New"));
-            var result = playQueueController.playQueue.CurrentTrack;
+            var result = playQueueController.PQ.CurrentTrack;
             //Assert
             Assert.AreEqual(result, track);
         }
@@ -44,10 +44,10 @@ namespace Ritmo.UnitTests
         {
             //Arrange
             PlayQueueController playQueueController = new PlayQueueController();
-            playQueueController.playQueue.IsPaused = true;
+            playQueueController.PQ.IsPaused = true;
             //Act
             playQueueController.ResumeTrack();
-            bool result = playQueueController.playQueue.IsPaused;
+            bool result = playQueueController.PQ.IsPaused;
             //Assert
             Assert.AreEqual(result, false);
         }
@@ -58,10 +58,10 @@ namespace Ritmo.UnitTests
         {
             //Arrange
             PlayQueueController playQueueController = new PlayQueueController();
-            playQueueController.playQueue.IsPaused = false;
+            playQueueController.PQ.IsPaused = false;
             //Act
             playQueueController.PauseTrack();
-            bool result = playQueueController.playQueue.IsPaused;
+            bool result = playQueueController.PQ.IsPaused;
             //Assert
             Assert.AreEqual(result, true);
         }
@@ -80,7 +80,7 @@ namespace Ritmo.UnitTests
             playlistnew.Tracks.AddLast(track1);
             playQueueController.SetTrackWatingList(playlistnew);
             playQueueController.PlayTrack(track);
-            var result = playQueueController.playQueue.TrackWaitingList.Find(playQueueController.playQueue.CurrentTrack).Next.Value;
+            var result = playQueueController.PQ.TrackWaitingList.Find(playQueueController.PQ.CurrentTrack).Next.Value;
             playQueueController.NextTrack();
             //Assert
             Assert.AreEqual(result, track1);
@@ -101,7 +101,7 @@ namespace Ritmo.UnitTests
             playQueueController.SetTrackWatingList(playlistnew);
             playQueueController.PlayTrack(track);
             playQueueController.PlayTrack(track1);
-            var result = playQueueController.playQueue.TrackWaitingList.Find(playQueueController.playQueue.CurrentTrack).Previous.Value;
+            var result = playQueueController.PQ.TrackWaitingList.Find(playQueueController.PQ.CurrentTrack).Previous.Value;
             playQueueController.PreviousTrack();
             //Assert
             Assert.AreEqual(result, track);
@@ -116,7 +116,7 @@ namespace Ritmo.UnitTests
             Track track = new Track();
             //Act
             playQueueController.AddTrack(track);
-            var result = playQueueController.playQueue.TrackQueue.Contains(track);
+            var result = playQueueController.PQ.TrackQueue.Contains(track);
             //Assert
             Assert.AreEqual(result, true);
         }
@@ -130,11 +130,11 @@ namespace Ritmo.UnitTests
             Track track = new Track();
             bool result;
             //Act
-            playQueueController.playQueue.TrackQueue.Enqueue(track);
-            if (playQueueController.playQueue.TrackQueue.Count > 0)
+            playQueueController.PQ.TrackQueue.Enqueue(track);
+            if (playQueueController.PQ.TrackQueue.Count > 0)
             {
                 playQueueController.RemoveTrackFromQueue(track, 0);
-                result = playQueueController.playQueue.TrackQueue.Contains(track);
+                result = playQueueController.PQ.TrackQueue.Contains(track);
             } else
             {
                 result = true;

@@ -28,7 +28,7 @@ namespace Ritmo.Views
 
 
             
-            if (playQueueController.playQueue.CurrentTrack != null)
+            if (playQueueController.PQ.CurrentTrack != null)
             {
                 Button currentTrackBar = new Button() { Height = 30 };
                 currentTrackBar.Click += OuterClick;
@@ -38,10 +38,10 @@ namespace Ritmo.Views
 
                 StackPanel panelCurrentrack = new StackPanel() { Orientation = Orientation.Horizontal };
                 panelCurrentrack.Children.Add(playCurrentButton);
-                panelCurrentrack.Children.Add(new Label() { Content = playQueueController.playQueue.CurrentTrack.Name });
-                panelCurrentrack.Children.Add(new Label() { Content = playQueueController.playQueue.CurrentTrack.Artist });
+                panelCurrentrack.Children.Add(new Label() { Content = playQueueController.PQ.CurrentTrack.Name });
+                panelCurrentrack.Children.Add(new Label() { Content = playQueueController.PQ.CurrentTrack.Artist });
                 panelCurrentrack.Children.Add(new Label() { Content = "Album"});
-                panelCurrentrack.Children.Add(new Label() { Content = playQueueController.playQueue.CurrentTrack.Duration });
+                panelCurrentrack.Children.Add(new Label() { Content = playQueueController.PQ.CurrentTrack.Duration });
 
                 currentTrackBar.Content = panelCurrentrack;
                 PlayingNowStackPanel.Children.Add(currentTrackBar);
@@ -51,9 +51,9 @@ namespace Ritmo.Views
 
 
 
-            if (playQueueController.playQueue.TrackQueue.Count > 0)
+            if (playQueueController.PQ.TrackQueue.Count > 0)
             {
-                foreach (var item in playQueueController.playQueue.TrackQueue)
+                foreach (var item in playQueueController.PQ.TrackQueue)
                 {
                     Button queueItemBar = new Button() { Height = 30 };
                     queueItemBar.Click += OuterClick;
@@ -72,9 +72,9 @@ namespace Ritmo.Views
                     NextInQueueStackPanel.Children.Add(queueItemBar);
                 }
             }
-            if (playQueueController.playQueue.TrackWaitingList.Count > 0)
+            if (playQueueController.PQ.TrackWaitingList.Count > 0)
             {
-                foreach (var item in playQueueController.playQueue.TrackWaitingList)
+                foreach (var item in playQueueController.PQ.TrackWaitingList)
                 {
                     Button waitingListItemBar = new Button() { Height = 30 };
                     waitingListItemBar.Click += OuterClick;
