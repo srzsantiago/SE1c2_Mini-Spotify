@@ -13,7 +13,7 @@ namespace Ritmo
         public PlayQueueController()//Constructor that initializate a new playQueue and link this to the playqueuecontroller
         {
             PQ = new PlayQueue();
-            //this.TestMethode();
+            this.TestMethode();
         }
 
         private void TestMethode()
