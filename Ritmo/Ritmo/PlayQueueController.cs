@@ -15,7 +15,7 @@ namespace Ritmo
             this.playQueue = new PlayQueue();
 
             this.TestMethode();
-            
+
         }
 
         private void TestMethode()
