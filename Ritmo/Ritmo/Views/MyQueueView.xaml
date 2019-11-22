@@ -25,8 +25,16 @@
                         </Style>
                     </StackPanel.Style>
                     <Label Content="Now Playing" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30"/>
-                    
-                </StackPanel>
+                    <Grid Background="Blue">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="46*"/>
+                            <ColumnDefinition Width="179*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Column1" Grid.Column="0"/>
+                        <Label Content="Column2" Grid.Column="1"/>
+                    </Grid>
+
+                    </StackPanel>
                 <StackPanel x:Name="NextInQueueStackPanel" Orientation="Vertical">
                     <StackPanel.Style>
                         <Style TargetType="StackPanel">

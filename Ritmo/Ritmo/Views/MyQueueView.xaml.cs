@@ -38,10 +38,10 @@ namespace Ritmo.Views
 
                 StackPanel panelCurrentrack = new StackPanel() { Orientation = Orientation.Horizontal };
                 panelCurrentrack.Children.Add(playCurrentButton);
-                panelCurrentrack.Children.Add(new Label() { Content = "Naam" });
-                panelCurrentrack.Children.Add(new Label() { Content = "Artist" });
-                panelCurrentrack.Children.Add(new Label() { Content = "Album" });
-                panelCurrentrack.Children.Add(new Label() { Content = "Duration" });
+                panelCurrentrack.Children.Add(new Label() { Content = playQueueController.playQueue.CurrentTrack.Name });
+                panelCurrentrack.Children.Add(new Label() { Content = playQueueController.playQueue.CurrentTrack.Artist });
+                panelCurrentrack.Children.Add(new Label() { Content = "Album"});
+                panelCurrentrack.Children.Add(new Label() { Content = playQueueController.playQueue.CurrentTrack.Duration });
 
                 currentTrackBar.Content = panelCurrentrack;
                 PlayingNowStackPanel.Children.Add(currentTrackBar);
@@ -55,14 +55,42 @@ namespace Ritmo.Views
             {
                 foreach (var item in playQueueController.playQueue.TrackQueue)
                 {
-                    NextInQueueStackPanel.Children.Add(new Label() { Content = item.Name });
+                    Button queueItemBar = new Button() { Height = 30 };
+                    queueItemBar.Click += OuterClick;
+
+                    Button playQueueItemButton = new Button() { Content = "Play" };
+                    playQueueItemButton.Click += InnerClick;
+
+                    StackPanel QueueItemPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+                    QueueItemPanel.Children.Add(playQueueItemButton);
+                    QueueItemPanel.Children.Add(new Label() { Content = item.Name });
+                    QueueItemPanel.Children.Add(new Label() { Content = item.Artist });
+                    QueueItemPanel.Children.Add(new Label() { Content = "Album" });
+                    QueueItemPanel.Children.Add(new Label() { Content = item.Duration });
+
+                    queueItemBar.Content = QueueItemPanel;
+                    NextInQueueStackPanel.Children.Add(queueItemBar);
                 }
             }
             if (playQueueController.playQueue.TrackWaitingList.Count > 0)
             {
                 foreach (var item in playQueueController.playQueue.TrackWaitingList)
                 {
-                    NextUpStackPanel.Children.Add(new Label() { Content = item.Name });
+                    Button waitingListItemBar = new Button() { Height = 30 };
+                    waitingListItemBar.Click += OuterClick;
+
+                    Button playWaitingListItemButton = new Button() { Content = "Play" };
+                    playWaitingListItemButton.Click += InnerClick;
+
+                    StackPanel waitingListItemPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+                    waitingListItemPanel.Children.Add(playWaitingListItemButton);
+                    waitingListItemPanel.Children.Add(new Label() { Content = item.Name });
+                    waitingListItemPanel.Children.Add(new Label() { Content = item.Artist });
+                    waitingListItemPanel.Children.Add(new Label() { Content = "Album" });
+                    waitingListItemPanel.Children.Add(new Label() { Content = item.Duration });
+
+                    waitingListItemBar.Content = waitingListItemPanel;
+                    NextUpStackPanel.Children.Add(waitingListItemBar);
                 }
             }
         }
