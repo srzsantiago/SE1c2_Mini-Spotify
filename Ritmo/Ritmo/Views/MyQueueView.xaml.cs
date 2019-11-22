@@ -44,10 +44,10 @@ namespace Ritmo.Views
                 CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
                 CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
 
-                Label name = new Label() { Content = "" };
-                Label artist = new Label() { Content = "" };
+                Label name = new Label() { Content = playQueueController.PQ.CurrentTrack.Name };
+                Label artist = new Label() { Content = playQueueController.PQ.CurrentTrack.Artist };
                 Label album = new Label() { Content = "Album" };
-                Label duration = new Label() { Content = "" };
+                Label duration = new Label() { Content = playQueueController.PQ.CurrentTrack.Duration };
 
                 CurrentTrackPanel.Children.Add(playCurrentTrackButton);
                 Grid.SetColumn(playCurrentTrackButton, 0);
