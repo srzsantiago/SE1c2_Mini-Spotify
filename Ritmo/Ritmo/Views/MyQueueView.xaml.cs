@@ -30,23 +30,37 @@ namespace Ritmo.Views
             
             if (playQueueController.PQ.CurrentTrack != null)
             {
-                Button currentTrackBar = new Button() { Height = 30 };
-                currentTrackBar.Click += OuterClick;
+                Grid CurrentTrackPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
+                Button CurrentTrackBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = CurrentTrackPanel };
+                CurrentTrackBar.Click += OuterClick;
 
-                Button playCurrentButton = new Button() { Content = "Play" };
-                playCurrentButton.Click += InnerClick;
+                Button playCurrentTrackButton = new Button() { Content = "Play" };
+                playCurrentTrackButton.Click += InnerClick;
 
-                StackPanel panelCurrentrack = new StackPanel() { Orientation = Orientation.Horizontal };
-                panelCurrentrack.Children.Add(playCurrentButton);
-                panelCurrentrack.Children.Add(new Label() { Content = playQueueController.PQ.CurrentTrack.Name });
-                panelCurrentrack.Children.Add(new Label() { Content = playQueueController.PQ.CurrentTrack.Artist });
-                panelCurrentrack.Children.Add(new Label() { Content = "Album"});
-                panelCurrentrack.Children.Add(new Label() { Content = playQueueController.PQ.CurrentTrack.Duration });
+                CurrentTrackPanel.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
+                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
 
-                currentTrackBar.Content = panelCurrentrack;
-                PlayingNowStackPanel.Children.Add(currentTrackBar);
+                Label name = new Label() { Content = playQueueController.PQ.CurrentTrack.Name };
+                Label artist = new Label() { Content = playQueueController.PQ.CurrentTrack.Artist };
+                Label album = new Label() { Content = "Album" };
+                Label duration = new Label() { Content = playQueueController.PQ.CurrentTrack.Duration };
 
-               
+                CurrentTrackPanel.Children.Add(playCurrentTrackButton);
+                Grid.SetColumn(playCurrentTrackButton, 0);
+                CurrentTrackPanel.Children.Add(name);
+                Grid.SetColumn(name, 1);
+                CurrentTrackPanel.Children.Add(artist);
+                Grid.SetColumn(artist, 2);
+                CurrentTrackPanel.Children.Add(album);
+                Grid.SetColumn(album, 3);
+                CurrentTrackPanel.Children.Add(duration);
+                Grid.SetColumn(duration, 4);
+
+                PlayingNowStackPanel.Children.Add(CurrentTrackBar);
             }
 
 
@@ -55,41 +69,73 @@ namespace Ritmo.Views
             {
                 foreach (var item in playQueueController.PQ.TrackQueue)
                 {
-                    Button queueItemBar = new Button() { Height = 30 };
-                    queueItemBar.Click += OuterClick;
+                    Grid QueueItemPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
+                    Button QueueItemBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = QueueItemPanel };
+                    QueueItemBar.Click += OuterClick;
 
                     Button playQueueItemButton = new Button() { Content = "Play" };
                     playQueueItemButton.Click += InnerClick;
 
-                    StackPanel QueueItemPanel = new StackPanel() { Orientation = Orientation.Horizontal };
-                    QueueItemPanel.Children.Add(playQueueItemButton);
-                    QueueItemPanel.Children.Add(new Label() { Content = item.Name });
-                    QueueItemPanel.Children.Add(new Label() { Content = item.Artist });
-                    QueueItemPanel.Children.Add(new Label() { Content = "Album" });
-                    QueueItemPanel.Children.Add(new Label() { Content = item.Duration });
+                    QueueItemPanel.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
+                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
 
-                    queueItemBar.Content = QueueItemPanel;
-                    NextInQueueStackPanel.Children.Add(queueItemBar);
+                    Label name = new Label() { Content = item.Name };
+                    Label artist = new Label() { Content = item.Artist };
+                    Label album = new Label() { Content = "Album" };
+                    Label duration = new Label() { Content = item.Duration };
+
+                    QueueItemPanel.Children.Add(playQueueItemButton);
+                    Grid.SetColumn(playQueueItemButton, 0);
+                    QueueItemPanel.Children.Add(name);
+                    Grid.SetColumn(name, 1);
+                    QueueItemPanel.Children.Add(artist);
+                    Grid.SetColumn(artist, 2);
+                    QueueItemPanel.Children.Add(album);
+                    Grid.SetColumn(album, 3);
+                    QueueItemPanel.Children.Add(duration);
+                    Grid.SetColumn(duration, 4);
+
+                    NextInQueueStackPanel.Children.Add(QueueItemBar);
                 }
             }
             if (playQueueController.PQ.TrackWaitingList.Count > 0)
             {
                 foreach (var item in playQueueController.PQ.TrackWaitingList)
                 {
-                    Button waitingListItemBar = new Button() { Height = 30 };
+                    Grid waitingListItemPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
+                    Button waitingListItemBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = waitingListItemPanel };
                     waitingListItemBar.Click += OuterClick;
-
-                    Button playWaitingListItemButton = new Button() { Content = "Play" };
+                    
+                    Button playWaitingListItemButton = new Button() { Content = "Play"};
                     playWaitingListItemButton.Click += InnerClick;
 
-                    StackPanel waitingListItemPanel = new StackPanel() { Orientation = Orientation.Horizontal };
-                    waitingListItemPanel.Children.Add(playWaitingListItemButton);
-                    waitingListItemPanel.Children.Add(new Label() { Content = item.Name });
-                    waitingListItemPanel.Children.Add(new Label() { Content = item.Artist });
-                    waitingListItemPanel.Children.Add(new Label() { Content = "Album" });
-                    waitingListItemPanel.Children.Add(new Label() { Content = item.Duration });
+                    waitingListItemPanel.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
+                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                    
+                    Label name = new Label() { Content = item.Name };
+                    Label artist = new Label() { Content = item.Artist };
+                    Label album = new Label() { Content = "Album" };
+                    Label duration = new Label() { Content = item.Duration };
 
-                    waitingListItemBar.Content = waitingListItemPanel;
+                    waitingListItemPanel.Children.Add(playWaitingListItemButton);
+                    Grid.SetColumn(playWaitingListItemButton, 0);
+                    waitingListItemPanel.Children.Add(name);
+                    Grid.SetColumn(name, 1);
+                    waitingListItemPanel.Children.Add(artist);
+                    Grid.SetColumn(artist, 2);
+                    waitingListItemPanel.Children.Add(album);
+                    Grid.SetColumn(album, 3);
+                    waitingListItemPanel.Children.Add(duration);
+                    Grid.SetColumn(duration, 4);
+                   
                     NextUpStackPanel.Children.Add(waitingListItemBar);
                 }
             }
