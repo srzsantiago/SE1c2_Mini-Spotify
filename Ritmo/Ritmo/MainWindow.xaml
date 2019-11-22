@@ -10,6 +10,7 @@
         mc:Ignorable="d"
         Left="5" Top="5"
         Title="Ritmo" Height="450" Width="800" MinWidth="1000" MinHeight="900">
+
     <Window.Resources>
         <!-- Variables -->
 
@@ -84,6 +85,8 @@
 
         <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="100" Margin="379,10,0,0" VerticalAlignment="Top" Width="100" Grid.Column="1" Grid.Row="1"/>
         <MediaElement x:Name="CurrentTrackElement" HorizontalAlignment="Left" Height="100" Margin="506,10,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="-1.145,1.054" Grid.Column="1" Grid.Row="1"/>
+        <Button Content="+" Name="VolumeUp" Grid.Column="1" HorizontalAlignment="Left" Margin="216,95,0,0" Grid.Row="1" VerticalAlignment="Top" Width="26" Click="VolumeUp_Click"/>
+        <Button Content="-" Name="VolumeDown" Grid.Column="1" HorizontalAlignment="Left" Margin="68,95,0,0" Grid.Row="1" VerticalAlignment="Top" Width="26" Click="VolumeDown_Click"/>
 
 
     </Grid>
