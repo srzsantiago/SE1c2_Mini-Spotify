@@ -35,8 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>Ritmo.TrackList</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
