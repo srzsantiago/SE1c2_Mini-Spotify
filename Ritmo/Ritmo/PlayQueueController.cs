@@ -17,12 +17,12 @@ namespace Ritmo
 
         private void TestMethode()
         {
-            playQueue.CurrentTrack = new Track("Ritmo");
-            this.AddTrack(new Track("Blanco"));
-            this.AddTrack(new Track("Contra la pared"));
+            playQueue.CurrentTrack = new Track("Ritmo", "Jbalvin", 80);
+            this.AddTrack(new Track("Blanco", "Jbalvin", 60));
+            this.AddTrack(new Track("Contra la pared", "Jbalvin", 120));
             TrackList testlist = new Playlist("TestPlaylist");
-            testlist.Tracks.AddLast(new Track("Con Calma"));
-            testlist.Tracks.AddLast(new Track("Despacito"));
+            testlist.Tracks.AddLast(new Track("Con Calma", "Daddy Yankee", 55));
+            testlist.Tracks.AddLast(new Track("Despacito", "Luis foncin", 40));
             this.SetTrackWatingList(testlist);
         }
 
