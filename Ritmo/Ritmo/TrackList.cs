@@ -84,14 +84,14 @@ namespace Ritmo
         }
 
         // test main
-        static void Main(string[] args)
-        {
-            TrackList t1 = new Playlist("hallo");
+        //static void Main(string[] args)
+        //{
+        //    TrackList t1 = new Playlist("hallo");
 
-            t1.TestSortTrackList();
+        //    t1.TestSortTrackList();
 
 
-        }
+        //}
     }
     
     }
