@@ -8,8 +8,9 @@
         xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
         xmlns:views="clr-namespace:Ritmo.Views"
         mc:Ignorable="d"
-        
-        Title="MainWindow" Height="450" Width="800" MinWidth="1000" MinHeight="900">
+        Left="5" Top="5"
+        Title="Ritmo" Height="450" Width="800" MinWidth="1000" MinHeight="900">
+
     <Window.Resources>
         <!-- Variables -->
 
@@ -72,9 +73,16 @@
         <Frame Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" Content="{Binding}"/>
 
         <!-- Media control -->
-        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Center" Margin="0,56,0,0" VerticalAlignment="Top" Width="75" Grid.Row="1" Grid.ColumnSpan="2" Click="Play_Clicked"/>
-        <Button x:Name="PrevButton" Content="Prev" HorizontalAlignment="Center" Margin="-150,56,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Click="Prev_Clicked"/>
-        <Button x:Name="NextButton" Content="Next" HorizontalAlignment="Center" Margin="150,56,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Click="Next_Clicked"/>
+        <Button x:Name="PlayButton"  Margin="0,0,0,0" Grid.Row="1" Click="Play_Clicked" Style="{StaticResource MediaButtonStyle}">
+            <Image x:Name="PlayButtonIcon" Source="/ImageResources/playbutton.png"/>
+        </Button>
+        <Button x:Name="PrevButton" Margin="-120,0,0,0" Click="Prev_Clicked"  Style="{StaticResource MediaButtonStyle}">
+            <Image Source="/ImageResources/prevtrackbutton.png" Width="30"/>
+        </Button>
+        <Button x:Name="NextButton" Margin="120,0,0,0"  Click="Next_Clicked" Style="{StaticResource MediaButtonStyle}" Width="30">
+            <Image Source="/ImageResources/nexttrackbutton.png"/>
+        </Button>
+
         <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="100" Margin="379,10,0,0" VerticalAlignment="Top" Width="100" Grid.Column="1" Grid.Row="1"/>
         <MediaElement x:Name="CurrentTrackElement" HorizontalAlignment="Left" Height="100" Margin="506,10,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="-1.145,1.054" Grid.Column="1" Grid.Row="1"/>
         <Button Content="+" Name="VolumeUp" Grid.Column="1" HorizontalAlignment="Left" Margin="216,95,0,0" Grid.Row="1" VerticalAlignment="Top" Width="26" Click="VolumeUp_Click"/>
