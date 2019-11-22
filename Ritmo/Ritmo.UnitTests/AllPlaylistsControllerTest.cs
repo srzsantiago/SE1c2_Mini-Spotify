@@ -14,13 +14,13 @@ namespace Ritmo.UnitTests
         {
             //Arrange
             bool result;
-            Playlist playlist = new Playlist("Name");
+            Playlist playlist = new Playlist("Name"); //Create new playlist with name: 'Name'
             AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
             //Act
-            allPlaylistsController.AddTrackList(playlist);
+            allPlaylistsController.AddTrackList(playlist); //Add a playlist called 'Name'
             result = allPlaylistsController.allplaylists.playlists.Contains(playlist);
-            //Assert
-            Assert.AreEqual(result, true);
+            //Assert 
+            Assert.AreEqual(result, true); //Checks if the playlist 'Name' is added -> should be true
         }
 
         //Method: AddTrackList(Playlist playlist) - Add playlist to list of all playlists, twice with same name, success scenario, returns true.
