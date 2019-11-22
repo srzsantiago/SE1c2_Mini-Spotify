@@ -71,7 +71,7 @@
 
 
         <!-- Page views -->
-        <ContentControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" Content="{Binding}"/>
+        <Frame Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" Content="{Binding}"/>
 
         <!-- Media control -->
         <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Center" Margin="106,56,0,0" VerticalAlignment="Top" Width="75" Grid.Row="1" Grid.ColumnSpan="2"/>

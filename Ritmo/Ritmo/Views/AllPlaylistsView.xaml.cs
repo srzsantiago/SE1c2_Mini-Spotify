@@ -33,9 +33,16 @@ namespace Ritmo.Views
             {
                 Button button = new Button();
                 button.Content = item.Name;
+                button.Click += PlaylistClick;
                 
                 NameColumn.Children.Add(button);               
             }
+        }
+
+        public void PlaylistClick(Object sender, EventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Views/PlaylistView.xaml", UriKind.Relative));
         }
 
         // maakt playlists aan en voegt de playlists toe aan de lijst, waarna deze zullen geladen worden in AllPlayListsView window in de GUI
