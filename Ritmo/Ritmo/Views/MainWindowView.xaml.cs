@@ -18,17 +18,17 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Ritmo
+namespace Ritmo.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindowView : Window
     {
         PlayQueueController playQueueController = new PlayQueueController();
         PlaylistController playlistController = new PlaylistController("TestPlaylist");
 
-        public MainWindow()
+        public MainWindowView()
         {
             InitializeComponent();
             CurrentTrackElement.LoadedBehavior = MediaState.Manual;
