@@ -21,6 +21,7 @@ namespace Ritmo.Views
     public partial class PlaylistView : UserControl
     {
         bool playlistMenuPanel = false;
+        bool menuPenalIsOpen = false;
 
         public PlaylistView()
         {
@@ -38,6 +39,20 @@ namespace Ritmo.Views
             {
                 PlaylistMenuGrid.Height = 0;
                 playlistMenuPanel = false;
+            }
+        }
+
+        private void ButtonMenu_Click(object sender, RoutedEventArgs e)
+        {
+            if (!menuPenalIsOpen)
+            {
+                MenuPanel.Height = +120;
+                menuPenalIsOpen = true;
+            }
+            else
+            {
+                MenuPanel.Height = 0;
+                menuPenalIsOpen = false;
             }
         }
     }
