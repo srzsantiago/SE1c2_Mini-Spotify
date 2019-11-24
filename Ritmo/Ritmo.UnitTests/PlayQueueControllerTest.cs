@@ -212,7 +212,7 @@ namespace Ritmo.UnitTests
             playQueueController.SetMute(); //Set the volume to mute
             result = playQueueController.PQ.IsMute;
             //Assert
-            Assert.AreEqual(result, true); //Check is the volume is mute, should be true.
+            Assert.AreEqual(result, true); //Check if the volume is mute, should be true.
         }
     }
 }

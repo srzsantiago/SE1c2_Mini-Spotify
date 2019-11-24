@@ -7,10 +7,11 @@
              
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
     <Grid Background="GhostWhite">
         <Grid Background="LightSlateGray" Height="48" VerticalAlignment="Top">
             <Label HorizontalAlignment="Left" Width="172" Content="My Playlists" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="24" Height="44" VerticalAlignment="Top"/>
+            <Button Name="ButtonMenu" Content="≡" HorizontalAlignment="Left" Height="48" Margin="757,0,0,0" VerticalAlignment="Top" Width="43" Click="Button_Click" Background="{x:Null}" FontSize="38"/>
         </Grid>
 
 
@@ -43,7 +44,10 @@
 
 
         </Grid>
+        <StackPanel Name="MenuPanel" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="105" Margin="685,48,0,0" Background="#FF778899">
+            <Button Content="Add Playlist" HorizontalAlignment="Left" Height="32" Margin="0,0,-0.2,0" Width="105" Background="{x:Null}"/>
+        </StackPanel>
 
     </Grid>
-    
+
 </UserControl>

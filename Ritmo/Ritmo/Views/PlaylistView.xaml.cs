@@ -20,9 +20,25 @@ namespace Ritmo.Views
     /// </summary>
     public partial class PlaylistView : UserControl
     {
+        bool playlistMenuPanel = false;
+
         public PlaylistView()
         {
             InitializeComponent();
+        }
+
+        private void PlaylistMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!playlistMenuPanel)
+            {
+                PlaylistMenuGrid.Height = +140;
+                playlistMenuPanel = true;
+            }
+            else
+            {
+                PlaylistMenuGrid.Height = 0;
+                playlistMenuPanel = false;
+            }
         }
     }
 }

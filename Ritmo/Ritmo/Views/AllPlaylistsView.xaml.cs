@@ -22,6 +22,8 @@ namespace Ritmo.Views
     public partial class MyPlaylistsView : UserControl
     {
         AllPlaylistsController allplaylistcontroller = new AllPlaylistsController();
+
+        bool menuPenalIsOpen = false;
         
 
         public MyPlaylistsView()
@@ -86,6 +88,25 @@ namespace Ritmo.Views
             allplaylistcontroller.AddTrackList(testplaylist4);
             allplaylistcontroller.AddTrackList(testplaylist4);
             allplaylistcontroller.AddTrackList(testplaylist4);
+        }
+
+        private void Menu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ButtonMenu_Click(object sender, RoutedEventArgs e)
+        {
+            if (!menuPenalIsOpen)
+            {
+                MenuPanel.Height = +120;
+                menuPenalIsOpen = true;
+            }
+            else
+            {
+                MenuPanel.Height = 0;
+                menuPenalIsOpen = false;
+            }
         }
     }
 }
