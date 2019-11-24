@@ -21,6 +21,7 @@ namespace Ritmo.Views
     public partial class MyQueueView : UserControl
     {
         PlayQueueController playQueueController = new PlayQueueController();
+        int count;
         public MyQueueView()
         {
             InitializeComponent();
@@ -32,16 +33,19 @@ namespace Ritmo.Views
             {
                 Grid CurrentTrackPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
                 Button CurrentTrackBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = CurrentTrackPanel };
-                CurrentTrackBar.Click += OuterClick;
+                CurrentTrackBar.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e) { OuterClick(sender, e, "CurrentTrack"); };
+                
 
                 Button playCurrentTrackButton = new Button() { Content = "Play" };
-                playCurrentTrackButton.Click += InnerClick;
+                playCurrentTrackButton.Click += delegate (object sender, RoutedEventArgs e) { InnerClick(sender, e, "CurrentTrack"); };
+                
+
 
                 CurrentTrackPanel.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2.5, GridUnitType.Star) });
+                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
+                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(4.5, GridUnitType.Star) });
+                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5, GridUnitType.Star) });
                 CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
 
                 Label name = new Label() { Content = playQueueController.PQ.CurrentTrack.Name };
@@ -67,20 +71,24 @@ namespace Ritmo.Views
 
             if (playQueueController.PQ.TrackQueue.Count > 0)
             {
+                count = 0;
                 foreach (var item in playQueueController.PQ.TrackQueue)
                 {
                     Grid QueueItemPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
                     Button QueueItemBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = QueueItemPanel };
-                    QueueItemBar.Click += OuterClick;
+                    QueueItemBar.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e) { OuterClick(sender, e, "TrackQueue"); };
+                    QueueItemBar.Tag = count;
+
 
                     Button playQueueItemButton = new Button() { Content = "Play" };
-                    playQueueItemButton.Click += InnerClick;
+                    playQueueItemButton.Click += delegate (object sender, RoutedEventArgs e) { InnerClick(sender, e, "TrackQueue"); };
+                    playQueueItemButton.Tag = count;
 
                     QueueItemPanel.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
-                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2.5, GridUnitType.Star) });
+                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
+                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(4.5, GridUnitType.Star) });
+                    QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5, GridUnitType.Star) });
                     QueueItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
 
                     Label name = new Label() { Content = item.Name };
@@ -100,24 +108,28 @@ namespace Ritmo.Views
                     Grid.SetColumn(duration, 4);
 
                     NextInQueueStackPanel.Children.Add(QueueItemBar);
+                    count++;
                 }
             }
             if (playQueueController.PQ.TrackWaitingList.Count > 0)
             {
+                count = 0;
                 foreach (var item in playQueueController.PQ.TrackWaitingList)
                 {
                     Grid waitingListItemPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
                     Button waitingListItemBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = waitingListItemPanel };
-                    waitingListItemBar.Click += OuterClick;
-                    
+                    waitingListItemBar.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e) { OuterClick(sender, e, "TrackQueue"); };
+                    waitingListItemBar.Tag = count;
+
                     Button playWaitingListItemButton = new Button() { Content = "Play"};
-                    playWaitingListItemButton.Click += InnerClick;
+                    playWaitingListItemButton.Click += delegate (object sender, RoutedEventArgs e) { InnerClick(sender, e, "TrackWaitingList"); };
+                    playWaitingListItemButton.Tag = count;
 
                     waitingListItemPanel.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
-                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2.5, GridUnitType.Star) });
+                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
+                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(4.5, GridUnitType.Star) });
+                    waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5, GridUnitType.Star) });
                     waitingListItemPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
                     
                     Label name = new Label() { Content = item.Name };
@@ -137,20 +149,46 @@ namespace Ritmo.Views
                     Grid.SetColumn(duration, 4);
                    
                     NextUpStackPanel.Children.Add(waitingListItemBar);
+                    count++;
                 }
             }
         }
 
-        private void OuterClick(object sender, RoutedEventArgs e)
+        private void OuterClick(object sender, MouseButtonEventArgs e, string type)
         {
-            MessageBox.Show("OuterButton is clicked!");
+
+            try
+            {
+                MessageBox.Show($"OuterButton is double clicked at {type} index {((Button)sender).Tag.ToString()}");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"OuterButton is double clicked at {type} ");
+            }
+            
+            if(type.Equals("TrackQueue"))
+                //invoke event to play the song
+            if(type.Equals("TrackWaitingList"))
+                //invoke event to play the song
+            if(type.Equals("CurrentTrack"))
+                //invoke event to play the song
+                Console.WriteLine();
         }
-        private void InnerClick(object sender, RoutedEventArgs e)
+
+        private void InnerClick(object sender, RoutedEventArgs e, string type)
         {
-            MessageBox.Show("InnerButton is clicked!");
-            e.Handled = true;
-           
+            try
+            {
+                MessageBox.Show($"InnerButton is clicked at {type} index {((Button)sender).Tag.ToString()}");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"InnerButton is clicked at {type} ");
+            }
+            
         }
+
+
 
 
     }
