@@ -13,36 +13,40 @@ namespace Ritmo.ViewModels
 {
     public class MainWindowViewModel : Screen
     {
+        #region Commands
         public ICommand ChangeViewModelCommand { get; set; }
+        #endregion
+
+        #region ViewModel attributes
         private Screen _currentViewModel = new HomeViewModel();
-
-        public MainWindowViewModel()
-        {
-            ChangeViewModelCommand = new RelayCommand<object>(ChangeViewModel);
-        }
-
         public Screen HomeViewModel { get; set; } = new HomeViewModel();
         public Screen SearchViewModel { get; set; } = new SearchViewModel();
         public Screen CategoriesViewModel { get; set; } = new CategoriesViewModel();
         public Screen FollowingViewModel { get; set; } = new FollowingViewModel();
-        public Screen AllPlaylistsViewModel { get; set; } = new AllPlaylistsViewModel();
+        public Screen AllPlaylistsViewModel { get; set; } 
         public Screen MyQueueViewModel { get; set; } = new MyQueueViewModel();
-        
+        #endregion
 
-        public Screen CurrentViewModel
+        public MainWindowViewModel()
         {
-            get { return _currentViewModel; }
-            set {
-                _currentViewModel = value;
-                NotifyOfPropertyChange(() => CurrentViewModel);
-            }
+            ChangeViewModelCommand = new RelayCommand<object>(ChangeViewModel); //Sets the command to the corresponding method
+            AllPlaylistsViewModel = new AllPlaylistsViewModel(this);
         }
 
+        //Changes CurrentViewModel and sets the frame
         public void ChangeViewModel(object ViewModel)
         {
             this.CurrentViewModel = (Screen)ViewModel;
         }
 
-        
+        public Screen CurrentViewModel
+        {
+            get { return _currentViewModel; }
+            set
+            {
+                _currentViewModel = value;
+                NotifyOfPropertyChange(() => CurrentViewModel);
+            }
+        }
     }
 }

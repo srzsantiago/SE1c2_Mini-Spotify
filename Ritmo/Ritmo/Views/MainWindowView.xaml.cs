@@ -125,34 +125,6 @@ namespace Ritmo.Views
             PlayPreviousTrack();
         }
 
-        private void Home_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new HomeViewModel();
-        }
-
-        private void Search_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new SearchViewModel();
-        }
-
-        private void Categories_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new CategoriesViewModel();
-        }
-
-        private void Following_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new FollowingViewModel();
-        }
-
-        private void AllPlaylists_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new AllPlaylistsViewModel();
-        }
-        private void MyQueue_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new MyQueueViewModel();
-        }
         #endregion
 
 

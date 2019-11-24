@@ -26,7 +26,6 @@ namespace Ritmo.Views
 
         public MyPlaylistsView()
         {
-            
             InitializeComponent();
             testAllPlayLists();
             foreach (var item in allplaylistcontroller.allplaylists.playlists) // goes through all the playlists that exist and adds their name to the list in my playlists
@@ -34,15 +33,17 @@ namespace Ritmo.Views
                 Button button = new Button();
                 button.Content = item.Name;
                 button.Click += PlaylistClick;
-                
+
                 NameColumn.Children.Add(button);               
             }
         }
 
+        //LEGACY: Moet omgezet worden naar MVVM.
         public void PlaylistClick(Object sender, EventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new Uri("Views/PlaylistView.xaml", UriKind.Relative));
+            //ns.Navigate(new Uri("Views/PlaylistView.xaml", UriKind.Relative));
+            ns.Navigate(new PlaylistViewModel());
         }
 
         // maakt playlists aan en voegt de playlists toe aan de lijst, waarna deze zullen geladen worden in AllPlayListsView window in de GUI

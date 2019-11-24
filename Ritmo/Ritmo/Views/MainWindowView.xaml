@@ -13,9 +13,10 @@
         Title="Ritmo" Height="450" Width="800" MinWidth="1000" MinHeight="600">
 
     <Window.Resources>
-        <!-- Variables -->
+        <!--#Region Variables -->
+        <!--#endregion-->
 
-        <!-- Views -->
+        <!--#region ViewModel DataTemplates-->
         <DataTemplate x:Name="homeViewTemplate" DataType="{x:Type viewmodels:HomeViewModel}">
             <views:HomeView DataContext="{Binding}"/>
         </DataTemplate>
@@ -34,6 +35,10 @@
         <DataTemplate x:Name="MyQueueViewTemplate" DataType="{x:Type viewmodels:MyQueueViewModel}">
             <views:MyQueueView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="playlistViewTemplate" DataType="{x:Type viewmodels:PlaylistViewModel}">
+            <views:PlaylistView DataContext="{Binding}"/>
+        </DataTemplate>
+        <!--#endregion-->
 
     </Window.Resources>
 
@@ -70,7 +75,7 @@
             </StackPanel>
         </Grid>
 
-        <!-- Page views -->
+        <!-- Frame view -->
         <Frame Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" Content="{Binding CurrentViewModel}"/>
 
         <!-- Media control -->
