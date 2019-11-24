@@ -185,7 +185,15 @@ namespace Ritmo.Views
             {
                 MessageBox.Show($"InnerButton is clicked at {type} ");
             }
-            
+
+            if (type.Equals("TrackQueue"))
+                //invoke event to play the song
+            if (type.Equals("TrackWaitingList"))
+                //invoke event to play the song
+            if (type.Equals("CurrentTrack"))
+                //invoke event to play the song
+                Console.WriteLine();
+
         }
 
 
