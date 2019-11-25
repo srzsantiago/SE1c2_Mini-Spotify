@@ -148,6 +148,7 @@ namespace Ritmo
         private void AllPlaylists_Clicked(object sender, RoutedEventArgs e)
         {
             DataContext = new AllPlaylistsViewModel();
+
         }
         private void MyQueue_Clicked(object sender, RoutedEventArgs e)
         {
