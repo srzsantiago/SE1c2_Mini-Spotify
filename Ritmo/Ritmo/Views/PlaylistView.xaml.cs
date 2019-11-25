@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +32,7 @@ namespace Ritmo.Views
         {
             if (!playlistMenuPanel)
             {
-                PlaylistMenuGrid.Height = +60;
+                PlaylistMenuGrid.Height = +140;
                 playlistMenuPanel = true;
             }
             else
@@ -47,7 +46,7 @@ namespace Ritmo.Views
         {
             if (!menuPenalIsOpen)
             {
-                MenuPanel.Height = +90;
+                MenuPanel.Height = +120;
                 menuPenalIsOpen = true;
             }
             else
@@ -55,59 +54,6 @@ namespace Ritmo.Views
                 MenuPanel.Height = 0;
                 menuPenalIsOpen = false;
             }
-        }
-
-        private void DeletePlaylistButton_Click(object sender, RoutedEventArgs e)
-        {
-            PlaylistMenuGrid.Height = 0;
-            playlistMenuPanel = false;
-        }
-
-        private void ChangeNameButton_Click(object sender, RoutedEventArgs e)
-        {
-            PlaylistMenuGrid.Height = 0;
-            playlistMenuPanel = false;
-            string message, title, defaultValue;
-            object myValue;
-
-            //Set prompt
-            message = "Please enter a name for the playlist.";
-
-            //Set title
-            title = "Set name for the playlist.";
-
-            //Set default value
-            defaultValue = "Default value";
-            myValue = Interaction.InputBox(message, title, defaultValue);
-
-            //Click ok
-            var result = myValue.ToString();
-            if (myValue.ToString() != "")
-            {
-                NamePlaylist.Content = result;
-            }
-            else
-            {
-                //Do nothing
-            }
-        }
-
-        private void AddTrackPlaylist_Click(object sender, RoutedEventArgs e)
-        {
-            MenuPanel.Height = 0;
-            menuPenalIsOpen = false;
-        }
-
-        private void DeleteTrack_Click(object sender, RoutedEventArgs e)
-        {
-            MenuPanel.Height = 0;
-            menuPenalIsOpen = false;
-        }
-
-        private void AddTrackQueue_Click(object sender, RoutedEventArgs e)
-        {
-            MenuPanel.Height = 0;
-            menuPenalIsOpen = false;
         }
     }
 }
