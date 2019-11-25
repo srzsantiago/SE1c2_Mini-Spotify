@@ -5,8 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ritmo.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
+             d:DataContext="{d:DesignInstance viewmodels:HomeViewModel, IsDesignTimeCreatable=True}">
     <Grid Background="LightGreen">
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Home test</TextBlock>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding TestString}"></TextBlock>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="357,120,0,0" Command="{Binding ChangeTestStringCommand}"/>
+
     </Grid>
 </UserControl>
