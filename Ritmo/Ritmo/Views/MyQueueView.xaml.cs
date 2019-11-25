@@ -22,12 +22,12 @@ namespace Ritmo.Views
     {
         PlayQueueController playQueueController = new PlayQueueController();
         int count;
+        
         public MyQueueView()
         {
             InitializeComponent();
             this.DataContext = playQueueController;
-
-
+            
             
             if (playQueueController.PQ.CurrentTrack != null)
             {
@@ -118,7 +118,7 @@ namespace Ritmo.Views
                 {
                     Grid waitingListItemPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
                     Button waitingListItemBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = waitingListItemPanel };
-                    waitingListItemBar.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e) { OuterClick(sender, e, "TrackQueue"); };
+                    waitingListItemBar.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e) { OuterClick(sender, e, "TrackWaitingList"); };
                     waitingListItemBar.Tag = count;
 
                     Button playWaitingListItemButton = new Button() { Content = "Play"};
@@ -150,6 +150,7 @@ namespace Ritmo.Views
                    
                     NextUpStackPanel.Children.Add(waitingListItemBar);
                     count++;
+                    
                 }
             }
         }
