@@ -34,15 +34,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -61,18 +56,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AccessLevel.cs" />
-    <Compile Include="Administrator.cs" />
+    <Compile Include="User\AccessLevel.cs" />
+    <Compile Include="User\Administrator.cs" />
     <Compile Include="AllPlaylists.cs" />
-    <Compile Include="AllPlaylistsController.cs" />
-    <Compile Include="Artist.cs" />
-    <Compile Include="Person.cs" />
+    <Compile Include="Controllers\AllPlaylistsController.cs" />
+    <Compile Include="User\Artist.cs" />
+    <Compile Include="User\Person.cs" />
     <Compile Include="Playlist.cs" />
-    <Compile Include="PlayListController.cs" />
-    <Compile Include="PlayQueueController.cs" />
+    <Compile Include="Controllers\PlayListController.cs" />
+    <Compile Include="Controllers\PlayQueueController.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="TrackList.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="User\User.cs" />
     <Compile Include="ViewModels\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\FollowingViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
@@ -113,13 +108,9 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="StyleResources\MediaButtonsStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="StyleResources\ButtonStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CategoriesView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -176,16 +167,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ImageResources\playbutton.png" />
-    <Resource Include="ImageResources\nexttrackbutton.png" />
-    <Resource Include="ImageResources\prevtrackbutton.png" />
-    <Resource Include="ImageResources\pausebutton.png" />
-    <Content Include="TestFiles\Powerup1.wav" />
-    <Content Include="TestFiles\Powerup2.wav" />
-    <Content Include="TestFiles\RingtoneRoundabout.mp3" />
-    <Content Include="TestFiles\RingtoneUnatco.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

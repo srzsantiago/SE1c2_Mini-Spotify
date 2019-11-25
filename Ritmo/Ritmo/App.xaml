@@ -7,7 +7,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="StyleResources/ButtonStyles.xaml"/>
-                <ResourceDictionary Source="StyleResources/MediaButtonsStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

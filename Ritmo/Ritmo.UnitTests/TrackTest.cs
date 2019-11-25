@@ -8,6 +8,9 @@ namespace Ritmo.UnitTests
     [TestClass]
     public class TrackTest
     {
-
+        [TestMethod]
+        public void TestMethod1()
+        {
+        }
     }
 }
