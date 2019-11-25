@@ -11,7 +11,18 @@
             <Label HorizontalAlignment="Left" Width="172" Content="Playlist name" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="24" Height="44" VerticalAlignment="Top"/>
             <Label Margin="0,44,0,0" Content="Duration" Height="25" VerticalAlignment="Top" Width="85" HorizontalAlignment="Left" />
             <Label Margin="0,70,0,0" Content="Creation date:" Height="25" VerticalAlignment="Top" Width="85" HorizontalAlignment="Left"/>
+            <ComboBox HorizontalAlignment="Left" Height="33" Margin="600,54,0,0" VerticalAlignment="Top" Width="145" Background="#FF13273C">
+                <Button Content="Name A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Content="Name Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Content="Artist A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Content="Artist Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+            </ComboBox>
+            <Button Click="ButtonMenu_Click" Name="ButtonMenu" Content="≡" HorizontalAlignment="Left" Margin="760,49,0,0" Width="30" Background="{x:Null}" FontSize="30" Height="46" VerticalAlignment="Top"/>
         </Grid>
+
+
+
+        <Button Click="PlaylistMenuButton_Click" Name="PlaylistMenuButton" Content="≡" HorizontalAlignment="Left" Height="44" Margin="177,0,0,0" VerticalAlignment="Top" Width="53" Background="{x:Null}" FontSize="24"/>
         <Grid Background="GhostWhite" Margin="0,97,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="325*"/>
@@ -30,6 +41,16 @@
             <Label Grid.Column="2" Content="ALBUM" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Width="186" />
             <Label Grid.Column="3" Content="DURATION" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Width="101" />
             <Border BorderBrush="Black" BorderThickness="1" Height="2" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="4" MinWidth="500"/>
+        </Grid>
+
+        <StackPanel Name="MenuPanel" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="105" Margin="685,97,0,0" Background="#FF778899">
+            <Button Content="Add Track" HorizontalAlignment="Left" Height="20" Margin="0,0,-0.2,0" Width="105" Background="{x:Null}"/>
+            <Button Content="Delete track" HorizontalAlignment="Left" Height="20" Margin="0,0,-0.2,0" Width="105" Background="{x:Null}"/>
+        </StackPanel>
+
+        <Grid Name="PlaylistMenuGrid" HorizontalAlignment="Left" Height="0" Margin="104,44,0,-83" VerticalAlignment="Top" Width="126" RenderTransformOrigin="0.474,1.036" Background="#FF778899">
+            <Button Content="Change name" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="126" Background="{x:Null}"/>
+            <Button Content="Delete playlist" HorizontalAlignment="Left" Height="33" Margin="0,33,0,0" VerticalAlignment="Top" Width="126" Background="{x:Null}"/>
         </Grid>
     </Grid>
 
