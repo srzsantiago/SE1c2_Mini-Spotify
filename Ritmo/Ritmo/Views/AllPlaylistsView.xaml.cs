@@ -28,11 +28,10 @@ namespace Ritmo.Views
         AllPlaylistsController allplaylistcontroller = new AllPlaylistsController();
 
         bool menuPenalIsOpen = false;
-        
+
 
         public MyPlaylistsView()
         {
-            
             InitializeComponent();
             testAllPlayLists();
             foreach (var item in allplaylistcontroller.allplaylists.playlists) // goes through all the playlists that exist and adds their name to the list in my playlists
@@ -40,16 +39,17 @@ namespace Ritmo.Views
                 Button button = new Button();
                 button.Content = item.Name;
                 button.Click += PlaylistClick;
-                
-                NameColumn.Children.Add(button);               
+
+                NameColumn.Children.Add(button);
             }
         }
 
+        //LEGACY: Moet omgezet worden naar MVVM.
         public void PlaylistClick(Object sender, EventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new Uri("Views/PlaylistView.xaml", UriKind.Relative));
-
+            //ns.Navigate(new Uri("Views/PlaylistView.xaml", UriKind.Relative));
+            ns.Navigate(new PlaylistViewModel());
         }
 
         // maakt playlists aan en voegt de playlists toe aan de lijst, waarna deze zullen geladen worden in AllPlayListsView window in de GUI
@@ -60,14 +60,14 @@ namespace Ritmo.Views
             Playlist testplaylist3 = new Playlist("playlist3");
             Playlist testplaylist4 = new Playlist("playlist4");
             Playlist testplaylist5 = new Playlist("playlist5");
-            
+
 
             allplaylistcontroller.AddTrackList(testplaylist1);
             allplaylistcontroller.AddTrackList(testplaylist2);
             allplaylistcontroller.AddTrackList(testplaylist3);
             allplaylistcontroller.AddTrackList(testplaylist4);
             allplaylistcontroller.AddTrackList(testplaylist5);
-            
+
         }
 
         private void Menu_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -88,13 +88,13 @@ namespace Ritmo.Views
                 menuPenalIsOpen = false;
             }
         }
-        
+
 
         private void AddPlayList_Click(object sender, RoutedEventArgs e)
         {
-            
+
             string x = Interaction.InputBox("Please insert a name:", "Create playlist", "playlist name", 10, 10);
-              
+
             if(x == "")
             {
                 System.Windows.MessageBox.Show("Did not make a playlist");
@@ -113,7 +113,7 @@ namespace Ritmo.Views
             }
 
 
-            
+
         }
     }
 }
