@@ -25,6 +25,16 @@ namespace Ritmo.ViewModels
         public Screen FollowingViewModel { get; set; } = new FollowingViewModel();
         public Screen AllPlaylistsViewModel { get; set; } 
         public Screen MyQueueViewModel { get; set; } = new MyQueueViewModel();
+
+        public Screen CurrentViewModel
+        {
+            get { return _currentViewModel; }
+            set
+            {
+                _currentViewModel = value;
+                NotifyOfPropertyChange(() => CurrentViewModel);
+            }
+        }
         #endregion
 
         public MainWindowViewModel()
@@ -37,16 +47,6 @@ namespace Ritmo.ViewModels
         public void ChangeViewModel(object ViewModel)
         {
             this.CurrentViewModel = (Screen)ViewModel;
-        }
-
-        public Screen CurrentViewModel
-        {
-            get { return _currentViewModel; }
-            set
-            {
-                _currentViewModel = value;
-                NotifyOfPropertyChange(() => CurrentViewModel);
-            }
         }
     }
 }

@@ -80,7 +80,7 @@
 
         <!-- Media control -->
 
-        <Button x:Name="PlayButton"  Margin="0,0,0,0" Grid.Row="1" Click="Play_Clicked" Style="{StaticResource MediaButtonStyle}">
+        <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Click="Play_Clicked" Style="{StaticResource MediaButtonStyle}">
             <Image x:Name="PlayButtonIcon" Source="/ImageResources/playbutton.png"/>
         </Button>
         <Button x:Name="PrevButton" Margin="-120,0,0,0" Click="Prev_Clicked"  Style="{StaticResource MediaButtonStyle}">

@@ -32,7 +32,10 @@ namespace Ritmo.Views
         {
             InitializeComponent();
             CurrentTrackElement.LoadedBehavior = MediaState.Manual;
+            CurrentTrackElement.UnloadedBehavior = MediaState.Pause;
             CurrentTrackElement.MediaEnded += Track_Ended;
+
+            
 
             TestTrackMethod();
         }

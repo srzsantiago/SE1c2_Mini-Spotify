@@ -17,14 +17,14 @@ namespace Ritmo.ViewModels
 
         public AllPlaylistsViewModel(MainWindowViewModel MainWindow)
         {
-            OpenPlaylistViewModelCommand = new RelayCommand<object>(OpenPlaylistViewModel);
+            OpenPlaylistViewModelCommand = new RelayCommand<Screen>(OpenPlaylistViewModel);
             this.MainWindow = MainWindow;
         }
 
         //Sets CurrentViewModel in the MainWindow to a PlaylistViewModel
-        public void OpenPlaylistViewModel(object PlaylistViewModel)
+        public void OpenPlaylistViewModel(Screen PlaylistViewModel)
         {
-            MainWindow.ChangeViewModel((Screen)PlaylistViewModel);
+            MainWindow.ChangeViewModel(PlaylistViewModel);
         }
     }
 }
