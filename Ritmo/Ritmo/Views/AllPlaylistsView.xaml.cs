@@ -22,8 +22,6 @@ namespace Ritmo.Views
     public partial class MyPlaylistsView : UserControl
     {
         AllPlaylistsController allplaylistcontroller = new AllPlaylistsController();
-
-        bool menuPenalIsOpen = false;
         
 
         public MyPlaylistsView()
@@ -45,7 +43,6 @@ namespace Ritmo.Views
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Views/PlaylistView.xaml", UriKind.Relative));
-
         }
 
         // maakt playlists aan en voegt de playlists toe aan de lijst, waarna deze zullen geladen worden in AllPlayListsView window in de GUI
@@ -89,25 +86,6 @@ namespace Ritmo.Views
             allplaylistcontroller.AddTrackList(testplaylist4);
             allplaylistcontroller.AddTrackList(testplaylist4);
             allplaylistcontroller.AddTrackList(testplaylist4);
-        }
-
-        private void Menu_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ButtonMenu_Click(object sender, RoutedEventArgs e)
-        {
-            if (!menuPenalIsOpen)
-            {
-                MenuPanel.Height = +120;
-                menuPenalIsOpen = true;
-            }
-            else
-            {
-                MenuPanel.Height = 0;
-                menuPenalIsOpen = false;
-            }
         }
     }
 }

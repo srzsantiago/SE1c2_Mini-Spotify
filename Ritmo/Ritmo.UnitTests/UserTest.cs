@@ -6,6 +6,5 @@ namespace Ritmo.UnitTests
 {
     class UserTest
     {
-
     }
 }

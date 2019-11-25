@@ -14,12 +14,12 @@ namespace Ritmo.UnitTests
         {
             //Arrange
             PlayQueue playQueue = new PlayQueue();
-            bool result;
+            bool result = false;
             //Act
-            playQueue.TrackQueue.Enqueue(new Track()); //Enqueue track to the queue
+            playQueue.TrackQueue.Enqueue(new Track());
             result = playQueue.TrackQueueHasSongs();
             //Assert
-            Assert.AreEqual(result, true); //Check if the track is added to the queue -> returns true
+            Assert.AreEqual(result, true);
         }
 
         //Method: TrackQueueHasSongs() - Track queue has tracks, no tracks, returns false.
@@ -28,11 +28,11 @@ namespace Ritmo.UnitTests
         {
             //Arrange
             PlayQueue playQueue = new PlayQueue();
-            bool result;
+            bool result = true;
             //Act
             result = playQueue.TrackQueueHasSongs();
             //Assert
-            Assert.AreEqual(result, false); //Check if the queue has tracks, when no tracks are added -> returns false
+            Assert.AreEqual(result, false);
         }
 
         //Method: TrackEnded() - 
