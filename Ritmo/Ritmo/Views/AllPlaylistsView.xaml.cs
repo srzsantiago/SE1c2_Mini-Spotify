@@ -25,15 +25,15 @@ namespace Ritmo.Views
     /// </summary>
     public partial class MyPlaylistsView : UserControl
     {
+        Playlist p1 = new Playlist("FirstPlaylist");
         AllPlaylistsController allplaylistcontroller = new AllPlaylistsController();
-
         bool menuPenalIsOpen = false;
 
 
         public MyPlaylistsView()
         {
             InitializeComponent();
-            testAllPlayLists();
+            TestTrack();
             foreach (var item in allplaylistcontroller.allplaylists.playlists) // goes through all the playlists that exist and adds their name to the list in my playlists
             {
                 Button button = new Button();
@@ -49,11 +49,16 @@ namespace Ritmo.Views
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
             //ns.Navigate(new Uri("Views/PlaylistView.xaml", UriKind.Relative));
-            ns.Navigate(new PlaylistViewModel());
+            ns.Navigate(new PlaylistView(p1));
+        }
+
+        public void TestTrack()
+        {
+            allplaylistcontroller.AddTrackList(p1);
         }
 
         // maakt playlists aan en voegt de playlists toe aan de lijst, waarna deze zullen geladen worden in AllPlayListsView window in de GUI
-        public void testAllPlayLists()
+        /*public void testAllPlayLists()
         {
             Playlist testplaylist1 = new Playlist("playlist1");
             Playlist testplaylist2 = new Playlist("playlist2");
@@ -68,7 +73,7 @@ namespace Ritmo.Views
             allplaylistcontroller.AddTrackList(testplaylist4);
             allplaylistcontroller.AddTrackList(testplaylist5);
 
-        }
+        }*/
 
         private void Menu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

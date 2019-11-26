@@ -8,6 +8,7 @@ namespace Ritmo
 {
     public class Track
     {
+
         public Track(){}
         public Track(string name)
         {

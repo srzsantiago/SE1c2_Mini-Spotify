@@ -24,9 +24,30 @@ namespace Ritmo.Views
         bool playlistMenuPanel = false;
         bool menuPenalIsOpen = false;
 
-        public PlaylistView()
+        Track one = new Track("FirstTrack", "Shakira", 125);
+        Track two = new Track("Second", "Shakira", 134);             
+
+        public PlaylistView(Playlist playlist)
         {
             InitializeComponent();
+            playlist.Tracks.AddLast(one);
+            playlist.Tracks.AddLast(two);
+            NamePlaylist.Content = playlist.Name.ToString();
+            
+            foreach (var item in playlist.Tracks) // goes through all the playlists that exist and adds their name to the list in my playlists
+            {
+                Label l = new Label();
+                l.Content = item.Name;
+                NameColumn.Children.Add(l);
+
+                Label l1 = new Label();
+                l1.Content = item.Artist;
+                ArtistColumn.Children.Add(l1);
+
+                Label l2 = new Label();
+                l2.Content = item.Duration;
+                DurationColumn.Children.Add(l2);
+            }
         }
 
         private void PlaylistMenuButton_Click(object sender, RoutedEventArgs e)
@@ -84,6 +105,7 @@ namespace Ritmo.Views
             if (myValue.ToString() != "")
             {
                 NamePlaylist.Content = result;
+            
             }
             else
             {
