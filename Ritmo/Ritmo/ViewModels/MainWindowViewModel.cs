@@ -12,12 +12,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Ritmo;
 
+
 namespace Ritmo.ViewModels
 {
     public class MainWindowViewModel : Screen
     {
         PlaylistController PlaylistController = new PlaylistController("TestPlaylist");
         PlayQueueController PlayQueueController = new PlayQueueController();
+
 
         #region Commands
         public ICommand ChangeViewModelCommand { get; set; }

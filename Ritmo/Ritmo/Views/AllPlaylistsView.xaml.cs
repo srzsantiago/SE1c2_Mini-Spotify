@@ -25,15 +25,20 @@ namespace Ritmo.Views
     /// </summary>
     public partial class MyPlaylistsView : UserControl
     {
-        Playlist p1 = new Playlist("FirstPlaylist");
-        AllPlaylistsController allplaylistcontroller = new AllPlaylistsController();
-        bool menuPenalIsOpen = false;
+        public Playlist testplaylist1 = new Playlist("playlist1");
+        Playlist testplaylist2 = new Playlist("playlist2");
+        Playlist testplaylist3 = new Playlist("playlist3");
+        Playlist testplaylist4 = new Playlist("playlist4");
+        Playlist testplaylist5 = new Playlist("playlist5");
 
+        AllPlaylistsController allplaylistcontroller = new AllPlaylistsController();
+
+        bool menuPenalIsOpen = false;
 
         public MyPlaylistsView()
         {
             InitializeComponent();
-            TestTrack();
+            testAllPlayLists();
             foreach (var item in allplaylistcontroller.allplaylists.playlists) // goes through all the playlists that exist and adds their name to the list in my playlists
             {
                 Button button = new Button();
@@ -49,31 +54,19 @@ namespace Ritmo.Views
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
             //ns.Navigate(new Uri("Views/PlaylistView.xaml", UriKind.Relative));
-            ns.Navigate(new PlaylistView(p1));
-        }
-
-        public void TestTrack()
-        {
-            allplaylistcontroller.AddTrackList(p1);
+            ns.Navigate(new PlaylistView(testplaylist1));
         }
 
         // maakt playlists aan en voegt de playlists toe aan de lijst, waarna deze zullen geladen worden in AllPlayListsView window in de GUI
-        /*public void testAllPlayLists()
+        public void testAllPlayLists()
         {
-            Playlist testplaylist1 = new Playlist("playlist1");
-            Playlist testplaylist2 = new Playlist("playlist2");
-            Playlist testplaylist3 = new Playlist("playlist3");
-            Playlist testplaylist4 = new Playlist("playlist4");
-            Playlist testplaylist5 = new Playlist("playlist5");
-
-
             allplaylistcontroller.AddTrackList(testplaylist1);
             allplaylistcontroller.AddTrackList(testplaylist2);
             allplaylistcontroller.AddTrackList(testplaylist3);
             allplaylistcontroller.AddTrackList(testplaylist4);
             allplaylistcontroller.AddTrackList(testplaylist5);
 
-        }*/
+        }
 
         private void Menu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
