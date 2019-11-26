@@ -91,7 +91,7 @@
         </Button>
 
         <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="60" Margin="563,10,0,0" VerticalAlignment="Top" Width="100" Grid.Column="1" Grid.Row="1"/>
-        <MediaElement x:Name="CurrentTrackElement" HorizontalAlignment="Left" Height="60" Margin="668,10,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="-1.145,1.054" Grid.Column="1" Grid.Row="1"/>
+        <MediaElement x:Name="CurrentTrackElement" DataContext="{Binding CurrentTrackElement}" HorizontalAlignment="Left" Height="60" Margin="668,10,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="-1.145,1.054" Grid.Column="1" Grid.Row="1"/>
         <TextBlock Foreground="Black" VerticalAlignment="Center" Margin="136,113,471,1" Grid.Column="1" Grid.Row="1"  >Volume</TextBlock>
         <Slider Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" Minimum="0" Maximum="1" Value="0.5" Margin="406,52,315,10" Grid.Row="1" Grid.Column="1"/>
 

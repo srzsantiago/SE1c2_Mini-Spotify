@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ritmo.ViewModels
 {
-    class MyQueueViewModel : Screen
+    public class MyQueueViewModel : Screen
     {
     }
 }

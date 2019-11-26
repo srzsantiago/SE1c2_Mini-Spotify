@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Ritmo.ViewModels
 {
-    class HomeViewModel : Screen
+    public class HomeViewModel : Screen
     {
         public ICommand ChangeTestStringCommand { get; set; }
         private string _TestString = "Dit is een test!";

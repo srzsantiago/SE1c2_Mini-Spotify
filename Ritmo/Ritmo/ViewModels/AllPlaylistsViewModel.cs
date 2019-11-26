@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Ritmo.ViewModels
 {
-    class AllPlaylistsViewModel : Screen
+    public class AllPlaylistsViewModel : Screen
     {
         public MainWindowViewModel MainWindow { get; set; }
         public PlaylistViewModel PlaylistViewModel { get; set; } = new PlaylistViewModel();

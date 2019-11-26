@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ritmo.ViewModels
 {
-    class SearchViewModel : Screen
+    public class SearchViewModel : Screen
     {
     }
 }
