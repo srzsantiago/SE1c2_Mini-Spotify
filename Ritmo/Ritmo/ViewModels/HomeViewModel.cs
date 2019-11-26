@@ -23,7 +23,6 @@ namespace Ritmo.ViewModels
             }
         }
 
-
         public HomeViewModel()
         {
             ChangeTestStringCommand = new RelayCommand(ChangeTestString);
@@ -31,7 +30,10 @@ namespace Ritmo.ViewModels
 
         private void ChangeTestString()
         {
-            TestString = "Tekst is veranderd";
+            if (!TestString.Equals("Tekst is veranderd!"))
+                TestString = "Tekst is veranderd!";
+            else
+                TestString = "Weer andere tekst!";
         }
     }
 }

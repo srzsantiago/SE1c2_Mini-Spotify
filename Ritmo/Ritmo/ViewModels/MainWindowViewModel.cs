@@ -26,8 +26,8 @@ namespace Ritmo.ViewModels
         #endregion
 
         #region ViewModel attributes
-        private Screen _currentViewModel = new HomeViewModel();
-        public Screen HomeViewModel { get; set; } = new HomeViewModel();
+        private Screen _currentViewModel;
+        public Screen HomeViewModel { get; set; }
         public Screen SearchViewModel { get; set; } = new SearchViewModel();
         public Screen CategoriesViewModel { get; set; } = new CategoriesViewModel();
         public Screen FollowingViewModel { get; set; } = new FollowingViewModel();
@@ -40,7 +40,7 @@ namespace Ritmo.ViewModels
             set
             {
                 _currentViewModel = value;
-                NotifyOfPropertyChange(() => CurrentViewModel);
+                NotifyOfPropertyChange();
             }
         }
         #endregion
@@ -154,6 +154,8 @@ namespace Ritmo.ViewModels
         }
         public void InitializeViewModels()
         {
+            HomeViewModel = new HomeViewModel();
+            CurrentViewModel = HomeViewModel;
             AllPlaylistsViewModel = new AllPlaylistsViewModel(this);
         }
         public void InitializeCurrentTrackElement()
