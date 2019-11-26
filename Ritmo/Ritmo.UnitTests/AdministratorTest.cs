@@ -6,5 +6,6 @@ namespace Ritmo.UnitTests
 {
     class AdministratorTest
     {
+
     }
 }
