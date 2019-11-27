@@ -123,9 +123,5 @@ namespace Ritmo.Views
 
         //}
 
-        private void AllPlaylist_Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

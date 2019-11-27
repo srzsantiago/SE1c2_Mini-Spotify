@@ -34,7 +34,7 @@ namespace Ritmo.Views
         Track two = new Track(2, "Second", "Shakira", 134);
         Track three = new Track(3, "FirstSecond", "Ha", 10);
 
-        public PlaylistView(Playlist playlist)
+        public PlaylistView(PlayList playlist)
         {
             InitializeComponent();
 
