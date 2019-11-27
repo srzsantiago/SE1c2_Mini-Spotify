@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,89 +14,141 @@ namespace Ritmo.ViewModels
     class MyQueueViewModel : Screen
     {
         PlayQueueController playQueueController = new PlayQueueController();
-
-        private Uri _currentrackElement;
-
-        public Uri CurrentrackElement
-        {
-            get { return _currentrackElement; }
-            set { _currentrackElement = value; }
-        }
-
-        private StackPanel _playingNowStackPanel;
-
-
-        public StackPanel PlayingNowStackPanel
-        {
-            get 
-            { 
-                if(_playingNowStackPanel == null)
-                {
-                    _playingNowStackPanel = new StackPanel();
-                }
-                return _playingNowStackPanel;
-            }
-            set
-            {
-                _playingNowStackPanel = value;
-                NotifyOfPropertyChange(() => PlayingNowStackPanel);
-            }
-        }
-
-        private IObservableCollection<MyQueueItem> _queueItems;
-
-        public IObservableCollection<MyQueueItem> QueueItems
-        {
-            get { return _queueItems; }
-            set { _queueItems = value; }
-        }
-
+        int count;
 
         public MyQueueViewModel()
         {
             TestCurrentTrack();
+            //OuterClickCommand = new DelegateCommand<object>(OuterClick);
         }
+
+        #region Observable collections
+        private ObservableCollection<MyQueueItem> _playingNowItems;
+        private ObservableCollection<MyQueueItem> _nextInQueueItems;
+        private ObservableCollection<MyQueueItem> _nextUpItems;
+
+        public ObservableCollection<MyQueueItem> PlayingNowItems
+        {
+            get { return _playingNowItems; }
+            set { _playingNowItems = value; }
+        }
+
+        public ObservableCollection<MyQueueItem> NextInQueueItems
+        {
+            get { return _nextInQueueItems; }
+            set { _nextInQueueItems = value; }
+        }
+
+        public ObservableCollection<MyQueueItem> NextUpItems
+        {
+            get { return _nextUpItems; }
+            set { _nextUpItems = value; }
+        }
+
+        #endregion
+
+        public ICommand OuterClickCommand { get; private set; }
+
+        private void ButtonClick(object yourParameter)
+        {
+            //Read 'InputId' somehow. 
+            //But DelegateCommand does not allow the method to contain parameters.
+        }
+
+
 
 
         public void TestCurrentTrack()
         {
-            if (playQueueController.PQ.CurrentTrack != null)
+            //commands
+            //initializate item
+
+            PlayingNowItems = new ObservableCollection<MyQueueItem>()
             {
-                Grid CurrentTrackPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
-                Button CurrentTrackBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = CurrentTrackPanel };
-                CurrentTrackBar.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e) { OuterClick(sender, e, "CurrentTrack"); };
+                new MyQueueItem()
+                {
+                    Name= playQueueController.PQ.CurrentTrack.Name,
+                    Artist=playQueueController.PQ.CurrentTrack.Artist,
+                    Album= "Album",
+                    Duration= playQueueController.PQ.CurrentTrack.Duration
+                }
+            };
 
+            NextInQueueItems = new ObservableCollection<MyQueueItem>();
 
-                Button playCurrentTrackButton = new Button() { Content = "Play" };
-                playCurrentTrackButton.Click += delegate (object sender, RoutedEventArgs e) { InnerClick(sender, e, "CurrentTrack"); };
-
-
-
-                CurrentTrackPanel.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2.5, GridUnitType.Star) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(4.5, GridUnitType.Star) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5, GridUnitType.Star) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-
-                Label name = new Label() { Content = playQueueController.PQ.CurrentTrack.Name };
-                Label artist = new Label() { Content = playQueueController.PQ.CurrentTrack.Artist };
-                Label album = new Label() { Content = "Album" };
-                Label duration = new Label() { Content = playQueueController.PQ.CurrentTrack.Duration };
-
-                CurrentTrackPanel.Children.Add(playCurrentTrackButton);
-                Grid.SetColumn(playCurrentTrackButton, 0);
-                CurrentTrackPanel.Children.Add(name);
-                Grid.SetColumn(name, 1);
-                CurrentTrackPanel.Children.Add(artist);
-                Grid.SetColumn(artist, 2);
-                CurrentTrackPanel.Children.Add(album);
-                Grid.SetColumn(album, 3);
-                CurrentTrackPanel.Children.Add(duration);
-                Grid.SetColumn(duration, 4);
-
-                PlayingNowStackPanel.Children.Add(CurrentTrackBar);
+            count = 0;
+            foreach (var item in playQueueController.PQ.TrackQueue)
+            {
+                NextInQueueItems.Add(new MyQueueItem()
+                {
+                    playButtonID = count,
+                    Name = item.Name,
+                    Artist = item.Artist,
+                    Album = "Album",
+                    Duration = item.Duration
+                }); ;
             }
+
+            NextUpItems = new ObservableCollection<MyQueueItem>();
+
+            count = 0;
+            foreach (var item in playQueueController.PQ.TrackWaitingList)
+            {
+                NextUpItems.Add(new MyQueueItem()
+                {
+                    playButtonID = count,
+                    Name = item.Name,
+                    Artist = item.Artist,
+                    Album = "Album",
+                    Duration = item.Duration
+                });
+            }
+
+            //    Label name = new Label() { Content = playQueueController.PQ.CurrentTrack.Name };
+            //    Label artist = new Label() { Content = playQueueController.PQ.CurrentTrack.Artist };
+            //    Label album = new Label() { Content = "Album" };
+            //    Label duration = new Label() { Content = playQueueController.PQ.CurrentTrack.Duration };
+
+
+
+
+            //if (playQueueController.PQ.CurrentTrack != null)
+            //{
+            //    Grid CurrentTrackPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
+            //    Button CurrentTrackBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = CurrentTrackPanel };
+            //    CurrentTrackBar.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e) { OuterClick(sender, e, "CurrentTrack"); };
+
+
+            //    Button playCurrentTrackButton = new Button() { Content = "Play" };
+            //    playCurrentTrackButton.Click += delegate (object sender, RoutedEventArgs e) { InnerClick(sender, e, "CurrentTrack"); };
+
+
+
+            //    CurrentTrackPanel.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
+            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2.5, GridUnitType.Star) });
+            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
+            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(4.5, GridUnitType.Star) });
+            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5, GridUnitType.Star) });
+            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
+
+            //    Label name = new Label() { Content = playQueueController.PQ.CurrentTrack.Name };
+            //    Label artist = new Label() { Content = playQueueController.PQ.CurrentTrack.Artist };
+            //    Label album = new Label() { Content = "Album" };
+            //    Label duration = new Label() { Content = playQueueController.PQ.CurrentTrack.Duration };
+
+            //    CurrentTrackPanel.Children.Add(playCurrentTrackButton);
+            //    Grid.SetColumn(playCurrentTrackButton, 0);
+            //    CurrentTrackPanel.Children.Add(name);
+            //    Grid.SetColumn(name, 1);
+            //    CurrentTrackPanel.Children.Add(artist);
+            //    Grid.SetColumn(artist, 2);
+            //    CurrentTrackPanel.Children.Add(album);
+            //    Grid.SetColumn(album, 3);
+            //    CurrentTrackPanel.Children.Add(duration);
+            //    Grid.SetColumn(duration, 4);
+
+            //    PlayingNowStackPanel.Children.Add(CurrentTrackBar);
+            //}
         }
 
         private void OuterClick(object sender, MouseButtonEventArgs e, string type)
@@ -144,10 +197,10 @@ namespace Ritmo.ViewModels
 
     public class MyQueueItem
     {
-        public Button PlayButton { get; set; }
-        public Label Name { get; set; }
-        public Label Artist { get; set; }
-        public Label album { get; set; }
-        public Label Duration { get; set; }
+        public int playButtonID { get; set; }
+        public String Name { get; set; }
+        public String Artist { get; set; }
+        public String Album { get; set; }
+        public int Duration { get; set; }
     }
 }
