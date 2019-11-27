@@ -7,12 +7,27 @@ namespace Ritmo
     public abstract class TrackList
     {
         public string Name { get; set; }
+
+        public DateTime CreationDate { get; set; } // get from database
+
+        public int TrackListDuration { get; set; } // get from database, dont know if we change to double or keep it a string
         public LinkedList<Track> Tracks { get; set; }
+
+        public int TrackListID { get; set; }
 
         public TrackList(string name)
         {
             Name = name;
             Tracks = new LinkedList<Track>();
+        }
+
+        public TrackList(int tracklistid, string name, int tracklistduration, DateTime datetime)
+        {
+            TrackListID = tracklistid;
+            Name = name;
+            Tracks = new LinkedList<Track>();
+            CreationDate = datetime;
+            TrackListDuration = tracklistduration;
         }
 
         public void SortTrackList(LinkedList<Track> tracks, string sortOption, bool isAscending)
