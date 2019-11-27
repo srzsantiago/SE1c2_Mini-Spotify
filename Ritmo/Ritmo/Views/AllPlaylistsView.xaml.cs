@@ -84,7 +84,7 @@ namespace Ritmo.Views
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
             //ns.Navigate(new Uri("Views/PlaylistView.xaml", UriKind.Relative));
-            ns.Navigate(new PlaylistViewModel());
+            ns.Navigate(new PlaylistView(testplaylist1));
         }
 
         // maakt playlists aan en voegt de playlists toe aan de lijst, waarna deze zullen geladen worden in AllPlayListsView window in de GUI

@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Ritmo.ViewModels
 {
-    class HomeViewModel : Screen
+    public class HomeViewModel : Screen
     {
         public ICommand ChangeTestStringCommand { get; set; }
         private string _TestString = "Dit is een test!";
@@ -23,7 +23,6 @@ namespace Ritmo.ViewModels
             }
         }
 
-
         public HomeViewModel()
         {
             ChangeTestStringCommand = new RelayCommand(ChangeTestString);
@@ -31,7 +30,10 @@ namespace Ritmo.ViewModels
 
         private void ChangeTestString()
         {
-            TestString = "Tekst is veranderd";
+            if (!TestString.Equals("Tekst is veranderd!"))
+                TestString = "Tekst is veranderd!";
+            else
+                TestString = "Weer andere tekst!";
         }
     }
 }
