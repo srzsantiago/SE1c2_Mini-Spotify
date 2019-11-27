@@ -72,6 +72,8 @@ namespace Ritmo.Views
 
         }
 
+        
+
         //Changes to next track, set CurrentTrackElement and plays track.
         public void PlayNextTrack()
         {

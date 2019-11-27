@@ -29,43 +29,7 @@ namespace Ritmo.Views
 
 
             
-            if (playQueueController.PQ.CurrentTrack != null)
-            {
-                Grid CurrentTrackPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
-                Button CurrentTrackBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = CurrentTrackPanel };
-                CurrentTrackBar.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e) { OuterClick(sender, e, "CurrentTrack"); };
-                
-
-                Button playCurrentTrackButton = new Button() { Content = "Play" };
-                playCurrentTrackButton.Click += delegate (object sender, RoutedEventArgs e) { InnerClick(sender, e, "CurrentTrack"); };
-                
-
-
-                CurrentTrackPanel.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2.5, GridUnitType.Star) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(4.5, GridUnitType.Star) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5, GridUnitType.Star) });
-                CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-
-                Label name = new Label() { Content = playQueueController.PQ.CurrentTrack.Name };
-                Label artist = new Label() { Content = playQueueController.PQ.CurrentTrack.Artist };
-                Label album = new Label() { Content = "Album" };
-                Label duration = new Label() { Content = playQueueController.PQ.CurrentTrack.Duration };
-
-                CurrentTrackPanel.Children.Add(playCurrentTrackButton);
-                Grid.SetColumn(playCurrentTrackButton, 0);
-                CurrentTrackPanel.Children.Add(name);
-                Grid.SetColumn(name, 1);
-                CurrentTrackPanel.Children.Add(artist);
-                Grid.SetColumn(artist, 2);
-                CurrentTrackPanel.Children.Add(album);
-                Grid.SetColumn(album, 3);
-                CurrentTrackPanel.Children.Add(duration);
-                Grid.SetColumn(duration, 4);
-
-                PlayingNowStackPanel.Children.Add(CurrentTrackBar);
-            }
+            
 
 
 
@@ -156,7 +120,7 @@ namespace Ritmo.Views
 
         private void OuterClick(object sender, MouseButtonEventArgs e, string type)
         {
-
+            
             try
             {
                 MessageBox.Show($"OuterButton is double clicked at {type} index {((Button)sender).Tag.ToString()}");
