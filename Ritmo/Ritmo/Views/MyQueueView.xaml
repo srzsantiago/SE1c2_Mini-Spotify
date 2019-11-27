@@ -55,7 +55,7 @@
                             <DataTemplate>
                                 <Button HorizontalContentAlignment="Stretch">
                                     <Button.InputBindings>
-                                        <MouseBinding Gesture="LeftClick" Command="{Binding OuterClickCommand}"/>
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="PlayingNow"/>
                                     </Button.InputBindings>
                                     <Grid HorizontalAlignment="Stretch">
                                         <Grid.RowDefinitions>
@@ -69,9 +69,9 @@
                                             <ColumnDefinition Width="2*" />
                                         </Grid.ColumnDefinitions>
                                         <Button Content="Play" Grid.Column="0">
-                                            <!--<Button.InputBindings>
-                                                <MouseBinding Gesture="LeftClick" Command="InnerClickCommand"/>
-                                            </Button.InputBindings>-->
+                                            <Button.InputBindings>
+                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="PlayingNow"/>
+                                            </Button.InputBindings>
                                         </Button>
                                         <Label Content="{Binding Name}" Grid.Column="1"/>
                                         <Label Content="{Binding Artist}" Grid.Column="2"/>
@@ -90,7 +90,7 @@
                     <StackPanel.Style>
                         <Style TargetType="{x:Type StackPanel}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding PQ.TrackQueue.Count}" Value="0">
+                                <DataTrigger Binding="{Binding NextInQueueItems.Count}" Value="0">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -120,9 +120,9 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Button HorizontalContentAlignment="Stretch">
-                                    <!--<Button.InputBindings>
-                                        <MouseBinding Gesture="LeftDoubleClick" Command="OuterClickCommand"/>
-                                    </Button.InputBindings>-->
+                                    <Button.InputBindings>
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="NextInQueue"/>
+                                    </Button.InputBindings>
                                     <Grid HorizontalAlignment="Stretch">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30" />
@@ -135,9 +135,9 @@
                                             <ColumnDefinition Width="2*" />
                                         </Grid.ColumnDefinitions>
                                         <Button Content="Play" Grid.Column="0">
-                                            <!--<Button.InputBindings>
-                                                <MouseBinding Gesture="LeftClick" Command="InnerClickCommand"/>
-                                            </Button.InputBindings>-->
+                                            <Button.InputBindings>
+                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="NextInQueue"/>
+                                            </Button.InputBindings>
                                         </Button>
                                         <Label Content="{Binding Name}" Grid.Column="1"/>
                                         <Label Content="{Binding Artist}" Grid.Column="2"/>
@@ -150,12 +150,12 @@
                     </ListBox>
                 </StackPanel>
 
-                <!--Stack 2 : Next up-->
+                <!--Stack 3 : Next up-->
                 <StackPanel x:Name="NextUpStackPanel" Orientation="Vertical">
                     <StackPanel.Style>
                         <Style TargetType="{x:Type StackPanel}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding NextUpItems}" Value="0">
+                                <DataTrigger Binding="{Binding NextUpItems.Count}" Value="0">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -185,9 +185,9 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Button HorizontalContentAlignment="Stretch">
-                                    <!--<Button.InputBindings>
-                                        <MouseBinding Gesture="LeftDoubleClick" Command="OuterClickCommand"/>
-                                    </Button.InputBindings>-->
+                                    <Button.InputBindings>
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="NextUp"/>
+                                    </Button.InputBindings>
                                     <Grid HorizontalAlignment="Stretch">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30" />
@@ -200,9 +200,9 @@
                                             <ColumnDefinition Width="2*" />
                                         </Grid.ColumnDefinitions>
                                         <Button Content="Play" Grid.Column="0">
-                                            <!--<Button.InputBindings>
-                                                <MouseBinding Gesture="LeftClick" Command="InnerClickCommand"/>
-                                            </Button.InputBindings>-->
+                                            <Button.InputBindings>
+                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="NextUp"/>
+                                            </Button.InputBindings>
                                         </Button>
                                         <Label Content="{Binding Name}" Grid.Column="1"/>
                                         <Label Content="{Binding Artist}" Grid.Column="2"/>

@@ -20,7 +20,8 @@ namespace Ritmo.ViewModels
         public MyQueueViewModel()
         {
             TestCurrentTrack();
-            //OuterClickCommand = new DelegateCommand<object>(OuterClick);
+            _outerClickCommand = new RelayCommand<object>(this.OuterClick);
+            _innerClickCommand = new RelayCommand<object>(this.InnerClick);
         }
 
         #region Observable collections
@@ -55,25 +56,37 @@ namespace Ritmo.ViewModels
         {
             get
             {
-                if (_outerClickCommand == null)
-                    _outerClickCommand = new RelayCommand(OuterClick);
                 return _outerClickCommand;
+            }
+            set
+            {
+                _outerClickCommand = value;
             }
         }
 
-        public void AddNumber(String n)
+        private ICommand _innerClickCommand;
+
+        public ICommand InnerClickCommand
         {
+            get
+            {
+                return _innerClickCommand;
+            }
+            set
+            {
+                _innerClickCommand = value;
+            }
         }
-
-
 
         public void TestCurrentTrack()
         {
             //commands
             //initializate item
 
-            PlayingNowItems = new ObservableCollection<MyQueueItem>()
+            if (playQueueController.PQ.CurrentTrack != null)
             {
+                PlayingNowItems = new ObservableCollection<MyQueueItem>()
+                {
                 new MyQueueItem()
                 {
                     Name= playQueueController.PQ.CurrentTrack.Name,
@@ -81,38 +94,42 @@ namespace Ritmo.ViewModels
                     Album= "Album",
                     Duration= playQueueController.PQ.CurrentTrack.Duration
                 }
-            };
-
-            NextInQueueItems = new ObservableCollection<MyQueueItem>();
-
-            count = 0;
-            foreach (var item in playQueueController.PQ.TrackQueue)
-            {
-                NextInQueueItems.Add(new MyQueueItem()
-                {
-                    playButtonID = count,
-                    Name = item.Name,
-                    Artist = item.Artist,
-                    Album = "Album",
-                    Duration = item.Duration
-                }); ;
+                };
             }
 
-            NextUpItems = new ObservableCollection<MyQueueItem>();
-
-            count = 0;
-            foreach (var item in playQueueController.PQ.TrackWaitingList)
+            if (playQueueController.PQ.TrackQueue.Count > 0)
             {
-                NextUpItems.Add(new MyQueueItem()
+                NextInQueueItems = new ObservableCollection<MyQueueItem>();
+                count = 0;
+                foreach (var item in playQueueController.PQ.TrackQueue)
                 {
-                    playButtonID = count,
-                    Name = item.Name,
-                    Artist = item.Artist,
-                    Album = "Album",
-                    Duration = item.Duration
-                });
+                    NextInQueueItems.Add(new MyQueueItem()
+                    {
+                        playButtonID = count,
+                        Name = item.Name,
+                        Artist = item.Artist,
+                        Album = "Album",
+                        Duration = item.Duration
+                    }); ;
+                }
             }
 
+            if (playQueueController.PQ.TrackWaitingList.Count > 0)
+            {
+                NextUpItems = new ObservableCollection<MyQueueItem>();
+                count = 0;
+                foreach (var item in playQueueController.PQ.TrackWaitingList)
+                {
+                    NextUpItems.Add(new MyQueueItem()
+                    {
+                        playButtonID = count,
+                        Name = item.Name,
+                        Artist = item.Artist,
+                        Album = "Album",
+                        Duration = item.Duration
+                    });
+                }
+            }
             //    Label name = new Label() { Content = playQueueController.PQ.CurrentTrack.Name };
             //    Label artist = new Label() { Content = playQueueController.PQ.CurrentTrack.Artist };
             //    Label album = new Label() { Content = "Album" };
@@ -160,9 +177,10 @@ namespace Ritmo.ViewModels
             //}
         }
 
-        private void OuterClick()
+        private void OuterClick(Object sender)
         {
-            NextUpItems.ElementAt(0).Album = "test";
+            
+            System.Windows.MessageBox.Show($"OuterButton is double clicked at {(string)sender}");
 
             //try
             //{
@@ -182,24 +200,27 @@ namespace Ritmo.ViewModels
             //            Console.WriteLine();
         }
 
-        private void InnerClick(object sender, RoutedEventArgs e, string type)
+        private void InnerClick(object sender)
         {
-            try
-            {
-                MessageBox.Show($"InnerButton is clicked at {type} index {((Button)sender).Tag.ToString()}");
-            }
-            catch (Exception)
-            {
-                MessageBox.Show($"InnerButton is clicked at {type} ");
-            }
+            System.Windows.MessageBox.Show($"Innerclick is clicked at {(string)sender}");
 
-            if (type.Equals("TrackQueue"))
-                //invoke event to play the song
-                if (type.Equals("TrackWaitingList"))
-                    //invoke event to play the song
-                    if (type.Equals("CurrentTrack"))
-                        //invoke event to play the song
-                        Console.WriteLine();
+
+            //try
+            //{
+            //    MessageBox.Show($"InnerButton is clicked at {type} index {((Button)sender).Tag.ToString()}");
+            //}
+            //catch (Exception)
+            //{
+            //    MessageBox.Show($"InnerButton is clicked at {type} ");
+            //}
+
+            //if (type.Equals("TrackQueue"))
+            //    //invoke event to play the song
+            //    if (type.Equals("TrackWaitingList"))
+            //        //invoke event to play the song
+            //        if (type.Equals("CurrentTrack"))
+            //            //invoke event to play the song
+            //            Console.WriteLine();
 
         }
 
