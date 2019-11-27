@@ -206,8 +206,6 @@ namespace Ritmo.Views
         {
             MenuPanel.Height = 0;
             menuPenalIsOpen = false; //Close the stackpanel
-
-
         }
 
         private void NameAsc_Click(object sender, RoutedEventArgs e) //Sort the playlist by name ascending
