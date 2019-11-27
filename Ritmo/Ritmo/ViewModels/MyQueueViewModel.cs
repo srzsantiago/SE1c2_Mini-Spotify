@@ -42,6 +42,15 @@ namespace Ritmo.ViewModels
             }
         }
 
+        private IObservableCollection<MyQueueItem> _queueItems;
+
+        public IObservableCollection<MyQueueItem> QueueItems
+        {
+            get { return _queueItems; }
+            set { _queueItems = value; }
+        }
+
+
         public MyQueueViewModel()
         {
             TestCurrentTrack();
@@ -131,5 +140,14 @@ namespace Ritmo.ViewModels
 
         }
 
+    }
+
+    public class MyQueueItem
+    {
+        public Button PlayButton { get; set; }
+        public Label Name { get; set; }
+        public Label Artist { get; set; }
+        public Label album { get; set; }
+        public Label Duration { get; set; }
     }
 }
