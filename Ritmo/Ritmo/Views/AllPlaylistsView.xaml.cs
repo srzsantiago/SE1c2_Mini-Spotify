@@ -21,6 +21,7 @@ using CheckBox = System.Windows.Controls.CheckBox;
 using System.Windows.Forms.VisualStyles;
 using Label = System.Windows.Controls.Label;
 using System.Windows.Threading;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Ritmo.Views
 {
@@ -37,7 +38,6 @@ namespace Ritmo.Views
             allplaylistcontroller = AllPlaylistsViewModel.AllPlaylistsController;
             InitializeComponent();
             //testAllPlayLists();
-            
             GetPlayListsGUI();
 
         }
@@ -109,7 +109,7 @@ namespace Ritmo.Views
 
                 if (allplaylistcontroller.allplaylists.playlists[i].Name == buttoncontent) // checks if i is equal to the pressed buttons content
                 {
-                    ns.Navigate(new PlaylistView(allplaylistcontroller.allplaylists.playlists[i]));
+                    ns.Navigate(new PlaylistView(allplaylistcontroller.allplaylists.playlists[i])); // navigates to the desired playlist
                 }
             }
 
@@ -186,15 +186,19 @@ namespace Ritmo.Views
             int playlistamount = allplaylistcontroller.allplaylists.playlists.Count; // counts the amount of playlists
             int buttoncontent = (int)clickedButton.Content; // puts the content of the clicked button onto an int
 
-            for (int i = 0; i < playlistamount; i++) 
+            
+            if (MessageBox.Show("Are you sure you want to delete this playlist?", "Deleting playlist", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                
-                if (allplaylistcontroller.allplaylists.playlists[i].TrackListID == buttoncontent) // checks if i is equal to the pressed buttons content
+                for (int i = 0; i < playlistamount; i++)
                 {
-                    allplaylistcontroller.RemovePlaylist(allplaylistcontroller.allplaylists.playlists[i]); // removes the button with the id of i
-                    
-                    GetPlayListsGUI(); // refreshes the page
-                    break; // stops the loop, if you count 5 playlists and delete one then the loop still goes on to the 5th playlist, this gives an error
+
+                    if (allplaylistcontroller.allplaylists.playlists[i].TrackListID == buttoncontent) // checks if i is equal to the pressed buttons content
+                    {
+                        allplaylistcontroller.RemovePlaylist(allplaylistcontroller.allplaylists.playlists[i]); // removes the button with the id of i
+
+                        GetPlayListsGUI(); // refreshes the page
+                        break; // stops the loop, if you count 5 playlists and delete one then the loop still goes on to the 5th playlist, this gives an error
+                    }
                 }
             }
 
