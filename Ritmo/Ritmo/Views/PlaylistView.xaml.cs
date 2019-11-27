@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Ritmo.Views
 {
     /// <summary>
@@ -179,7 +180,9 @@ namespace Ritmo.Views
             int tracksamount = playlistController.Playlist.Tracks.Count();
             int buttoncontent = (int)clickedButton.Tag; //Pressed button gets an ID
 
-            for (int i = 0; i < tracksamount; i++)
+            if (MessageBox.Show("Are you sure you want to delete this playlist?", "Deleting playlist", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                for (int i = 0; i < tracksamount; i++)
             {
                 if (playlistController.Playlist.Tracks.ElementAt(i).TrackId == buttoncontent) //Check if the trackId is the same as the buttonId
                 {
@@ -188,6 +191,7 @@ namespace Ritmo.Views
                     break; //Ends the loop when you delete a track
                 }
             }
+                }
         }
 
         private void AddTrackQueue_Click(object sender, RoutedEventArgs e) //Add track to the queue
