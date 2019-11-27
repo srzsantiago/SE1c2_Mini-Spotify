@@ -14,7 +14,7 @@ namespace Ritmo.ViewModels
 {
     public class MyQueueViewModel : Screen
     {
-        PlayQueueController PlayQueueController = new PlayQueueController();
+        
         MainWindowViewModel mwvm;
         int count;
 
@@ -85,25 +85,25 @@ namespace Ritmo.ViewModels
             //commands
             //initializate item
 
-            if (PlayQueueController.PQ.CurrentTrack != null)
+            if (mwvm.PlayQueueController.PQ.CurrentTrack != null)
             {
                 PlayingNowItems = new ObservableCollection<MyQueueItem>()
                 {
                 new MyQueueItem()
                 {
-                    Name= PlayQueueController.PQ.CurrentTrack.Name,
-                    Artist=PlayQueueController.PQ.CurrentTrack.Artist,
+                    Name= mwvm.PlayQueueController.PQ.CurrentTrack.Name,
+                    Artist=mwvm.PlayQueueController.PQ.CurrentTrack.Artist,
                     Album= "Album",
-                    Duration= PlayQueueController.PQ.CurrentTrack.Duration
+                    Duration= mwvm.PlayQueueController.PQ.CurrentTrack.Duration
                 }
                 };
             }
 
-            if (PlayQueueController.PQ.TrackQueue.Count > 0)
+            if (mwvm.PlayQueueController.PQ.TrackQueue.Count > 0)
             {
                 NextInQueueItems = new ObservableCollection<MyQueueItem>();
                 count = 0;
-                foreach (var item in PlayQueueController.PQ.TrackQueue)
+                foreach (var item in mwvm.PlayQueueController.PQ.TrackQueue)
                 {
                     NextInQueueItems.Add(new MyQueueItem()
                     {
@@ -116,11 +116,11 @@ namespace Ritmo.ViewModels
                 }
             }
 
-            if (PlayQueueController.PQ.TrackWaitingList.Count > 0)
+            if (mwvm.PlayQueueController.PQ.TrackWaitingList.Count > 0)
             {
                 NextUpItems = new ObservableCollection<MyQueueItem>();
                 count = 0;
-                foreach (var item in PlayQueueController.PQ.TrackWaitingList)
+                foreach (var item in mwvm.PlayQueueController.PQ.TrackWaitingList)
                 {
                     NextUpItems.Add(new MyQueueItem()
                     {
@@ -132,51 +132,7 @@ namespace Ritmo.ViewModels
                     });
                 }
             }
-            //    Label name = new Label() { Content = playQueueController.PQ.CurrentTrack.Name };
-            //    Label artist = new Label() { Content = playQueueController.PQ.CurrentTrack.Artist };
-            //    Label album = new Label() { Content = "Album" };
-            //    Label duration = new Label() { Content = playQueueController.PQ.CurrentTrack.Duration };
 
-
-
-
-            //if (playQueueController.PQ.CurrentTrack != null)
-            //{
-            //    Grid CurrentTrackPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
-            //    Button CurrentTrackBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = CurrentTrackPanel };
-            //    CurrentTrackBar.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e) { OuterClick(sender, e, "CurrentTrack"); };
-
-
-            //    Button playCurrentTrackButton = new Button() { Content = "Play" };
-            //    playCurrentTrackButton.Click += delegate (object sender, RoutedEventArgs e) { InnerClick(sender, e, "CurrentTrack"); };
-
-
-
-            //    CurrentTrackPanel.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
-            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2.5, GridUnitType.Star) });
-            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
-            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(4.5, GridUnitType.Star) });
-            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5, GridUnitType.Star) });
-            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-
-            //    Label name = new Label() { Content = playQueueController.PQ.CurrentTrack.Name };
-            //    Label artist = new Label() { Content = playQueueController.PQ.CurrentTrack.Artist };
-            //    Label album = new Label() { Content = "Album" };
-            //    Label duration = new Label() { Content = playQueueController.PQ.CurrentTrack.Duration };
-
-            //    CurrentTrackPanel.Children.Add(playCurrentTrackButton);
-            //    Grid.SetColumn(playCurrentTrackButton, 0);
-            //    CurrentTrackPanel.Children.Add(name);
-            //    Grid.SetColumn(name, 1);
-            //    CurrentTrackPanel.Children.Add(artist);
-            //    Grid.SetColumn(artist, 2);
-            //    CurrentTrackPanel.Children.Add(album);
-            //    Grid.SetColumn(album, 3);
-            //    CurrentTrackPanel.Children.Add(duration);
-            //    Grid.SetColumn(duration, 4);
-
-            //    PlayingNowStackPanel.Children.Add(CurrentTrackBar);
-            //}
         }
 
         private void OuterClick(Object sender)
@@ -201,11 +157,9 @@ namespace Ritmo.ViewModels
             System.Windows.MessageBox.Show($"InnerButton is clicked at {(string)sender}");
 
             if (type.Equals("PlayingNow"))
-                mwvm.PlayQueueController.PlayTrack()
-                Console.WriteLine();
+                //volgende sprinter
             if (type.Equals("NextInQueue"))
-                //invoke event to play the song
-                Console.WriteLine();
+                //volgende sprinter
             if (type.Equals("NextUp"))
                 //invoke event to play the song
                 Console.WriteLine();
