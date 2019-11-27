@@ -14,7 +14,7 @@
         <Label Grid.Row="0" Content="Play Queue&#xD;&#xA;" HorizontalAlignment="Left" Margin="40,14,0,0" VerticalAlignment="Top" FontSize="48"/>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
             <StackPanel x:Name="MainStackPanel" Orientation="Vertical">
-                <StackPanel Name="PlayingNowStackPanel" Orientation="Vertical" Height="auto">
+                <StackPanel x:Name="PlayingNowStackPanel" Orientation="Vertical" Height="auto">
                     <StackPanel.Style>
                         <Style TargetType="StackPanel">
                             <Style.Triggers>
@@ -39,7 +39,31 @@
                         <Label Content="Album" Grid.Column="3"/>
                         <Label Content="Duration" Grid.Column="4"/>
                     </Grid>
-                    
+                    <ListBox ItemsSource="{Binding QueueItems}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Button HorizontalContentAlignment="Stretch" x:Name="OuterClick">
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button Content="play" Grid.Column="0" x:Name="InnerClick"/>
+                                        <Label x:Name="{Binding Path=QueueItems.Name}" Grid.Column="1"/>
+                                        <Label Content="{Binding Path=QueueItems.Artist}" Grid.Column="2"/>
+                                        <Label Content="{Binding Path=QueueItems.Album}" Grid.Column="3"/>
+                                        <Label Content="{Binding Path=QueueItems.Duration}" Grid.Column="4"/>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
                 <StackPanel x:Name="NextInQueueStackPanel" Orientation="Vertical">
                     <StackPanel.Style>
