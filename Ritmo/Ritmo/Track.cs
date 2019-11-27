@@ -8,7 +8,7 @@ namespace Ritmo
 {
     public class Track
     {
-        public int Id { get; set; } = 0;
+        public int TrackId { get; set; }
         public string Name { get; set; }
         public string Artist { get; set; } // its a string for now, testing
         public int Duration { get; set; } // Duration in seconds
@@ -24,8 +24,9 @@ namespace Ritmo
             Name = name;
         }
 
-        public Track(string name, string artist, int duration)
+        public Track(int trackId, string name, string artist, int duration)
         {
+            TrackId = trackId;
             Name = name;
             Artist = artist;
             Duration = duration;

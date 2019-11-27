@@ -57,13 +57,13 @@
         </Grid>
 
         <StackPanel Name="MenuPanel" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="160" Margin="630,97,0,0" Background="#FF778899">
-            <Button Name="DeleteTrack" Click="DeleteTrack_Click" Content="Delete track from playlist" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
+            <Button Name="DeleteTrack" Content="Delete track from playlist" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
             <Button Name="AddTrackQueue" Click="AddTrackQueue_Click" Content="Add track to queue" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
             <Button Name="AddTrackPlaylist" Click="AddTrackPlaylist_Click" Content="Add track to playlist" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
         </StackPanel>
 
         <StackPanel Name="PlaylistMenu" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="160" Margin="470,159,0,0" Background="#FF778899">
-            <Button Content="Playlist1" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
+            <Button Name="Playlist1Button" Content="Playlist1" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
             <Button Content="Playlist2" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
         </StackPanel>
 
