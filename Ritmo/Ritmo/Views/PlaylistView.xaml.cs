@@ -17,12 +17,12 @@ using System.Windows.Shapes;
 namespace Ritmo.Views
 {
     /// <summary>
-    /// Interaction logic for MyPlaylistsView.xaml
+    /// Interaction logic for AllPlayListsView.xaml
     /// </summary>
     public partial class PlaylistView : UserControl
     {
         bool playlistMenuPanel = false;
-        MyPlaylistsView playlistsView = new MyPlaylistsView();
+        AllPlayListsView playlistsView = new AllPlayListsView();
         bool menuPenalIsOpen = false;
         PlaylistController playlistController;
         Track one = new Track("FirstTrack", "Shakira", 125);

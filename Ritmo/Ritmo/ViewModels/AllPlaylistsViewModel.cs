@@ -11,12 +11,24 @@ namespace Ritmo.ViewModels
 {
     public class AllPlaylistsViewModel : Screen
     {
+        
+
         public MainWindowViewModel MainWindow { get; set; }
         public PlaylistViewModel PlaylistViewModel { get; set; } = new PlaylistViewModel();
         public ICommand OpenPlaylistViewModelCommand { get; set; }
 
+        private static AllPlaylistsController _allPlaylistsController;
+
+        public static AllPlaylistsController AllPlaylistsController
+        {
+
+            get { return _allPlaylistsController; }
+            set { _allPlaylistsController = value; }
+        }
+
         public AllPlaylistsViewModel(MainWindowViewModel MainWindow)
         {
+            AllPlaylistsController = new AllPlaylistsController();
             OpenPlaylistViewModelCommand = new RelayCommand<Screen>(OpenPlaylistViewModel);
             this.MainWindow = MainWindow;
         }

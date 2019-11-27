@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Ritmo.Views.MyPlaylistsView"
+﻿<UserControl x:Class="Ritmo.Views.AllPlayListsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -38,14 +38,12 @@
             <ScrollBar Grid.Column="3" HorizontalAlignment="Left" Margin="165,0,0,0" Grid.Row="2" RenderTransformOrigin="0.529,0.531" Grid.RowSpan="2"/>
 
             <StackPanel Name="NameColumn" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
-                
             </StackPanel>
 
             <StackPanel Name="DurationColumn" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2">
-               
             </StackPanel>
-            <StackPanel Name="CheckboxColumn" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0" Height="375"/>
-
+            <!--<StackPanel Name="CheckboxColumn" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0" Height="375"/> use this one later in the sprint-->
+            <StackPanel Name="DeleteButtonColumn" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0" Height="375"/>
             <StackPanel Name="CreationDateColumn" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2"></StackPanel>
             <!--<Button CommandParameter="{Binding PlaylistViewModel}" Command="{Binding OpenPlaylistViewModelCommand}" Content="Test Open Playlist" Grid.Column="1" HorizontalAlignment="Left" Margin="154,-38,0,0" VerticalAlignment="Top" Width="142"/>-->
             

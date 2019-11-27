@@ -20,55 +20,69 @@ using Button = System.Windows.Controls.Button;
 using CheckBox = System.Windows.Controls.CheckBox;
 using System.Windows.Forms.VisualStyles;
 using Label = System.Windows.Controls.Label;
+using System.Windows.Threading;
 
 namespace Ritmo.Views
 {
     /// <summary>
-    /// Interaction logic for MyPlaylistsView.xaml
+    /// Interaction logic for AllPlayListsView.xaml
     /// </summary>
-    public partial class MyPlaylistsView : UserControl
+    public partial class AllPlayListsView : UserControl
     {
         AllPlaylistsController allplaylistcontroller;
 
         bool menuPenalIsOpen = false;
-
-        int count = -1;
-
-        public MyPlaylistsView()
+        public AllPlayListsView()
         {
-            allplaylistcontroller = new AllPlaylistsController();
+            allplaylistcontroller = AllPlaylistsViewModel.AllPlaylistsController;
             InitializeComponent();
-            testAllPlayLists();
-            GetPlayListsGUI();
+            //testAllPlayLists();
             
+            GetPlayListsGUI();
 
+        }
+
+        public void ClearItems()
+        {
+            NameColumn.Children.Clear();
+            CreationDateColumn.Children.Clear();
+            DeleteButtonColumn.Children.Clear();
+            DurationColumn.Children.Clear();
         }
 
         public void GetPlayListsGUI()
         {
-
-
-                foreach (var item in allplaylistcontroller.allplaylists.playlists) // goes through all the playlists that exist and adds their name to the list in my playlists
+            ClearItems();
+            foreach (var item in allplaylistcontroller.allplaylists.playlists) // goes through all the playlists that exist and adds their name to the list in my playlists
                 {
-                    count++;
-                    CheckBox checkbox = new CheckBox(); // 
-                    Button button = new Button();
+                
+
+                    Button DeleteButton = new Button();
+                    Button NameButton = new Button();
                     Label DurationLabel = new Label();
                     Label CreationDateLabel = new Label();
-                    checkbox.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
-                    button.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
+                
+                    DeleteButton.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+                    NameButton.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
                     DurationLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
                     CreationDateLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
 
-                    button.Height = 27;
-                    button.Content = item.Name;
+                    NameButton.Height = 27;
+                    NameButton.Content = item.Name;
+
+                    DeleteButton.Height = 27;
+                    DeleteButton.Width = 27;
+                    DeleteButton.Content = item.TrackListID;
+                    
+
                     DurationLabel.Content = item.TrackListDuration;
                     CreationDateLabel.Content = item.CreationDate;
 
-                    button.Click += PlaylistClick;
+                    NameButton.Click += PlaylistClick;
+                    DeleteButton.Click += DeletePlayList_Click;
 
-                    CheckboxColumn.Children.Add(checkbox);
-                    NameColumn.Children.Add(button);
+                    DeleteButtonColumn.Children.Add(DeleteButton);
+                    NameColumn.Children.Add(NameButton);
                     DurationColumn.Children.Add(DurationLabel);
                     CreationDateColumn.Children.Add(CreationDateLabel);
                    
@@ -84,33 +98,52 @@ namespace Ritmo.Views
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
             //ns.Navigate(new Uri("Views/PlaylistView.xaml", UriKind.Relative));
-            ns.Navigate(new PlaylistView(testplaylist1));
+  
+
+            Button clickedButton = sender as Button; // checks which button is pressed
+            int playlistamount = allplaylistcontroller.allplaylists.playlists.Count; // counts the amount of playlists
+            string buttoncontent = (string)clickedButton.Content; // puts the content of the clicked button onto an int
+
+            for (int i = 0; i < playlistamount; i++) // FIX: when 2 playlists have the same name(this can be fixed when playlist has their own id in SQL)
+            {
+
+                if (allplaylistcontroller.allplaylists.playlists[i].Name == buttoncontent) // checks if i is equal to the pressed buttons content
+                {
+                    ns.Navigate(new PlaylistView(allplaylistcontroller.allplaylists.playlists[i]));
+                }
+            }
+
         }
 
         // maakt playlists aan en voegt de playlists toe aan de lijst, waarna deze zullen geladen worden in AllPlayListsView window in de GUI
-        public void testAllPlayLists()
-        {
-            Playlist testplaylist1 = new Playlist(1, "playlist1", 100, DateTime.Today);
-            Playlist testplaylist2 = new Playlist(2, "playlist2", 200, DateTime.Today);
-            Playlist testplaylist3 = new Playlist(3, "playlist3", 400, DateTime.Today.AddDays(1));
-            Playlist testplaylist4 = new Playlist(4, "playlist4", 5000, DateTime.Today.AddMonths(4));
-            Playlist testplaylist5 = new Playlist(5, "playlist5", 2222, DateTime.Today);
+        //public void testAllPlayLists()
+        //{
 
+        //    Playlist testplaylist1 = new Playlist(0, "playlist1", 100, DateTime.Today);
+        //    Playlist testplaylist2 = new Playlist(1, "playlist2", 200, DateTime.Today);
+        //    //Playlist testplaylist3 = new Playlist(2, "playlist3", 400, DateTime.Today.AddDays(1));
+        //    //Playlist testplaylist4 = new Playlist(3, "playlist4", 5000, DateTime.Today.AddMonths(4));
+        //    //Playlist testplaylist5 = new Playlist(4, "playlist5", 2222, DateTime.Today);
+        //    Track t1 = new Track("name");
+        //    Track track2 = new Track("lol");
+        //    testplaylist1.Tracks.AddLast(t1);
+        //    testplaylist2.Tracks.AddLast(track2);
 
-            allplaylistcontroller.AddTrackList(testplaylist1);
-            allplaylistcontroller.AddTrackList(testplaylist2);
-            allplaylistcontroller.AddTrackList(testplaylist3);
-            allplaylistcontroller.AddTrackList(testplaylist4);
-            allplaylistcontroller.AddTrackList(testplaylist5);
+        //    allplaylistcontroller.AddTrackList(testplaylist1);
+        //    allplaylistcontroller.AddTrackList(testplaylist2);
 
-        }
+        //    //allplaylistcontroller.AddTrackList(testplaylist3);
+        //    //allplaylistcontroller.AddTrackList(testplaylist4);
+        //    //allplaylistcontroller.AddTrackList(testplaylist5);
+
+        //}
 
         private void Menu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        private void ButtonMenu_Click(object sender, RoutedEventArgs e)
+        private void ButtonMenu_Click(object sender, RoutedEventArgs e) // makes it so that when you click the menu button it opens up, otherwise its closed
         {
             if (!menuPenalIsOpen)
             {
@@ -125,20 +158,20 @@ namespace Ritmo.Views
         }
 
 
-        private void AddPlayList_Click(object sender, RoutedEventArgs e)
+        private void AddPlayList_Click(object sender, RoutedEventArgs e) // creates a pop up that asks the user to input a name for the new playlist
         {
             MenuPanel.Height = 0;
             menuPenalIsOpen = false;
             string x = Interaction.InputBox("Please insert a name:", "Create playlist", "playlist name", 10, 10);
 
-            if(x == "")
+            if(x == "") // if the name field is empty or they click cancel the pop up returns an empty string
             {
                 
             } else
             {
-                Playlist playlist = new Playlist(1 , x, 100, DateTime.Today);
+                Playlist playlist = new Playlist(1 , x, 100, DateTime.Today); // id is going to be unique when we use the database
                 allplaylistcontroller.AddTrackList(playlist);
-                
+                GetPlayListsGUI();
             }
 
 
@@ -149,11 +182,21 @@ namespace Ritmo.Views
         {
             MenuPanel.Height = 0;
             menuPenalIsOpen = false;
+            Button clickedButton = sender as Button; // checks which button is pressed
+            int playlistamount = allplaylistcontroller.allplaylists.playlists.Count; // counts the amount of playlists
+            int buttoncontent = (int)clickedButton.Content; // puts the content of the clicked button onto an int
 
-            //foreach (var item in collection)
-            //{
-            //    allplaylistcontroller.RemovePlaylist();
-            //}
+            for (int i = 0; i < playlistamount; i++) 
+            {
+                
+                if (allplaylistcontroller.allplaylists.playlists[i].TrackListID == buttoncontent) // checks if i is equal to the pressed buttons content
+                {
+                    allplaylistcontroller.RemovePlaylist(allplaylistcontroller.allplaylists.playlists[i]); // removes the button with the id of i
+                    
+                    GetPlayListsGUI(); // refreshes the page
+                    break; // stops the loop, if you count 5 playlists and delete one then the loop still goes on to the 5th playlist, this gives an error
+                }
+            }
 
         }
     }

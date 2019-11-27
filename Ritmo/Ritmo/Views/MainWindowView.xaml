@@ -30,7 +30,7 @@
             <views:FollowingView DataContext="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Name="AllPlaylistsViewTemplate" DataType="{x:Type viewmodels:AllPlaylistsViewModel}">
-            <views:MyPlaylistsView DataContext="{Binding}"/>
+            <views:AllPlayListsView DataContext="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Name="MyQueueViewTemplate" DataType="{x:Type viewmodels:MyQueueViewModel}">
             <views:MyQueueView DataContext="{Binding}"/>
