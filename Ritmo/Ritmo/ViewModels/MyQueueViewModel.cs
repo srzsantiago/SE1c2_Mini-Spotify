@@ -201,7 +201,7 @@ namespace Ritmo.ViewModels
             System.Windows.MessageBox.Show($"InnerButton is clicked at {(string)sender}");
 
             if (type.Equals("PlayingNow"))
-                mwvm.PlayQueueController.PlayTrack()
+                //mwvm.PlayQueueController.PlayTrack(); gave error so i commented it
                 Console.WriteLine();
             if (type.Equals("NextInQueue"))
                 //invoke event to play the song
