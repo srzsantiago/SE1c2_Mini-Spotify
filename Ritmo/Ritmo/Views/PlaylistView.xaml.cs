@@ -28,10 +28,14 @@ namespace Ritmo.Views
         Track one = new Track("FirstTrack", "Shakira", 125);
         Track two = new Track("Second", "Shakira", 134);
         Track three = new Track("FirstSecond", "Ha", 10);
-
-        public PlaylistView(Playlist playlist)
+        public PlaylistView()
         {
             InitializeComponent();
+        }
+
+        public PlaylistView(Playlist playlist): this()
+        {
+            
             playlistController = new PlaylistController(playlist.Name);
             playlistController.AddTrack(one);
             playlistController.AddTrack(two);
