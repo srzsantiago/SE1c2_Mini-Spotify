@@ -33,10 +33,13 @@ namespace Ritmo.Views
         Track two = new Track(2, "Second", "Shakira", 134);
         Track three = new Track(3, "FirstSecond", "Ha", 10);
 
-        public PlaylistView(PlayList playlist)
+        public PlaylistView()
         {
             InitializeComponent();
+        }
 
+        public PlaylistView(Playlist playlist):this()
+        {
             playlistController = new PlaylistController(playlist.Name); //Create a new playlistController with playlist
 
             playlistController.AddTrack(one); //Add tracks to the playlist

@@ -14,11 +14,13 @@ namespace Ritmo.ViewModels
 {
     public class MyQueueViewModel : Screen
     {
-        PlayQueueController playQueueController = new PlayQueueController();
+        PlayQueueController PlayQueueController = new PlayQueueController();
+        MainWindowViewModel mwvm;
         int count;
 
-        public MyQueueViewModel()
+        public MyQueueViewModel(MainWindowViewModel mwvm)
         {
+            this.mwvm = mwvm;
             TestCurrentTrack();
             _outerClickCommand = new RelayCommand<object>(this.OuterClick);
             _innerClickCommand = new RelayCommand<object>(this.InnerClick);
@@ -83,25 +85,25 @@ namespace Ritmo.ViewModels
             //commands
             //initializate item
 
-            if (playQueueController.PQ.CurrentTrack != null)
+            if (PlayQueueController.PQ.CurrentTrack != null)
             {
                 PlayingNowItems = new ObservableCollection<MyQueueItem>()
                 {
                 new MyQueueItem()
                 {
-                    Name= playQueueController.PQ.CurrentTrack.Name,
-                    Artist=playQueueController.PQ.CurrentTrack.Artist,
+                    Name= PlayQueueController.PQ.CurrentTrack.Name,
+                    Artist=PlayQueueController.PQ.CurrentTrack.Artist,
                     Album= "Album",
-                    Duration= playQueueController.PQ.CurrentTrack.Duration
+                    Duration= PlayQueueController.PQ.CurrentTrack.Duration
                 }
                 };
             }
 
-            if (playQueueController.PQ.TrackQueue.Count > 0)
+            if (PlayQueueController.PQ.TrackQueue.Count > 0)
             {
                 NextInQueueItems = new ObservableCollection<MyQueueItem>();
                 count = 0;
-                foreach (var item in playQueueController.PQ.TrackQueue)
+                foreach (var item in PlayQueueController.PQ.TrackQueue)
                 {
                     NextInQueueItems.Add(new MyQueueItem()
                     {
@@ -114,11 +116,11 @@ namespace Ritmo.ViewModels
                 }
             }
 
-            if (playQueueController.PQ.TrackWaitingList.Count > 0)
+            if (PlayQueueController.PQ.TrackWaitingList.Count > 0)
             {
                 NextUpItems = new ObservableCollection<MyQueueItem>();
                 count = 0;
-                foreach (var item in playQueueController.PQ.TrackWaitingList)
+                foreach (var item in PlayQueueController.PQ.TrackWaitingList)
                 {
                     NextUpItems.Add(new MyQueueItem()
                     {
@@ -179,48 +181,34 @@ namespace Ritmo.ViewModels
 
         private void OuterClick(Object sender)
         {
-            
+            String type = (string)sender;
             System.Windows.MessageBox.Show($"OuterButton is double clicked at {(string)sender}");
 
-            //try
-            //{
-            //    MessageBox.Show($"OuterButton is double clicked at {type} index");
-            //}
-            //catch (Exception)
-            //{
-            //    MessageBox.Show($"OuterButton is double clicked at {type} ");
-            //}
-
-            //if (type.Equals("TrackQueue"))
-            //    //invoke event to play the song
-            //    if (type.Equals("TrackWaitingList"))
-            //        //invoke event to play the song
-            //        if (type.Equals("CurrentTrack"))
-            //            //invoke event to play the song
-            //            Console.WriteLine();
+            if (type.Equals("PlayingNow"))
+                //invoke event to play the song
+                Console.WriteLine();
+            if (type.Equals("NextInQueue"))
+                //invoke event to play the song
+                Console.WriteLine();
+            if (type.Equals("NextUp"))
+                //invoke event to play the song
+                Console.WriteLine();
         }
 
         private void InnerClick(object sender)
         {
-            System.Windows.MessageBox.Show($"Innerclick is clicked at {(string)sender}");
+            String type = (string)sender;
+            System.Windows.MessageBox.Show($"InnerButton is clicked at {(string)sender}");
 
-
-            //try
-            //{
-            //    MessageBox.Show($"InnerButton is clicked at {type} index {((Button)sender).Tag.ToString()}");
-            //}
-            //catch (Exception)
-            //{
-            //    MessageBox.Show($"InnerButton is clicked at {type} ");
-            //}
-
-            //if (type.Equals("TrackQueue"))
-            //    //invoke event to play the song
-            //    if (type.Equals("TrackWaitingList"))
-            //        //invoke event to play the song
-            //        if (type.Equals("CurrentTrack"))
-            //            //invoke event to play the song
-            //            Console.WriteLine();
+            if (type.Equals("PlayingNow"))
+                mwvm.PlayQueueController.PlayTrack()
+                Console.WriteLine();
+            if (type.Equals("NextInQueue"))
+                //invoke event to play the song
+                Console.WriteLine();
+            if (type.Equals("NextUp"))
+                //invoke event to play the song
+                Console.WriteLine();
 
         }
 
