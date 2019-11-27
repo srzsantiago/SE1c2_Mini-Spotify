@@ -17,7 +17,7 @@
         </Grid>
 
 
-        <Grid Background="GhostWhite" Margin="0,48,0,0">
+        <Grid Background="GhostWhite" Name="structuregrid" Margin="0,48,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MaxWidth="50" Width="50*"/>
                 <ColumnDefinition Width="395*"/>
@@ -37,18 +37,25 @@
             <Border BorderBrush="Black" BorderThickness="1" Height="2" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="4" MinWidth="500"/>
             <ScrollBar Grid.Column="3" HorizontalAlignment="Left" Margin="165,0,0,0" Grid.Row="2" RenderTransformOrigin="0.529,0.531" Grid.RowSpan="2"/>
 
-            <StackPanel Name="NameColumn" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"></StackPanel>
+            <StackPanel Name="NameColumn" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
+                
+            </StackPanel>
 
-            <StackPanel Name="DurationColumn" Grid.Row="2" Grid.Column="2"></StackPanel>
+            <StackPanel Name="DurationColumn" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2">
+               
+            </StackPanel>
+            <StackPanel Name="CheckboxColumn" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0" Height="375"/>
 
-            <StackPanel Name="CreationDateColumn" Grid.Row="2" Grid.Column="3"></StackPanel>
-            <Button CommandParameter="{Binding PlaylistViewModel}" Command="{Binding OpenPlaylistViewModelCommand}" Content="Test Open Playlist" Grid.Column="1" HorizontalAlignment="Left" Margin="154,-38,0,0" VerticalAlignment="Top" Width="142"/>
+            <StackPanel Name="CreationDateColumn" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2"></StackPanel>
+            <!--<Button CommandParameter="{Binding PlaylistViewModel}" Command="{Binding OpenPlaylistViewModelCommand}" Content="Test Open Playlist" Grid.Column="1" HorizontalAlignment="Left" Margin="154,-38,0,0" VerticalAlignment="Top" Width="142"/>-->
+            
 
 
 
         </Grid>
         <StackPanel Name="MenuPanel" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="105" Margin="685,48,0,0" Background="#FF778899">
             <Button Name="AddPlayList" Click="AddPlayList_Click" Content="Add Playlist" HorizontalAlignment="Left" Height="32" Margin="0,0,-0.2,0" Width="105" Background="{x:Null}" />
+            <Button Name="DeletePlayList" Click="DeletePlayList_Click" Content="Delete Playlist" HorizontalAlignment="Left" Height="32" Margin="0,0,-0.2,0" Width="105" Background="{x:Null}" />
         </StackPanel>
 
     </Grid>
