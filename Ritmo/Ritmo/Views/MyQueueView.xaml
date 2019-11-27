@@ -14,7 +14,7 @@
         <Label Grid.Row="0" Content="Play Queue&#xD;&#xA;" HorizontalAlignment="Left" Margin="40,14,0,0" VerticalAlignment="Top" FontSize="48"/>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
             <StackPanel x:Name="MainStackPanel" Orientation="Vertical">
-                <StackPanel x:Name="PlayingNowStackPanel" Orientation="Vertical">
+                <StackPanel Name="PlayingNowStackPanel" Orientation="Vertical" Height="auto">
                     <StackPanel.Style>
                         <Style TargetType="StackPanel">
                             <Style.Triggers>
@@ -39,6 +39,7 @@
                         <Label Content="Album" Grid.Column="3"/>
                         <Label Content="Duration" Grid.Column="4"/>
                     </Grid>
+                    
                 </StackPanel>
                 <StackPanel x:Name="NextInQueueStackPanel" Orientation="Vertical">
                     <StackPanel.Style>

@@ -22,22 +22,29 @@ namespace Ritmo.ViewModels
             set { _currentrackElement = value; }
         }
 
-        private StackPanel _playingNowStackPanel= new StackPanel();
+        private StackPanel _playingNowStackPanel;
 
-        public MyQueueViewModel()
-        {
-            
-        }
 
         public StackPanel PlayingNowStackPanel
         {
-            get { return _playingNowStackPanel; }
-            set 
+            get 
             { 
+                if(_playingNowStackPanel == null)
+                {
+                    _playingNowStackPanel = new StackPanel();
+                }
+                return _playingNowStackPanel;
+            }
+            set
+            {
                 _playingNowStackPanel = value;
-                TestCurrentTrack();
                 NotifyOfPropertyChange(() => PlayingNowStackPanel);
             }
+        }
+
+        public MyQueueViewModel()
+        {
+            TestCurrentTrack();
         }
 
 
