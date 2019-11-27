@@ -24,7 +24,7 @@ namespace Ritmo
             else
             {
                 Playlist.Tracks.AddLast(track);
-            }            
+            }
         }
 
         public void RemoveTrack(Track track) // removes a track from the playlist.

@@ -19,6 +19,7 @@ namespace Ritmo
         {
             Name = name;
             Tracks = new LinkedList<Track>();
+            
         }
 
         public TrackList(int tracklistid, string name, int tracklistduration, DateTime datetime)
