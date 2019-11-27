@@ -158,8 +158,10 @@ namespace Ritmo.ViewModels
 
             if (type.Equals("PlayingNow"))
                 //volgende sprinter
+                Console.WriteLine();
             if (type.Equals("NextInQueue"))
                 //volgende sprinter
+                Console.WriteLine();
             if (type.Equals("NextUp"))
                 //invoke event to play the song
                 Console.WriteLine();

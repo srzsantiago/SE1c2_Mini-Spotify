@@ -29,10 +29,7 @@ namespace Ritmo.Views
 
         PlaylistController playlistController;
 
-        //Add tracks
-        Track one = new Track(1, "FirstTrack", "Shakira", 125);
-        Track two = new Track(2, "Second", "Shakira", 134);
-        Track three = new Track(3, "FirstSecond", "Ha", 10);
+        
 
         public PlaylistView()
         {
@@ -42,14 +39,22 @@ namespace Ritmo.Views
         public PlaylistView(Playlist playlist):this()
         {
             playlistController = new PlaylistController(playlist.Name); //Create a new playlistController with playlist
+            NamePlaylist.Content = playlistController.Playlist.Name.ToString(); //Set the content for the name
+            TestPlaylist();
+            ShowObjects(); //Show the tracks in the playlistView
+        }
+
+        public void TestPlaylist()
+        {
+            //Add tracks
+            Track one = new Track(1, "FirstTrack", "Shakira", 125);
+            Track two = new Track(2, "Second", "Shakira", 134);
+            Track three = new Track(3, "FirstSecond", "Ha", 10);
 
             playlistController.AddTrack(one); //Add tracks to the playlist
             playlistController.AddTrack(two);
             playlistController.AddTrack(three);
-
-            NamePlaylist.Content = playlistController.Playlist.Name.ToString(); //Set the content for the name
-
-            ShowObjects(); //Show the tracks in the playlistView
+            
         }
 
         public void ShowObjects()
@@ -63,6 +68,7 @@ namespace Ritmo.Views
                 Label l2 = new Label();
                 Label l3 = new Label();
                 Button b = new Button();
+
 
                 // Delete button
                 b.Click += DeleteTrack_Click; //Set the click event
@@ -168,7 +174,7 @@ namespace Ritmo.Views
             }
         }
 
-        private void AddTrackPlaylist_Click(object sender, RoutedEventArgs e) //Add track to a playlist
+        private void AddTrackToPlaylist_Click(object sender, RoutedEventArgs e) //Add track to a playlist
         {
             playlistMenuIsOpen = true; //Opens a new stackpanel, to select a playlist
             PlaylistMenu.Height = 60;
@@ -183,8 +189,7 @@ namespace Ritmo.Views
             int tracksamount = playlistController.Playlist.Tracks.Count();
             int buttoncontent = (int)clickedButton.Tag; //Pressed button gets an ID
 
-            if (MessageBox.Show("Are you sure you want to delete this playlist?", "Deleting playlist", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
+            
                 for (int i = 0; i < tracksamount; i++)
             {
                 if (playlistController.Playlist.Tracks.ElementAt(i).TrackId == buttoncontent) //Check if the trackId is the same as the buttonId
@@ -194,13 +199,15 @@ namespace Ritmo.Views
                     break; //Ends the loop when you delete a track
                 }
             }
-                }
+                
         }
 
         private void AddTrackQueue_Click(object sender, RoutedEventArgs e) //Add track to the queue
         {
             MenuPanel.Height = 0;
             menuPenalIsOpen = false; //Close the stackpanel
+
+
         }
 
         private void NameAsc_Click(object sender, RoutedEventArgs e) //Sort the playlist by name ascending
@@ -238,5 +245,7 @@ namespace Ritmo.Views
             playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Duration", false);
             ShowObjects();
         }
+
+        
     }
 }
