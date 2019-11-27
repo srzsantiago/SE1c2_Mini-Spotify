@@ -17,6 +17,9 @@ using Microsoft.VisualBasic;
 using System.Windows.Forms;
 using UserControl = System.Windows.Controls.UserControl;
 using Button = System.Windows.Controls.Button;
+using CheckBox = System.Windows.Controls.CheckBox;
+using System.Windows.Forms.VisualStyles;
+using Label = System.Windows.Controls.Label;
 
 namespace Ritmo.Views
 {
@@ -25,29 +28,56 @@ namespace Ritmo.Views
     /// </summary>
     public partial class MyPlaylistsView : UserControl
     {
-        public Playlist testplaylist1 = new Playlist("playlist1");
-        Playlist testplaylist2 = new Playlist("playlist2");
-        Playlist testplaylist3 = new Playlist("playlist3");
-        Playlist testplaylist4 = new Playlist("playlist4");
-        Playlist testplaylist5 = new Playlist("playlist5");
-
-        AllPlaylistsController allplaylistcontroller = new AllPlaylistsController();
+        AllPlaylistsController allplaylistcontroller;
 
         bool menuPenalIsOpen = false;
 
+        int count = -1;
+
         public MyPlaylistsView()
         {
+            allplaylistcontroller = new AllPlaylistsController();
             InitializeComponent();
             testAllPlayLists();
-            foreach (var item in allplaylistcontroller.allplaylists.playlists) // goes through all the playlists that exist and adds their name to the list in my playlists
-            {
-                Button button = new Button();
-                button.Content = item.Name;
-                button.Click += PlaylistClick;
+            GetPlayListsGUI();
+            
 
-                NameColumn.Children.Add(button);
-            }
         }
+
+        public void GetPlayListsGUI()
+        {
+
+
+                foreach (var item in allplaylistcontroller.allplaylists.playlists) // goes through all the playlists that exist and adds their name to the list in my playlists
+                {
+                    count++;
+                    CheckBox checkbox = new CheckBox(); // 
+                    Button button = new Button();
+                    Label DurationLabel = new Label();
+                    Label CreationDateLabel = new Label();
+                    checkbox.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
+                    button.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
+                    DurationLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
+                    CreationDateLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
+
+                    button.Height = 27;
+                    button.Content = item.Name;
+                    DurationLabel.Content = item.TrackListDuration;
+                    CreationDateLabel.Content = item.CreationDate;
+
+                    button.Click += PlaylistClick;
+
+                    CheckboxColumn.Children.Add(checkbox);
+                    NameColumn.Children.Add(button);
+                    DurationColumn.Children.Add(DurationLabel);
+                    CreationDateColumn.Children.Add(CreationDateLabel);
+                   
+
+                }
+            
+        }
+
+       
 
         //LEGACY: Moet omgezet worden naar MVVM.
         public void PlaylistClick(Object sender, EventArgs e)
@@ -60,6 +90,13 @@ namespace Ritmo.Views
         // maakt playlists aan en voegt de playlists toe aan de lijst, waarna deze zullen geladen worden in AllPlayListsView window in de GUI
         public void testAllPlayLists()
         {
+            Playlist testplaylist1 = new Playlist(1, "playlist1", 100, DateTime.Today);
+            Playlist testplaylist2 = new Playlist(2, "playlist2", 200, DateTime.Today);
+            Playlist testplaylist3 = new Playlist(3, "playlist3", 400, DateTime.Today.AddDays(1));
+            Playlist testplaylist4 = new Playlist(4, "playlist4", 5000, DateTime.Today.AddMonths(4));
+            Playlist testplaylist5 = new Playlist(5, "playlist5", 2222, DateTime.Today);
+
+
             allplaylistcontroller.AddTrackList(testplaylist1);
             allplaylistcontroller.AddTrackList(testplaylist2);
             allplaylistcontroller.AddTrackList(testplaylist3);
@@ -90,27 +127,33 @@ namespace Ritmo.Views
 
         private void AddPlayList_Click(object sender, RoutedEventArgs e)
         {
-
+            MenuPanel.Height = 0;
+            menuPenalIsOpen = false;
             string x = Interaction.InputBox("Please insert a name:", "Create playlist", "playlist name", 10, 10);
 
             if(x == "")
             {
-                System.Windows.MessageBox.Show("Did not make a playlist");
+                
             } else
             {
-                System.Windows.MessageBox.Show("Playlist " + x + " is made!");
-                Playlist playlist = new Playlist(x);
+                Playlist playlist = new Playlist(1 , x, 100, DateTime.Today);
                 allplaylistcontroller.AddTrackList(playlist);
-
-                Button button = new Button();
-                button.Content = playlist.Name;
-                button.Click += PlaylistClick;
-                NameColumn.Children.Add(button);
-
-
+                
             }
 
 
+
+        }
+
+        private void DeletePlayList_Click(object sender, RoutedEventArgs e)
+        {
+            MenuPanel.Height = 0;
+            menuPenalIsOpen = false;
+
+            //foreach (var item in collection)
+            //{
+            //    allplaylistcontroller.RemovePlaylist();
+            //}
 
         }
     }
