@@ -13,6 +13,7 @@ namespace Ritmo
         {
             Name = name;
             Tracks = new LinkedList<Track>();
+            
         }
 
         public void SortTrackList(LinkedList<Track> tracks, string sortOption, bool isAscending)
