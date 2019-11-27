@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -47,14 +48,22 @@ namespace Ritmo.ViewModels
 
         #endregion
 
-        public ICommand OuterClickCommand { get; private set; }
 
-        private void ButtonClick(object yourParameter)
+        private ICommand _outerClickCommand;
+
+        public ICommand OuterClickCommand
         {
-            //Read 'InputId' somehow. 
-            //But DelegateCommand does not allow the method to contain parameters.
+            get
+            {
+                if (_outerClickCommand == null)
+                    _outerClickCommand = new RelayCommand(OuterClick);
+                return _outerClickCommand;
+            }
         }
 
+        public void AddNumber(String n)
+        {
+        }
 
 
 
@@ -151,25 +160,26 @@ namespace Ritmo.ViewModels
             //}
         }
 
-        private void OuterClick(object sender, MouseButtonEventArgs e, string type)
+        private void OuterClick()
         {
+            NextUpItems.ElementAt(0).Album = "test";
 
-            try
-            {
-                MessageBox.Show($"OuterButton is double clicked at {type} index {((Button)sender).Tag.ToString()}");
-            }
-            catch (Exception)
-            {
-                MessageBox.Show($"OuterButton is double clicked at {type} ");
-            }
+            //try
+            //{
+            //    MessageBox.Show($"OuterButton is double clicked at {type} index");
+            //}
+            //catch (Exception)
+            //{
+            //    MessageBox.Show($"OuterButton is double clicked at {type} ");
+            //}
 
-            if (type.Equals("TrackQueue"))
-                //invoke event to play the song
-                if (type.Equals("TrackWaitingList"))
-                    //invoke event to play the song
-                    if (type.Equals("CurrentTrack"))
-                        //invoke event to play the song
-                        Console.WriteLine();
+            //if (type.Equals("TrackQueue"))
+            //    //invoke event to play the song
+            //    if (type.Equals("TrackWaitingList"))
+            //        //invoke event to play the song
+            //        if (type.Equals("CurrentTrack"))
+            //            //invoke event to play the song
+            //            Console.WriteLine();
         }
 
         private void InnerClick(object sender, RoutedEventArgs e, string type)
