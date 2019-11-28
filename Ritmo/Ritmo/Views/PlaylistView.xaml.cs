@@ -207,44 +207,24 @@ namespace Ritmo.Views
             MenuPanel.Height = 0;
             menuPenalIsOpen = false; //Close the stackpanel
 
-
+            
         }
 
-        private void NameAsc_Click(object sender, RoutedEventArgs e) //Sort the playlist by name ascending
+        private void AscendingSort_Click(object sender, RoutedEventArgs e) 
         {
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Name", true);
+            Button clickedButton = sender as Button;
+            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, (string)clickedButton.Tag, true);
             ShowObjects();
         }
 
-        private void NameDesc_Click(object sender, RoutedEventArgs e) //Sort the playlist by name descending
+        private void DescendingSort_Click(object sender, RoutedEventArgs e)
         {
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Name", false);
+            Button clickedButton = sender as Button;
+            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, (string)clickedButton.Tag, false);
             ShowObjects();
         }
 
-        private void ArtistAsc_Click(object sender, RoutedEventArgs e) //Sort the playlist by artist ascending
-        {
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Artist", true);
-            ShowObjects();
-        }
-
-        private void ArtistDesc_Click(object sender, RoutedEventArgs e) //Sort the playlist by artist descending
-        {
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Artist", false);
-            ShowObjects();
-        }
-
-        private void DurationAsc_Click(object sender, RoutedEventArgs e) //Sort the playlist by duration ascending
-        {
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Duration", true);
-            ShowObjects();
-        }
-
-        private void DurationDesc_Click(object sender, RoutedEventArgs e) //Sort the playlist by duration descending
-        {
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Duration", false);
-            ShowObjects();
-        }
+       
 
         
     }
