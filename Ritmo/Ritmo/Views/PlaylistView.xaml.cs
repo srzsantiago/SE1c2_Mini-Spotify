@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Ritmo.Views
 {
     /// <summary>
@@ -21,65 +22,85 @@ namespace Ritmo.Views
     /// </summary>
     public partial class PlaylistView : UserControl
     {
+        //Close and open the stackpanels (menu panels)
         bool playlistMenuPanel = false;
-        AllPlayListsView playlistsView = new AllPlayListsView();
         bool menuPenalIsOpen = false;
         bool playlistMenuIsOpen = false;
 
         PlaylistController playlistController;
 
-        Track one = new Track("FirstTrack", "Shakira", 125);
-        Track two = new Track("Second", "Shakira", 134);
-        Track three = new Track("FirstSecond", "Ha", 10);
+        
 
-        public PlaylistView(Playlist playlist)
+        public PlaylistView()
         {
             InitializeComponent();
-        
-            playlistController = new PlaylistController(playlist.Name);
-            playlistController.AddTrack(one);
+        }
+
+        public PlaylistView(Playlist playlist):this()
+        {
+            playlistController = new PlaylistController(playlist.Name); //Create a new playlistController with playlist
+            NamePlaylist.Content = playlistController.Playlist.Name.ToString(); //Set the content for the name
+            TestPlaylist();
+            ShowObjects(); //Show the tracks in the playlistView
+        }
+
+        public void TestPlaylist()
+        {
+            //Add tracks
+            Track one = new Track(1, "FirstTrack", "Shakira", 125);
+            Track two = new Track(2, "Second", "Shakira", 134);
+            Track three = new Track(3, "FirstSecond", "Ha", 10);
+
+            playlistController.AddTrack(one); //Add tracks to the playlist
             playlistController.AddTrack(two);
             playlistController.AddTrack(three);
-            NamePlaylist.Content = playlistController.Playlist.Name.ToString();
-
-            ShowObjects();
+            
         }
 
         public void ShowObjects()
-        {            
-            foreach (var item in playlistController.Playlist.Tracks)
+        {
+            ClearItems(); //Clear the stackpanel with labels
+            foreach (var item in playlistController.Playlist.Tracks) //Get items from the track linkedList
             {
+                //Create new labels and button
                 Label l = new Label();
                 Label l1 = new Label();
                 Label l2 = new Label();
                 Label l3 = new Label();
                 Button b = new Button();
 
-                b.Content = "X";
-                b.FontSize = 16;
-               
-                DeleteColumn.Children.Add(b);
-                b.HorizontalAlignment = HorizontalAlignment.Center;
 
+                // Delete button
+                b.Click += DeleteTrack_Click; //Set the click event
+                b.Content = "X"; //Content
+                b.Tag = item.TrackId; //Set id to the button
+                b.FontSize = 16; //Set size of the button
+                DeleteColumn.Children.Add(b); //Add button to the assigned column
+                b.HorizontalAlignment = HorizontalAlignment.Center; //Center the button horizontal
+
+                //Name label
                 l.Content = item.Name;
                 NameColumn.Children.Add(l);
                 l.HorizontalContentAlignment = HorizontalAlignment.Left;
                 
+                //Artist label
                 l1.Content = item.Artist;
                 ArtistColumn.Children.Add(l1);
                 l1.HorizontalContentAlignment = HorizontalAlignment.Center;
-
+                 
+                //Album label
                 l2.Content = "Test";
                 AlbumColumn.Children.Add(l2);
                 l2.HorizontalContentAlignment = HorizontalAlignment.Center;
 
+                //Duration label
                 l3.Content = item.Duration;
                 DurationColumn.Children.Add(l3);
                 l3.HorizontalContentAlignment = HorizontalAlignment.Center;
             }
         }
 
-        public void ClearItems()
+        public void ClearItems() //Method to clear the whole stackpanel with labels
         {
             DeleteColumn.Children.Clear();
             NameColumn.Children.Clear();
@@ -88,47 +109,48 @@ namespace Ritmo.Views
             DurationColumn.Children.Clear();
         }
 
-        private void PlaylistMenuButton_Click(object sender, RoutedEventArgs e)
+        private void PlaylistMenuButton_Click(object sender, RoutedEventArgs e) //Opens or closes the optionsmenu to set the name of the playlist or delete the playlist
         {
-            if (!playlistMenuPanel)
+            if (!playlistMenuPanel) //If panel is closed
             {
-                PlaylistMenuGrid.Height = +60;
+                PlaylistMenuGrid.Height = +60; //Open the stackpanel
                 playlistMenuPanel = true;
             }
             else
             {
-                PlaylistMenuGrid.Height = 0;
+                PlaylistMenuGrid.Height = 0;  //Else close the stackpanel
                 playlistMenuPanel = false;
             }
         }
 
-        private void ButtonMenu_Click(object sender, RoutedEventArgs e)
+        private void ButtonMenu_Click(object sender, RoutedEventArgs e) //Opens or closes the optiosnmenu to add songs to playlist/queue or delete a song
         {
-            if (!menuPenalIsOpen)
+            if (!menuPenalIsOpen) //if panel is closed
             {
-                MenuPanel.Height = +90;
+                MenuPanel.Height = +90; //Open the stackpanel
                 menuPenalIsOpen = true;
             }
             else
             {
-                MenuPanel.Height = 0;
+                MenuPanel.Height = 0; //Close the stackpanel
                 menuPenalIsOpen = false;
             }
         }
-        private void DeletePlaylistButton_Click(object sender, RoutedEventArgs e)
+        private void DeletePlaylistButton_Click(object sender, RoutedEventArgs e) //Delete playlist
         {
             PlaylistMenuGrid.Height = 0;
-            playlistMenuPanel = false;
-            
+            playlistMenuPanel = false; //Closes the stackpanel
         }
 
-        private void ChangeNameButton_Click(object sender, RoutedEventArgs e)
+        private void ChangeNameButton_Click(object sender, RoutedEventArgs e) //Change the name of the playlist
         {
             PlaylistMenuGrid.Height = 0;
-            playlistMenuPanel = false;
+            playlistMenuPanel = false; //Close the stackpanel
+
             string message, title, defaultValue;
             object myValue;
 
+            //Pop up  window
             //Set prompt
             message = "Please enter a name for the playlist.";
 
@@ -152,64 +174,58 @@ namespace Ritmo.Views
             }
         }
 
-        private void AddTrackPlaylist_Click(object sender, RoutedEventArgs e)
+        private void AddTrackToPlaylist_Click(object sender, RoutedEventArgs e) //Add track to a playlist
         {
-            playlistMenuIsOpen = true;
+            playlistMenuIsOpen = true; //Opens a new stackpanel, to select a playlist
             PlaylistMenu.Height = 60;
         }
 
-        private void DeleteTrack_Click(object sender, RoutedEventArgs e)
+        private void DeleteTrack_Click(object sender, RoutedEventArgs e) //Delete a track from the playlist
         {
             MenuPanel.Height = 0;
-            menuPenalIsOpen = false;
+            menuPenalIsOpen = false; //Close the stackpanel
+
+            Button clickedButton = sender as Button; //Check which button is pressed
+            int tracksamount = playlistController.Playlist.Tracks.Count();
+            int buttoncontent = (int)clickedButton.Tag; //Pressed button gets an ID
+
+            
+                for (int i = 0; i < tracksamount; i++)
+            {
+                if (playlistController.Playlist.Tracks.ElementAt(i).TrackId == buttoncontent) //Check if the trackId is the same as the buttonId
+                {
+                    playlistController.RemoveTrack(playlistController.Playlist.Tracks.ElementAt(i)); //Delete the selected track (by trackId)
+                    ShowObjects(); //Show the tracks in the playlist
+                    break; //Ends the loop when you delete a track
+                }
+            }
+                
         }
 
-        private void AddTrackQueue_Click(object sender, RoutedEventArgs e)
+        private void AddTrackQueue_Click(object sender, RoutedEventArgs e) //Add track to the queue
         {
             MenuPanel.Height = 0;
-            menuPenalIsOpen = false;
+            menuPenalIsOpen = false; //Close the stackpanel
+
+            
         }
 
-        private void NameAsc_Click(object sender, RoutedEventArgs e)
+        private void AscendingSort_Click(object sender, RoutedEventArgs e) 
         {
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Name", true);
-            ClearItems();
+            Button clickedButton = sender as Button;
+            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, (string)clickedButton.Tag, true);
             ShowObjects();
         }
 
-        private void NameDesc_Click(object sender, RoutedEventArgs e)
+        private void DescendingSort_Click(object sender, RoutedEventArgs e)
         {
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Name", false);
-            ClearItems();
+            Button clickedButton = sender as Button;
+            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, (string)clickedButton.Tag, false);
             ShowObjects();
         }
 
-        private void ArtistAsc_Click(object sender, RoutedEventArgs e)
-        {
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Artist", true);
-            ClearItems();
-            ShowObjects();
-        }
+       
 
-        private void ArtistDesc_Click(object sender, RoutedEventArgs e)
-        {
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Artist", false);
-            ClearItems();
-            ShowObjects();
-        }
-
-        private void DurationAsc_Click(object sender, RoutedEventArgs e)
-        {
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Duration", true);
-            ClearItems();
-            ShowObjects();
-        }
-
-        private void DurationDesc_Click(object sender, RoutedEventArgs e)
-        {
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, "Duration", false);
-            ClearItems();
-            ShowObjects();
-        }
+        
     }
 }

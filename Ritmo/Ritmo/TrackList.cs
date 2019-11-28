@@ -50,11 +50,11 @@ namespace Ritmo
         {
 
             // making tracks with a name, artist and duration in seconds
-            Track track1 = new Track("B", "santiago", 100);
-            Track track2 = new Track("X", "Tristan", 120);
-            Track track3 = new Track("F", "A", 1000);
-            Track track4 = new Track("A", "B", 20000);
-            Track track5 = new Track("Z", "F", 1);
+            Track track1 = new Track(1, "B", "santiago", 100);
+            Track track2 = new Track(1, "X", "Tristan", 120);
+            Track track3 = new Track(1, "F", "A", 1000);
+            Track track4 = new Track(1, "A", "B", 20000);
+            Track track5 = new Track(1, "Z", "F", 1);
 
             // making the tracklist (goes from playlistcontroller to playlist to tracklist)
             PlaylistController tracklist = new PlaylistController("tracklist1");

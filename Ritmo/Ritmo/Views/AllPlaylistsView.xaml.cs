@@ -21,6 +21,7 @@ using CheckBox = System.Windows.Controls.CheckBox;
 using System.Windows.Forms.VisualStyles;
 using Label = System.Windows.Controls.Label;
 using System.Windows.Threading;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Ritmo.Views
 {
@@ -37,7 +38,6 @@ namespace Ritmo.Views
             allplaylistcontroller = AllPlaylistsViewModel.AllPlaylistsController;
             InitializeComponent();
             //testAllPlayLists();
-            
             GetPlayListsGUI();
 
         }
@@ -109,34 +109,34 @@ namespace Ritmo.Views
 
                 if (allplaylistcontroller.allplaylists.playlists[i].Name == buttoncontent) // checks if i is equal to the pressed buttons content
                 {
-                    ns.Navigate(new PlaylistView(allplaylistcontroller.allplaylists.playlists[i]));
+                    ns.Navigate(new PlaylistView(allplaylistcontroller.allplaylists.playlists[i])); // navigates to the desired playlist
                 }
             }
 
         }
 
         // maakt playlists aan en voegt de playlists toe aan de lijst, waarna deze zullen geladen worden in AllPlayListsView window in de GUI
-        //public void testAllPlayLists()
-        //{
+        public void testAllPlayLists()
+        {
 
-        //    Playlist testplaylist1 = new Playlist(0, "playlist1", 100, DateTime.Today);
-        //    Playlist testplaylist2 = new Playlist(1, "playlist2", 200, DateTime.Today);
-        //    //Playlist testplaylist3 = new Playlist(2, "playlist3", 400, DateTime.Today.AddDays(1));
-        //    //Playlist testplaylist4 = new Playlist(3, "playlist4", 5000, DateTime.Today.AddMonths(4));
-        //    //Playlist testplaylist5 = new Playlist(4, "playlist5", 2222, DateTime.Today);
-        //    Track t1 = new Track("name");
-        //    Track track2 = new Track("lol");
-        //    testplaylist1.Tracks.AddLast(t1);
-        //    testplaylist2.Tracks.AddLast(track2);
+            Playlist testplaylist1 = new Playlist(0, "playlist1", 100, DateTime.Today);
+            Playlist testplaylist2 = new Playlist(1, "playlist2", 200, DateTime.Today);
+            //Playlist testplaylist3 = new Playlist(2, "playlist3", 400, DateTime.Today.AddDays(1));
+            //Playlist testplaylist4 = new Playlist(3, "playlist4", 5000, DateTime.Today.AddMonths(4));
+            //Playlist testplaylist5 = new Playlist(4, "playlist5", 2222, DateTime.Today);
+            Track t1 = new Track("name");
+            Track track2 = new Track("lol");
+            testplaylist1.Tracks.AddLast(t1);
+            testplaylist2.Tracks.AddLast(track2);
 
-        //    allplaylistcontroller.AddTrackList(testplaylist1);
-        //    allplaylistcontroller.AddTrackList(testplaylist2);
+            allplaylistcontroller.AddTrackList(testplaylist1);
+            allplaylistcontroller.AddTrackList(testplaylist2);
 
-        //    //allplaylistcontroller.AddTrackList(testplaylist3);
-        //    //allplaylistcontroller.AddTrackList(testplaylist4);
-        //    //allplaylistcontroller.AddTrackList(testplaylist5);
+            //allplaylistcontroller.AddTrackList(testplaylist3);
+            //allplaylistcontroller.AddTrackList(testplaylist4);
+            //allplaylistcontroller.AddTrackList(testplaylist5);
 
-        //}
+        }
 
         private void Menu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -186,15 +186,19 @@ namespace Ritmo.Views
             int playlistamount = allplaylistcontroller.allplaylists.playlists.Count; // counts the amount of playlists
             int buttoncontent = (int)clickedButton.Content; // puts the content of the clicked button onto an int
 
-            for (int i = 0; i < playlistamount; i++) 
+            
+            if (MessageBox.Show("Are you sure you want to delete this playlist?", "Deleting playlist", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                
-                if (allplaylistcontroller.allplaylists.playlists[i].TrackListID == buttoncontent) // checks if i is equal to the pressed buttons content
+                for (int i = 0; i < playlistamount; i++)
                 {
-                    allplaylistcontroller.RemovePlaylist(allplaylistcontroller.allplaylists.playlists[i]); // removes the button with the id of i
-                    
-                    GetPlayListsGUI(); // refreshes the page
-                    break; // stops the loop, if you count 5 playlists and delete one then the loop still goes on to the 5th playlist, this gives an error
+
+                    if (allplaylistcontroller.allplaylists.playlists[i].TrackListID == buttoncontent) // checks if i is equal to the pressed buttons content
+                    {
+                        allplaylistcontroller.RemovePlaylist(allplaylistcontroller.allplaylists.playlists[i]); // removes the button with the id of i
+
+                        GetPlayListsGUI(); // refreshes the page
+                        break; // stops the loop, if you count 5 playlists and delete one then the loop still goes on to the 5th playlist, this gives an error
+                    }
                 }
             }
 

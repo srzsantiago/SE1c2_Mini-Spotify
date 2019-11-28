@@ -15,12 +15,12 @@
                 <ComboBox.Background>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
                 </ComboBox.Background>
-                <Button Click="NameAsc_Click" Name="NameAsc" Content="Name A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <Button Click="NameDesc_Click" Name="NameDesc" Content="Name Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <Button Click="ArtistAsc_Click" Name="ArtistAsc" Content="Artist A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <Button Click="ArtistDesc_Click" Name="ArtistDesc" Content="Artist Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <Button Click="DurationAsc_Click" Name="DurationAsc" Content="Duration A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <Button Click="DurationDesc_Click" Name="DurationDesc" Content="Duration Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Click="AscendingSort_Click" Name="NameAsc" Tag="Name" Content="Name A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Click="DescendingSort_Click" Name="NameDesc" Tag="Name" Content="Name Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Click="AscendingSort_Click" Name="ArtistAsc" Tag="Artist" Content="Artist A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Click="DescendingSort_Click" Name="ArtistDesc" Tag="Artist" Content="Artist Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Click="AscendingSort_Click" Name="DurationAsc" Tag="Duration" Content="Duration A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Click="DescendingSort_Click" Name="DurationDesc" Tag="Duration" Content="Duration Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
             </ComboBox>
             <Button Click="ButtonMenu_Click" Name="ButtonMenu" Content="≡" HorizontalAlignment="Left" Margin="760,49,0,0" Width="30" Background="{x:Null}" FontSize="30" Height="46" VerticalAlignment="Top"/>
         </Grid>
@@ -57,13 +57,13 @@
         </Grid>
 
         <StackPanel Name="MenuPanel" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="160" Margin="630,97,0,0" Background="#FF778899">
-            <Button Name="DeleteTrack" Click="DeleteTrack_Click" Content="Delete track from playlist" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
+            <Button Name="DeleteTrack" Content="Delete track from playlist" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}" Click="DeleteTrack_Click"/>
             <Button Name="AddTrackQueue" Click="AddTrackQueue_Click" Content="Add track to queue" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
-            <Button Name="AddTrackPlaylist" Click="AddTrackPlaylist_Click" Content="Add track to playlist" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
+            <Button Name="AddTrackPlaylist" Click="AddTrackToPlaylist_Click" Content="Add track to playlist" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
         </StackPanel>
 
         <StackPanel Name="PlaylistMenu" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="160" Margin="470,159,0,0" Background="#FF778899">
-            <Button Content="Playlist1" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
+            <Button Name="Playlist1Button" Content="Playlist1" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
             <Button Content="Playlist2" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
         </StackPanel>
 

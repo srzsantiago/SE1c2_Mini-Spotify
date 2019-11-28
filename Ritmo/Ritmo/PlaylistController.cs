@@ -29,13 +29,7 @@ namespace Ritmo
 
         public void RemoveTrack(Track track) // removes a track from the playlist.
         {
-            if (Playlist.Tracks.Contains(track)) // checks if the given track is in the playlist.
-            {
                 Playlist.Tracks.Remove(track);
-            } else
-            {
-                throw new Exception("This track does not exist in this playlist.");
-            }
             
         }
 

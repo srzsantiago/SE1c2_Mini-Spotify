@@ -13,6 +13,7 @@
     <Grid Background="GhostWhite">
         <Grid Background="LightSlateGray" Height="48" VerticalAlignment="Top">
             <Label HorizontalAlignment="Left" Width="172" Content="My Playlists" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="24" Height="44" VerticalAlignment="Top"/>
+
             <Button Click="ButtonMenu_Click" Name="ButtonMenu" Content="≡" HorizontalAlignment="Left" Height="48" Margin="757,0,0,0" VerticalAlignment="Top" Width="43" Background="{x:Null}" FontSize="38"/>
         </Grid>
 
@@ -35,7 +36,6 @@
             <Label Grid.Column="2" Content="DURATION" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Width="101" />
             <Label Grid.Column="3" Content="CREATION DATE" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Width="101" />
             <Border BorderBrush="Black" BorderThickness="1" Height="2" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="4" MinWidth="500"/>
-            <ScrollBar Grid.Column="3" HorizontalAlignment="Left" Margin="165,0,0,0" Grid.Row="2" RenderTransformOrigin="0.529,0.531" Grid.RowSpan="2"/>
 
             <StackPanel Name="NameColumn" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
             </StackPanel>
@@ -45,15 +45,15 @@
             <!--<StackPanel Name="CheckboxColumn" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0" Height="375"/> use this one later in the sprint-->
             <StackPanel Name="DeleteButtonColumn" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0" Height="375"/>
             <StackPanel Name="CreationDateColumn" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2"></StackPanel>
-            <!--<Button CommandParameter="{Binding PlaylistViewModel}" Command="{Binding OpenPlaylistViewModelCommand}" Content="Test Open Playlist" Grid.Column="1" HorizontalAlignment="Left" Margin="154,-38,0,0" VerticalAlignment="Top" Width="142"/>-->
-            
+             <!--<Button CommandParameter="{Binding PlaylistViewModel}" Command="{Binding OpenPlaylistViewModelCommand}" Content="Test Open Playlist" Grid.Column="1" HorizontalAlignment="Left" Margin="154,-38,0,0" VerticalAlignment="Top" Width="142"/>-->
+
 
 
 
         </Grid>
         <StackPanel Name="MenuPanel" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="105" Margin="685,48,0,0" Background="#FF778899">
             <Button Name="AddPlayList" Click="AddPlayList_Click" Content="Add Playlist" HorizontalAlignment="Left" Height="32" Margin="0,0,-0.2,0" Width="105" Background="{x:Null}" />
-            <Button Name="DeletePlayList" Click="DeletePlayList_Click" Content="Delete Playlist" HorizontalAlignment="Left" Height="32" Margin="0,0,-0.2,0" Width="105" Background="{x:Null}" />
+            <Button Name="DeletePlayList" Content="Delete Playlist" HorizontalAlignment="Left" Height="32" Margin="0,0,-0.2,0" Width="105" Background="{x:Null}" />
         </StackPanel>
 
     </Grid>
