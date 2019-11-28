@@ -29,18 +29,34 @@ namespace Ritmo.Views
 
         PlaylistController playlistController;
 
-        
+        private PlaylistController _playlistController;
+
+        public PlaylistController PlaylistController
+        {
+            get { return _playlistController; }
+            set { _playlistController = value; }
+        }
+
 
         public PlaylistView()
         {
             InitializeComponent();
+        
+            
         }
 
-        public PlaylistView(Playlist playlist):this()
+        public void ChangePlaylist(Playlist playlist)
         {
+            
             playlistController = new PlaylistController(playlist.Name); //Create a new playlistController with playlist
+            playlistController.Playlist = playlist;
             NamePlaylist.Content = playlistController.Playlist.Name.ToString(); //Set the content for the name
-            TestPlaylist();
+
+            if(!(playlistController.Playlist.Tracks.Count > 0))
+            {
+                TestPlaylist();
+            }
+            
             ShowObjects(); //Show the tracks in the playlistView
         }
 

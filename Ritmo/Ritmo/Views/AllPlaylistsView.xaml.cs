@@ -110,11 +110,14 @@ namespace Ritmo.Views
             int playlistamount = allplaylistcontroller.allplaylists.playlists.Count; // counts the amount of playlists
             string buttoncontent = (string)clickedButton.Content; // puts the content of the clicked button onto an int
             int index = (int)clickedButton.Tag; 
-            playlistview.Playlist = allplaylistcontroller.allplaylists.playlists.ElementAt(index);
+            Playlist playlist = allplaylistcontroller.allplaylists.playlists.ElementAt(index);
+            
+
             for (int i = 0; i < playlistamount; i++) // FIX: when 2 playlists have the same name(this can be fixed when playlist has their own id in SQL)
             {
                 if (allplaylistcontroller.allplaylists.playlists[i].Name == buttoncontent) // checks if i is equal to the pressed buttons content
                 {
+                    playlistview.ChangePlaylist(playlist);
                     ns.Navigate(playlistview); // navigates to the desired playlist
                 }
             }
