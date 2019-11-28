@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class User
+    class User : Person
     {
+        
+        public User (bool loggedin):base(loggedin, AccessLevel.user){
+            
+        }
     }
 }

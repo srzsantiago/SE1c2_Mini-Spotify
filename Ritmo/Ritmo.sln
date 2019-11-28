@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ritmo", "Ritmo\Ritmo.csproj", "{44784E21-218C-4315-AA7A-D51491BA60C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ritmo.UnitTests", "Ritmo.UnitTests\Ritmo.UnitTests.csproj", "{27DD3F89-3537-472C-A8A2-D12CA5346FDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritmo.UnitTests", "Ritmo.UnitTests\Ritmo.UnitTests.csproj", "{27DD3F89-3537-472C-A8A2-D12CA5346FDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loginscherm", "loginscherm\loginscherm.csproj", "{06BF6148-DD25-4A9F-9136-69B095422DD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisterTestWPF", "RegisterTestWPF\RegisterTestWPF.csproj", "{4CD357CA-F24A-436E-B2A7-14F8A830E0D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{27DD3F89-3537-472C-A8A2-D12CA5346FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27DD3F89-3537-472C-A8A2-D12CA5346FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27DD3F89-3537-472C-A8A2-D12CA5346FDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06BF6148-DD25-4A9F-9136-69B095422DD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06BF6148-DD25-4A9F-9136-69B095422DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06BF6148-DD25-4A9F-9136-69B095422DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06BF6148-DD25-4A9F-9136-69B095422DD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CD357CA-F24A-436E-B2A7-14F8A830E0D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CD357CA-F24A-436E-B2A7-14F8A830E0D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CD357CA-F24A-436E-B2A7-14F8A830E0D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CD357CA-F24A-436E-B2A7-14F8A830E0D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
