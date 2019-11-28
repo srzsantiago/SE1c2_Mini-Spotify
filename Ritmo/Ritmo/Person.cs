@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Ritmo
 {
 
-    class Person
+    abstract class Person
     {
         bool loggedin { get; set; }
         AccessLevel access;
