@@ -94,7 +94,7 @@
     <Compile Include="AllPlaylistsController.cs" />
     <Compile Include="Artist.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Database\DBConnector.cs" />
+    <Compile Include="Database\DatabaseConnector.cs" />
     <Compile Include="Database\QueryType.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Playlist.cs" />
