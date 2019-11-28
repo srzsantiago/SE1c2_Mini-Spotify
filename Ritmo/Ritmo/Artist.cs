@@ -6,5 +6,14 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class Artist { }
+    class Artist : Person
+    {
+        public string Name;
+        public string Producer;
+        public Artist(bool loggedin, string Name, string Producer) : base(loggedin, AccessLevel.artist)
+        {
+            this.Name = Name;
+            this.Producer = Producer;
+        }
+    }
 }
