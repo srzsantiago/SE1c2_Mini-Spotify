@@ -63,8 +63,8 @@ namespace Ritmo.Views
 
             foreach (var item in allplaylistcontroller.allplaylists.playlists)
             {
-                
-               Listbox.Items.Add(item + item.Name);
+               // Listbox.Item
+               //Listbox.Items.Add(item + item.Name);
             }
             Listbox.Items.Refresh();
         }

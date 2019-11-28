@@ -31,10 +31,13 @@ namespace Ritmo.Views
     public partial class AllPlayListsView : UserControl
     {
         AllPlaylistsController allplaylistcontroller;
-
+        PlaylistView playlistview = new PlaylistView();
         bool menuPenalIsOpen = false;
+        int count = 0; // this is for playlists ids. will be replaced with sql query later
+        
         public AllPlayListsView()
         {
+            
             allplaylistcontroller = AllPlaylistsViewModel.AllPlaylistsController;
             InitializeComponent();
             //testAllPlayLists();
@@ -69,6 +72,8 @@ namespace Ritmo.Views
 
                     NameButton.Height = 27;
                     NameButton.Content = item.Name;
+                    NameButton.Tag = count;
+                    count++;
 
                     DeleteButton.Height = 27;
                     DeleteButton.Width = 27;
@@ -96,6 +101,7 @@ namespace Ritmo.Views
         //LEGACY: Moet omgezet worden naar MVVM.
         public void PlaylistClick(Object sender, EventArgs e)
         {
+            
             NavigationService ns = NavigationService.GetNavigationService(this);
             //ns.Navigate(new Uri("Views/PlaylistView.xaml", UriKind.Relative));
   
@@ -103,13 +109,13 @@ namespace Ritmo.Views
             Button clickedButton = sender as Button; // checks which button is pressed
             int playlistamount = allplaylistcontroller.allplaylists.playlists.Count; // counts the amount of playlists
             string buttoncontent = (string)clickedButton.Content; // puts the content of the clicked button onto an int
-
+            int index = (int)clickedButton.Tag; 
+            playlistview.Playlist = allplaylistcontroller.allplaylists.playlists.ElementAt(index);
             for (int i = 0; i < playlistamount; i++) // FIX: when 2 playlists have the same name(this can be fixed when playlist has their own id in SQL)
             {
-
                 if (allplaylistcontroller.allplaylists.playlists[i].Name == buttoncontent) // checks if i is equal to the pressed buttons content
                 {
-                    ns.Navigate(new PlaylistView(allplaylistcontroller.allplaylists.playlists[i])); // navigates to the desired playlist
+                    ns.Navigate(playlistview); // navigates to the desired playlist
                 }
             }
 
