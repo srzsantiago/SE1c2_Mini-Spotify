@@ -16,22 +16,13 @@ using System.Windows.Shapes;
 namespace Ritmo.Views
 {
     /// <summary>
-    /// Interaction logic for SearchView.xaml
+    /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class SearchView : UserControl
+    public partial class LoginView : UserControl
     {
-        public SearchView()
+        public LoginView()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Search search = new Search();
-            string input = Searchbar_content.Text;
-            List<string> results = search.searchResults(input); 
-
-
         }
     }
 }
