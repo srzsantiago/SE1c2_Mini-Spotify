@@ -55,7 +55,7 @@
                             <DataTemplate>
                                 <Button HorizontalContentAlignment="Stretch">
                                     <Button.InputBindings>
-                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="PlayingNow"/>
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding playButtonID}"/>
                                     </Button.InputBindings>
                                     <Grid HorizontalAlignment="Stretch">
                                         <Grid.RowDefinitions>
@@ -70,7 +70,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Button Content="Play" Grid.Column="0">
                                             <Button.InputBindings>
-                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="PlayingNow"/>
+                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding playButtonID}"/>
                                             </Button.InputBindings>
                                         </Button>
                                         <Label Content="{Binding Name}" Grid.Column="1"/>
@@ -121,7 +121,7 @@
                             <DataTemplate>
                                 <Button HorizontalContentAlignment="Stretch">
                                     <Button.InputBindings>
-                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="NextInQueue"/>
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding playButtonID}"/>
                                     </Button.InputBindings>
                                     <Grid HorizontalAlignment="Stretch">
                                         <Grid.RowDefinitions>
@@ -136,7 +136,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Button Content="Play" Grid.Column="0">
                                             <Button.InputBindings>
-                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="NextInQueue"/>
+                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding playButtonID}"/>
                                             </Button.InputBindings>
                                         </Button>
                                         <Label Content="{Binding Name}" Grid.Column="1"/>
@@ -186,7 +186,7 @@
                             <DataTemplate>
                                 <Button HorizontalContentAlignment="Stretch">
                                     <Button.InputBindings>
-                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="NextUp"/>
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding playButtonID}"/>
                                     </Button.InputBindings>
                                     <Grid HorizontalAlignment="Stretch">
                                         <Grid.RowDefinitions>
@@ -201,7 +201,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Button Content="Play" Grid.Column="0">
                                             <Button.InputBindings>
-                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="NextUp"/>
+                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding playButtonID}"/>
                                             </Button.InputBindings>
                                         </Button>
                                         <Label Content="{Binding Name}" Grid.Column="1"/>

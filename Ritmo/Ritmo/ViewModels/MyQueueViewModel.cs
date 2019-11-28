@@ -14,14 +14,14 @@ namespace Ritmo.ViewModels
 {
     public class MyQueueViewModel : Screen
     {
-        PlayQueueController PlayQueueController = new PlayQueueController();
+        
         MainWindowViewModel mwvm;
         int count;
 
         public MyQueueViewModel(MainWindowViewModel mwvm)
         {
             this.mwvm = mwvm;
-            TestCurrentTrack();
+            ShowElements();
             _outerClickCommand = new RelayCommand<object>(this.OuterClick);
             _innerClickCommand = new RelayCommand<object>(this.InnerClick);
         }
@@ -51,7 +51,7 @@ namespace Ritmo.ViewModels
 
         #endregion
 
-
+        #region commands
         private ICommand _outerClickCommand;
 
         public ICommand OuterClickCommand
@@ -79,136 +79,137 @@ namespace Ritmo.ViewModels
                 _innerClickCommand = value;
             }
         }
+        #endregion
 
-        public void TestCurrentTrack()
+        public void ShowElements()
         {
-            //commands
-            //initializate item
+            //Create ObservableCollections of MyQueueItem(Class) type (The class is at the bottom of this file).
+            //This OC are used in the XAML of MyQueueView in a ListBox to draw the elements.
 
-            if (PlayQueueController.PQ.CurrentTrack != null)
+            if (mwvm.PlayQueueController.PQ.CurrentTrack != null)
             {
+                //makes an OB for CurrentTrack
                 PlayingNowItems = new ObservableCollection<MyQueueItem>()
                 {
+                    //create instance of MyQueueItem with the correspondent properties
                 new MyQueueItem()
                 {
-                    Name= PlayQueueController.PQ.CurrentTrack.Name,
-                    Artist=PlayQueueController.PQ.CurrentTrack.Artist,
+                    playButtonID = "",
+                    Name= mwvm.PlayQueueController.PQ.CurrentTrack.Name,
+                    Artist=mwvm.PlayQueueController.PQ.CurrentTrack.Artist,
                     Album= "Album",
-                    Duration= PlayQueueController.PQ.CurrentTrack.Duration
+                    Duration= mwvm.PlayQueueController.PQ.CurrentTrack.Duration
                 }
                 };
             }
 
-            if (PlayQueueController.PQ.TrackQueue.Count > 0)
+            if (mwvm.PlayQueueController.PQ.TrackQueue.Count > 0)
             {
+                //Makes an OB for All tracks in TrackQueue
                 NextInQueueItems = new ObservableCollection<MyQueueItem>();
-                count = 0;
-                foreach (var item in PlayQueueController.PQ.TrackQueue)
+                count = 0; //this count is used to give every item a ID
+                foreach (var item in mwvm.PlayQueueController.PQ.TrackQueue)
                 {
+                    //Create a instance for each item in TrackQueue
                     NextInQueueItems.Add(new MyQueueItem()
                     {
-                        playButtonID = count,
+                        playButtonID = $"NextInQueue {count}",
                         Name = item.Name,
                         Artist = item.Artist,
                         Album = "Album",
                         Duration = item.Duration
                     }); ;
+                    count++;
                 }
             }
 
-            if (PlayQueueController.PQ.TrackWaitingList.Count > 0)
+            if (mwvm.PlayQueueController.PQ.TrackWaitingList.Count > 0)
             {
+                //Makes an OB for All tracks in TrackWaitingList
                 NextUpItems = new ObservableCollection<MyQueueItem>();
-                count = 0;
-                foreach (var item in PlayQueueController.PQ.TrackWaitingList)
+                count = 0;//this count is used to give every item a ID
+                foreach (var item in mwvm.PlayQueueController.PQ.TrackWaitingList)
                 {
+                    //Create a instance for each item in TrackWaitingList
                     NextUpItems.Add(new MyQueueItem()
                     {
-                        playButtonID = count,
+                        playButtonID = $"NextUp {count}",
                         Name = item.Name,
                         Artist = item.Artist,
                         Album = "Album",
                         Duration = item.Duration
                     });
+                    count++;
                 }
             }
-            //    Label name = new Label() { Content = playQueueController.PQ.CurrentTrack.Name };
-            //    Label artist = new Label() { Content = playQueueController.PQ.CurrentTrack.Artist };
-            //    Label album = new Label() { Content = "Album" };
-            //    Label duration = new Label() { Content = playQueueController.PQ.CurrentTrack.Duration };
 
-
-
-
-            //if (playQueueController.PQ.CurrentTrack != null)
-            //{
-            //    Grid CurrentTrackPanel = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
-            //    Button CurrentTrackBar = new Button() { HorizontalContentAlignment = HorizontalAlignment.Stretch, Content = CurrentTrackPanel };
-            //    CurrentTrackBar.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e) { OuterClick(sender, e, "CurrentTrack"); };
-
-
-            //    Button playCurrentTrackButton = new Button() { Content = "Play" };
-            //    playCurrentTrackButton.Click += delegate (object sender, RoutedEventArgs e) { InnerClick(sender, e, "CurrentTrack"); };
-
-
-
-            //    CurrentTrackPanel.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
-            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2.5, GridUnitType.Star) });
-            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
-            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(4.5, GridUnitType.Star) });
-            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5, GridUnitType.Star) });
-            //    CurrentTrackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) });
-
-            //    Label name = new Label() { Content = playQueueController.PQ.CurrentTrack.Name };
-            //    Label artist = new Label() { Content = playQueueController.PQ.CurrentTrack.Artist };
-            //    Label album = new Label() { Content = "Album" };
-            //    Label duration = new Label() { Content = playQueueController.PQ.CurrentTrack.Duration };
-
-            //    CurrentTrackPanel.Children.Add(playCurrentTrackButton);
-            //    Grid.SetColumn(playCurrentTrackButton, 0);
-            //    CurrentTrackPanel.Children.Add(name);
-            //    Grid.SetColumn(name, 1);
-            //    CurrentTrackPanel.Children.Add(artist);
-            //    Grid.SetColumn(artist, 2);
-            //    CurrentTrackPanel.Children.Add(album);
-            //    Grid.SetColumn(album, 3);
-            //    CurrentTrackPanel.Children.Add(duration);
-            //    Grid.SetColumn(duration, 4);
-
-            //    PlayingNowStackPanel.Children.Add(CurrentTrackBar);
-            //}
         }
 
         private void OuterClick(Object sender)
         {
-            String type = (string)sender;
-            System.Windows.MessageBox.Show($"OuterButton is double clicked at {(string)sender}");
+            String item = (string)sender; //get playButtonID (this will be splited in two. Type and index.
+            string type;
+            int index= -1; //if at the end of the if statement it did not change. It means the type is "PlayingNow" and that a index is not needed
+
+            if (!item.Equals(""))//if item is blank it means it does not have a ID, so it is a playingNow type.
+            {
+                string[] buttonId = item.Split(null); //split playbuttonID
+                type = buttonId[0];
+                index = Int32.Parse(buttonId[1]);
+            }
+            else
+            {
+                type = "PlayingNow";
+            }
+
+            System.Windows.MessageBox.Show($"OuterButton is double clicked at {type} at {index}");
 
             if (type.Equals("PlayingNow"))
-                //invoke event to play the song
+                //volgende sprint
                 Console.WriteLine();
             if (type.Equals("NextInQueue"))
-                //invoke event to play the song
+                //vongende sprint
                 Console.WriteLine();
             if (type.Equals("NextUp"))
-                //invoke event to play the song
-                Console.WriteLine();
+            {
+                Track playTrack = mwvm.PlayQueueController.PQ.TrackWaitingList.ElementAt(index);
+                mwvm.PlayQueueController.PlayTrack(playTrack);
+                mwvm.CurrentTrackElement.Source = playTrack.AudioFile;
+                
+            }
         }
 
         private void InnerClick(object sender)
         {
-            String type = (string)sender;
-            System.Windows.MessageBox.Show($"InnerButton is clicked at {(string)sender}");
+            String item = (string)sender; //get playButtonID (this will be splited in two. Type and index.)
+            string type;
+            int index = -1; //if at the end of the if statement it did not change. It means the type is "PlayingNow" and that a index is not needed
+
+            if (!item.Equals(""))//if item is blank it means it does not have a ID, so it is a playingNow type.
+            {
+                string[] buttonId = item.Split(null);//split playbuttonID
+                type = buttonId[0];
+                index = Int32.Parse(buttonId[1]);
+            }
+            else
+            {
+                type = "PlayingNow";
+            }
+
+            System.Windows.MessageBox.Show($"InnerButton clicked at {type} at {index}");
 
             if (type.Equals("PlayingNow"))
-                //mwvm.PlayQueueController.PlayTrack(); gave error so i commented it
+                //volgende sprint
                 Console.WriteLine();
             if (type.Equals("NextInQueue"))
-                //invoke event to play the song
+                //volgende sprint
                 Console.WriteLine();
             if (type.Equals("NextUp"))
-                //invoke event to play the song
-                Console.WriteLine();
+            {
+                Track playTrack = mwvm.PlayQueueController.PQ.TrackWaitingList.ElementAt(index);
+                mwvm.PlayQueueController.PlayTrack(playTrack);
+                mwvm.CurrentTrackElement.Source = playTrack.AudioFile;
+            }
 
         }
 
@@ -216,7 +217,7 @@ namespace Ritmo.ViewModels
 
     public class MyQueueItem
     {
-        public int playButtonID { get; set; }
+        public String playButtonID { get; set; } //is composed of a type and an Index
         public String Name { get; set; }
         public String Artist { get; set; }
         public String Album { get; set; }

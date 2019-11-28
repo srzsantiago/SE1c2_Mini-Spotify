@@ -18,7 +18,7 @@ namespace Ritmo.ViewModels
     public class MainWindowViewModel : Screen
     {
         PlaylistController PlaylistController = new PlaylistController("TestPlaylist");
-        PlayQueueController PlayQueueController = new PlayQueueController();
+        public PlayQueueController PlayQueueController = new PlayQueueController();
 
 
         #region Commands
