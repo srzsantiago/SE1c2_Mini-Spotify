@@ -97,11 +97,13 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Database\DatabaseConnector.cs" />
     <Compile Include="Database\QueryType.cs" />
+    <Compile Include="Login.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="PlayListController.cs" />
     <Compile Include="PlayQueueController.cs" />
     <Compile Include="Search.cs" />
+    <Compile Include="Register.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="TrackList.cs" />
     <Compile Include="User.cs" />

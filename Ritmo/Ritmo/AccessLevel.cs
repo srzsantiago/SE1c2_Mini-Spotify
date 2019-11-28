@@ -8,6 +8,6 @@ namespace Ritmo
 {
     public enum AccessLevel
     {
-         Admin, Artist, User 
+         admin, artist, user 
     }
 }
