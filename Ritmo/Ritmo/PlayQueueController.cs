@@ -81,8 +81,8 @@ namespace Ritmo
                 }
                 catch
                 {
-                    //throw new Exception("There is no next track available");
-                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
+                    throw new Exception("There is no next track available");
+                    /*if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
                     {
                         PQ.CurrentTrack = PQ.TrackWaitingList.First.Value;
                     }
@@ -91,7 +91,7 @@ namespace Ritmo
                         PQ.TrackWaitingListEnded = true;
                         PQ.IsPaused = true;
                         PQ.CurrentTrack = PQ.TrackWaitingList.First.Value;
-                    }
+                    }*/
                 }
 
             }
