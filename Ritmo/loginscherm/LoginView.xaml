@@ -1,11 +1,10 @@
-﻿<Window x:Class="Ritmo.Views.LoginView"
+﻿<Window x:Class="loginscherm.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Ritmo.Views"
+        xmlns:local="clr-namespace:loginscherm"
         mc:Ignorable="d"
-         xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
         Title="MainWindow" Height="450" Width="800">
     <Grid Background="LightBlue">
         <Canvas HorizontalAlignment="Left" Height="358" Margin="248,26,0,0" VerticalAlignment="Top" Width="311" Background="White">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ritmo.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,16 +11,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ritmo.Views
+namespace loginscherm
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class LoginView : Window
+    public partial class MainWindow : Window
     {
-        public LoginView()
+        public MainWindow()
         {
             InitializeComponent();
         }
@@ -33,8 +35,9 @@ namespace Ritmo.Views
             brush.Color = Colors.LightYellow;
             successblock.Fill = brush;
             if (loginAttemp.loggedin == true)
-            {
+            {              
                 succeslabel.Content = "Success";
+                // mainwindow tonen
             }
             else
             {
@@ -44,7 +47,7 @@ namespace Ritmo.Views
 
         private void Newacc_link_Click(object sender, RoutedEventArgs e)
         {
-
+            //DisplayRootViewFor<MainWindowViewModel>();
         }
 
     }

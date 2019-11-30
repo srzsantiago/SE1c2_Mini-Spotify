@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Ritmo.Database;
 using Ritmo.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,14 @@ namespace Ritmo
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            DisplayRootViewFor<MainWindowViewModel>();
+            //DisplayRootViewFor<Login>();
+            //DisplayRootViewFor<RegisterViewModel>();
+            DisplayRootViewFor<ArtistRegisterViewModel>();
+            //DisplayRootViewFor<MainWindowViewModel>();
+            DatabaseConnector.ConnectSSH();
+            DatabaseConnector.ConnectDB();
+   
         }
+
     }
 }

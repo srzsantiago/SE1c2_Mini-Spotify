@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,59 +14,81 @@ namespace Ritmo
         AccessLevel access { get; set; }
 
         // Hard-coded credentials, uncomment code in 'Login' to use database credentials. 
-        public string email = "gebruiker1@mail.com";
-        public string password = "gebruiker1";
-        public AccessLevel accessdb = AccessLevel.admin;
+        public string emailThis = "";
+        public string passwordThis = "";
+        public AccessLevel accessdb = AccessLevel.user;
 
         // login function
-        public Login(string email, string password)
+        public Login(string mail, string password)
         {
-            /* SqlCommand command;
-             * SqlDataReader dataReader;
-             * String sql,Output = "";
-             * 
-             * GET EMAILADRESSES FROM DATABASE
-             * sql = "SELECT mail FROM users WHERE mail = email";
-             * command = new SqlCommand (sql, conn); // conn contains the connection with the database. 
-             * dataReader = command.ExecuteReader();
-             * 
-             * while (dataReader.Read()){
-             *  Output = Output + dataReader.GetValue(0)
-             * }
-             */
+            
+ 
+            String sql,Output = "";
+            int level = 1;
+            
 
-            // if(Output == email)
-            if (this.email == email)
+            //GET EMAILADRESSES FROM DATABASE
+            sql = "SELECT email FROM Person WHERE email = " + "'" + mail + "'";
+            List<Dictionary<string, object>> Email = Database.DatabaseConnector.SelectQueryDB(sql);
+            string databaseMail = "";
+
+            foreach(var dictionary in Email)
             {
-                /* sql = "SELECT password FROM users WHERE mail = email";
-                 * command = new SqlCommand (sql, conn); // conn contains the connection with the database. 
-                 * dataReader = command.ExecuteReader();
-                 * 
-                 * while (dataReader.Read()){
-                 *  Output = Output + dataReader.GetValue(0)
-                 * }
-                 */
+                foreach (var keyValue in dictionary)
+                {
+                    databaseMail =  keyValue.Value.ToString();
+                }
+            }
 
-                // if (output != password)
-                if (this.password != password)
+            if(databaseMail == mail)
+            //if (this.email == email)
+            {
+                sql = "SELECT password FROM Person WHERE email = " + "'" + mail + "'";
+                List<Dictionary<string, object>> Password = Database.DatabaseConnector.SelectQueryDB(sql);
+                string databasePassword = "";
+
+                foreach (var dictionary in Password)
+                {
+                    foreach (var keyValue in dictionary)
+                    {
+                        databasePassword = keyValue.Value.ToString();
+                    }
+                }
+
+
+                if (databasePassword != password)
+                //if (this.password != password)
                 {
                     loggedin = false;
                 }
                 else
                 {
-                    this.email = email;
-                    this.password = password;
-                    /* sql = "SELECT access FROM users WHERE mail = email";
-                    * command = new SqlCommand (sql, conn); // conn contains the connection with the database. 
-                    * dataReader = command.ExecuteReader();
-                    * 
-                    * while (dataReader.Read()){
-                    *  Output = Output + dataReader.GetValue(0)
-                    * }
-                    */
+                    emailThis = mail;
+                    passwordThis = password;
+                    sql = "SELECT rol FROM Person WHERE email = " + "'" + mail + "'";
+                    List<Dictionary<string, object>> Role = Database.DatabaseConnector.SelectQueryDB(sql);
+                    int databaseRole = 1;
 
-                    //this.access = output;
-                    this.access = accessdb;
+                    foreach (var dictionary in Role)
+                    {
+                        foreach (var keyValue in dictionary)
+                        {
+                            string databaseRoleString = keyValue.Value.ToString();
+                            databaseRole = Int32.Parse(databaseRoleString);
+                        }
+                    }
+
+                    if (databaseRole == 1)
+                    {
+                        this.access = AccessLevel.user;
+                    } else if (databaseRole == 2)
+                    {
+                        this.access = AccessLevel.artist;
+                    } else if (databaseRole == 3)
+                    {
+                        this.access = AccessLevel.admin;
+                    }
+                    //this.access = accessdb;
                     loggedin = true;
                     // create new user with the loggedin bool and the access enum value
                     if (access == AccessLevel.user)
@@ -86,6 +109,7 @@ namespace Ritmo
                 loggedin = false;
                 Console.WriteLine("Username not found in our database");
             }
+
         }
     }
 }

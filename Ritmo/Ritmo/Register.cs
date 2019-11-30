@@ -8,41 +8,43 @@ namespace Ritmo
 {
     public class Register
     {
-        /* SqlCommand command;
-         * SqlDataReader dataReader;
-         * String sql,Output = "";
-         */
-        private string  Name;
-        private string  Email;
-        private string  Password;
-        private bool    Artist;
         public string   Message;
 
+        String sql, Output = "";
+        private bool mailexists = false;
         public string existingTestMail = "email@example.com"; 
 
-        public Register(string name, string email, string password, string confirmpw)
+        public Register(string name, string mail, string password, string confirmpw)
         {
             if(password == confirmpw)
             {
-                /*GET EMAILADRESSES FROM DATABASE
-                * sql = "SELECT mail FROM users WHERE mail = email";
-                * command = new SqlCommand(sql, conn); // conn contains the connection with the database. 
-                * dataReader = command.ExecuteReader();
-                *
-                * while (dataReader.Read())
-                * {
-                *   Output = Output + dataReader.GetValue(0)
-                * }
-                */
+                sql = "SELECT email FROM Person WHERE email = " + "'" + mail + "'";
+                List<Dictionary<string, object>> Email = Database.DatabaseConnector.SelectQueryDB(sql);
+                List<string> databaseMail = new List<string>();
+
+                foreach (var dictionary in Email)
+                {
+                    foreach (var keyValue in dictionary)
+                    {
+                        databaseMail.Add(keyValue.Value.ToString());
+                    }
+                }
+
+                foreach (string dbmail in databaseMail)
+                {
+                    if(mail == dbmail)
+                    {
+                        this.mailexists = true;
+                    }
+                }
 
                 //if (email != Output)
-                if(email != existingTestMail)
+                if (this.mailexists == false)
                 {
-                    Name        = name;
-                    Email       = email;
-                    Password    = password;
-                    Artist      = false;
                     Message = "Your account has been successfully created";
+
+                    sql = "INSERT INTO Person VALUES (" + "'" + mail + "', '" + password + "', '" + name + "', " + 1 + ")";
+                    Database.DatabaseConnector.InsertQueryDB(sql);
                 }
                 else
                 {
@@ -55,24 +57,32 @@ namespace Ritmo
             }
         }
 
-        public Register(string email)
+        public Register(string mail)
         {
-            /*GET EMAILADRESSES FROM DATABASE
-             * sql = "SELECT mail FROM users WHERE mail = email";
-             * command = new SqlCommand(sql, conn); // conn contains the connection with the database. 
-             * dataReader = command.ExecuteReader();
-             *
-             * while (dataReader.Read())
-             * {
-             *   Output = Output + dataReader.GetValue(0)
-             * }
-             */
+            sql = "SELECT email FROM Person WHERE email = " + "'" + mail + "'";
+            List<Dictionary<string, object>> Email = Database.DatabaseConnector.SelectQueryDB(sql);
+            List<string> databaseMail = new List<string>();
 
-            //if (email != Output)
-            if (email != existingTestMail)
+            foreach (var dictionary in Email)
             {
-                Email   = email;
-                Artist  = true;
+                foreach (var keyValue in dictionary)
+                {
+                    databaseMail.Add(keyValue.Value.ToString());
+                }
+            }
+
+            foreach (string dbmail in databaseMail)
+            {
+                if (mail == dbmail)
+                {
+                    this.mailexists = true;
+                }
+            }
+
+            if (this.mailexists == false)
+            {
+                sql = "INSERT INTO Person VALUES (" + "'" + mail + "', '" + "', '"  + "', " + 2 + ")";
+                Database.DatabaseConnector.InsertQueryDB(sql);
             } else
             {
                 Message = "This email already exists";
