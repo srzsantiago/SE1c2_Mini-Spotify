@@ -21,7 +21,7 @@
                 
                 <!--Stack 1 : Playing Now-->
                 <StackPanel x:Name="PlayingNowStackPanel" Orientation="Vertical" Height="auto">
-                    <StackPanel.Style>
+                    <StackPanel.Style><!-- DataTrigger to hide the StackPanel if its empty -->
                         <Style TargetType="{x:Type StackPanel}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding PlayingNowItems, Mode=TwoWay}" Value="{x:Null}">
@@ -30,6 +30,7 @@
                             </Style.Triggers>
                         </Style>
                     </StackPanel.Style>
+                    <!-- column header -->
                     <Label Content="Now Playing" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -45,6 +46,7 @@
                         <Label Content="Album" Grid.Column="3"/>
                         <Label Content="Duration" Grid.Column="4"/>
                     </Grid>
+                    <!-- ListBox with ItemTemplate for each component in the ObservableCollection  -->
                     <ListBox ItemsSource="{Binding PlayingNowItems}" BorderThickness="0" HorizontalContentAlignment="Stretch">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
@@ -55,7 +57,7 @@
                             <DataTemplate>
                                 <Button HorizontalContentAlignment="Stretch">
                                     <Button.InputBindings>
-                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding playButtonID}"/>
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
                                     </Button.InputBindings>
                                     <Grid HorizontalAlignment="Stretch">
                                         <Grid.RowDefinitions>
@@ -70,18 +72,20 @@
                                         </Grid.ColumnDefinitions>
                                         <Button Content="Play" Grid.Column="0">
                                             <Button.InputBindings>
-                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding playButtonID}"/>
+                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
                                             </Button.InputBindings>
                                         </Button>
                                         <Label Content="{Binding Name}" Grid.Column="1"/>
                                         <Label Content="{Binding Artist}" Grid.Column="2"/>
                                         <Label Content="{Binding Album}" Grid.Column="3"/>
                                         <Label Content="{Binding Duration}" Grid.Column="4"/>
+                                        <Button BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                                                Name="ButtonMenu" Content="⋯" Grid.Column="4" Background="{x:Null}" 
+                                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" FontSize="14"/>
                                     </Grid>
                                 </Button>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                        
                     </ListBox>
                 </StackPanel>
 
@@ -121,7 +125,7 @@
                             <DataTemplate>
                                 <Button HorizontalContentAlignment="Stretch">
                                     <Button.InputBindings>
-                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding playButtonID}"/>
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
                                     </Button.InputBindings>
                                     <Grid HorizontalAlignment="Stretch">
                                         <Grid.RowDefinitions>
@@ -136,13 +140,16 @@
                                         </Grid.ColumnDefinitions>
                                         <Button Content="Play" Grid.Column="0">
                                             <Button.InputBindings>
-                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding playButtonID}"/>
+                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
                                             </Button.InputBindings>
                                         </Button>
                                         <Label Content="{Binding Name}" Grid.Column="1"/>
                                         <Label Content="{Binding Artist}" Grid.Column="2"/>
                                         <Label Content="{Binding Album}" Grid.Column="3"/>
                                         <Label Content="{Binding Duration}" Grid.Column="4"/>
+                                        <Button BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                                                Name="ButtonMenu" Content="⋯" Grid.Column="4" Background="{x:Null}" 
+                                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" FontSize="14"/>
                                     </Grid>
                                 </Button>
                             </DataTemplate>
@@ -186,7 +193,7 @@
                             <DataTemplate>
                                 <Button HorizontalContentAlignment="Stretch">
                                     <Button.InputBindings>
-                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding playButtonID}"/>
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
                                     </Button.InputBindings>
                                     <Grid HorizontalAlignment="Stretch">
                                         <Grid.RowDefinitions>
@@ -201,13 +208,16 @@
                                         </Grid.ColumnDefinitions>
                                         <Button Content="Play" Grid.Column="0">
                                             <Button.InputBindings>
-                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding playButtonID}"/>
+                                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
                                             </Button.InputBindings>
                                         </Button>
                                         <Label Content="{Binding Name}" Grid.Column="1"/>
                                         <Label Content="{Binding Artist}" Grid.Column="2"/>
                                         <Label Content="{Binding Album}" Grid.Column="3"/>
                                         <Label Content="{Binding Duration}" Grid.Column="4"/>
+                                        <Button BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                                                Name="ButtonMenu" Content="⋯" Grid.Column="4" Background="{x:Null}" 
+                                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" FontSize="14"/>
                                     </Grid>
                                 </Button>
                             </DataTemplate>

@@ -13,34 +13,22 @@ namespace Ritmo
         public PlayQueueController()//Constructor that initializate a new playQueue and link this to the playqueuecontroller
         {
             PQ = new PlayQueue();
-            this.TestMethode();
-        }
-
-        private void TestMethode()
-        {
-            PQ.CurrentTrack = new Track(1,"Ritmo", "Jbalvin", 80);
-            this.AddTrack(new Track(2,"Blanco", "Jbalvin", 60));
-            this.AddTrack(new Track(3,"Contra la pared", "Jbalvin", 120));
-            TrackList testlist = new Playlist("TestPlaylist");
-            testlist.Tracks.AddLast(new Track(4,"Con Calma", "Daddy Yankee", 55));
-            testlist.Tracks.AddLast(new Track(5,"Despacito", "Luis foncin", 40));
-            this.SetTrackWatingList(testlist);
         }
 
         public void PlayTrack(Track track)//Set the currentTrack with a single track chosen by the user
         {
+            PQ.CurrentTrack = track;
             if (PQ.TrackWaitingList.Contains(PQ.CurrentTrack)) //check if the tracklist contains the track
             {
                 PQ.WaitingListToQueueTrack = PQ.CurrentTrack;//remember the track so it can be use for the method next
             }
-            PQ.CurrentTrack = track;
-            PQ.WaitingListToQueueTrack = null;
+            
         }
 
         public void PlayTrack(Track track, TrackList trackList)//set the currentTrack with a track from a tracklist(playlist/album) chosen by the user and at the whole playlist will be added to the waitinglist
         {
-            PlayTrack(track);
             SetTrackWatingList(trackList);
+            PlayTrack(track);
         }
 
         public void ResumeTrack()
@@ -63,25 +51,22 @@ namespace Ritmo
             {
                 try
                 {
-                    if (PQ.WaitingListToQueueTrack == null)//check if the last played track has a value
+                    //play next song in the tracklist if the Repeatmode is OFF or TrackListRepeat
+                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
                     {
-                        //play next song in the tracklist if the mode is off or trackrepeat
-                        if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat)) 
-                        {
-                            PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.CurrentTrack).Next.Value;
-                            PQ.TrackWaitingListEnded = false;
-                        }
-                        //play the same track again while mode is trackrepeat
-                        if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
-                            PQ.CurrentTrack = PQ.CurrentTrack;
-                        
-                    }
-                    else//resume the tracklist at the last played track
                         PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Next.Value;
+                        PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
+                        PQ.TrackWaitingListEnded = false;
+                    }
+                    //play the same track again while mode is TrackRepeat
+                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
+                        PQ.CurrentTrack = PQ.CurrentTrack;
                 }
                 catch
                 {
                     //throw new Exception("There is no next track available");
+                    
+                    //this stage is only for test. In the next Sprint it will be changed.=====================
                     if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
                     {
                         PQ.CurrentTrack = PQ.TrackWaitingList.First.Value;
@@ -91,6 +76,7 @@ namespace Ritmo
                         PQ.TrackWaitingListEnded = true;
                         PQ.IsPaused = true;
                         PQ.CurrentTrack = PQ.TrackWaitingList.First.Value;
+                        PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
                     }
                 }
 
@@ -102,11 +88,19 @@ namespace Ritmo
         {
             //check if tracklist contains the CurrentTrack
             //(this must be checked because you can not use previous for the tracks in the queue)
-            //and check if the track is not the first track
-            if (PQ.TrackWaitingList.Contains(PQ.CurrentTrack) && !PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First.Value))
-                PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.CurrentTrack).Previous.Value;
+            
+            if (PQ.TrackWaitingList.Contains(PQ.WaitingListToQueueTrack) && !PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First.Value))
+            {
+                PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Previous.Value;
+                PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
+            }
+            //check if the track is not the first track
             else if (PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First()))
+            {
                 PQ.CurrentTrack = PQ.TrackWaitingList.Last();
+                PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
+            }
+
         }
 
         public void AddTrack(Track track) //Add track to the queue

@@ -52,18 +52,12 @@ namespace Ritmo.Views
 
         }
 
-        public void ChangePlaylist(Playlist playlist)
+        public PlaylistView(Playlist playlist):this()
         {
             
             playlistController = new PlaylistController(playlist.Name); //Create a new playlistController with playlist
-            playlistController.Playlist = playlist;
             NamePlaylist.Content = playlistController.Playlist.Name.ToString(); //Set the content for the name
-
-            if(!(playlistController.Playlist.Tracks.Count > 0))
-            {
-                TestPlaylist();
-            }
-            
+            TestPlaylist();
             ShowObjects(); //Show the tracks in the playlistView
         }
 

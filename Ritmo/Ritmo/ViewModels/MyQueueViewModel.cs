@@ -21,10 +21,11 @@ namespace Ritmo.ViewModels
         public MyQueueViewModel(MainWindowViewModel mwvm)
         {
             this.mwvm = mwvm;
-            ShowElements();
             _outerClickCommand = new RelayCommand<object>(this.OuterClick);
             _innerClickCommand = new RelayCommand<object>(this.InnerClick);
+            ShowElements();
         }
+
 
         #region Observable collections
         private ObservableCollection<MyQueueItem> _playingNowItems;
@@ -34,19 +35,25 @@ namespace Ritmo.ViewModels
         public ObservableCollection<MyQueueItem> PlayingNowItems
         {
             get { return _playingNowItems; }
-            set { _playingNowItems = value; }
+            set { _playingNowItems = value;
+                NotifyOfPropertyChange("PlayingNowItems");
+            }
         }
 
         public ObservableCollection<MyQueueItem> NextInQueueItems
         {
             get { return _nextInQueueItems; }
-            set { _nextInQueueItems = value; }
+            set { _nextInQueueItems = value;
+                NotifyOfPropertyChange("NextInQueueItems");
+            }
         }
 
         public ObservableCollection<MyQueueItem> NextUpItems
         {
             get { return _nextUpItems; }
-            set { _nextUpItems = value; }
+            set { _nextUpItems = value;
+                NotifyOfPropertyChange("NextUpItems");
+            }
         }
 
         #endregion
@@ -83,24 +90,28 @@ namespace Ritmo.ViewModels
 
         public void ShowElements()
         {
-            //Create ObservableCollections of MyQueueItem(Class) type (The class is at the bottom of this file).
+            //Create ObservableCollections(OC) of class MyQueueItem (The class is at the bottom of this file).
             //This OC are used in the XAML of MyQueueView in a ListBox to draw the elements.
 
             if (mwvm.PlayQueueController.PQ.CurrentTrack != null)
             {
-                //makes an OB for CurrentTrack
+                //makes an OC for CurrentTrack
                 PlayingNowItems = new ObservableCollection<MyQueueItem>()
                 {
                     //create instance of MyQueueItem with the correspondent properties
                 new MyQueueItem()
                 {
-                    playButtonID = "",
+                    ButtonID = "",
                     Name= mwvm.PlayQueueController.PQ.CurrentTrack.Name,
                     Artist=mwvm.PlayQueueController.PQ.CurrentTrack.Artist,
                     Album= "Album",
                     Duration= mwvm.PlayQueueController.PQ.CurrentTrack.Duration
                 }
                 };
+            }
+            else // if CurrentTrack is empty, the OC is cleared.
+            {
+                PlayingNowItems = new ObservableCollection<MyQueueItem>();
             }
 
             if (mwvm.PlayQueueController.PQ.TrackQueue.Count > 0)
@@ -113,7 +124,7 @@ namespace Ritmo.ViewModels
                     //Create a instance for each item in TrackQueue
                     NextInQueueItems.Add(new MyQueueItem()
                     {
-                        playButtonID = $"NextInQueue {count}",
+                        ButtonID = $"NextInQueue {count}",
                         Name = item.Name,
                         Artist = item.Artist,
                         Album = "Album",
@@ -121,6 +132,10 @@ namespace Ritmo.ViewModels
                     }); ;
                     count++;
                 }
+            }
+            else // if CurrentTrack is empty, the OC is cleared.
+            {
+                NextInQueueItems = new ObservableCollection<MyQueueItem>();
             }
 
             if (mwvm.PlayQueueController.PQ.TrackWaitingList.Count > 0)
@@ -130,40 +145,50 @@ namespace Ritmo.ViewModels
                 count = 0;//this count is used to give every item a ID
                 foreach (var item in mwvm.PlayQueueController.PQ.TrackWaitingList)
                 {
-                    //Create a instance for each item in TrackWaitingList
-                    NextUpItems.Add(new MyQueueItem()
+                    //This LINQ expression returns the index of WaitingListToQueueTrack
+                    int indexOfWaitingListToQueueTrack = mwvm.PlayQueueController.PQ.TrackWaitingList.TakeWhile(n => n != mwvm.PlayQueueController.PQ.WaitingListToQueueTrack).Count();
+
+                    //Create a instance for each item after the WaitingListToQueueTrack in TrackWaitingList
+                    if (count > indexOfWaitingListToQueueTrack)
                     {
-                        playButtonID = $"NextUp {count}",
-                        Name = item.Name,
-                        Artist = item.Artist,
-                        Album = "Album",
-                        Duration = item.Duration
-                    });
+                        NextUpItems.Add(new MyQueueItem()
+                        {
+                            ButtonID = $"NextUp {count}",
+                            Name = item.Name,
+                            Artist = item.Artist,
+                            Album = "Album",
+                            Duration = item.Duration
+                        });
+                    }
                     count++;
                 }
+            }
+            else// if CurrentTrack is empty, the OC is cleared.
+            {
+                NextInQueueItems = new ObservableCollection<MyQueueItem>();
             }
 
         }
 
         private void OuterClick(Object sender)
         {
-            String item = (string)sender; //get playButtonID (this will be splited in two. Type and index.
+            String item = (string)sender; //get ButtonID (this will be splited in two portions, Type and index)
             string type;
-            int index= -1; //if at the end of the if statement it did not change. It means the type is "PlayingNow" and that a index is not needed
+            int index= -1; //if at the end of the if statement it did not change. It means the type is "PlayingNow" and that an index is not needed
 
-            if (!item.Equals(""))//if item is blank it means it does not have a ID, so it is a playingNow type.
+            if (!item.Equals(""))//If item ButtonID is not empty.
             {
-                string[] buttonId = item.Split(null); //split playbuttonID
+                string[] buttonId = item.Split(null); //split ButtonID
                 type = buttonId[0];
                 index = Int32.Parse(buttonId[1]);
             }
-            else
+            else//if item is blank it means it does not have a ID, so it is a playingNow type.
             {
                 type = "PlayingNow";
             }
 
-            System.Windows.MessageBox.Show($"OuterButton is double clicked at {type} at {index}");
 
+            //Now that we have the type and the index we can define what needs to be done with the pressed element.
             if (type.Equals("PlayingNow"))
                 //volgende sprint
                 Console.WriteLine();
@@ -172,32 +197,34 @@ namespace Ritmo.ViewModels
                 Console.WriteLine();
             if (type.Equals("NextUp"))
             {
-                Track playTrack = mwvm.PlayQueueController.PQ.TrackWaitingList.ElementAt(index);
-                mwvm.PlayQueueController.PlayTrack(playTrack);
-                mwvm.CurrentTrackElement.Source = playTrack.AudioFile;
-                
+                Track playTrack = mwvm.PlayQueueController.PQ.TrackWaitingList.ElementAt(index);//gets the element at the given index
+                mwvm.PlayQueueController.PlayTrack(playTrack);//set this element as CurrentTrack
+                mwvm.CurrentTrackElement.Source = playTrack.AudioFile; // play the track
             }
+
+
+            this.ShowElements();
         }
 
         private void InnerClick(object sender)
         {
-            String item = (string)sender; //get playButtonID (this will be splited in two. Type and index.)
+            String item = (string)sender; //get ButtonID (this will be splited in two portions, Type and index)
             string type;
             int index = -1; //if at the end of the if statement it did not change. It means the type is "PlayingNow" and that a index is not needed
 
-            if (!item.Equals(""))//if item is blank it means it does not have a ID, so it is a playingNow type.
+            if (!item.Equals(""))//If item ButtonID is not empty.
             {
-                string[] buttonId = item.Split(null);//split playbuttonID
+                string[] buttonId = item.Split(null);//split ButtonID
                 type = buttonId[0];
                 index = Int32.Parse(buttonId[1]);
             }
-            else
+            else//if item is blank it means it does not have a ID, so it is a playingNow type.
             {
                 type = "PlayingNow";
             }
 
-            System.Windows.MessageBox.Show($"InnerButton clicked at {type} at {index}");
 
+            //Now that we have the type and the index we can define what needs to be done with the pressed element.
             if (type.Equals("PlayingNow"))
                 //volgende sprint
                 Console.WriteLine();
@@ -206,18 +233,19 @@ namespace Ritmo.ViewModels
                 Console.WriteLine();
             if (type.Equals("NextUp"))
             {
-                Track playTrack = mwvm.PlayQueueController.PQ.TrackWaitingList.ElementAt(index);
-                mwvm.PlayQueueController.PlayTrack(playTrack);
-                mwvm.CurrentTrackElement.Source = playTrack.AudioFile;
+                Track playTrack = mwvm.PlayQueueController.PQ.TrackWaitingList.ElementAt(index);//gets the element at the given index
+                mwvm.PlayQueueController.PlayTrack(playTrack);//set this element as CurrentTrack
+                mwvm.CurrentTrackElement.Source = playTrack.AudioFile; // play the track
             }
 
+            this.ShowElements();
         }
 
     }
 
     public class MyQueueItem
     {
-        public String playButtonID { get; set; } //is composed of a type and an Index
+        public String ButtonID { get; set; } //composition of a type and an Index
         public String Name { get; set; }
         public String Artist { get; set; }
         public String Album { get; set; }

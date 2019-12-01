@@ -26,7 +26,7 @@ namespace Ritmo.Database
                     var portForwarded = new ForwardedPortLocal("127.0.0.1", 1433, "127.0.0.1", 1433);
                     sshClient.AddForwardedPort(portForwarded);
                     portForwarded.Start();
-                    Console.WriteLine("Client reached.");
+                    Console.WriteLine("Server reached.");
                 }
                 else
                 {

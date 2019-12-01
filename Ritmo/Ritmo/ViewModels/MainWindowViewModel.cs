@@ -13,12 +13,14 @@ using System.Windows.Input;
 using Ritmo;
 
 
+
 namespace Ritmo.ViewModels
 {
     public class MainWindowViewModel : Screen
     {
         PlaylistController PlaylistController = new PlaylistController("TestPlaylist");
         public PlayQueueController PlayQueueController = new PlayQueueController();
+        MyQueueViewModel MyQueueScreenToViewModel;
 
 
         #region Commands
@@ -53,7 +55,7 @@ namespace Ritmo.ViewModels
         private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual};
         private Uri _currentTrackSource; //Unused
         private double _currentTrackVolume = 0.5;
-        private Uri _playButtonIcon = new Uri("/ImageResources/playbutton.png", UriKind.RelativeOrAbsolute);
+        private Uri _playButtonIcon = new Uri("/ImageResources/playicon.ico", UriKind.RelativeOrAbsolute);
 
         public MediaElement CurrentTrackElement
         {
@@ -93,7 +95,7 @@ namespace Ritmo.ViewModels
             if (CurrentTrackElement.IsLoaded)
             {
                 CurrentTrackElement.Play();
-                PlayButtonIcon = new Uri(@"\ImageResources\pausebutton.png", UriKind.Relative);
+                PlayButtonIcon = new Uri(@"\ImageResources\pauseicon.ico", UriKind.Relative);
             }
         }
 
@@ -103,7 +105,7 @@ namespace Ritmo.ViewModels
             if (PlayQueueController.PQ.TrackWaitingListEnded)
             {
                 CurrentTrackElement.Pause();
-                PlayButtonIcon = new Uri(@"\ImageResources\playbutton.png", UriKind.Relative);
+                PlayButtonIcon = new Uri(@"\ImageResources\playicon.ico", UriKind.Relative);
             }
         }
 
@@ -111,6 +113,7 @@ namespace Ritmo.ViewModels
         public void NextTrack()
         {
             PlayQueueController.NextTrack();
+            MyQueueScreenToViewModel.ShowElements();
             CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
             if (!PlayQueueController.PQ.TrackWaitingListEnded)
             {
@@ -122,6 +125,7 @@ namespace Ritmo.ViewModels
         public void PrevTrack()
         {
             PlayQueueController.PreviousTrack();
+            MyQueueScreenToViewModel.ShowElements();
             CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
             PlayTrack();
         }
@@ -159,6 +163,7 @@ namespace Ritmo.ViewModels
             CurrentViewModel = HomeViewModel;
             AllPlaylistsViewModel = new AllPlaylistsViewModel(this);
             MyQueueViewModel = new MyQueueViewModel(this);
+            MyQueueScreenToViewModel = (MyQueueViewModel)MyQueueViewModel;
         }
         public void InitializeCurrentTrackElement()
         {
@@ -176,23 +181,61 @@ namespace Ritmo.ViewModels
 
         public void TestTrackMethod()
         {
-            //Een test playlist
-            //Track testTrack1 = new Track() { AudioFile = new Uri(@"C:\RingtoneUnatco.mp3") };
-            Track testTrack1 = new Track() { AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneUnatco.mp3") };
-            Track testTrack2 = new Track() { AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3") };
-            Track testTrack3 = new Track() { AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup2.wav") };
-            Track testTrack4 = new Track() { AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav") };
+            
+            Track testTrack1 = new Track() {
+                TrackId = 1,
+                Name = "RingtoneUnatco",
+                Artist = "Santi",
+                Duration = 120,
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneUnatco.mp3"),
+            };
+            Track testTrack2 = new Track()
+            {
+                TrackId = 2,
+                Name = "RingtoneRoundabout",
+                Artist = "Stefan",
+                Duration = 90,
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
+            };
+            Track testTrack3 = new Track()
+            {
+                TrackId = 3,
+                Name = "Powerup1",
+                Artist = "Tristan",
+                Duration = 100,
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav"),
+            };
+            Track testTrack4 = new Track()
+            {
+                TrackId = 4,
+                Name = "Powerup2",
+                Artist = "Marloes",
+                Duration = 70,
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup2.wav"),
+            };
+            Track testTrack5 = new Track()
+            {
+                TrackId = 5,
+                Name = "Track5",
+                Artist = "Susan",
+                Duration = 70,
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup2.wav"),
+            };
+            //Track testTrack4 = new Track() { AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav") };
             PlaylistController.AddTrack(testTrack1);
             PlaylistController.AddTrack(testTrack2);
             PlaylistController.AddTrack(testTrack3);
-            PlaylistController.AddTrack(testTrack4);
+
+            PlayQueueController.AddTrack(testTrack4);
+            PlaylistController.AddTrack(testTrack5);
 
             //Speelt track en zet playlist in wachtrij
             PlayQueueController.PlayTrack(PlaylistController.Playlist.Tracks.First.Value, PlaylistController.Playlist);
-
+            
             //Zet de CurrentTrack als audio die afgespeeld wordt
-            CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
-
+            CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;             
+            
+            MyQueueScreenToViewModel.ShowElements();
         }
     }
 }
