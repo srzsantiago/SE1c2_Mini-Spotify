@@ -19,7 +19,8 @@ namespace Ritmo.ViewModels
     public class MainWindowViewModel : Screen
     {
         PlaylistController PlaylistController = new PlaylistController("TestPlaylist");
-        public PlayQueueController PlayQueueController;
+        public PlayQueueController PlayQueueController = new PlayQueueController();
+        MyQueueViewModel MyQueueScreenToViewModel;
 
 
         #region Commands
@@ -112,6 +113,7 @@ namespace Ritmo.ViewModels
         public void NextTrack()
         {
             PlayQueueController.NextTrack();
+            MyQueueScreenToViewModel.ShowElements();
             CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
             if (!PlayQueueController.PQ.TrackWaitingListEnded)
             {
@@ -123,6 +125,7 @@ namespace Ritmo.ViewModels
         public void PrevTrack()
         {
             PlayQueueController.PreviousTrack();
+            MyQueueScreenToViewModel.ShowElements();
             CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
             PlayTrack();
         }
@@ -158,6 +161,8 @@ namespace Ritmo.ViewModels
             HomeViewModel = new HomeViewModel();
             CurrentViewModel = HomeViewModel;
             AllPlaylistsViewModel = new AllPlaylistsViewModel(this);
+            MyQueueViewModel = new MyQueueViewModel(this);
+            MyQueueScreenToViewModel = (MyQueueViewModel)MyQueueViewModel;
         }
         public void InitializeCurrentTrackElement()
         {
@@ -175,8 +180,6 @@ namespace Ritmo.ViewModels
 
         public void TestTrackMethod()
         {
-            
-            PlayQueueController = new PlayQueueController();
             
             Track testTrack1 = new Track() {
                 TrackId = 1,
@@ -205,7 +208,7 @@ namespace Ritmo.ViewModels
             {
                 TrackId = 4,
                 Name = "Powerup2",
-                Artist = "Jelki",
+                Artist = "Marloes",
                 Duration = 70,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup2.wav"),
             };
@@ -221,19 +224,17 @@ namespace Ritmo.ViewModels
             PlaylistController.AddTrack(testTrack1);
             PlaylistController.AddTrack(testTrack2);
             PlaylistController.AddTrack(testTrack3);
-            
+
+            PlayQueueController.AddTrack(testTrack4);
+            PlaylistController.AddTrack(testTrack5);
 
             //Speelt track en zet playlist in wachtrij
             PlayQueueController.PlayTrack(PlaylistController.Playlist.Tracks.First.Value, PlaylistController.Playlist);
-            PlayQueueController.AddTrack(testTrack4);
-
+            
             //Zet de CurrentTrack als audio die afgespeeld wordt
-            CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
-
-            MyQueueViewModel = new MyQueueViewModel(this);
-            MyQueueViewModel MyQueueViewModel1 = (MyQueueViewModel)MyQueueViewModel;
-            PlaylistController.AddTrack(testTrack5);
-            MyQueueViewModel1.ShowElements();
+            CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;             
+            
+            MyQueueScreenToViewModel.ShowElements();
         }
     }
 }

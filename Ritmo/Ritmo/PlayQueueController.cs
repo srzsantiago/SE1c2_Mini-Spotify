@@ -30,18 +30,22 @@ namespace Ritmo
 
         public void PlayTrack(Track track)//Set the currentTrack with a single track chosen by the user
         {
+            PQ.CurrentTrack = track;
             if (PQ.TrackWaitingList.Contains(PQ.CurrentTrack)) //check if the tracklist contains the track
             {
                 PQ.WaitingListToQueueTrack = PQ.CurrentTrack;//remember the track so it can be use for the method next
             }
-            PQ.CurrentTrack = track;
-            PQ.WaitingListToQueueTrack = null;
+            //else
+            //{
+            //    PQ.WaitingListToQueueTrack = null;
+            //}
+            
         }
 
         public void PlayTrack(Track track, TrackList trackList)//set the currentTrack with a track from a tracklist(playlist/album) chosen by the user and at the whole playlist will be added to the waitinglist
         {
-            PlayTrack(track);
             SetTrackWatingList(trackList);
+            PlayTrack(track);
         }
 
         public void ResumeTrack()
@@ -67,7 +71,7 @@ namespace Ritmo
                     if (PQ.WaitingListToQueueTrack == null)//check if the last played track has a value
                     {
                         //play next song in the tracklist if the mode is off or trackrepeat
-                        if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat)) 
+                        if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
                         {
                             PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.CurrentTrack).Next.Value;
                             PQ.TrackWaitingListEnded = false;
@@ -75,10 +79,13 @@ namespace Ritmo
                         //play the same track again while mode is trackrepeat
                         if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
                             PQ.CurrentTrack = PQ.CurrentTrack;
-                        
+
                     }
                     else//resume the tracklist at the last played track
+                    {
                         PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Next.Value;
+                        PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
+                    }
                 }
                 catch
                 {

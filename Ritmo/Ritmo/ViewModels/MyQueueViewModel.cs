@@ -35,7 +35,9 @@ namespace Ritmo.ViewModels
         public ObservableCollection<MyQueueItem> PlayingNowItems
         {
             get { return _playingNowItems; }
-            set { _playingNowItems = value; }
+            set { _playingNowItems = value;
+                NotifyOfPropertyChange("PlayingNowItems");
+            }
         }
 
         public ObservableCollection<MyQueueItem> NextInQueueItems
@@ -49,7 +51,9 @@ namespace Ritmo.ViewModels
         public ObservableCollection<MyQueueItem> NextUpItems
         {
             get { return _nextUpItems; }
-            set { _nextUpItems = value; }
+            set { _nextUpItems = value;
+                NotifyOfPropertyChange("NextUpItems");
+            }
         }
 
         #endregion
@@ -105,6 +109,10 @@ namespace Ritmo.ViewModels
                 }
                 };
             }
+            else
+            {
+                PlayingNowItems = new ObservableCollection<MyQueueItem>();
+            }
 
             if (mwvm.PlayQueueController.PQ.TrackQueue.Count > 0)
             {
@@ -125,6 +133,10 @@ namespace Ritmo.ViewModels
                     count++;
                 }
             }
+            else
+            {
+                NextInQueueItems = new ObservableCollection<MyQueueItem>();
+            }
 
             if (mwvm.PlayQueueController.PQ.TrackWaitingList.Count > 0)
             {
@@ -144,6 +156,10 @@ namespace Ritmo.ViewModels
                     });
                     count++;
                 }
+            }
+            else
+            {
+                NextInQueueItems = new ObservableCollection<MyQueueItem>();
             }
 
         }
@@ -180,6 +196,9 @@ namespace Ritmo.ViewModels
                 mwvm.CurrentTrackElement.Source = playTrack.AudioFile;
                 
             }
+
+
+            this.ShowElements();
         }
 
         private void InnerClick(object sender)
@@ -214,6 +233,7 @@ namespace Ritmo.ViewModels
                 mwvm.CurrentTrackElement.Source = playTrack.AudioFile;
             }
 
+            this.ShowElements();
         }
 
     }
