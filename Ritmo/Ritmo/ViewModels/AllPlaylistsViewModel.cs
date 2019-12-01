@@ -21,7 +21,6 @@ namespace Ritmo.ViewModels
 
         public static AllPlaylistsController AllPlaylistsController
         {
-
             get { return _allPlaylistsController; }
             set { _allPlaylistsController = value; }
         }

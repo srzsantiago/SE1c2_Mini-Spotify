@@ -52,18 +52,6 @@ namespace Ritmo.UnitTests
             Assert.AreEqual(result, false); //Returns false
         }
 
-        //Method: RemoveTrack(Track track) - Remove track from playlist, track does not exists, returns exception.
-        [TestMethod]
-        [ExpectedException(typeof(Exception))]
-        public void RemoveTrack_TrackDoesNotExists_ReturnsException()
-        {
-            //Arrange
-            Track track = new Track();
-            PlaylistController playlistController = new PlaylistController("Playlist");
-            //Act / Assert
-            playlistController.RemoveTrack(track); //Remove track from playlist -> playlist does not contain the track -> returns exception
-        }
-
         //Method: SetName(string name) - Sets playlist name, returns name
         [TestMethod]
         public void SetName_ChangeName_ReturnsName()

@@ -68,7 +68,7 @@ namespace Ritmo.UnitTests
 
         //NextTrack() -> Skip the currently palying track and set the next track as current track, success scenario, returns void.
         [TestMethod]
-        public void NextTrack_SuccessScenario()
+        public void NextTrack_TrackWaitingList_SuccessScenario()
         {
             //Arrange
             PlayQueueController playQueueController = new PlayQueueController();
@@ -84,6 +84,43 @@ namespace Ritmo.UnitTests
             playQueueController.NextTrack(); //Skip the currently playing track and play the next track
             //Assert
             Assert.AreEqual(result, track1); //Check if the currently playing track was the next track in line: 'track1'
+        }
+
+        //NextTrack() -> Check if there are tracks in the queue and deqeueue currentTrack, success scenario, returns void.
+        [TestMethod]
+        public void NextTrack_TrackQueue_SuccessScenario()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+            Track track = new Track();
+            Track track1 = new Track();
+            Playlist playlistnew = new Playlist("New"); //Create new playlist called "New"
+            //Act
+            playlistnew.Tracks.AddLast(track); //Add track 'track' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track1); //Add track 'track1' to playlist 'playlistnew'
+            playQueueController.SetTrackWatingList(playlistnew); //Add 'playlistnew' to the trackWaitingList
+            playQueueController.PlayTrack(track); //Assign 'track' as currently playing track and play 'traçk'
+            var result = playQueueController.PQ.TrackQueueHasSongs();
+            playQueueController.NextTrack(); //Skip the currently playing track and play the next track
+            //Assert
+            Assert.AreEqual(result, true); //Check if the currently playing track was the next track in line: 'track1'
+        }
+
+        //NextTrack() ->  Set the NextTrack as the CurrentTrack, no previous track, returns Exception
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void NextTrack_NoNextTrack_ReturnsException()
+        {
+            PlayQueueController playQueueController = new PlayQueueController();
+            Track track = new Track();
+            Playlist playlistnew = new Playlist("New"); //Create new playlist called "New"
+            //Act
+            playlistnew.Tracks.AddLast(track); // Add track 'track' to playlist 'playlistnew'
+            playQueueController.SetTrackWatingList(playlistnew); //Add 'playlistnew' to the trackWaitingList
+            playQueueController.PlayTrack(track); //Assign 'track' as currently playing track and play 'traçk'
+            //Act / Assert
+            var result = playQueueController.PQ.TrackWaitingList.Find(playQueueController.PQ.WaitingListToQueueTrack).Next.Value;
+            playQueueController.NextTrack(); //Return to the previous track and play that track
         }
 
         //PreviousTrack() ->  Set the PreviousTrack as the CurrentTrack, success scenario, returns void.
@@ -107,6 +144,45 @@ namespace Ritmo.UnitTests
             Assert.AreEqual(result, track); //Check if the currently playing track was the previous track: 'track'
         }
 
+        //PreviousTrack() -> The firstTrack of the list is the currentTrack, previousTrack() is called, the last number of the list is now the currentTrack, success scenario, returns void.
+        [TestMethod]
+        public void PreviousTrack_SuccessScenario_TrackIsFirstTrack()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+            Track track = new Track();
+            Track track1 = new Track();
+            Playlist playlistnew = new Playlist("New"); //Create new playlist called "New"
+            //Act
+            playlistnew.Tracks.AddLast(track); // Add track 'track' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track1); //Add track 'track1' to playlist 'playlistnew'
+            playQueueController.SetTrackWatingList(playlistnew); //Add 'playlistnew' to the trackWaitingList
+            playQueueController.PlayTrack(track); //Assign 'track' as currently playing track and play 'traçk'
+            playQueueController.PlayTrack(track1); //Assign 'track1' as currently playing track and play 'traçk1'
+            playQueueController.PQ.CurrentTrack = playQueueController.PQ.TrackWaitingList.First.Value;
+            var result = playQueueController.PQ.TrackWaitingList.Last.Value;
+            playQueueController.PreviousTrack(); //Return to the previous track and play that track
+            //Assert
+            Assert.AreEqual(result, playQueueController.PQ.CurrentTrack); //Check if the currently playing track was the previous track: 'track'
+        }
+
+        //PreviousTrack() ->  Set the PreviousTrack as the CurrentTrack, no previous track, returns Exception.
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void PreviousTrack_NoPreviousTrack_ReturnsException()
+        {
+            PlayQueueController playQueueController = new PlayQueueController();
+            Track track = new Track();
+            Playlist playlistnew = new Playlist("New"); //Create new playlist called "New"
+            //Act
+            playlistnew.Tracks.AddLast(track); // Add track 'track' to playlist 'playlistnew'
+            playQueueController.SetTrackWatingList(playlistnew); //Add 'playlistnew' to the trackWaitingList
+            playQueueController.PlayTrack(track); //Assign 'track' as currently playing track and play 'traçk'
+            //Act / Assert
+            var result = playQueueController.PQ.TrackWaitingList.Find(playQueueController.PQ.CurrentTrack).Previous.Value;
+            playQueueController.PreviousTrack(); //Return to the previous track and play that track
+        }
+
         //Method: AddTrack(Track track) -> Add given track to queue, success scenario, returns void.
         [TestMethod]
         public void AddTrack_SuccessScenario()
@@ -127,14 +203,14 @@ namespace Ritmo.UnitTests
         {
             //Arrange
             PlayQueueController playQueueController = new PlayQueueController();
-            Track track = new Track();
+            Track trackTest = new Track(0, "H", "A", 10);
             bool result;
             //Act
-            playQueueController.PQ.TrackQueue.Enqueue(track); //Add track to the queue
+            playQueueController.PQ.TrackQueue.Enqueue(trackTest); //Add track to the queue
             if (playQueueController.PQ.TrackQueue.Count > 0) //You can only remove a track from the queue if the queue contains 1 or more tracks
             {
-                playQueueController.RemoveTrackFromQueue(track, 0); //Remove track from the queue at given index
-                result = playQueueController.PQ.TrackQueue.Contains(track);
+                playQueueController.RemoveTrackFromQueue(trackTest, playQueueController.PQ.TrackQueue.Count - 1) ; //Remove track from the queue at given index
+                result = playQueueController.PQ.TrackQueue.Contains(trackTest);
             }
             else
             {

@@ -29,8 +29,6 @@ namespace Ritmo.Views
 
         PlaylistController playlistController;
 
-        
-
         public PlaylistView()
         {
             InitializeComponent();
@@ -38,6 +36,7 @@ namespace Ritmo.Views
 
         public PlaylistView(Playlist playlist):this()
         {
+            
             playlistController = new PlaylistController(playlist.Name); //Create a new playlistController with playlist
             NamePlaylist.Content = playlistController.Playlist.Name.ToString(); //Set the content for the name
             TestPlaylist();

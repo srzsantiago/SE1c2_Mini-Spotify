@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{44784E21-218C-4315-AA7A-D51491BA60C7}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Ritmo</RootNamespace>
     <AssemblyName>Ritmo</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -97,22 +97,30 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Database\DatabaseConnector.cs" />
     <Compile Include="Database\QueryType.cs" />
+    <Compile Include="Login.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="PlayListController.cs" />
     <Compile Include="PlayQueueController.cs" />
     <Compile Include="Search.cs" />
+    <Compile Include="Register.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="TrackList.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="ViewModels\ArtistRegisterViewModel.cs" />
     <Compile Include="ViewModels\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\FollowingViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\AllPlaylistsViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MyQueueViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
+    <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
+    <Compile Include="Views\ArtistRegisterView.xaml.cs">
+      <DependentUpon>ArtistRegisterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CategoriesView.xaml.cs">
       <DependentUpon>CategoriesView.xaml</DependentUpon>
     </Compile>
@@ -125,15 +133,29 @@
     <Compile Include="Views\AllPlaylistsView.xaml.cs">
       <DependentUpon>AllPlaylistsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyQueueView.xaml.cs">
       <DependentUpon>MyQueueView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RegisterView.xaml.cs">
+      <DependentUpon>RegisterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SearchView.xaml.cs">
       <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\ArtistRegisterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -178,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\RegisterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SearchView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -212,11 +238,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageResources\playbutton.png" />
     <Resource Include="ImageResources\nexttrackbutton.png" />
     <Resource Include="ImageResources\prevtrackbutton.png" />
-    <Resource Include="ImageResources\pausebutton.png" />
     <Resource Include="ImageResources\searchbutton.png" />
+    <Resource Include="ImageResources\playicon.ico" />
+    <Resource Include="ImageResources\pauseicon.ico" />
     <Content Include="TestFiles\Powerup1.wav" />
     <Content Include="TestFiles\Powerup2.wav" />
     <Content Include="TestFiles\RingtoneRoundabout.mp3" />

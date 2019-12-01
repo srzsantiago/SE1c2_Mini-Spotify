@@ -54,7 +54,7 @@ namespace Ritmo.ViewModels
         private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual};
         private Uri _currentTrackSource; //Unused
         private double _currentTrackVolume = 0.5;
-        private Uri _playButtonIcon = new Uri("/ImageResources/playbutton.png", UriKind.RelativeOrAbsolute);
+        private Uri _playButtonIcon = new Uri("/ImageResources/playicon.ico", UriKind.RelativeOrAbsolute);
 
         public MediaElement CurrentTrackElement
         {
@@ -94,7 +94,7 @@ namespace Ritmo.ViewModels
             if (CurrentTrackElement.IsLoaded)
             {
                 CurrentTrackElement.Play();
-                PlayButtonIcon = new Uri(@"\ImageResources\pausebutton.png", UriKind.Relative);
+                PlayButtonIcon = new Uri(@"\ImageResources\pauseicon.ico", UriKind.Relative);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Ritmo.ViewModels
             if (PlayQueueController.PQ.TrackWaitingListEnded)
             {
                 CurrentTrackElement.Pause();
-                PlayButtonIcon = new Uri(@"\ImageResources\playbutton.png", UriKind.Relative);
+                PlayButtonIcon = new Uri(@"\ImageResources\playicon.ico", UriKind.Relative);
             }
         }
 

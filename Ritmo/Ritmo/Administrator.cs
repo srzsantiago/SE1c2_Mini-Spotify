@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ritmo
 {
-    class Administrator
+    class Administrator:Person
     {
+        public Administrator(bool loggedin) : base(loggedin, AccessLevel.user)
+        {
+
+        }
     }
 }
