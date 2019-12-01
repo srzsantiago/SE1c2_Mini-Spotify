@@ -19,6 +19,10 @@ namespace Ritmo
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             DisplayRootViewFor<MainWindowViewModel>();
+            //Database.DatabaseConnector.ConnectDB();
+            //Database.DatabaseConnector.ConnectSSH();
+            //Database.DatabaseConnector.DisconnectSSH();
+            //Database.DatabaseConnector.DisconnectDB();
         }
     }
 }

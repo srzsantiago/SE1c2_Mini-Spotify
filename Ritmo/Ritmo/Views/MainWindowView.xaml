@@ -88,12 +88,10 @@
         <Button x:Name="NextButton" Margin="120,0,0,0" Command="{Binding NextTrackCommand}"  Style="{StaticResource MediaButtonStyle}" Width="30">
             <Image Source="/ImageResources/nexttrackbutton.png"/>
         </Button>
-        
+
         <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="35" Margin="468,11,0,0" VerticalAlignment="Top" Width="42" Grid.Column="1" Grid.Row="1"/>
         <ContentControl Content="{Binding CurrentTrackElement}" Margin="326,11,481,60" Grid.Column="1" Grid.Row="1"/>
         <TextBlock Foreground="Black" VerticalAlignment="Center" Margin="0,11,40,53" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="88" Height="16"  >Volume</TextBlock>
         <Slider Name="volumeSlider" VerticalAlignment="Center" Minimum="0" Maximum="1" Value="{Binding CurrentTrackVolume}" Margin="0,32,40,30" Grid.Row="1" Grid.Column="1" Width="100" Height="18" HorizontalAlignment="Right"/>
-
-
     </Grid>
 </Window>

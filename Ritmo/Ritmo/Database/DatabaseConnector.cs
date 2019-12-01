@@ -52,7 +52,7 @@ namespace Ritmo.Database
         }
 
         //Sets up connection with Ritmo database
-        private static SqlConnection ConnectDB()
+        public static SqlConnection ConnectDB()
         {
             dbConn = new SqlConnection("SERVER=127.0.0.1;UID=SA;PASSWORD=IctSe1c_Groep2;DATABASE=Ritmo");
             dbConn.Open();
@@ -68,13 +68,13 @@ namespace Ritmo.Database
         }
 
         //Disconnects the SSH connection to the server
-        private static void DisconnectSSH()
+        public static void DisconnectSSH()
         {
             sshClient.Disconnect();
         }
 
         //Disconnects the database connection
-        private static void DisconnectDB()
+        public static void DisconnectDB()
         {
             dbConn.Close();
             if (dbConn.State == ConnectionState.Closed)

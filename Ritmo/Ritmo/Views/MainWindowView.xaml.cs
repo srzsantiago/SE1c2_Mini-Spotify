@@ -25,6 +25,8 @@ namespace Ritmo.Views
     /// </summary>
     public partial class MainWindowView : Window
     {
+        
+
         //PlayQueueController playQueueController = new PlayQueueController();
         //PlaylistController playlistController = new PlaylistController("TestPlaylist");
 
@@ -33,7 +35,7 @@ namespace Ritmo.Views
         //    InitializeComponent();
         //    CurrentTrackElement.LoadedBehavior = MediaState.Manual;
         //    CurrentTrackElement.UnloadedBehavior = MediaState.Pause;
-            //CurrentTrackElement.MediaEnded += Track_Ended;
+        //CurrentTrackElement.MediaEnded += Track_Ended;
 
         //    //TestTrackMethod();
         //}
@@ -41,7 +43,7 @@ namespace Ritmo.Views
         ////Methode om de logica te testen. Dit zijn uiteindelijk de stappen die de gebruiker zelf moet zetten in de GUI
         //public void TestTrackMethod()
         //{
-            
+
         //}
 
         ////Plays track and updates play/pausebutton
@@ -112,9 +114,6 @@ namespace Ritmo.Views
         //}
 
         //#endregion
-
-
-        //// test tristan volume
 
         //// changes volume based on slidebar, 0 is muted and 1 is the highest volume.
         //private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> args)
