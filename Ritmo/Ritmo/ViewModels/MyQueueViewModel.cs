@@ -21,10 +21,11 @@ namespace Ritmo.ViewModels
         public MyQueueViewModel(MainWindowViewModel mwvm)
         {
             this.mwvm = mwvm;
-            ShowElements();
             _outerClickCommand = new RelayCommand<object>(this.OuterClick);
             _innerClickCommand = new RelayCommand<object>(this.InnerClick);
+            ShowElements();
         }
+
 
         #region Observable collections
         private ObservableCollection<MyQueueItem> _playingNowItems;
@@ -40,7 +41,9 @@ namespace Ritmo.ViewModels
         public ObservableCollection<MyQueueItem> NextInQueueItems
         {
             get { return _nextInQueueItems; }
-            set { _nextInQueueItems = value; }
+            set { _nextInQueueItems = value;
+                NotifyOfPropertyChange("NextInQueueItems");
+            }
         }
 
         public ObservableCollection<MyQueueItem> NextUpItems
