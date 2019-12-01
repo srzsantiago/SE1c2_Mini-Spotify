@@ -13,15 +13,43 @@
             <RowDefinition Height="46*"/>
             <RowDefinition Height="179*"/>
         </Grid.RowDefinitions>
-        
-        
+
+
         <Label Grid.Row="0" Content="Play Queue&#xA;" HorizontalAlignment="Left" Margin="40,14,0,0" VerticalAlignment="Top" FontSize="48"/>
+        <!-- test -->
+        <!--<Button BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                                                Name="ButtonMenu" Content="⋯" Grid.Column="0" Background="{x:Null}" 
+                                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" FontSize="14">
+            <Button.ContextMenu>
+                <ContextMenu  x:Name="cm" ItemsSource="{Binding ItemsList}">
+                    <ContextMenu.ItemContainerStyle>
+                        <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacemantTarget.DataContext.ItemChanged }"/>
+                            <Setter Property="CommandParameter" Value="{Binding}"/>
+                        </Style>
+                    </ContextMenu.ItemContainerStyle>
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>-->
+        <MenuItem Click="AddPresetButton_Click" Header="text" HorizontalAlignment="Center" Height="30" Width="96" >
+            <MenuItem.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="1" />
+                    <MenuItem Header="2"/>
+                    <MenuItem Header="3"/>
+                </ContextMenu>
+            </MenuItem.ContextMenu>
+        </MenuItem>
+
+        <!-- test -->
+
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
             <StackPanel x:Name="MainStackPanel" Orientation="Vertical">
-                
+
                 <!--Stack 1 : Playing Now-->
                 <StackPanel x:Name="PlayingNowStackPanel" Orientation="Vertical" Height="auto">
-                    <StackPanel.Style><!-- DataTrigger to hide the StackPanel if its empty -->
+                    <StackPanel.Style>
+                        <!-- DataTrigger to hide the StackPanel if its empty -->
                         <Style TargetType="{x:Type StackPanel}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding PlayingNowItems, Mode=TwoWay}" Value="{x:Null}">
@@ -68,7 +96,7 @@
                                             <ColumnDefinition Width="6*" />
                                             <ColumnDefinition Width="4.5*" />
                                             <ColumnDefinition Width="5*" />
-                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="2*"/>
                                         </Grid.ColumnDefinitions>
                                         <Button Content="Play" Grid.Column="0">
                                             <Button.InputBindings>
@@ -79,9 +107,15 @@
                                         <Label Content="{Binding Artist}" Grid.Column="2"/>
                                         <Label Content="{Binding Album}" Grid.Column="3"/>
                                         <Label Content="{Binding Duration}" Grid.Column="4"/>
-                                        <Button BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
-                                                Name="ButtonMenu" Content="⋯" Grid.Column="4" Background="{x:Null}" 
-                                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" FontSize="14"/>
+                                        <MenuItem Click="AddPresetButton_Click" Grid.Column="4" Header="test" Width="50">
+                                            <MenuItem.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="1"/>
+                                                    <MenuItem Header="2"/>
+                                                    <MenuItem Header="3"/>
+                                                </ContextMenu>
+                                            </MenuItem.ContextMenu>
+                                        </MenuItem>
                                     </Grid>
                                 </Button>
                             </DataTemplate>
@@ -217,7 +251,18 @@
                                         <Label Content="{Binding Duration}" Grid.Column="4"/>
                                         <Button BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
                                                 Name="ButtonMenu" Content="⋯" Grid.Column="4" Background="{x:Null}" 
-                                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" FontSize="14"/>
+                                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" FontSize="14">
+                                            <Button.ContextMenu>
+                                                <ContextMenu  x:Name="cm" ItemsSource="{Binding ItemsList}">
+                                                    <ContextMenu.ItemContainerStyle>
+                                                        <Style TargetType="{x:Type MenuItem}">
+                                                            <Setter Property="Command"  Value="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                                            <Setter Property="CommandParameter" Value="{Binding}"/>
+                                                        </Style>
+                                                    </ContextMenu.ItemContainerStyle>
+                                                </ContextMenu>
+                                            </Button.ContextMenu>
+                                        </Button>
                                     </Grid>
                                 </Button>
                             </DataTemplate>

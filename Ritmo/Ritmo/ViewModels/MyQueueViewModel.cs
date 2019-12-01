@@ -58,6 +58,19 @@ namespace Ritmo.ViewModels
 
         #endregion
 
+        private List<string> _itemsList;
+
+        public List<string> ItemsList
+        {
+            get {
+                if (_itemsList == null)
+                    _itemsList = new List<string>() { "Test1", "Test2" };
+                return _itemsList;
+            }
+            set { _itemsList = value; }
+        }
+
+
         #region commands
         private ICommand _outerClickCommand;
 

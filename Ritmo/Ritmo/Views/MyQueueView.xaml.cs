@@ -25,6 +25,8 @@ namespace Ritmo.Views
         public MyQueueView()
         {
             InitializeComponent();
+
+
             //    this.DataContext = playQueueController;
 
 
@@ -159,7 +161,14 @@ namespace Ritmo.Views
             //        Console.WriteLine();
 
         }
-
+        private void AddPresetButton_Click(object sender, RoutedEventArgs e)
+        {
+            var addButton = sender as FrameworkElement;
+            if (addButton != null)
+            {
+                addButton.ContextMenu.IsOpen = true;
+            }
+        }
 
 
 
