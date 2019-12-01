@@ -145,15 +145,21 @@ namespace Ritmo.ViewModels
                 count = 0;//this count is used to give every item a ID
                 foreach (var item in mwvm.PlayQueueController.PQ.TrackWaitingList)
                 {
+
+                    int indexOfWaitingListToQueueTrack = mwvm.PlayQueueController.PQ.TrackWaitingList.TakeWhile(n => n != mwvm.PlayQueueController.PQ.WaitingListToQueueTrack).Count();
+
                     //Create a instance for each item in TrackWaitingList
-                    NextUpItems.Add(new MyQueueItem()
+                    if (count > indexOfWaitingListToQueueTrack)
                     {
-                        playButtonID = $"NextUp {count}",
-                        Name = item.Name,
-                        Artist = item.Artist,
-                        Album = "Album",
-                        Duration = item.Duration
-                    });
+                        NextUpItems.Add(new MyQueueItem()
+                        {
+                            playButtonID = $"NextUp {count}",
+                            Name = item.Name,
+                            Artist = item.Artist,
+                            Album = "Album",
+                            Duration = item.Duration
+                        });
+                    }
                     count++;
                 }
             }

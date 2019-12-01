@@ -68,24 +68,16 @@ namespace Ritmo
             {
                 try
                 {
-                    if (PQ.WaitingListToQueueTrack == null)//check if the last played track has a value
-                    {
-                        //play next song in the tracklist if the mode is off or trackrepeat
-                        if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
-                        {
-                            PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.CurrentTrack).Next.Value;
-                            PQ.TrackWaitingListEnded = false;
-                        }
-                        //play the same track again while mode is trackrepeat
-                        if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
-                            PQ.CurrentTrack = PQ.CurrentTrack;
-
-                    }
-                    else//resume the tracklist at the last played track
+                    //play next song in the tracklist if the Repeatmode is OFF or TrackListRepeat
+                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
                     {
                         PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Next.Value;
                         PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
+                        PQ.TrackWaitingListEnded = false;
                     }
+                    //play the same track again while mode is TrackRepeat
+                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
+                        PQ.CurrentTrack = PQ.CurrentTrack;
                 }
                 catch
                 {
@@ -99,6 +91,7 @@ namespace Ritmo
                         PQ.TrackWaitingListEnded = true;
                         PQ.IsPaused = true;
                         PQ.CurrentTrack = PQ.TrackWaitingList.First.Value;
+                        PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
                     }
                 }
 
