@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{44784E21-218C-4315-AA7A-D51491BA60C7}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Ritmo</RootNamespace>
     <AssemblyName>Ritmo</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -238,11 +238,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageResources\playbutton.png" />
     <Resource Include="ImageResources\nexttrackbutton.png" />
     <Resource Include="ImageResources\prevtrackbutton.png" />
-    <Resource Include="ImageResources\pausebutton.png" />
     <Resource Include="ImageResources\searchbutton.png" />
+    <Resource Include="ImageResources\playicon.ico" />
+    <Resource Include="ImageResources\pauseicon.ico" />
     <Content Include="TestFiles\Powerup1.wav" />
     <Content Include="TestFiles\Powerup2.wav" />
     <Content Include="TestFiles\RingtoneRoundabout.mp3" />

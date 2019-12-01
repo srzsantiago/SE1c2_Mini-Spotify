@@ -21,11 +21,14 @@ namespace Ritmo
         {
             //DisplayRootViewFor<Login>();
             //DisplayRootViewFor<RegisterViewModel>();
-            DisplayRootViewFor<ArtistRegisterViewModel>();
-            //DisplayRootViewFor<MainWindowViewModel>();
+            //DisplayRootViewFor<ArtistRegisterViewModel>();
+            DisplayRootViewFor<MainWindowViewModel>();
             DatabaseConnector.ConnectSSH();
-            DatabaseConnector.ConnectDB();
-   
+        }
+
+        protected override void OnExit(object sender, EventArgs e)
+        {
+            DatabaseConnector.DisconnectSSH();
         }
 
     }

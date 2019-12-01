@@ -117,7 +117,7 @@ namespace Ritmo.Views
             {
                 if (allplaylistcontroller.allplaylists.playlists[i].Name == buttoncontent) // checks if i is equal to the pressed buttons content
                 {
-                    playlistview.ChangePlaylist(playlist);
+                    //playlistview.ChangePlaylist(playlist);
                     ns.Navigate(playlistview); // navigates to the desired playlist
                 }
             }
