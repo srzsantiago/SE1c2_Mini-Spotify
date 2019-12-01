@@ -8,17 +8,29 @@
              d:DesignHeight="450" d:DesignWidth="800"
              xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
              d:DataContext="{d:DesignInstance viewmodels:HomeViewModel, IsDesignTimeCreatable=True}">
-    <Grid Background="LightGreen">
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding TestString}"></TextBlock>
-        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="357,120,0,0" Command="{Binding ChangeTestStringCommand}"/>
-        <Button Content="Add to playlist" HorizontalAlignment="Left" Margin="303,270,0,0" VerticalAlignment="Top" Width="129" RenderTransformOrigin="0.372,-0.95" Click="AddToPlayListClick"/>
-        <Label Content="song1" HorizontalAlignment="Left" Margin="168,270,0,0" VerticalAlignment="Top" Width="141"/>
-        <Label Content="song1" HorizontalAlignment="Left" Margin="168,311,0,0" VerticalAlignment="Top" Width="141"/>
-        <Button Content="Add to Playlist" Click="AddToPlayListClick" HorizontalAlignment="Left" Margin="303,317,0,0" VerticalAlignment="Top" Width="129"/>
-        <Button Content="Add to Queue" Click="AddToQueueClick" HorizontalAlignment="Left" Margin="464,270,0,0" VerticalAlignment="Top" Width="130"/>
-        <Button Content="Add to Queue" Click="AddToQueueClick" HorizontalAlignment="Left" Margin="464,317,0,0" VerticalAlignment="Top" Width="130"/>
-        <ListBox Name="Listbox" HorizontalAlignment="Left" Height="100" Margin="140,165,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="ListBox_SelectionChanged"/>
+
+    <Grid Background="GhostWhite" Name="structuregridHome" Margin="0,48,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MaxWidth="50" Width="0*"/>
+            <ColumnDefinition Width="62*"/>
+            <ColumnDefinition Width="61*"/>
+            <ColumnDefinition Width="39*"/>
+            <ColumnDefinition Width="38*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="2"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Name="TracknamesColumn" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" HorizontalAlignment="Left" Width="224" RenderTransformOrigin="1.286,0.505" Margin="10,0,0,0"/>
+        <StackPanel Name="AddPlayListColumn" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2"></StackPanel>
+        <StackPanel Name="AddQueueColumn" Grid.Row="2" Grid.Column="4" Grid.RowSpan="2"></StackPanel>
+        <ListBox Name="Playlistboxes"  Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="136" Grid.Row="3" VerticalAlignment="Top" Width="248" SelectionChanged="Playlistboxes_SelectionChanged"/>
 
     </Grid>
-    
+
+
+
 </UserControl>

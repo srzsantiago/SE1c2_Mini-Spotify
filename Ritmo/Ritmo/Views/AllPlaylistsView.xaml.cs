@@ -56,6 +56,7 @@ namespace Ritmo.Views
         public void GetPlayListsGUI()
         {
             ClearItems();
+            count = 0;
             foreach (var item in allplaylistcontroller.allplaylists.playlists) // goes through all the playlists that exist and adds their name to the list in my playlists
                 {
                 
@@ -109,7 +110,7 @@ namespace Ritmo.Views
             Button clickedButton = sender as Button; // checks which button is pressed
             int playlistamount = allplaylistcontroller.allplaylists.playlists.Count; // counts the amount of playlists
             string buttoncontent = (string)clickedButton.Content; // puts the content of the clicked button onto an int
-            int index = (int)clickedButton.Tag; 
+            int index = (int)clickedButton.Tag;
             Playlist playlist = allplaylistcontroller.allplaylists.playlists.ElementAt(index);
             
 

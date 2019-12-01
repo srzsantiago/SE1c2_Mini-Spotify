@@ -155,6 +155,7 @@ namespace Ritmo.ViewModels
             PlayTrackCommand = new RelayCommand(PlayTrack);
             NextTrackCommand = new RelayCommand(NextTrack);
             PrevTrackCommand = new RelayCommand(PrevTrack);
+           
         }
         public void InitializeViewModels()
         {
