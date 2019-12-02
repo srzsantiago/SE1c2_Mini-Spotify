@@ -19,11 +19,11 @@ namespace Ritmo
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            //DisplayRootViewFor<Login>();
-            //DisplayRootViewFor<RegisterViewModel>();
-            //DisplayRootViewFor<ArtistRegisterViewModel>();
-            DisplayRootViewFor<MainWindowViewModel>();
             //DatabaseConnector.ConnectSSH();
+            //if (true)
+            //    DisplayRootViewFor<LoginViewModel>();
+            //else
+                DisplayRootViewFor<MainWindowViewModel>();
         }
 
         protected override void OnExit(object sender, EventArgs e)

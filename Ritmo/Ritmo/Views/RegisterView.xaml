@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ritmo.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Grid Background="LightBlue">
         <Canvas HorizontalAlignment="Left" Height="358" Margin="248,26,0,0" VerticalAlignment="Top" Width="311" Background="White">
             <Label Content="SIGN UP" Canvas.Left="128" Canvas.Top="22"/>
