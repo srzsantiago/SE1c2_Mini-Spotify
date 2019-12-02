@@ -94,7 +94,6 @@ namespace Ritmo.UnitTests
             PlayQueueController playQueueController = new PlayQueueController();
             Track track = new Track();
             Track track1 = new Track();
-
             Playlist playlistnew = new Playlist("New"); //Create new playlist called "New"
             //Act
             playlistnew.Tracks.AddLast(track); //Add track 'track' to playlist 'playlistnew'
@@ -103,7 +102,6 @@ namespace Ritmo.UnitTests
             playQueueController.AddTrack(track1);
             playQueueController.NextTrack(); //Skip the currently playing track and play the next track
             var result = playQueueController.PQ.CurrentTrack.Equals(track1);
-            
             //Assert
             Assert.AreEqual(result, true); //Check if the currently playing track was the next track in line: 'track1'
         }
