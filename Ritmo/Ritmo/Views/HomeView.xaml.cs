@@ -31,34 +31,5 @@ namespace Ritmo.Views
         {
             InitializeComponent();
         }
-
-        
-
-
-
-
-        
-
-       
-
-        //private void Playlistboxes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    foreach (var item in allTestTrack)
-        //    {
-        //        if (item.TrackId == clickedbuttonvalue)
-        //        {
-        //            for (int i = 0; i < allplaylistcontroller.allplaylists.playlists.Count; i++)
-        //            {
-        //                var selecteditem = Playlistboxes.SelectedItem;
-        //                if (selecteditem.Equals(allplaylistcontroller.allplaylists.playlists.ElementAt(i).Name))
-        //                {
-        //                    allplaylistcontroller.allplaylists.playlists.ElementAt(i).Tracks.AddLast(item);
-        //                }
-        //            }
-
-        //        }
-
-        //    }
-        //}
     }
 }

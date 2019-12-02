@@ -19,16 +19,16 @@ namespace Ritmo
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            DatabaseConnector.ConnectSSH();
-            if (false)
-                DisplayRootViewFor<LoginViewModel>();
-            else
+            //DatabaseConnector.ConnectSSH();
+            //if (false)
+            //    DisplayRootViewFor<LoginViewModel>();
+            //else
                 DisplayRootViewFor<MainWindowViewModel>();
         }
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            DatabaseConnector.DisconnectSSH();
+            //DatabaseConnector.DisconnectSSH();
         }
 
     }
