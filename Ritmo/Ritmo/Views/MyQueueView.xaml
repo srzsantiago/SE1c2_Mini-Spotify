@@ -31,15 +31,7 @@
                 </ContextMenu>
             </Button.ContextMenu>
         </Button>-->
-        <MenuItem Click="AddPresetButton_Click" Header="text" HorizontalAlignment="Center" Height="30" Width="96" >
-            <MenuItem.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="1" />
-                    <MenuItem Header="2"/>
-                    <MenuItem Header="3"/>
-                </ContextMenu>
-            </MenuItem.ContextMenu>
-        </MenuItem>
+        
 
         <!-- test -->
 
@@ -107,10 +99,10 @@
                                         <Label Content="{Binding Artist}" Grid.Column="2"/>
                                         <Label Content="{Binding Album}" Grid.Column="3"/>
                                         <Label Content="{Binding Duration}" Grid.Column="4"/>
-                                        <MenuItem Click="AddPresetButton_Click" Grid.Column="4" Header="test" Width="50">
+                                        <MenuItem Click="AddPresetButton_Click" Grid.Column="4" Header="⋯" HorizontalAlignment="Center" Height="30" Width="95" >
                                             <MenuItem.ContextMenu>
                                                 <ContextMenu>
-                                                    <MenuItem Header="1"/>
+                                                    <MenuItem Header="1" />
                                                     <MenuItem Header="2"/>
                                                     <MenuItem Header="3"/>
                                                 </ContextMenu>
@@ -181,9 +173,15 @@
                                         <Label Content="{Binding Artist}" Grid.Column="2"/>
                                         <Label Content="{Binding Album}" Grid.Column="3"/>
                                         <Label Content="{Binding Duration}" Grid.Column="4"/>
-                                        <Button BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
-                                                Name="ButtonMenu" Content="⋯" Grid.Column="4" Background="{x:Null}" 
-                                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" FontSize="14"/>
+                                        <MenuItem Click="AddPresetButton_Click" Grid.Column="4" Header="⋯" HorizontalAlignment="Center" Height="30" Width="95" >
+                                            <MenuItem.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="1" />
+                                                    <MenuItem Header="2"/>
+                                                    <MenuItem Header="3"/>
+                                                </ContextMenu>
+                                            </MenuItem.ContextMenu>
+                                        </MenuItem>
                                     </Grid>
                                 </Button>
                             </DataTemplate>
@@ -249,20 +247,15 @@
                                         <Label Content="{Binding Artist}" Grid.Column="2"/>
                                         <Label Content="{Binding Album}" Grid.Column="3"/>
                                         <Label Content="{Binding Duration}" Grid.Column="4"/>
-                                        <Button BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
-                                                Name="ButtonMenu" Content="⋯" Grid.Column="4" Background="{x:Null}" 
-                                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" FontSize="14">
-                                            <Button.ContextMenu>
-                                                <ContextMenu  x:Name="cm" ItemsSource="{Binding ItemsList}">
-                                                    <ContextMenu.ItemContainerStyle>
-                                                        <Style TargetType="{x:Type MenuItem}">
-                                                            <Setter Property="Command"  Value="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
-                                                            <Setter Property="CommandParameter" Value="{Binding}"/>
-                                                        </Style>
-                                                    </ContextMenu.ItemContainerStyle>
+                                        <MenuItem Click="AddPresetButton_Click" Grid.Column="4" Header="⋯" HorizontalAlignment="Center" Height="30" Width="95" >
+                                            <MenuItem.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="Add to queue" Command="{Binding DataContext.AddToQueueClickCommand,RelativeSource={RelativeSource AncestorType=ListBoxItem}}" CommandParameter="{Binding ButtonID}"/>
+                                                    <MenuItem Header="2"/>
+                                                    <MenuItem Header="3"/>
                                                 </ContextMenu>
-                                            </Button.ContextMenu>
-                                        </Button>
+                                            </MenuItem.ContextMenu>
+                                        </MenuItem>
                                     </Grid>
                                 </Button>
                             </DataTemplate>

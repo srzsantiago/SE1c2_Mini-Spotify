@@ -23,6 +23,7 @@ namespace Ritmo.ViewModels
             this.mwvm = mwvm;
             _outerClickCommand = new RelayCommand<object>(this.OuterClick);
             _innerClickCommand = new RelayCommand<object>(this.InnerClick);
+            _addToQueueClickCommand = new RelayCommand<object>(this.AddToQueueClick);
             ShowElements();
         }
 
@@ -99,6 +100,21 @@ namespace Ritmo.ViewModels
                 _innerClickCommand = value;
             }
         }
+
+        private ICommand _addToQueueClickCommand;
+
+        public ICommand AddToQueueClickCommand
+        {
+            get
+            {
+                return _addToQueueClickCommand;
+            }
+            set
+            {
+                _addToQueueClickCommand = value;
+            }
+        }
+
         #endregion
 
         public void ShowElements()
@@ -250,6 +266,31 @@ namespace Ritmo.ViewModels
                 mwvm.PlayQueueController.PlayTrack(playTrack);//set this element as CurrentTrack
                 mwvm.CurrentTrackElement.Source = playTrack.AudioFile; // play the track
             }
+
+            this.ShowElements();
+        }
+
+        private void AddToQueueClick(object sender)
+        {
+            String item = (string)sender; //get ButtonID (this will be splited in two portions, Type and index)
+            string type;
+            int index = -1; //if at the end of the if statement it did not change. It means the type is "PlayingNow" and that a index is not needed
+
+            if (!item.Equals(""))//If item ButtonID is not empty.
+            {
+                string[] buttonId = item.Split(null);//split ButtonID
+                type = buttonId[0];
+                index = Int32.Parse(buttonId[1]);
+            }
+            else//if item is blank it means it does not have a ID, so it is a playingNow type.
+            {
+                type = "PlayingNow";
+            }
+
+            Track playTrack = mwvm.PlayQueueController.PQ.TrackWaitingList.ElementAt(index);//gets the element at the given index
+            mwvm.PlayQueueController.AddTrack(playTrack);
+            
+            
 
             this.ShowElements();
         }
