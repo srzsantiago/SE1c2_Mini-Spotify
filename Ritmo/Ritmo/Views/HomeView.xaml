@@ -6,16 +6,14 @@
              xmlns:local="clr-namespace:Ritmo.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
-             d:DataContext="{d:DesignInstance viewmodels:HomeViewModel, IsDesignTimeCreatable=True}">
+             xmlns:viewmodels="clr-namespace:Ritmo.ViewModels">
+    <!--d:DataContext="{d:DesignInstance viewmodels:HomeViewModel, IsDesignTimeCreatable=True}">-->
 
     <Grid Background="GhostWhite" Name="structuregridHome" Margin="0,48,0,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MaxWidth="50" Width="0*"/>
-            <ColumnDefinition Width="62*"/>
-            <ColumnDefinition Width="61*"/>
-            <ColumnDefinition Width="39*"/>
-            <ColumnDefinition Width="38*"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="50*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -24,10 +22,28 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Name="TracknamesColumn" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" HorizontalAlignment="Left" Width="224" RenderTransformOrigin="1.286,0.505" Margin="10,0,0,0"/>
-        <StackPanel Name="AddPlayListColumn" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2"></StackPanel>
-        <StackPanel Name="AddQueueColumn" Grid.Row="2" Grid.Column="4" Grid.RowSpan="2"></StackPanel>
-        <ListBox Name="Playlistboxes" SelectionChanged="Playlistboxes_SelectionChanged" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="136" Grid.Row="3" VerticalAlignment="Top" Width="248"/>
+
+        <ListBox ItemsSource='{Binding AllTestTrack }' Grid.Column="2" Grid.Row="3" Width="250" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="{Binding Name}"/>
+                        <Button Content="Add to Playlist" Grid.Column="0">
+                            <Button.InputBindings>
+                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.AddToPlaylistCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
+                            </Button.InputBindings>
+                        </Button>
+                        <Button Content="Add to queue" Grid.Column="0">
+                            <Button.InputBindings>
+                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.AddToQueueCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
+                            </Button.InputBindings>
+                        </Button>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <ListBox x:Name="Playlistboxes" Grid.Column="0" HorizontalAlignment="Left" Height="136" Grid.Row="3" VerticalAlignment="Top" Width="248"/>
 
     </Grid>
 

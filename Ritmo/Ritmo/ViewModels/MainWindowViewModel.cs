@@ -18,9 +18,10 @@ namespace Ritmo.ViewModels
 {
     public class MainWindowViewModel : Screen
     {
-        PlaylistController PlaylistController = new PlaylistController("TestPlaylist");
+        public PlaylistController PlaylistController = new PlaylistController("TestPlaylist");
+        public AllPlaylistsController AllPlaylistsController = new AllPlaylistsController();
         public PlayQueueController PlayQueueController = new PlayQueueController();
-        MyQueueViewModel MyQueueScreenToViewModel;
+        public MyQueueViewModel MyQueueScreenToViewModel;
 
 
         #region Commands
@@ -159,7 +160,7 @@ namespace Ritmo.ViewModels
         }
         public void InitializeViewModels()
         {
-            HomeViewModel = new HomeViewModel();
+            HomeViewModel = new HomeViewModel(this);
             CurrentViewModel = HomeViewModel;
             AllPlaylistsViewModel = new AllPlaylistsViewModel(this);
             MyQueueViewModel = new MyQueueViewModel(this);
