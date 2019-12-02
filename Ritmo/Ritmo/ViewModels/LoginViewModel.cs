@@ -16,7 +16,10 @@ namespace Ritmo.ViewModels
         public ICommand LoginCommand { get; set; }
         public ICommand NewAccountCommand { get; set; }
 
-        #region Properties
+        IWindowManager Manager = new WindowManager();
+
+
+        #region XAML Properties
         private string _filledPassword;
         private string _filledEmail;
         private string _loginMessage = "kaas";
@@ -52,28 +55,33 @@ namespace Ritmo.ViewModels
 
         public LoginViewModel()
         {
-            LoginCommand = new RelayCommand(Login);
+            LoginCommand = new RelayCommand<Window>(Login);
             NewAccountCommand = new RelayCommand<Window>(NewAccount);
         }
 
-        private void Login()
+        //LoginView is given as argument to close the view in code
+        private void Login(Window LoginView)
         {
-            Login loginAttemp = new Login(FilledEmail, FilledPassword);
+            Login LoginAttempt = new Login(FilledEmail, FilledPassword);
 
             ErrorColor = Brushes.LightYellow;
 
-            if (loginAttemp.loggedin == true)
+            if(true)//if (LoginAttempt.loggedin == true) //Uitgecomment omdat ik niet een correct email en ww weet
+            {
                 LoginMessage = "Success";
+                Manager.ShowWindow(new MainWindowViewModel());
+                LoginView.Close();
+            }
             else
                 LoginMessage = "Failed, incorrect email or password";
         }
 
+        //LoginView is given as argument to close the view in code
         private void NewAccount(Window LoginView)
         {
-            //Window RegisterView = new Window() { Content = new RegisterViewModel() };
-            //RegisterView.Show();
+            Manager.ShowWindow(new RegisterViewModel());
 
-            //LoginView.Close();
+            LoginView.Close();
         }
         
     }

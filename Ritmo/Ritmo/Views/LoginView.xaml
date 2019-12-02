@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
         xmlns:views="clr-namespace:Ritmo.Views"
+        WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="450" Width="800">
     
     <Grid Background="LightBlue">
@@ -17,7 +18,7 @@
             <Label Content="Email" Canvas.Left="32" Canvas.Top="129"/>
             <PasswordBox x:Name="FilledPassword" BorderBrush="Transparent" Height="24" Canvas.Left="116" Canvas.Top="164" Width="159" Background="#E6E5E5"/>
             <TextBox x:Name="FilledEmail" BorderBrush="Transparent" Height="24" Canvas.Left="116" TextWrapping="Wrap" Text="Email@example.com" Canvas.Top="131" Width="159" Background="#E6E5E5"/>
-            <Button Command="{Binding LoginCommand}" Content="SIGN IN" Canvas.Left="116"  Canvas.Top="216" Width="79" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Height="25"/>
+            <Button CommandParameter="{Binding ElementName=LoginWindow}" Command="{Binding LoginCommand}" Content="SIGN IN" Canvas.Left="116"  Canvas.Top="216" Width="79" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Height="25"/>
             <Rectangle x:Name="successblock" Fill="{Binding ErrorColor}" Height="22" Width="311"/>
             <Label Name="succeslabel" Content="{Binding LoginMessage}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="-4"/>
             <TextBlock Canvas.Left="93" TextWrapping="Wrap" Canvas.Top="262" Width="123">
