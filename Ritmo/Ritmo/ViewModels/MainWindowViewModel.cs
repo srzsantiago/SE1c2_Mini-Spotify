@@ -115,10 +115,11 @@ namespace Ritmo.ViewModels
             PlayQueueController.NextTrack();
             MyQueueScreenToViewModel.ShowElements();
             CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
+            
             if (!PlayQueueController.PQ.TrackWaitingListEnded)
-            {
                 PlayTrack();
-            }
+            else
+                PauseTrack();
         }
 
         ////Changes to the previous track and set CurrentTrackElement
@@ -239,13 +240,14 @@ namespace Ritmo.ViewModels
             };
             //Track testTrack4 = new Track() { AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav") };
             PlaylistController.AddTrack(testTrack1);
+            PlaylistController.AddTrack(testTrack2);
             //PlaylistController.AddTrack(testTrack3);
 
             PlayQueueController.AddTrack(testTrack2);
-            PlayQueueController.AddTrack(testTrack1); 
-            PlaylistController.AddTrack(testTrack6); //Als je lines na Queue.AddTrack comment gaat de wachtrij loopen. Dus als je iets toevoegt aan de playqueue.
-            PlaylistController.AddTrack(testTrack7);
-            PlaylistController.AddTrack(testTrack2);
+            PlayQueueController.AddTrack(testTrack1);
+            PlaylistController.AddTrack(testTrack6); 
+            //PlaylistController.AddTrack(testTrack7);
+
 
             //Speelt track en zet playlist in wachtrij
             PlayQueueController.PlayTrack(PlaylistController.Playlist.Tracks.First.Value, PlaylistController.Playlist);
