@@ -27,7 +27,7 @@
         <StackPanel Name="TracknamesColumn" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" HorizontalAlignment="Left" Width="224" RenderTransformOrigin="1.286,0.505" Margin="10,0,0,0"/>
         <StackPanel Name="AddPlayListColumn" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2"></StackPanel>
         <StackPanel Name="AddQueueColumn" Grid.Row="2" Grid.Column="4" Grid.RowSpan="2"></StackPanel>
-        <ListBox Name="Playlistboxes"  Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="136" Grid.Row="3" VerticalAlignment="Top" Width="248" SelectionChanged="Playlistboxes_SelectionChanged"/>
+        <ListBox Name="Playlistboxes" SelectionChanged="Playlistboxes_SelectionChanged" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="136" Grid.Row="3" VerticalAlignment="Top" Width="248"/>
 
     </Grid>
 
