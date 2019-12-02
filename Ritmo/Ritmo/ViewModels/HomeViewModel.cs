@@ -266,21 +266,9 @@ namespace Ritmo.ViewModels
         }
 
 
-        //public void LoadItems()
-        //{
-        //    AllTestTrack = new ObservableCollection<TestItems>()
-        //    {
-        //        new TestItems()
-        //        {
-
-        //        }
-        //    };
-        //}
-
         private void AddToPlayListClick(object sender)
         {
             clickedbuttonvalue = (int)sender;
-            //Playlistboxes.Items.Clear();
             AllPlaylist = new ObservableCollection<Playlist>();
 
             foreach (var item in mainWindowViewModel.AllPlaylistsController.allplaylists.playlists)

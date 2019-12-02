@@ -64,6 +64,7 @@ namespace Ritmo.Views
         public void TestPlaylist()
         {
             //Add tracks
+
             Track one = new Track(1, "FirstTrack", "Shakira", 125);
             Track two = new Track(2, "Second", "Shakira", 134);
             Track three = new Track(3, "FirstSecond", "Ha", 10);
