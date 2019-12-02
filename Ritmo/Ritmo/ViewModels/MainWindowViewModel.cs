@@ -193,7 +193,7 @@ namespace Ritmo.ViewModels
             {
                 TrackId = 2,
                 Name = "RingtoneRoundabout",
-                Artist = "Stefan",
+                Artist = "Dio",
                 Duration = 90,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
             };
@@ -216,18 +216,36 @@ namespace Ritmo.ViewModels
             Track testTrack5 = new Track()
             {
                 TrackId = 5,
-                Name = "Track5",
+                Name = "Powerup2",
                 Artist = "Susan",
                 Duration = 70,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup2.wav"),
             };
+            Track testTrack6 = new Track()
+            {
+                TrackId = 5,
+                Name = "Gun's Roses",
+                Artist = "Susan",
+                Duration = 30,
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
+            };
+            Track testTrack7 = new Track()
+            {
+                TrackId = 5,
+                Name = "Metal Gear",
+                Artist = "Solid Snake",
+                Duration = 90,
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\MetalGearSolid.mp3"),
+            };
             //Track testTrack4 = new Track() { AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav") };
             PlaylistController.AddTrack(testTrack1);
-            PlaylistController.AddTrack(testTrack2);
-            PlaylistController.AddTrack(testTrack3);
+            //PlaylistController.AddTrack(testTrack3);
 
-            PlayQueueController.AddTrack(testTrack4);
-            PlaylistController.AddTrack(testTrack5);
+            PlayQueueController.AddTrack(testTrack2);
+            PlayQueueController.AddTrack(testTrack1); 
+            PlaylistController.AddTrack(testTrack6); //Als je lines na Queue.AddTrack comment gaat de wachtrij loopen. Dus als je iets toevoegt aan de playqueue.
+            PlaylistController.AddTrack(testTrack7);
+            PlaylistController.AddTrack(testTrack2);
 
             //Speelt track en zet playlist in wachtrij
             PlayQueueController.PlayTrack(PlaylistController.Playlist.Tracks.First.Value, PlaylistController.Playlist);

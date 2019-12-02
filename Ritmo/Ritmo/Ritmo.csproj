@@ -243,6 +243,8 @@
     <Resource Include="ImageResources\searchbutton.png" />
     <Resource Include="ImageResources\playicon.ico" />
     <Resource Include="ImageResources\pauseicon.ico" />
+    <Content Include="TestFiles\Gun%27sRoses.mp3" />
+    <Content Include="TestFiles\MetalGearSolid.mp3" />
     <Content Include="TestFiles\Powerup1.wav" />
     <Content Include="TestFiles\Powerup2.wav" />
     <Content Include="TestFiles\RingtoneRoundabout.mp3" />
