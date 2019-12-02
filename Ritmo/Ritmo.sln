@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ritmo", "Ritmo\Ritmo.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritmo.UnitTests", "Ritmo.UnitTests\Ritmo.UnitTests.csproj", "{27DD3F89-3537-472C-A8A2-D12CA5346FDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loginscherm", "loginscherm\loginscherm.csproj", "{06BF6148-DD25-4A9F-9136-69B095422DD4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisterTestWPF", "RegisterTestWPF\RegisterTestWPF.csproj", "{4CD357CA-F24A-436E-B2A7-14F8A830E0D1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,14 +21,6 @@ Global
 		{27DD3F89-3537-472C-A8A2-D12CA5346FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27DD3F89-3537-472C-A8A2-D12CA5346FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27DD3F89-3537-472C-A8A2-D12CA5346FDA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06BF6148-DD25-4A9F-9136-69B095422DD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06BF6148-DD25-4A9F-9136-69B095422DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06BF6148-DD25-4A9F-9136-69B095422DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06BF6148-DD25-4A9F-9136-69B095422DD4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4CD357CA-F24A-436E-B2A7-14F8A830E0D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4CD357CA-F24A-436E-B2A7-14F8A830E0D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4CD357CA-F24A-436E-B2A7-14F8A830E0D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4CD357CA-F24A-436E-B2A7-14F8A830E0D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
