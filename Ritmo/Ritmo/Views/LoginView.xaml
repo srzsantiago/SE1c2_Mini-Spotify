@@ -16,7 +16,7 @@
             <Image Height="77" Canvas.Left="116" Canvas.Top="27" Width="79" Source="https://www.childhood.org.au/app/uploads/2017/07/ACF-logo-placeholder.png"/>
             <Label Content="Password" Canvas.Left="32" Canvas.Top="160"/>
             <Label Content="Email" Canvas.Left="32" Canvas.Top="129"/>
-            <PasswordBox x:Name="FilledPassword" BorderBrush="Transparent" Height="24" Canvas.Left="116" Canvas.Top="164" Width="159" Background="#E6E5E5"/>
+            <TextBox x:Name="FilledPassword" BorderBrush="Transparent" Height="24" Canvas.Left="116" Canvas.Top="164" Width="159" Background="#E6E5E5"/>
             <TextBox x:Name="FilledEmail" BorderBrush="Transparent" Height="24" Canvas.Left="116" TextWrapping="Wrap" Text="Email@example.com" Canvas.Top="131" Width="159" Background="#E6E5E5"/>
             <Button CommandParameter="{Binding ElementName=LoginWindow}" Command="{Binding LoginCommand}" Content="SIGN IN" Canvas.Left="116"  Canvas.Top="216" Width="79" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Height="25"/>
             <Rectangle x:Name="successblock" Fill="{Binding ErrorColor}" Height="22" Width="311"/>

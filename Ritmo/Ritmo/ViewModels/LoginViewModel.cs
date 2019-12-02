@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -18,11 +19,10 @@ namespace Ritmo.ViewModels
 
         IWindowManager Manager = new WindowManager();
 
-
         #region XAML Properties
         private string _filledPassword;
         private string _filledEmail;
-        private string _loginMessage = "kaas";
+        private string _loginMessage;
         private Brush _errorColor;
 
         public Brush ErrorColor
@@ -66,7 +66,7 @@ namespace Ritmo.ViewModels
 
             ErrorColor = Brushes.LightYellow;
 
-            if(true)//if (LoginAttempt.loggedin == true) //Uitgecomment omdat ik niet een correct email en ww weet
+            if (LoginAttempt.loggedin == true) //Uitgecomment omdat ik niet een correct email en ww weet
             {
                 LoginMessage = "Success";
                 Manager.ShowWindow(new MainWindowViewModel());
