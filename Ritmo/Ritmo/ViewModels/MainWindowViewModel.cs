@@ -119,8 +119,8 @@ namespace Ritmo.ViewModels
             
             if (!PlayQueueController.PQ.TrackWaitingListEnded)
                 PlayTrack();
-            else
-                PauseTrack();
+            //else
+            //    PauseTrack(); //Bugs out Queue. Now TrackWaitingList will not pause when it's finished.
         }
 
         ////Changes to the previous track and set CurrentTrackElement

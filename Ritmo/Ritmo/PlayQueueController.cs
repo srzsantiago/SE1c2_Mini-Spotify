@@ -91,7 +91,7 @@ namespace Ritmo
             
             if (PQ.TrackWaitingList.Contains(PQ.WaitingListToQueueTrack) && !PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First.Value))
             {
-                PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Previous.Value;
+                PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Value;
                 PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
             }
             //check if the track is not the first track
