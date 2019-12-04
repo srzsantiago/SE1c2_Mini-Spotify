@@ -55,7 +55,7 @@ namespace Ritmo.ViewModels
 
         private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual};
         private Uri _currentTrackSource; //Unused
-        private double _currentTrackVolume = 0.5;
+        private double _currentTrackVolume = 5;
         private Uri _playButtonIcon = new Uri("/ImageResources/playicon.ico", UriKind.RelativeOrAbsolute);
 
         public MediaElement CurrentTrackElement
@@ -74,7 +74,7 @@ namespace Ritmo.ViewModels
             set 
             { 
                 _currentTrackVolume = value;
-                ChangeMediaVolume(value);
+                VolumeSlider_ValueChanged(value);
             }
         }
         public Uri PlayButtonIcon { get { return _playButtonIcon; } set { _playButtonIcon = value; NotifyOfPropertyChange(); } }
@@ -142,13 +142,13 @@ namespace Ritmo.ViewModels
         }
 
         //Changes volume based on slider. 0 is muted and 1 is the highest volume.
-        public void ChangeMediaVolume(double VolumeSliderValue)
+        public void VolumeSlider_ValueChanged(double VolumeSliderValue)
         {
             CurrentTrackElement.Volume = VolumeSliderValue; // gets the slider value and puts it as volume
         }
 
         #endregion
-       
+
         //Initialize-methods that are used in the constructor of MainWindowViewModel
         #region Initializer methods
         public void InitializeCommands()
