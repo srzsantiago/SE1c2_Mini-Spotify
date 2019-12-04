@@ -93,20 +93,10 @@ namespace Ritmo
                 PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Previous.Value;
                 PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
             }
-            //in geval van queue
+            //if the currentTrack is a song from the queue, currentTrack words the last played track from the tracklist.
             else
             {
                 PQ.CurrentTrack = PQ.WaitingListToQueueTrack;
-
-                //if (PQ.CurrentTrack != PQ.WaitingListToQueueTrack && !PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First.Value))
-                //{
-                    
-                //}
-                //else if (PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First()))
-                //{
-                //    PQ.CurrentTrack = PQ.TrackWaitingList.Last();
-                //    PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
-                //}
             }
 
         }
