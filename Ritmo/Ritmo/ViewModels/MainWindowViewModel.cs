@@ -52,6 +52,7 @@ namespace Ritmo.ViewModels
         public ICommand PlayTrackCommand { get; set; }
         public ICommand NextTrackCommand { get; set; }
         public ICommand PrevTrackCommand { get; set; }
+        public ICommand ShuffleWaitinglistCommand { get; set; }
 
         private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual};
         private Uri _currentTrackSource; //Unused
@@ -77,6 +78,7 @@ namespace Ritmo.ViewModels
                 ChangeMediaVolume(value);
             }
         }
+ 
         public Uri PlayButtonIcon { get { return _playButtonIcon; } set { _playButtonIcon = value; NotifyOfPropertyChange(); } }
         #endregion
 
@@ -139,6 +141,12 @@ namespace Ritmo.ViewModels
             
         }
 
+        public void ShuffleWaitinglist()
+        {
+            PlayQueueController.ShuffleTrackWaitingList();
+            MyQueueScreenToViewModel.ShowElements();
+        }
+
         //Runs when the track has ended. The next track will be loaded and played.
         //It's assigned to CurrentTrackElement.MediaEnded in the MainWindowViewModel constructor
         //If the playQueue has played all tracks, CurrentTrack will be set to the first Track in TrackWaitingList and the audio will be paused.
@@ -164,7 +172,7 @@ namespace Ritmo.ViewModels
             PlayTrackCommand = new RelayCommand(PlayTrack);
             NextTrackCommand = new RelayCommand(NextTrack);
             PrevTrackCommand = new RelayCommand(PrevTrack);
-           
+            ShuffleWaitinglistCommand = new RelayCommand(ShuffleWaitinglist);
         }
         public void InitializeViewModels()
         {
@@ -250,7 +258,9 @@ namespace Ritmo.ViewModels
             PlaylistController.AddTrack(testTrack1);
             PlaylistController.AddTrack(testTrack2);
             PlaylistController.AddTrack(testTrack6);
-            
+            PlaylistController.AddTrack(testTrack5);
+            PlaylistController.AddTrack(testTrack7);
+
 
             PlayQueueController.AddTrack(testTrack3);
             PlayQueueController.AddTrack(testTrack4);

@@ -99,5 +99,7 @@
 
         <TextBlock VerticalAlignment="Center" Margin="0,11,40,53" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="88" Height="16">Volume</TextBlock>
         <Slider Name="volumeSlider" VerticalAlignment="Center" Minimum="0" Maximum="1" Value="{Binding CurrentTrackVolume}" Margin="0,32,40,30" Grid.Row="1" Grid.Column="1" Width="100" Height="18" HorizontalAlignment="Right"/>
+
+        <Button Content="Shuffle" Grid.Column="1" HorizontalAlignment="Left" Margin="431,50,0,0" Grid.Row="1" VerticalAlignment="Top" Command="{Binding ShuffleWaitinglistCommand}" Width="75" Background="White"/>
     </Grid>
 </Window>
