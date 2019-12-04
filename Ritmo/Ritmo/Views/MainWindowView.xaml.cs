@@ -30,7 +30,10 @@ namespace Ritmo.Views
 
         }
 
+        private void MuteButton_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
         //PlayQueueController playQueueController = new PlayQueueController();
         //PlaylistController playlistController = new PlaylistController("TestPlaylist");
 

@@ -158,10 +158,23 @@ namespace Ritmo
             PQ.RepeatMode = PlayQueue.RepeatModes.TrackRepeat;
         } 
 
-        public void ShuffleTrackWaitingList(TrackList trackList) {
-            // werkt niet helemaal en moet volgende sprint verder
+        public void ShuffleTrackWaitingList() {
+
             Random rand = new Random();
-            int size = trackList.Tracks.Count;
+            LinkedList<Track> currentlist = PQ.TrackWaitingList;
+            LinkedList<Track> randomtracks = new LinkedList<Track>();
+
+            // Removes current track from list if the current track belongs to the trackWaitingList
+            if (currentlist.Contains(PQ.CurrentTrack))
+            {
+                currentlist.Remove(PQ.CurrentTrack);
+                randomtracks.AddFirst(PQ.CurrentTrack);
+            }
+
+            
+            int size = currentlist.Count;
+            Console.WriteLine(size);
+
             int cijfer;
             List<int> randomnummers = new List<int>();
 
@@ -182,13 +195,18 @@ namespace Ritmo
                 }
             }
 
-            LinkedList<Track> randomtracks = new LinkedList<Track>();
             foreach (int i in randomnummers)
             {
-                Track track = trackList.Tracks.ElementAt(i);
+                Track track = currentlist.ElementAt(i);
                 randomtracks.AddLast(track);
             }
-            trackList.Tracks = randomtracks;
+
+            PQ.TrackWaitingList = randomtracks;
+            foreach (Track track in PQ.TrackWaitingList)
+            {
+                Console.WriteLine(track.TrackId + ", " + track.Name + ", " + track.Artist);
+            }
+            Console.WriteLine("________________________________________________________");
         }
          
         public void SetVolume(double volume) {//Set the volume to a given value
