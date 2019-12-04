@@ -169,7 +169,7 @@ namespace Ritmo.ViewModels
         {
             HomeViewModel = new HomeViewModel();
             CurrentViewModel = HomeViewModel;
-            AllPlaylistsViewModel = new AllPlaylistsViewModel(this);
+            AllPlaylistsViewModel = new AllPlaylistsViewModel();
             MyQueueViewModel = new MyQueueViewModel(this);
             MyQueueScreenToViewModel = (MyQueueViewModel)MyQueueViewModel;
         }
