@@ -21,12 +21,6 @@ namespace Ritmo.Views
     /// </summary>
     public partial class HomeView : UserControl
     {
-        PlayQueueController playqueuecontroller = new PlayQueueController();
-        AllPlaylistsController allplaylistcontroller;
-        
-        private int clickedbuttonvalue;
-        PlaylistController testplaylist1 = new PlaylistController("playlist1");
-
         public HomeView()
         {
             InitializeComponent();
