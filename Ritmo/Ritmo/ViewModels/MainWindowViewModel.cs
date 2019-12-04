@@ -54,8 +54,7 @@ namespace Ritmo.ViewModels
         public ICommand NextTrackCommand { get; set; }
         public ICommand PrevTrackCommand { get; set; }
         public ICommand MuteTrackCommand { get; set; }
-
-
+        public ICommand ShuffleWaitinglistCommand { get; set; }
 
         private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual};
         private Uri _currentTrackSource; //Unused
@@ -82,6 +81,7 @@ namespace Ritmo.ViewModels
                 VolumeSlider_ValueChanged(value);
             }
         }
+ 
         public Uri PlayButtonIcon { get { return _playButtonIcon; } set { _playButtonIcon = value; NotifyOfPropertyChange(); } }
 
         public Uri MuteButtonIcon { get { return _muteButtonIcon; } set { _muteButtonIcon = value; NotifyOfPropertyChange(); } }
@@ -130,20 +130,34 @@ namespace Ritmo.ViewModels
             //    PauseTrack(); //Bugs out Queue. Now TrackWaitingList will not pause when it's finished.
         }
 
-        ////Changes to the previous track and set CurrentTrackElement
+        //Changes to the previous track and set CurrentTrackElement
         public void PrevTrack()
         {
-            //Checks if CurrentTrack is the first. If it is, it nothing will happen. 
-            //Call rewind track here
-            if (PlayQueueController.PQ.CurrentTrack.Equals(PlayQueueController.PQ.TrackWaitingList.First.Value)) { }
-            else
+            TimeSpan t1 = new TimeSpan(0, 0, 3); //Set timer for 3 seconds
+            if (CurrentTrackElement.Position <= t1) //If the song is under 3 seconds, go to the previous song
             {
-                PlayQueueController.PreviousTrack();
-                MyQueueScreenToViewModel.ShowElements();
-                CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
-                PlayTrack();
+                //Checks if CurrentTrack is the first. If it is, it nothing will happen. 
+                //Call rewind track here
+                if (PlayQueueController.PQ.CurrentTrack.Equals(PlayQueueController.PQ.TrackWaitingList.First.Value)) { }
+                else
+                {
+                    PlayQueueController.PreviousTrack();
+                    MyQueueScreenToViewModel.ShowElements();
+                    CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
+                    PlayTrack();
+                }
             }
-            
+            else //Else play the current song from the start (0 sec)
+            {
+                CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
+                CurrentTrackElement.Play(); //Play the current song
+            }   
+        }
+
+        public void ShuffleWaitinglist()
+        {
+            PlayQueueController.ShuffleTrackWaitingList();
+            MyQueueScreenToViewModel.ShowElements();
         }
 
         //Runs when the track has ended. The next track will be loaded and played.
@@ -202,7 +216,7 @@ namespace Ritmo.ViewModels
             NextTrackCommand = new RelayCommand(NextTrack);
             PrevTrackCommand = new RelayCommand(PrevTrack);
             MuteTrackCommand = new RelayCommand(MuteVolume);
-           
+            ShuffleWaitinglistCommand = new RelayCommand(ShuffleWaitinglist);
         }
         public void InitializeViewModels()
         {
@@ -288,7 +302,9 @@ namespace Ritmo.ViewModels
             PlaylistController.AddTrack(testTrack1);
             PlaylistController.AddTrack(testTrack2);
             PlaylistController.AddTrack(testTrack6);
-            
+            PlaylistController.AddTrack(testTrack5);
+            PlaylistController.AddTrack(testTrack7);
+
 
             PlayQueueController.AddTrack(testTrack3);
             PlayQueueController.AddTrack(testTrack4);

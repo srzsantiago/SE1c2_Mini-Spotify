@@ -102,5 +102,7 @@
         <Button Click="MuteButton_Click" Command="{Binding MuteTrackCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="610,21,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40" Height="38">
             <Image x:Name="MuteButtonIcon" Source="{Binding MuteButtonIcon}" />
         </Button>
+        <Button Content="Shuffle" Grid.Column="1" HorizontalAlignment="Left" Margin="431,50,0,0" Grid.Row="1" VerticalAlignment="Top" Command="{Binding ShuffleWaitinglistCommand}" Width="75" Background="White"/>
+
     </Grid>
 </Window>
