@@ -8,11 +8,11 @@ namespace Ritmo
 {
     public class AllPlaylists
     {
-        public List<Playlist> playlists { get; set; } // the list where all the playlists go into.
+        public List<Playlist> Playlists { get; set; } // the list where all the playlists go into.
 
         public AllPlaylists()
         {
-            playlists = new List<Playlist>();
+            Playlists = new List<Playlist>();
         }
     }
 }

@@ -38,64 +38,64 @@ namespace Ritmo.Views
         public AllPlayListsView()
         {
             
-            allplaylistcontroller = AllPlaylistsViewModel.AllPlaylistsController;
+            //allplaylistcontroller = AllPlaylistsViewModel.AllPlaylistsController;
             InitializeComponent();
-            testAllPlayLists();
-            GetPlayListsGUI();
+            //testAllPlayLists();
+            //GetPlayListsGUI();
 
         }
 
         public void ClearItems()
         {
-            NameColumn.Children.Clear();
-            CreationDateColumn.Children.Clear();
-            DeleteButtonColumn.Children.Clear();
-            DurationColumn.Children.Clear();
+            //NameColumn.Children.Clear();
+            //CreationDateColumn.Children.Clear();
+            //DeleteButtonColumn.Children.Clear();
+            //DurationColumn.Children.Clear();
         }
 
-        public void GetPlayListsGUI()
-        {
-            ClearItems();
-            count = 0;
-            foreach (var item in allplaylistcontroller.allplaylists.playlists) // goes through all the playlists that exist and adds their name to the list in my playlists
-                {
+        //public void GetPlayListsGUI()
+        //{
+        //    ClearItems();
+        //    count = 0;
+        //    foreach (var item in allplaylistcontroller.allplaylists.playlists) // goes through all the playlists that exist and adds their name to the list in my playlists
+        //        {
                 
 
-                    Button DeleteButton = new Button();
-                    Button NameButton = new Button();
-                    Label DurationLabel = new Label();
-                    Label CreationDateLabel = new Label();
+        //            Button DeleteButton = new Button();
+        //            Button NameButton = new Button();
+        //            Label DurationLabel = new Label();
+        //            Label CreationDateLabel = new Label();
                 
-                    DeleteButton.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
-                    NameButton.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
-                    DurationLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
-                    CreationDateLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
+        //            DeleteButton.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+        //            NameButton.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
+        //            DurationLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
+        //            CreationDateLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
 
-                    NameButton.Height = 27;
-                    NameButton.Content = item.Name;
-                    NameButton.Tag = count;
-                    count++;
+        //            NameButton.Height = 27;
+        //            NameButton.Content = item.Name;
+        //            NameButton.Tag = count;
+        //            count++;
 
-                    DeleteButton.Height = 27;
-                    DeleteButton.Width = 27;
-                    DeleteButton.Content = item.TrackListID;
+        //            DeleteButton.Height = 27;
+        //            DeleteButton.Width = 27;
+        //            DeleteButton.Content = item.TrackListID;
                     
 
-                    DurationLabel.Content = item.TrackListDuration;
-                    CreationDateLabel.Content = item.CreationDate;
+        //            DurationLabel.Content = item.TrackListDuration;
+        //            CreationDateLabel.Content = item.CreationDate;
 
-                    NameButton.Click += PlaylistClick;
-                    DeleteButton.Click += DeletePlayList_Click;
+        //            NameButton.Click += PlaylistClick;
+        //            DeleteButton.Click += DeletePlayList_Click;
 
-                    DeleteButtonColumn.Children.Add(DeleteButton);
-                    NameColumn.Children.Add(NameButton);
-                    DurationColumn.Children.Add(DurationLabel);
-                    CreationDateColumn.Children.Add(CreationDateLabel);
+        //            DeleteButtonColumn.Children.Add(DeleteButton);
+        //            NameColumn.Children.Add(NameButton);
+        //            DurationColumn.Children.Add(DurationLabel);
+        //            CreationDateColumn.Children.Add(CreationDateLabel);
                    
 
-                }
+        //        }
             
-        }
+        //}
 
        
 
@@ -109,15 +109,15 @@ namespace Ritmo.Views
   
 
             Button clickedButton = sender as Button; // checks which button is pressed
-            int playlistamount = allplaylistcontroller.allplaylists.playlists.Count; // counts the amount of playlists
+            int playlistamount = allplaylistcontroller.AllPlaylists.Playlists.Count; // counts the amount of playlists
             string buttoncontent = (string)clickedButton.Content; // puts the content of the clicked button onto an int
             int index = (int)clickedButton.Tag;
-            Playlist playlist = allplaylistcontroller.allplaylists.playlists.ElementAt(index);
+            Playlist playlist = allplaylistcontroller.AllPlaylists.Playlists.ElementAt(index);
             playlistview = new PlaylistView(playlist);
 
             for (int i = 0; i < playlistamount; i++) // FIX: when 2 playlists have the same name(this can be fixed when playlist has their own id in SQL)
             {
-                if (allplaylistcontroller.allplaylists.playlists[i].Name == buttoncontent) // checks if i is equal to the pressed buttons content
+                if (allplaylistcontroller.AllPlaylists.Playlists[i].Name == buttoncontent) // checks if i is equal to the pressed buttons content
                 {
                     //playlistview.ChangePlaylist(playlist);
                     ns.Navigate(playlistview); // navigates to the desired playlist
@@ -129,7 +129,7 @@ namespace Ritmo.Views
         // maakt playlists aan en voegt de playlists toe aan de lijst, waarna deze zullen geladen worden in AllPlayListsView window in de GUI
         public void testAllPlayLists()
         {
-            if(allplaylistcontroller.allplaylists.playlists.Count == 0) { 
+            if(allplaylistcontroller.AllPlaylists.Playlists.Count == 0) { 
                 Playlist testplaylist1 = new Playlist(0, "playlist1", 100, DateTime.Today);
                 Playlist testplaylist2 = new Playlist(1, "playlist2", 200, DateTime.Today);
                 Playlist testplaylist3 = new Playlist(2, "playlist3", 400, DateTime.Today.AddDays(1));
@@ -181,7 +181,7 @@ namespace Ritmo.Views
             {
                 Playlist playlist = new Playlist(1 , x, 100, DateTime.Today); // id is going to be unique when we use the database
                 allplaylistcontroller.AddTrackList(playlist);
-                GetPlayListsGUI();
+                //GetPlayListsGUI();
             }
 
 
@@ -193,7 +193,7 @@ namespace Ritmo.Views
             MenuPanel.Height = 0;
             menuPenalIsOpen = false;
             Button clickedButton = sender as Button; // checks which button is pressed
-            int playlistamount = allplaylistcontroller.allplaylists.playlists.Count; // counts the amount of playlists
+            int playlistamount = allplaylistcontroller.AllPlaylists.Playlists.Count; // counts the amount of playlists
             int buttoncontent = (int)clickedButton.Content; // puts the content of the clicked button onto an int
 
             
@@ -202,11 +202,11 @@ namespace Ritmo.Views
                 for (int i = 0; i < playlistamount; i++)
                 {
 
-                    if (allplaylistcontroller.allplaylists.playlists[i].TrackListID == buttoncontent) // checks if i is equal to the pressed buttons content
+                    if (allplaylistcontroller.AllPlaylists.Playlists[i].TrackListID == buttoncontent) // checks if i is equal to the pressed buttons content
                     {
-                        allplaylistcontroller.RemovePlaylist(allplaylistcontroller.allplaylists.playlists[i]); // removes the button with the id of i
+                        allplaylistcontroller.RemovePlaylist(allplaylistcontroller.AllPlaylists.Playlists[i]); // removes the button with the id of i
 
-                        GetPlayListsGUI(); // refreshes the page
+                        //GetPlayListsGUI(); // refreshes the page
                         break; // stops the loop, if you count 5 playlists and delete one then the loop still goes on to the 5th playlist, this gives an error
                     }
                 }
