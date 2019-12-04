@@ -126,17 +126,25 @@ namespace Ritmo.ViewModels
         ////Changes to the previous track and set CurrentTrackElement
         public void PrevTrack()
         {
-            //Checks if CurrentTrack is the first. If it is, it nothing will happen. 
-            //Call rewind track here
-            if (PlayQueueController.PQ.CurrentTrack.Equals(PlayQueueController.PQ.TrackWaitingList.First.Value)) { }
+            TimeSpan t1 = new TimeSpan(0, 0, 3);
+            if (CurrentTrackElement.Position > t1)
+            {
+                CurrentTrackElement.Position = new TimeSpan(0, 0, 0);
+                CurrentTrackElement.Play();
+            }
             else
             {
-                PlayQueueController.PreviousTrack();
-                MyQueueScreenToViewModel.ShowElements();
-                CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
-                PlayTrack();
-            }
-            
+                //Checks if CurrentTrack is the first. If it is, it nothing will happen. 
+                //Call rewind track here
+                if (PlayQueueController.PQ.CurrentTrack.Equals(PlayQueueController.PQ.TrackWaitingList.First.Value)) { }
+                else
+                {
+                    PlayQueueController.PreviousTrack();
+                    MyQueueScreenToViewModel.ShowElements();
+                    CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
+                    PlayTrack();
+                }
+            }   
         }
 
         //Runs when the track has ended. The next track will be loaded and played.
