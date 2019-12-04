@@ -22,7 +22,8 @@ namespace Ritmo.ViewModels
         public AllPlaylistsController AllPlaylistsController = new AllPlaylistsController();
         public PlayQueueController PlayQueueController = new PlayQueueController();
         public MyQueueViewModel MyQueueScreenToViewModel;
-
+        private bool muted = false;
+        static double OldVolume = 0;
 
         #region Commands
         public ICommand ChangeViewModelCommand { get; set; }
@@ -52,11 +53,15 @@ namespace Ritmo.ViewModels
         public ICommand PlayTrackCommand { get; set; }
         public ICommand NextTrackCommand { get; set; }
         public ICommand PrevTrackCommand { get; set; }
+        public ICommand MuteTrackCommand { get; set; }
+
+
 
         private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual};
         private Uri _currentTrackSource; //Unused
-        private double _currentTrackVolume = 5;
+        private double _currentTrackVolume = 0.5;
         private Uri _playButtonIcon = new Uri("/ImageResources/playicon.ico", UriKind.RelativeOrAbsolute);
+        private Uri _muteButtonIcon = new Uri("/ImageResources/unmute.png", UriKind.RelativeOrAbsolute);
 
         public MediaElement CurrentTrackElement
         {
@@ -78,6 +83,8 @@ namespace Ritmo.ViewModels
             }
         }
         public Uri PlayButtonIcon { get { return _playButtonIcon; } set { _playButtonIcon = value; NotifyOfPropertyChange(); } }
+
+        public Uri MuteButtonIcon { get { return _muteButtonIcon; } set { _muteButtonIcon = value; NotifyOfPropertyChange(); } }
         #endregion
 
         public MainWindowViewModel()
@@ -148,10 +155,40 @@ namespace Ritmo.ViewModels
             PauseTrack();
         }
 
-        //Changes volume based on slider. 0 is muted and 1 is the highest volume.
+        //Changes volume based on slider. 0 is muted and 100 is highest
         public void VolumeSlider_ValueChanged(double VolumeSliderValue)
         {
             CurrentTrackElement.Volume = VolumeSliderValue; // gets the slider value and puts it as volume
+            if (CurrentTrackElement.Volume > 0)
+            {
+                muted = false; // sets bool to false because its not muted
+                MuteButtonIcon = new Uri("/ImageResources/unmute.png", UriKind.RelativeOrAbsolute); // puts the volume image to the unmuted png
+            } else
+            {
+                muted = true; // sets bool to true because its muted
+                MuteButtonIcon = new Uri("/ImageResources/mute.png", UriKind.RelativeOrAbsolute); // puts the volume image to the muted png because the volume is 0
+            }
+            
+        }
+
+        private void MuteVolume()
+        {
+            if(muted) // checks if volume is already muted
+            {
+                muted = false;
+                if (OldVolume != 0) // if the old volume is not 0, and you click on the unmute button then the old volume will be put as the volume again
+                {
+                    VolumeSlider_ValueChanged(OldVolume);
+                    MuteButtonIcon = new Uri("/ImageResources/unmute.png", UriKind.RelativeOrAbsolute); // sets unmuted png as button icon
+                }
+            } else // else if volume is not muted
+            {
+                muted = true;
+                OldVolume = CurrentTrackElement.Volume; // saves the old volume
+                VolumeSlider_ValueChanged(0); // changes the slider volume value to 0
+                MuteButtonIcon = new Uri("/ImageResources/mute.png", UriKind.RelativeOrAbsolute); // changes the icon of the button to the muted icon
+                
+            }
         }
 
         #endregion
@@ -164,6 +201,7 @@ namespace Ritmo.ViewModels
             PlayTrackCommand = new RelayCommand(PlayTrack);
             NextTrackCommand = new RelayCommand(NextTrack);
             PrevTrackCommand = new RelayCommand(PrevTrack);
+            MuteTrackCommand = new RelayCommand(MuteVolume);
            
         }
         public void InitializeViewModels()

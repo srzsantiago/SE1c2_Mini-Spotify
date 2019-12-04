@@ -98,6 +98,9 @@
         <ContentControl Content="{Binding CurrentTrackElement}" Margin="326,11,481,60" Grid.Column="1" Grid.Row="1"/>
 
         <TextBlock VerticalAlignment="Center" Margin="0,11,40,53" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="88" Height="16">Volume</TextBlock>
-        <Slider Name="volumeSlider" ValueChanged="VolumeSlider_ValueChanged" Cursor="Hand" VerticalAlignment="Center" Minimum="0" Maximum="10" Value="{Binding CurrentTrackVolume}" Margin="0,32,40,30" Grid.Row="1" Grid.Column="1" Width="100" IsMoveToPointEnabled="True"  Height="18" HorizontalAlignment="Right"/>
+        <Slider Name="volumeSlider" ValueChanged="VolumeSlider_ValueChanged" Cursor="Hand" VerticalAlignment="Center" Minimum="0" Maximum="1" Value="{Binding CurrentTrackVolume}" Margin="0,32,28,30" Grid.Row="1" Grid.Column="1" Width="127" IsMoveToPointEnabled="True"  Height="18" HorizontalAlignment="Right"/>
+        <Button Click="MuteButton_Click" Command="{Binding MuteTrackCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="610,21,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40" Height="38">
+            <Image x:Name="MuteButtonIcon" Source="{Binding MuteButtonIcon}" />
+        </Button>
     </Grid>
 </Window>
