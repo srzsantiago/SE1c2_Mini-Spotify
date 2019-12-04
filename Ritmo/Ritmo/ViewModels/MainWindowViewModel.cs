@@ -123,16 +123,11 @@ namespace Ritmo.ViewModels
             //    PauseTrack(); //Bugs out Queue. Now TrackWaitingList will not pause when it's finished.
         }
 
-        ////Changes to the previous track and set CurrentTrackElement
+        //Changes to the previous track and set CurrentTrackElement
         public void PrevTrack()
         {
-            TimeSpan t1 = new TimeSpan(0, 0, 3);
-            if (CurrentTrackElement.Position > t1)
-            {
-                CurrentTrackElement.Position = new TimeSpan(0, 0, 0);
-                CurrentTrackElement.Play();
-            }
-            else
+            TimeSpan t1 = new TimeSpan(0, 0, 3); //Set timer for 3 seconds
+            if (CurrentTrackElement.Position <= t1) //If the song is under 3 seconds, go to the previous song
             {
                 //Checks if CurrentTrack is the first. If it is, it nothing will happen. 
                 //Call rewind track here
@@ -144,6 +139,11 @@ namespace Ritmo.ViewModels
                     CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
                     PlayTrack();
                 }
+            }
+            else //Else play the current song from the start (0 sec)
+            {
+                CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
+                CurrentTrackElement.Play(); //Play the current song
             }   
         }
 
