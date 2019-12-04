@@ -22,7 +22,7 @@ namespace Ritmo.ViewModels
         MainWindowViewModel mainWindowViewModel;
         private int clickedbuttonvalue;
 
-
+        #region stackpanels
         private StackPanel _tracknamesColumn;
 
         public StackPanel TracknamesColumn
@@ -61,23 +61,9 @@ namespace Ritmo.ViewModels
             }
             set { _addQueueColumn = value; }
         }
-        
+        #endregion
 
-        private ListBox _playlistboxes;
-
-        public ListBox Playlistboxes
-        {
-            get
-            {
-                if (_playlistboxes == null)
-                    _playlistboxes = new ListBox();
-                return _playlistboxes;
-            }
-            set { _playlistboxes = value;
-                NotifyOfPropertyChange("Playlistboxes");
-            }
-        }
-
+        #region observablecollections
         private ObservableCollection<TestItems> _allTestTrack;
 
         public ObservableCollection<TestItems> AllTestTrack
@@ -105,7 +91,9 @@ namespace Ritmo.ViewModels
                 NotifyOfPropertyChange("AllPlaylist");
             }
         }
+        #endregion
 
+        #region commands
         private ICommand _addToPlaylistCommand;
 
         public ICommand AddToPlaylistCommand
@@ -133,7 +121,9 @@ namespace Ritmo.ViewModels
                 _addToQueueCommand = value;
             }
         }
+        #endregion
 
+        #region listbox SelectedItem
         private Playlist selectedItem;
         public Playlist SelectedItem
         {
@@ -162,6 +152,7 @@ namespace Ritmo.ViewModels
 
             }
         }
+        #endregion
 
 
 

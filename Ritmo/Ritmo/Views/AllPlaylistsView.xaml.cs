@@ -113,7 +113,7 @@ namespace Ritmo.Views
             string buttoncontent = (string)clickedButton.Content; // puts the content of the clicked button onto an int
             int index = (int)clickedButton.Tag;
             Playlist playlist = allplaylistcontroller.allplaylists.playlists.ElementAt(index);
-            playlistview = new PlaylistView(playlist);
+            
 
             for (int i = 0; i < playlistamount; i++) // FIX: when 2 playlists have the same name(this can be fixed when playlist has their own id in SQL)
             {

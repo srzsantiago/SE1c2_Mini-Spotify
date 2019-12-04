@@ -7,6 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="GhostWhite">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="97"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
         <Grid Background="LightSlateGray" Height="97" VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="68*"/>
@@ -19,18 +24,18 @@
                 <ComboBox.Background>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
                 </ComboBox.Background>
-                <Button Click="AscendingSort_Click" Name="NameAsc" Tag="Name" Content="Name A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <Button Click="DescendingSort_Click" Name="NameDesc" Tag="Name" Content="Name Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <Button Click="AscendingSort_Click" Name="ArtistAsc" Tag="Artist" Content="Artist A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <Button Click="DescendingSort_Click" Name="ArtistDesc" Tag="Artist" Content="Artist Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <Button Click="AscendingSort_Click" Name="DurationAsc" Tag="Duration" Content="Duration A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <Button Click="DescendingSort_Click" Name="DurationDesc" Tag="Duration" Content="Duration Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Name="NameAsc" Tag="Name" Content="Name A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Name="NameDesc" Tag="Name" Content="Name Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Name="ArtistAsc" Tag="Artist" Content="Artist A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button  Name="ArtistDesc" Tag="Artist" Content="Artist Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button  Name="DurationAsc" Tag="Duration" Content="Duration A-Z" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <Button Name="DurationDesc" Tag="Duration" Content="Duration Z-A" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
             </ComboBox>
-            <Button Click="ButtonMenu_Click" Name="ButtonMenu" Content="≡" Margin="0,49,10,0" Background="{x:Null}" FontSize="30" Height="46" VerticalAlignment="Top" HorizontalAlignment="Right" Width="30" Grid.RowSpan="2"/>
+            <Button Name="ButtonMenu" Content="≡" Margin="0,49,10,0" Background="{x:Null}" FontSize="30" Height="46" VerticalAlignment="Top" HorizontalAlignment="Right" Width="30" Grid.RowSpan="2"/>
         </Grid>
 
-        <Button Click="PlaylistMenuButton_Click" Name="PlaylistMenuButton" Content="≡" HorizontalAlignment="Left" Height="44" Margin="177,0,0,0" VerticalAlignment="Top" Width="53" Background="{x:Null}" FontSize="24"/>
-        <Grid Name="ItemGrid" Background="GhostWhite" Margin="0,97,0,0">
+        <Button Name="PlaylistMenuButton" Content="≡" HorizontalAlignment="Left" Height="44" Margin="177,0,0,0" VerticalAlignment="Top" Width="53" Background="{x:Null}" FontSize="24"/>
+        <Grid Name="ItemGrid" Background="GhostWhite" Grid.Row="1" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="395*"/>
@@ -38,11 +43,6 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="2"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
 
             <Label Grid.Column="0" Content="DELETE" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="80" />
             <Label Grid.Column="1" Content="SONG NAME" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="320" />
@@ -50,20 +50,42 @@
             <Label Grid.Column="3" Content="ALBUM" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Width="150" />
             <Label Grid.Column="4" Content="DURATION" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Width="100" />
 
-            <StackPanel Name="DeleteColumn" Grid.Row="2" Grid.Column="0"></StackPanel>
-            <StackPanel Name="NameColumn" Grid.Row="2" Grid.Column="1"></StackPanel>
-            <StackPanel Name="ArtistColumn" Grid.Row="2" Grid.Column="2"></StackPanel>
-            <StackPanel Name="AlbumColumn" Grid.Row="2" Grid.Column="3"></StackPanel>
-            <StackPanel Name="DurationColumn" Grid.Row="2" Grid.Column="4"></StackPanel>
-
+            
             <Border BorderBrush="Black" BorderThickness="1" Height="2" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="5" MinWidth="500"/>
 
         </Grid>
+        <ListBox ItemsSource='{Binding PlayListTracksOC}' Grid.Row="3">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <!--<Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="395*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Delete" Grid.Column="0"/>
+                        <Label Content="{Binding Name}" Grid.Column="1"/>
+                        <Label Content="{Binding Artist}" Grid.Column="2"/>
+                        <Label Content="{Binding Album}" Grid.Column="3"/>
+                        <Label Content="{Binding Duration}" Grid.Column="4"/>
+                    </Grid>-->
+                    <Label Content="{Binding Name}"></Label>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
+        <Grid>
+</Grid>
+        
+        
 
         <StackPanel Name="MenuPanel" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="160" Margin="630,97,0,0" Background="#FF778899">
             <Button Name="DeleteTrack" Content="Delete track from playlist" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
-            <Button Name="AddTrackQueue" Click="AddTrackQueue_Click" Content="Add track to queue" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
-            <Button Name="AddTrackPlaylist" Click="AddTrackToPlaylist_Click" Content="Add track to playlist" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
+            <Button Name="AddTrackQueue" Content="Add track to queue" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
+            <Button Name="AddTrackPlaylist" Content="Add track to playlist" HorizontalAlignment="Left" Height="30" Margin="0,0,-0.2,0" Width="160" Background="{x:Null}"/>
         </StackPanel>
 
         <StackPanel Name="PlaylistMenu" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="160" Margin="470,159,0,0" Background="#FF778899">
@@ -72,8 +94,8 @@
         </StackPanel>
 
         <Grid Name="PlaylistMenuGrid" HorizontalAlignment="Left" Height="0" Margin="104,44,0,-83" VerticalAlignment="Top" Width="126" RenderTransformOrigin="0.474,1.036" Background="#FF778899">
-            <Button Name="ChangeName" Click="ChangeNameButton_Click" Content="Change name" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="126" Background="{x:Null}"/>
-            <Button Name="DeletePlaylist" Click="DeletePlaylistButton_Click" Content="Delete playlist" HorizontalAlignment="Left" Height="30" Margin="0,30,0,0" VerticalAlignment="Top" Width="126" Background="{x:Null}"/>
+            <Button Name="ChangeName" Content="Change name" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="126" Background="{x:Null}"/>
+            <Button Name="DeletePlaylist" Content="Delete playlist" HorizontalAlignment="Left" Height="30" Margin="0,30,0,0" VerticalAlignment="Top" Width="126" Background="{x:Null}"/>
         </Grid>
     </Grid>
 
