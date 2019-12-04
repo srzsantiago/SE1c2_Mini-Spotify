@@ -88,24 +88,25 @@ namespace Ritmo
         {
             //check if tracklist contains the CurrentTrack
             //(this must be checked because you can not use previous for the tracks in the queue)
-            
-
-            if (PQ.TrackWaitingList.Contains(PQ.WaitingListToQueueTrack) && !PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First.Value))
+            if(PQ.TrackWaitingList.Contains(PQ.CurrentTrack))
             {
-                if (PQ.TrackWaitingList.First.Value.Equals(PQ.WaitingListToQueueTrack)){
-                    PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Value;
-                }
-                else
-                {
-                    PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Previous.Value;
-                    PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
-                }
-            }
-            //check if the track is not the first track
-            else if (PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First()))
-            {
-                PQ.CurrentTrack = PQ.TrackWaitingList.Last();
+                PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Previous.Value;
                 PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
+            }
+            //in geval van queue
+            else
+            {
+                PQ.CurrentTrack = PQ.WaitingListToQueueTrack;
+
+                //if (PQ.CurrentTrack != PQ.WaitingListToQueueTrack && !PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First.Value))
+                //{
+                    
+                //}
+                //else if (PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First()))
+                //{
+                //    PQ.CurrentTrack = PQ.TrackWaitingList.Last();
+                //    PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
+                //}
             }
 
         }

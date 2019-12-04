@@ -212,7 +212,7 @@ namespace Ritmo.ViewModels
                 Name = "Powerup1",
                 Artist = "Tristan",
                 Duration = 100,
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav"),
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
             Track testTrack4 = new Track()
             {
@@ -220,7 +220,7 @@ namespace Ritmo.ViewModels
                 Name = "Powerup2",
                 Artist = "Marloes",
                 Duration = 70,
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup2.wav"),
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
             Track testTrack5 = new Track()
             {
@@ -228,7 +228,7 @@ namespace Ritmo.ViewModels
                 Name = "Powerup2",
                 Artist = "Susan",
                 Duration = 70,
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup2.wav"),
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
             Track testTrack6 = new Track()
             {
@@ -249,12 +249,13 @@ namespace Ritmo.ViewModels
             //Track testTrack4 = new Track() { AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav") };
             PlaylistController.AddTrack(testTrack1);
             PlaylistController.AddTrack(testTrack2);
-            //PlaylistController.AddTrack(testTrack3);
+            PlaylistController.AddTrack(testTrack6);
+            
 
-            PlayQueueController.AddTrack(testTrack2);
-            PlayQueueController.AddTrack(testTrack1);
-            PlaylistController.AddTrack(testTrack6); 
-            //PlaylistController.AddTrack(testTrack7);
+            PlayQueueController.AddTrack(testTrack3);
+            PlayQueueController.AddTrack(testTrack4);
+            
+            
 
 
             //Speelt track en zet playlist in wachtrij
