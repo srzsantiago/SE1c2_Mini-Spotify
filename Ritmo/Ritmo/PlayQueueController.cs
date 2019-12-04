@@ -88,17 +88,15 @@ namespace Ritmo
         {
             //check if tracklist contains the CurrentTrack
             //(this must be checked because you can not use previous for the tracks in the queue)
-            
-            if (PQ.TrackWaitingList.Contains(PQ.WaitingListToQueueTrack) && !PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First.Value))
+            if(PQ.TrackWaitingList.Contains(PQ.CurrentTrack))
             {
-                PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Value;
+                PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Previous.Value;
                 PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
             }
-            //check if the track is not the first track
-            else if (PQ.CurrentTrack.Equals(PQ.TrackWaitingList.First()))
+            //if the currentTrack is a song from the queue, currentTrack words the last played track from the tracklist.
+            else
             {
-                PQ.CurrentTrack = PQ.TrackWaitingList.Last();
-                PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
+                PQ.CurrentTrack = PQ.WaitingListToQueueTrack;
             }
 
         }

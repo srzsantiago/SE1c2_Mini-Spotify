@@ -121,7 +121,6 @@ namespace Ritmo.ViewModels
         {
             //Create ObservableCollections(OC) of class MyQueueItem (The class is at the bottom of this file).
             //This OC are used in the XAML of MyQueueView in a ListBox to draw the elements.
-
             if (mwvm.PlayQueueController.PQ.CurrentTrack != null)
             {
                 //makes an OC for CurrentTrack

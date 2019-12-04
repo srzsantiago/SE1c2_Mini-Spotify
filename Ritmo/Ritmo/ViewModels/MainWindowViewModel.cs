@@ -126,10 +126,17 @@ namespace Ritmo.ViewModels
         ////Changes to the previous track and set CurrentTrackElement
         public void PrevTrack()
         {
-            PlayQueueController.PreviousTrack();
-            MyQueueScreenToViewModel.ShowElements();
-            CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
-            PlayTrack();
+            //Checks if CurrentTrack is the first. If it is, it nothing will happen. 
+            //Call rewind track here
+            if (PlayQueueController.PQ.CurrentTrack.Equals(PlayQueueController.PQ.TrackWaitingList.First.Value)) { }
+            else
+            {
+                PlayQueueController.PreviousTrack();
+                MyQueueScreenToViewModel.ShowElements();
+                CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
+                PlayTrack();
+            }
+            
         }
 
         //Runs when the track has ended. The next track will be loaded and played.
@@ -205,7 +212,7 @@ namespace Ritmo.ViewModels
                 Name = "Powerup1",
                 Artist = "Tristan",
                 Duration = 100,
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav"),
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
             Track testTrack4 = new Track()
             {
@@ -213,7 +220,7 @@ namespace Ritmo.ViewModels
                 Name = "Powerup2",
                 Artist = "Marloes",
                 Duration = 70,
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup2.wav"),
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
             Track testTrack5 = new Track()
             {
@@ -221,7 +228,7 @@ namespace Ritmo.ViewModels
                 Name = "Powerup2",
                 Artist = "Susan",
                 Duration = 70,
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup2.wav"),
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
             Track testTrack6 = new Track()
             {
@@ -242,12 +249,13 @@ namespace Ritmo.ViewModels
             //Track testTrack4 = new Track() { AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav") };
             PlaylistController.AddTrack(testTrack1);
             PlaylistController.AddTrack(testTrack2);
-            //PlaylistController.AddTrack(testTrack3);
+            PlaylistController.AddTrack(testTrack6);
+            
 
-            PlayQueueController.AddTrack(testTrack2);
-            PlayQueueController.AddTrack(testTrack1);
-            PlaylistController.AddTrack(testTrack6); 
-            //PlaylistController.AddTrack(testTrack7);
+            PlayQueueController.AddTrack(testTrack3);
+            PlayQueueController.AddTrack(testTrack4);
+            
+            
 
 
             //Speelt track en zet playlist in wachtrij
