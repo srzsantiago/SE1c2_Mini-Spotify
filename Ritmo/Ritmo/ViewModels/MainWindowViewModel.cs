@@ -305,18 +305,8 @@ namespace Ritmo.ViewModels
             PlaylistController.AddTrack(testTrack4);
             PlaylistController.AddTrack(testTrack5);
 
-
-<<<<<<< HEAD
             PlayQueueController.AddTrack(testTrack6);
             PlayQueueController.AddTrack(testTrack7);
-            
-            
-=======
-            PlayQueueController.AddTrack(testTrack3);
-            PlayQueueController.AddTrack(testTrack4);
-
-
->>>>>>> 2fbfef5e0e0bbe5d48393d8dd22b265b6811daad
 
 
             //Speelt track en zet playlist in wachtrij
