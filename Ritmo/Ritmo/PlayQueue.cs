@@ -12,11 +12,13 @@ namespace Ritmo
         public enum RepeatModes { Off, TrackRepeat, TrackListRepeat }
 
         public LinkedList<Track> TrackWaitingList{ get; set; }
+        public LinkedList<Track> OriginalTrackWaitingList { get; set; }
         public Queue<Track> TrackQueue { get; set; }
         public Track CurrentTrack { get; set; }
         public Track WaitingListToQueueTrack { get; set; }
         public double CurrentVolume { get; set; }
         public bool IsMute { get; set; }
+        public bool IsShuffle { get; set; }
         public bool TrackWaitingListEnded { get; set; }
         public bool IsPaused { get; set; }
         public RepeatModes RepeatMode { get; set; }
@@ -25,6 +27,7 @@ namespace Ritmo
         public PlayQueue()
         {
             TrackWaitingList = new LinkedList<Track>();
+            OriginalTrackWaitingList = new LinkedList<Track>();
             TrackQueue = new Queue<Track>();
         }
 

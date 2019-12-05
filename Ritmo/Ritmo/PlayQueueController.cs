@@ -10,6 +10,7 @@ namespace Ritmo
     {
         public PlayQueue PQ { get; set; }
 
+
         public PlayQueueController()//Constructor that initializate a new playQueue and link this to the playqueuecontroller
         {
             PQ = new PlayQueue();
@@ -146,6 +147,7 @@ namespace Ritmo
         public void SetTrackWatingList(TrackList trackList) //Set the waitingList with a tracklist(playlist/album)
         {
             PQ.TrackWaitingList = trackList.Tracks;
+            PQ.OriginalTrackWaitingList = trackList.Tracks;
         }
         
         public void RepeatTrackWaitingList()//Repeat the whole waitingList (the queue can't be repeated)
@@ -158,70 +160,80 @@ namespace Ritmo
             PQ.RepeatMode = PlayQueue.RepeatModes.TrackRepeat;
         } 
 
-        public LinkedList<Track> ShuffleTrackWaitingList() {
-
+        public void ShuffleTrackWaitingList() {
+            
             Random rand = new Random();
             LinkedList<Track> currentlist = PQ.TrackWaitingList;
             LinkedList<Track> randomtracks = new LinkedList<Track>();
 
-            // Checks if the current-playing track belongs to the TrackWachtingList
-            if (currentlist.Contains(PQ.CurrentTrack))
-            {
-                // Removes the current track from the list of tracks that will be shuffled 
-                currentlist.Remove(PQ.CurrentTrack);
-                // Adds the currently playing track as first track of the random list before the shuffled tracks
-                randomtracks.AddFirst(PQ.CurrentTrack);
-            }
-            else
-            {
-                PQ.WaitingListToQueueTrack = null;
-            }
-    
-            // count the number of tracks that will be shuffled
-            int size = currentlist.Count;
-            int cijfer;
-
-            // list with random ints to create an random order of tracks
-            List<int> randomnummers = new List<int>();
-
-            // Generate as much random integers as the number of tracks that will be shuffled
-            for (int i = 1; i <= size; i++)
-            {
-                cijfer = rand.Next(0, size);
-                // check if random number is not already chosen 
-                if (!randomnummers.Contains(cijfer))
+                // Checks if the current-playing track belongs to the TrackWachtingList
+                if (currentlist.Contains(PQ.CurrentTrack))
                 {
-                    // add unique random number to List
-                    randomnummers.Add(cijfer);
+                    // Removes the current track from the list of tracks that will be shuffled 
+                    currentlist.Remove(PQ.CurrentTrack);
+                    // Adds the currently playing track as first track of the random list before the shuffled tracks
+                    randomtracks.AddFirst(PQ.CurrentTrack);
                 }
                 else
                 {
-                    // generate new random numbers as long as the number already exists
-                    while (randomnummers.Contains(cijfer))
-                    {
-                        cijfer = rand.Next(0, size);
-                    }
-                    randomnummers.Add(cijfer);
+                    PQ.WaitingListToQueueTrack = null;
                 }
-            }
-            // Add tracks from current list with random ElementAt to the randomtracks list. This wil create an random order
-            foreach (int i in randomnummers)
-            {
-                Track track = currentlist.ElementAt(i);
-                randomtracks.AddLast(track);
-            }
 
-            // Fill the PlayQueue, TrackWaitingList with the tracks of the new random list
-            PQ.TrackWaitingList = randomtracks;
-            foreach (Track track in PQ.TrackWaitingList)
-            {
-                Console.WriteLine(track.TrackId + ", " + track.Name + ", " + track.Artist);
-            }
-            Console.WriteLine("________________________________________________________");
-            return currentlist;
+                // count the number of tracks that will be shuffled
+                int size = currentlist.Count;
+                int cijfer;
+
+                // list with random ints to create an random order of tracks
+                List<int> randomnummers = new List<int>();
+
+                // Generate as much random integers as the number of tracks that will be shuffled
+                for (int i = 1; i <= size; i++)
+                {
+                    cijfer = rand.Next(0, size);
+                    // check if random number is not already chosen 
+                    if (!randomnummers.Contains(cijfer))
+                    {
+                        // add unique random number to List
+                        randomnummers.Add(cijfer);
+                    }
+                    else
+                    {
+                        // generate new random numbers as long as the number already exists
+                        while (randomnummers.Contains(cijfer))
+                        {
+                            cijfer = rand.Next(0, size);
+                        }
+                        randomnummers.Add(cijfer);
+                    }
+                }
+                // Add tracks from current list with random ElementAt to the randomtracks list. This wil create an random order
+                foreach (int i in randomnummers)
+                {
+                    Track track = currentlist.ElementAt(i);
+                    randomtracks.AddLast(track);
+                }
+
+                // Fill the PlayQueue, TrackWaitingList with the tracks of the new random list
+                PQ.TrackWaitingList = randomtracks;
+
+                PQ.IsShuffle = false; 
+                           
         }
-         
-        public void SetVolume(double volume) {//Set the volume to a given value
+        public void UnShuffleTrackWaitingList()
+        {
+            // Set the very first TrackWaitingList (OriginalTrackWaitingList) as current TrackWaitingList
+            PQ.TrackWaitingList = PQ.OriginalTrackWaitingList;
+
+            // Check if the current track is in the originalwaiting list, if not; add the current track as first value
+            if (!PQ.OriginalTrackWaitingList.Contains(PQ.CurrentTrack))
+            {
+                PQ.OriginalTrackWaitingList.AddFirst(PQ.CurrentTrack);
+            }
+            
+            PQ.IsShuffle = true;
+        }
+
+            public void SetVolume(double volume) {//Set the volume to a given value
             PQ.CurrentVolume = volume;
         }
 

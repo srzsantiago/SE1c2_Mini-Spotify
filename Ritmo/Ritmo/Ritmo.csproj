@@ -245,6 +245,8 @@
     <Resource Include="ImageResources\pauseicon.ico" />
     <Resource Include="ImageResources\mute.png" />
     <Resource Include="ImageResources\unmute.png" />
+    <Resource Include="ImageResources\unshuffle.png" />
+    <Resource Include="ImageResources\shuffle.png" />
     <Content Include="TestFiles\Gun%27sRoses.mp3" />
     <Content Include="TestFiles\MetalGearSolid.mp3" />
     <Content Include="TestFiles\Powerup1.wav" />

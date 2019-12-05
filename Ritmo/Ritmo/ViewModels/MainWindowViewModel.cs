@@ -61,6 +61,7 @@ namespace Ritmo.ViewModels
         private double _currentTrackVolume = 0.5;
         private Uri _playButtonIcon = new Uri("/ImageResources/playicon.ico", UriKind.RelativeOrAbsolute);
         private Uri _muteButtonIcon = new Uri("/ImageResources/unmute.png", UriKind.RelativeOrAbsolute);
+        private Uri _shuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
         private double oldVolume = 0;
 
         public MediaElement CurrentTrackElement
@@ -86,6 +87,8 @@ namespace Ritmo.ViewModels
         public Uri PlayButtonIcon { get { return _playButtonIcon; } set { _playButtonIcon = value; NotifyOfPropertyChange(); } }
 
         public Uri MuteButtonIcon { get { return _muteButtonIcon; } set { _muteButtonIcon = value; NotifyOfPropertyChange(); } }
+
+        public Uri ShuffleButtonIcon { get { return _shuffleButtonIcon; } set { _shuffleButtonIcon = value; NotifyOfPropertyChange(); } }
         #endregion
 
         public MainWindowViewModel()
@@ -163,7 +166,16 @@ namespace Ritmo.ViewModels
 
         public void ShuffleWaitinglist()
         {
-            PlayQueueController.ShuffleTrackWaitingList();
+            
+            if(PlayQueue.IsShuffle == true)
+            {
+                PlayQueueController.ShuffleTrackWaitingList();
+                ShuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
+            } else
+            {
+                PlayQueueController.UnShuffleTrackWaitingList();
+                ShuffleButtonIcon = new Uri("/ImageResources/shuffle.png", UriKind.RelativeOrAbsolute);
+            }
             MyQueueScreenToViewModel.ShowElements();
         }
 
@@ -308,7 +320,7 @@ namespace Ritmo.ViewModels
             PlayQueueController.AddTrack(testTrack6);
             PlayQueueController.AddTrack(testTrack7);
 
-
+            
             //Speelt track en zet playlist in wachtrij
             PlayQueueController.PlayTrack(PlaylistController.Playlist.Tracks.First.Value, PlaylistController.Playlist);
 
