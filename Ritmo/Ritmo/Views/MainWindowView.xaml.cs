@@ -25,15 +25,6 @@ namespace Ritmo.Views
     /// </summary>
     public partial class MainWindowView : Window
     {
-        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
-        }
-
-        private void MuteButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         //PlayQueueController playQueueController = new PlayQueueController();
         //PlaylistController playlistController = new PlaylistController("TestPlaylist");
 

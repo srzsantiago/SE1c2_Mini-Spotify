@@ -24,8 +24,6 @@ namespace Ritmo.ViewModels
         public PlayQueue PlayQueue;
 
         public MyQueueViewModel MyQueueScreenToViewModel;
-        //private bool muted = false;
-        //static double OldVolume = 0;
 
         #region Commands
         public ICommand ChangeViewModelCommand { get; set; }
@@ -143,7 +141,11 @@ namespace Ritmo.ViewModels
             {
                 //Checks if CurrentTrack is the first. If it is, it nothing will happen. 
                 //Call rewind track here
-                if (PlayQueueController.PQ.CurrentTrack.Equals(PlayQueueController.PQ.TrackWaitingList.First.Value)) { }
+                if (PlayQueueController.PQ.CurrentTrack.Equals(PlayQueueController.PQ.TrackWaitingList.First.Value)) 
+                {
+                    CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
+                    CurrentTrackElement.Play(); //Play the current song
+                }
                 else
                 {
                     PlayQueueController.PreviousTrack();
