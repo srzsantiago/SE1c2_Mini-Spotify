@@ -43,5 +43,19 @@ namespace Ritmo
 
             return Result;
         }
+
+        public bool IsDupliaceName(string name)
+        {
+            //Find name
+            try
+            {
+                bool nameExists = AllPlaylists.Playlists.Find(x => x.Name.Equals(name)).Name.Equals(name);
+                return nameExists;
+            }
+            catch //Catch no name found
+            {
+                return false;
+            }
+        }
     }
 }

@@ -19,6 +19,39 @@ namespace Ritmo.ViewModels
         public MainWindowViewModel MainWindow { get; set; }
 
         private bool _popUpIsOpen;
+        private string _popUpWarning;
+        private double _popUpSize = 120;
+        private string _newName;
+
+        public string NewName
+        {
+            get { return _newName; }
+            set
+            {
+                _newName = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public double PopUpSize
+        {
+            get { return _popUpSize; }
+            set
+            {
+                _popUpSize = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public string PopUpWarning
+        {
+            get { return _popUpWarning; }
+            set
+            {
+                _popUpWarning = value;
+                NotifyOfPropertyChange();
+            }
+        }
 
         public bool PopUpIsOpen
         {
@@ -30,6 +63,31 @@ namespace Ritmo.ViewModels
             }
         }
 
+        //Sets popup to default state
+        private void PopUpMessage()
+        {
+            PopUpSize = 120;
+            PopUpWarning = "";
+            NewName = "";
+        }
+
+        //Sets message for popup
+        private void PopUpMessage(string warning)
+        {
+            PopUpSize = 140;
+            PopUpWarning = warning;
+        }
+
+        //Enables or disable PopUpMenu
+        private void PopUpControl()
+        {
+            if (PopUpIsOpen)
+                PopUpIsOpen = false;
+            else if (!PopUpIsOpen)
+                PopUpIsOpen = true;
+
+            PopUpMessage();
+        }
         #endregion
 
         #region AllPlaylist Functionality Attributes
@@ -39,7 +97,9 @@ namespace Ritmo.ViewModels
         public ObservableCollection<Playlist> AllPlaylistsCollection
         {
             get { return _allPlaylistsCollection; }
-            set { _allPlaylistsCollection = value;
+            set
+            {
+                _allPlaylistsCollection = value;
                 NotifyOfPropertyChange("AllPlaylistsCollection");
             }
         }
@@ -47,7 +107,9 @@ namespace Ritmo.ViewModels
         public static AllPlaylistsController AllPlaylistsController
         {
             get { return _allPlaylistsController; }
-            set { _allPlaylistsController = value; 
+            set
+            {
+                _allPlaylistsController = value;
             }
         }
         #endregion
@@ -59,16 +121,16 @@ namespace Ritmo.ViewModels
         public ICommand ControlPopUpCommand { get; set; }
         #endregion
 
-        public AllPlaylistsViewModel()//MainWindowViewModel mainWindow
+        public AllPlaylistsViewModel(MainWindowViewModel mainWindow)
         {
             InitializeCommands();
-            
+
             AllPlaylistsController = new AllPlaylistsController();
-            //MainWindow = mainWindow;
+            MainWindow = mainWindow;
 
             //TestMethod();
 
-            SetAllPlaylistsCollection();         
+            SetAllPlaylistsCollection();
         }
 
         #region AllPlaylists methods
@@ -81,13 +143,20 @@ namespace Ritmo.ViewModels
 
         public void AddPlaylist(string name)
         {
-            //Check database for ID's to ascertain which ID to use
-            int id = AllPlaylistsCollection.Count();
-            //This is for testing
+            if (name.Equals(""))
+                PopUpMessage("Invalid Playlist name!");
+            else if (AllPlaylistsController.IsDupliaceName(name))
+                PopUpMessage("Playlist name already exists!");
+            else
+            {
+                //Check database for ID's to ascertain which ID to use
+                int id = AllPlaylistsCollection.Count();
+                //This is for testing
 
-            AllPlaylistsController.AddTrackList(new Playlist($"{name}") { TrackListID = id, CreationDate = DateTime.Now} ); //Create playlist and add it to all playlists
-            SetAllPlaylistsCollection(); //Updates view
-            ControlPopUp(); //Hides popup menu
+                AllPlaylistsController.AddTrackList(new Playlist($"{name}") { TrackListID = id, CreationDate = DateTime.Now }); //Create playlist and add it to all playlists
+                SetAllPlaylistsCollection(); //Updates view
+                PopUpControl(); //Hides popup menu
+            }
         }
 
         private void DeletePlaylist(int playlistID)
@@ -103,7 +172,7 @@ namespace Ritmo.ViewModels
             OpenPlaylistViewModelCommand = new RelayCommand<int>(OpenPlaylistViewModel);
             AddPlaylistCommand = new RelayCommand<string>(AddPlaylist);
             DeletePlaylistCommand = new RelayCommand<int>(DeletePlaylist);
-            ControlPopUpCommand = new RelayCommand(ControlPopUp);
+            ControlPopUpCommand = new RelayCommand(PopUpControl);
         }
         #endregion
 
@@ -112,16 +181,7 @@ namespace Ritmo.ViewModels
         {
             Playlist playlist = AllPlaylistsController.GetPlaylist(playlistID);
 
-            MainWindow.ChangeViewModel(new PlaylistViewModel()); 
-        }
-
-        //Enables or disable PopUpMenu
-        private void ControlPopUp()
-        {
-            if (PopUpIsOpen)
-                PopUpIsOpen = false;
-            else if (!PopUpIsOpen)
-                PopUpIsOpen = true;
+            MainWindow.ChangeViewModel(new PlaylistViewModel());
         }
 
         private void TestMethod()

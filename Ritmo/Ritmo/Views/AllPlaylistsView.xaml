@@ -8,9 +8,10 @@
              xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
              mc:Ignorable="d"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
-             d:DataContext="{d:DesignInstance viewmodels:AllPlaylistsViewModel, IsDesignTimeCreatable=True}"
+             
              d:DesignHeight="450" d:DesignWidth="800"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform">
+    <!--:DataContext="{d:DesignInstance viewmodels:AllPlaylistsViewModel, IsDesignTimeCreatable=True}"-->
     <UserControl.Resources>
         <!--Variables-->
         <GridLength x:Key="NameColumn">*</GridLength>
@@ -21,15 +22,18 @@
 
     <!--Main Grid-->
     <Grid Background="AntiqueWhite" Name="MainGrid">
-        
+
         <!--Pop Up Window for adding playlist-->
-        <Popup x:Name="Test" IsOpen="{Binding PopUpIsOpen}" Placement="Center">
+        <Popup x:Name="Test" IsOpen="{Binding PopUpIsOpen}" Placement="Center" StaysOpen="False">
             <Border BorderThickness="1" BorderBrush="DarkSlateGray">
-                <Grid Height="131" Width="340" Background="Gray" >
-                    <Label Content="Playlist Name" Width="96" VerticalAlignment="Top" HorizontalAlignment="Right" Height="54" VerticalContentAlignment="Center" Foreground="White"/>
-                    <TextBox Name="NewName" Margin="20,59,20,0" Height="18" VerticalAlignment="Top" />
+                <Grid Height="{Binding PopUpSize}" Width="340" Background="Gray" >
+                    <Grid RenderTransformOrigin="0.5,0.5" Margin="180,10,20,47">
+                        <Label Content="Playlist Name" VerticalContentAlignment="Top" HorizontalContentAlignment="Right" Foreground="White" Canvas.Left="35" FontSize="16" Margin="0,0,0,29"/>
+                        <Label Content="{Binding PopUpWarning}" Foreground="DarkRed" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Margin="-158,27,0,29"/>
+                    </Grid>
+                    <TextBox Name="NewName" Text="{Binding NewName}" Margin="20,0,20,54" Height="18" VerticalAlignment="Bottom" />
                     <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="50"  Width="140">
-                        <Button Content="Add Playlist" Margin="12,3,0,0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="66"
+                        <Button Content="Add Playlist" Margin="0,16,0,14" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="78"
                                 Command="{Binding AddPlaylistCommand}" CommandParameter="{Binding Text, ElementName=NewName}"/>
                         <Button Content="Cancel" Margin="83,3,0,0" 
                             Command="{Binding ControlPopUpCommand}" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="39"/>
@@ -102,7 +106,6 @@
                                         <ColumnDefinition Width="{StaticResource LastColumn}"/>
                                     </Grid.ColumnDefinitions>
 
-                                    
                                     <TextBlock Text="{Binding Name}" Grid.Column="0" HorizontalAlignment="Left" Margin="35, 0"/>
                                     <TextBlock Text="{Binding TrackListDuration}" Grid.Column="1" HorizontalAlignment="Left"/>
                                     <TextBlock Text="{Binding CreationDate}" Grid.Column="2" HorizontalAlignment="Left"/>
@@ -124,7 +127,7 @@
             <!--<Button CommandParameter="{Binding PlaylistViewModel}" Command="{Binding OpenPlaylistViewModelCommand}" Content="Test Open Playlist" Grid.Column="1" HorizontalAlignment="Left" Margin="154,-38,0,0" VerticalAlignment="Top" Width="142"/>-->
 
         </Grid>
-        
+
         <!--<StackPanel Name="MenuPanel" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="105" Margin="685,48,0,0" Background="#FF778899">
             <Button Name="AddPlayList" Click="AddPlayList_Click" Content="Add Playlist" HorizontalAlignment="Left" Height="32" Margin="0,0,-0.2,0" Width="105" Background="{x:Null}" />
             <Button Name="DeletePlayList" Content="Delete Playlist" HorizontalAlignment="Left" Height="32" Margin="0,0,-0.2,0" Width="105" Background="{x:Null}" />
