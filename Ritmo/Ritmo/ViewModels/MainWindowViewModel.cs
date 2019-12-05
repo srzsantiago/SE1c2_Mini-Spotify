@@ -58,7 +58,7 @@ namespace Ritmo.ViewModels
 
         private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual };
         private Uri _currentTrackSource; //Unused
-        private double _currentTrackVolume = 0.5;
+        private Double _currentTrackVolume;
         private Uri _playButtonIcon = new Uri("/ImageResources/playicon.ico", UriKind.RelativeOrAbsolute);
         private Uri _muteButtonIcon = new Uri("/ImageResources/unmute.png", UriKind.RelativeOrAbsolute);
         private Uri _shuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
@@ -74,7 +74,7 @@ namespace Ritmo.ViewModels
             get { return _currentTrackSource; }
             set { _currentTrackSource = value; }
         } //Unused
-        public double CurrentTrackVolume
+        public Double CurrentTrackVolume
         {
             get { return _currentTrackVolume; }
             set
@@ -95,9 +95,11 @@ namespace Ritmo.ViewModels
         {
             InitializeCommands();
             InitializeViewModels();
-            InitializeCurrentTrackElement();
+            
 
             PlayQueue = PlayQueueController.PQ;
+
+            InitializeCurrentTrackElement();
 
             TestTrackMethod();
         }
@@ -139,29 +141,26 @@ namespace Ritmo.ViewModels
         //Changes to the previous track and set CurrentTrackElement
         public void PrevTrack()
         {
-            TimeSpan t1 = new TimeSpan(0, 0, 3); //Set timer for 3 seconds
-            if (CurrentTrackElement.Position <= t1) //If the song is under 3 seconds, go to the previous song
+            TimeSpan timer = new TimeSpan(0, 0, 3); //Set timer for 3 seconds
+            if (CurrentTrackElement.Position <= timer) //If the song is under 3 seconds, go to the previous song
             {
-                //Checks if CurrentTrack is the first. If it is, it nothing will happen. 
-                //Call rewind track here
+                //Checks if CurrentTrack is the first. If it is, the track starts from beginning 
                 if (PlayQueueController.PQ.CurrentTrack.Equals(PlayQueueController.PQ.TrackWaitingList.First.Value)) 
                 {
                     CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
-                    CurrentTrackElement.Play(); //Play the current song
                 }
                 else
                 {
                     PlayQueueController.PreviousTrack();
                     MyQueueScreenToViewModel.ShowElements();
                     CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
-                    PlayTrack();
                 }
             }
             else //Else play the current song from the start (0 sec)
             {
                 CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
-                CurrentTrackElement.Play(); //Play the current song
             }
+            PlayTrack();
         }
 
         public void ShuffleWaitinglist()
@@ -192,6 +191,7 @@ namespace Ritmo.ViewModels
         public void VolumeSlider_ValueChanged(double VolumeSliderValue)
         {
             CurrentTrackElement.Volume = VolumeSliderValue; // gets the slider value and puts it as volume
+            PlayQueueController.SetVolume(VolumeSliderValue);
             if (CurrentTrackElement.Volume > 0)
             {
                 PlayQueue.IsMute = false; // sets bool to false because its not muted
@@ -209,7 +209,7 @@ namespace Ritmo.ViewModels
             }
             else // else if volume is not muted
             {
-                PlayQueue.IsMute = true;
+                PlayQueueController.SetMute();
                 oldVolume = CurrentTrackElement.Volume; // saves the old volume
                 VolumeSlider_ValueChanged(0); // changes the slider volume value to 0
             }
@@ -241,6 +241,7 @@ namespace Ritmo.ViewModels
         {
             //CurrentTrackElement.Source = CurrentTrackSource;
             CurrentTrackElement.MediaEnded += Track_Ended;
+            CurrentTrackVolume = PlayQueue.CurrentVolume;
             CurrentTrackElement.Volume = CurrentTrackVolume;
         }
         #endregion
