@@ -13,54 +13,52 @@
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform">
     <UserControl.Resources>
         <!--Variables-->
-        <GridLength x:Key="FirstColumn">50</GridLength>
         <GridLength x:Key="NameColumn">*</GridLength>
         <GridLength x:Key="DurationColumn">175</GridLength>
         <GridLength x:Key="CreationDateColumn">180</GridLength>
+        <GridLength x:Key="LastColumn">50</GridLength>
     </UserControl.Resources>
-
 
     <!--Main Grid-->
     <Grid Background="AntiqueWhite" Name="MainGrid">
-
+        
+        <!--Pop Up Window for adding playlist-->
         <Popup x:Name="Test" IsOpen="{Binding PopUpIsOpen}" Placement="Center">
-            <Grid Height="131" Width="340" Background="Black" >
-                <TextBox Name="NewName" Margin="20,59,20,0" Height="18" VerticalAlignment="Top"/>
-                <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="50"  Width="140">
-                    <Button Content="Add Playlist" Margin="12,3,0,0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="66"
-                            Command="{Binding AddPlaylistCommand}" CommandParameter="{Binding Text, ElementName=NewName}"/>
-                    <Button Content="Cancel" Margin="83,3,0,0" 
-                        Command="{Binding ControlPopUpCommand}" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="39"/>
+            <Border BorderThickness="1" BorderBrush="DarkSlateGray">
+                <Grid Height="131" Width="340" Background="Gray" >
+                    <Label Content="Playlist Name" Width="96" VerticalAlignment="Top" HorizontalAlignment="Right" Height="54" VerticalContentAlignment="Center" Foreground="White"/>
+                    <TextBox Name="NewName" Margin="20,59,20,0" Height="18" VerticalAlignment="Top" />
+                    <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="50"  Width="140">
+                        <Button Content="Add Playlist" Margin="12,3,0,0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="66"
+                                Command="{Binding AddPlaylistCommand}" CommandParameter="{Binding Text, ElementName=NewName}"/>
+                        <Button Content="Cancel" Margin="83,3,0,0" 
+                            Command="{Binding ControlPopUpCommand}" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="39"/>
+                    </Grid>
                 </Grid>
-
-            </Grid>
+            </Border>
         </Popup>
 
         <!--Top bar-->
         <Grid Background="LightSlateGray" Height="48" VerticalAlignment="Top">
             <Label HorizontalAlignment="Left" Width="172" Content="My Playlists" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="24" Height="44" VerticalAlignment="Top"/>
 
-            <!--<Button Click="ButtonMenu_Click" Name="ButtonMenu" Content="≡" HorizontalAlignment="Left" Height="48" Margin="757,0,0,0" VerticalAlignment="Top" Width="43" Background="{x:Null}" FontSize="38"/>-->
-
+            <!--Playlists menu-->
             <DockPanel Width="50" Height="50" HorizontalAlignment="Right" Margin="20, 0">
                 <Menu DockPanel.Dock="Top" Background="DarkBlue">
                     <MenuItem Icon="" Height="47" Width="50">
                         <MenuItem Header="New Playlist" Command="{Binding ControlPopUpCommand}"/>
-                        <MenuItem Header="Delete Playlist"/>
                     </MenuItem>
                 </Menu>
             </DockPanel>
         </Grid>
 
-
-
+        <!--Playlist grid-->
         <Grid Background="Transparent" Margin="0,50,0,0">
-
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{StaticResource FirstColumn}"/>
                 <ColumnDefinition Width="{StaticResource NameColumn}"/>
                 <ColumnDefinition Width="{StaticResource DurationColumn}" />
                 <ColumnDefinition Width="{StaticResource CreationDateColumn}"/>
+                <ColumnDefinition Width="{StaticResource LastColumn}"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
@@ -68,12 +66,11 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-
-
-            <TextBlock Grid.Column="1" Grid.Row="0" Text="NAME" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="2" Grid.Row="0" Text="DURATION" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="3" Grid.Row="0" Text="CREATION DATE" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Border BorderBrush="Black" BorderThickness="1" Height="2" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="4"/>
+            <!--Column names-->
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="NAME" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="35, 0"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="DURATION" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="2" Grid.Row="0" Text="CREATION DATE" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border BorderBrush="Gray" BorderThickness="1" Height="2" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="4"/>
 
             <!--List of all playlists-->
             <ListBox Grid.Row="2" ItemsSource="{Binding AllPlaylistsCollection}" 
@@ -99,18 +96,20 @@
                                     Command="{Binding DataContext.OpenPlaylistViewModelCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding TrackListID}">
                                 <Grid >
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="{StaticResource FirstColumn}"/>
                                         <ColumnDefinition Width="{StaticResource NameColumn}"/>
                                         <ColumnDefinition Width="{StaticResource DurationColumn}"/>
                                         <ColumnDefinition Width="{StaticResource CreationDateColumn}"/>
+                                        <ColumnDefinition Width="{StaticResource LastColumn}"/>
                                     </Grid.ColumnDefinitions>
 
+                                    
+                                    <TextBlock Text="{Binding Name}" Grid.Column="0" HorizontalAlignment="Left" Margin="35, 0"/>
+                                    <TextBlock Text="{Binding TrackListDuration}" Grid.Column="1" HorizontalAlignment="Left"/>
+                                    <TextBlock Text="{Binding CreationDate}" Grid.Column="2" HorizontalAlignment="Left"/>
+                                    <Button  Content="X" Background="Transparent" Padding="3, 0" Grid.Column="3" HorizontalAlignment="Center"
+                                             Command="{Binding DataContext.DeletePlaylistCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                             CommandParameter="{Binding TrackListID}"/>
 
-                                    <StackPanel Name="NameColumn" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
-                                        <TextBlock Text="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left"/>
-                                    </StackPanel>
-                                    <TextBlock Text="{Binding TrackListDuration}" Grid.Column="2" HorizontalAlignment="Left"/>
-                                    <TextBlock Text="{Binding CreationDate}" Grid.Column="3" HorizontalAlignment="Left"/>
                                 </Grid>
                             </Button>
 
@@ -124,14 +123,12 @@
             <!--<StackPanel Name="CheckboxColumn" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0" Height="375"/> use this one later in the sprint-->
             <!--<Button CommandParameter="{Binding PlaylistViewModel}" Command="{Binding OpenPlaylistViewModelCommand}" Content="Test Open Playlist" Grid.Column="1" HorizontalAlignment="Left" Margin="154,-38,0,0" VerticalAlignment="Top" Width="142"/>-->
 
-
-
-
         </Grid>
-        <StackPanel Name="MenuPanel" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="105" Margin="685,48,0,0" Background="#FF778899">
+        
+        <!--<StackPanel Name="MenuPanel" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="105" Margin="685,48,0,0" Background="#FF778899">
             <Button Name="AddPlayList" Click="AddPlayList_Click" Content="Add Playlist" HorizontalAlignment="Left" Height="32" Margin="0,0,-0.2,0" Width="105" Background="{x:Null}" />
             <Button Name="DeletePlayList" Content="Delete Playlist" HorizontalAlignment="Left" Height="32" Margin="0,0,-0.2,0" Width="105" Background="{x:Null}" />
-        </StackPanel>
+        </StackPanel>-->
 
     </Grid>
 
