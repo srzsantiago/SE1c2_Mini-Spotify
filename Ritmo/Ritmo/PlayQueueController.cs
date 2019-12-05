@@ -158,35 +158,45 @@ namespace Ritmo
             PQ.RepeatMode = PlayQueue.RepeatModes.TrackRepeat;
         } 
 
-        public void ShuffleTrackWaitingList() {
+        public LinkedList<Track> ShuffleTrackWaitingList() {
 
             Random rand = new Random();
             LinkedList<Track> currentlist = PQ.TrackWaitingList;
             LinkedList<Track> randomtracks = new LinkedList<Track>();
 
-            // Removes current track from list if the current track belongs to the trackWaitingList
+            // Checks if the current-playing track belongs to the TrackWachtingList
             if (currentlist.Contains(PQ.CurrentTrack))
             {
+                // Removes the current track from the list of tracks that will be shuffled 
                 currentlist.Remove(PQ.CurrentTrack);
+                // Adds the currently playing track as first track of the random list before the shuffled tracks
                 randomtracks.AddFirst(PQ.CurrentTrack);
             }
-
-            
+            else
+            {
+                PQ.WaitingListToQueueTrack = null;
+            }
+    
+            // count the number of tracks that will be shuffled
             int size = currentlist.Count;
-            Console.WriteLine(size);
-
             int cijfer;
+
+            // list with random ints to create an random order of tracks
             List<int> randomnummers = new List<int>();
 
+            // Generate as much random integers as the number of tracks that will be shuffled
             for (int i = 1; i <= size; i++)
             {
                 cijfer = rand.Next(0, size);
+                // check if random number is not already chosen 
                 if (!randomnummers.Contains(cijfer))
                 {
+                    // add unique random number to List
                     randomnummers.Add(cijfer);
                 }
                 else
                 {
+                    // generate new random numbers as long as the number already exists
                     while (randomnummers.Contains(cijfer))
                     {
                         cijfer = rand.Next(0, size);
@@ -194,19 +204,21 @@ namespace Ritmo
                     randomnummers.Add(cijfer);
                 }
             }
-
+            // Add tracks from current list with random ElementAt to the randomtracks list. This wil create an random order
             foreach (int i in randomnummers)
             {
                 Track track = currentlist.ElementAt(i);
                 randomtracks.AddLast(track);
             }
 
+            // Fill the PlayQueue, TrackWaitingList with the tracks of the new random list
             PQ.TrackWaitingList = randomtracks;
             foreach (Track track in PQ.TrackWaitingList)
             {
                 Console.WriteLine(track.TrackId + ", " + track.Name + ", " + track.Artist);
             }
             Console.WriteLine("________________________________________________________");
+            return currentlist;
         }
          
         public void SetVolume(double volume) {//Set the volume to a given value

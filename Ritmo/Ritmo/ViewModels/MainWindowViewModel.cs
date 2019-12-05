@@ -249,7 +249,7 @@ namespace Ritmo.ViewModels
             Track testTrack1 = new Track()
             {
                 TrackId = 1,
-                Name = "RingtoneUnatco",
+                Name = "1",
                 Artist = "Santi",
                 Duration = 120,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneUnatco.mp3"),
@@ -257,7 +257,7 @@ namespace Ritmo.ViewModels
             Track testTrack2 = new Track()
             {
                 TrackId = 2,
-                Name = "RingtoneRoundabout",
+                Name = "2",
                 Artist = "Dio",
                 Duration = 90,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
@@ -265,7 +265,7 @@ namespace Ritmo.ViewModels
             Track testTrack3 = new Track()
             {
                 TrackId = 3,
-                Name = "Powerup1",
+                Name = "3",
                 Artist = "Tristan",
                 Duration = 100,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
@@ -273,7 +273,7 @@ namespace Ritmo.ViewModels
             Track testTrack4 = new Track()
             {
                 TrackId = 4,
-                Name = "Powerup2",
+                Name = "4",
                 Artist = "Marloes",
                 Duration = 70,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
@@ -281,23 +281,23 @@ namespace Ritmo.ViewModels
             Track testTrack5 = new Track()
             {
                 TrackId = 5,
-                Name = "Powerup2",
+                Name = "5",
                 Artist = "Susan",
                 Duration = 70,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
             Track testTrack6 = new Track()
             {
-                TrackId = 5,
-                Name = "Gun's Roses",
+                TrackId = 6,
+                Name = "Queue1",
                 Artist = "Susan",
                 Duration = 30,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
             Track testTrack7 = new Track()
             {
-                TrackId = 5,
-                Name = "Metal Gear",
+                TrackId = 7,
+                Name = "Queue2",
                 Artist = "Solid Snake",
                 Duration = 90,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\MetalGearSolid.mp3"),
@@ -305,15 +305,12 @@ namespace Ritmo.ViewModels
             //Track testTrack4 = new Track() { AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav") };
             PlaylistController.AddTrack(testTrack1);
             PlaylistController.AddTrack(testTrack2);
-            PlaylistController.AddTrack(testTrack6);
+            PlaylistController.AddTrack(testTrack3);
+            PlaylistController.AddTrack(testTrack4);
             PlaylistController.AddTrack(testTrack5);
-            PlaylistController.AddTrack(testTrack7);
 
-
-            PlayQueueController.AddTrack(testTrack3);
-            PlayQueueController.AddTrack(testTrack4);
-
-
+            PlayQueueController.AddTrack(testTrack6);
+            PlayQueueController.AddTrack(testTrack7);
 
 
             //Speelt track en zet playlist in wachtrij
