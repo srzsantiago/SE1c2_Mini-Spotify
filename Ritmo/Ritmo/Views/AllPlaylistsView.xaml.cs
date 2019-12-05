@@ -22,6 +22,7 @@ using System.Windows.Forms.VisualStyles;
 using Label = System.Windows.Controls.Label;
 using System.Windows.Threading;
 using MessageBox = System.Windows.Forms.MessageBox;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace Ritmo.Views
 {
@@ -40,9 +41,18 @@ namespace Ritmo.Views
             
             //allplaylistcontroller = AllPlaylistsViewModel.AllPlaylistsController;
             InitializeComponent();
+            Messenger.Default.Register<NotificationMessage>(this, NotificationMessageReceived);
             //testAllPlayLists();
             //GetPlayListsGUI();
 
+        }
+
+        private void NotificationMessageReceived(NotificationMessage msg)
+        {
+            if(msg.Notification == "ShowAddPlaylist")
+            {
+                new PopUpWindowView().Show();
+            }
         }
 
         public void ClearItems()

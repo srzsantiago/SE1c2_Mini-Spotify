@@ -19,8 +19,22 @@
         <GridLength x:Key="CreationDateColumn">180</GridLength>
     </UserControl.Resources>
 
+
     <!--Main Grid-->
-    <Grid Background="AntiqueWhite">
+    <Grid Background="AntiqueWhite" Name="MainGrid">
+
+        <Popup x:Name="Test" IsOpen="{Binding PopUpIsOpen}" Placement="Center">
+            <Grid Height="131" Width="340" Background="Black" >
+                <TextBox Name="NewName" Margin="20,59,20,0" Height="18" VerticalAlignment="Top"/>
+                <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="50"  Width="140">
+                    <Button Content="Add Playlist" Margin="12,3,0,0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="66"
+                            Command="{Binding AddPlaylistCommand}" CommandParameter="{Binding Text, ElementName=NewName}"/>
+                    <Button Content="Cancel" Margin="83,3,0,0" 
+                        Command="{Binding ControlPopUpCommand}" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="39"/>
+                </Grid>
+
+            </Grid>
+        </Popup>
 
         <!--Top bar-->
         <Grid Background="LightSlateGray" Height="48" VerticalAlignment="Top">
@@ -31,14 +45,17 @@
             <DockPanel Width="50" Height="50" HorizontalAlignment="Right" Margin="20, 0">
                 <Menu DockPanel.Dock="Top" Background="DarkBlue">
                     <MenuItem Icon="" Height="47" Width="50">
-                        <MenuItem Header="New Playlist" Command="{Binding OpenAddPlaylistCommand}"/>
+                        <MenuItem Header="New Playlist" Command="{Binding ControlPopUpCommand}"/>
                         <MenuItem Header="Delete Playlist"/>
                     </MenuItem>
                 </Menu>
             </DockPanel>
         </Grid>
 
-        <Grid Background="Transparent" Name="structuregrid" Margin="0,50,0,0">
+
+
+        <Grid Background="Transparent" Margin="0,50,0,0">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="{StaticResource FirstColumn}"/>
                 <ColumnDefinition Width="{StaticResource NameColumn}"/>
@@ -51,13 +68,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+
+
             <TextBlock Grid.Column="1" Grid.Row="0" Text="NAME" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBlock Grid.Column="2" Grid.Row="0" Text="DURATION" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBlock Grid.Column="3" Grid.Row="0" Text="CREATION DATE" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Border BorderBrush="Black" BorderThickness="1" Height="2" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="4"/>
 
             <!--List of all playlists-->
-            <ListBox Name="PlaylistBox" Grid.Row="2" ItemsSource="{Binding AllPlaylistsCollection}" 
+            <ListBox Grid.Row="2" ItemsSource="{Binding AllPlaylistsCollection}" 
                      Height="auto"  Background="Transparent" Grid.ColumnSpan="4" 
                      HorizontalContentAlignment="Stretch" Padding="0" BorderThickness="0">
                 <ListBox.ItemContainerStyle>
@@ -67,7 +86,7 @@
                         <Setter Property="BorderThickness" Value="0"/>
                     </Style>
                 </ListBox.ItemContainerStyle>
-                <ListBox.ItemTemplate >
+                <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -78,15 +97,18 @@
                             <!--Listbox Items - Button with all attributes of playlist-->
                             <Button Background="Transparent" Grid.Row="0" Padding="0" Margin="0" BorderThickness="0" Height="50" HorizontalContentAlignment="Stretch" 
                                     Command="{Binding DataContext.OpenPlaylistViewModelCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding TrackListID}">
-                                <Grid x:Name="PlaylistsGrid">
+                                <Grid >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="{StaticResource FirstColumn}"/>
                                         <ColumnDefinition Width="{StaticResource NameColumn}"/>
                                         <ColumnDefinition Width="{StaticResource DurationColumn}"/>
                                         <ColumnDefinition Width="{StaticResource CreationDateColumn}"/>
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox Grid.Column="0" HorizontalAlignment="Center" Background="Gray" Tag="{Binding TrackListID}" Checked="CheckBox_Checked"/>
-                                    <TextBlock Text="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left"/>
+
+
+                                    <StackPanel Name="NameColumn" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
+                                        <TextBlock Text="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left"/>
+                                    </StackPanel>
                                     <TextBlock Text="{Binding TrackListDuration}" Grid.Column="2" HorizontalAlignment="Left"/>
                                     <TextBlock Text="{Binding CreationDate}" Grid.Column="3" HorizontalAlignment="Left"/>
                                 </Grid>

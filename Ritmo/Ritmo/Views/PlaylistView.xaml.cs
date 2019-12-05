@@ -162,15 +162,15 @@ namespace Ritmo.Views
 
             //if (MessageBox.Show("Are you sure you want to delete this playlist?", "Deleting playlist", MessageBoxButtons.OKCancel) == DialogResult.OK)
             
-            for (int i = 0; i < allplaylistscontroller.allplaylists.playlists.Count; i++)
-            {
-                if (allplaylistscontroller.allplaylists.playlists[i].TrackListID == playlistController.Playlist.TrackListID) // checks if i is equal to the pressed buttons content
-                {
-                    allplaylistscontroller.RemovePlaylist(allplaylistscontroller.allplaylists.playlists[i]); // removes the button with the id of i
-                    break; // stops the loop, if you count 5 playlists and delete one then the loop still goes on to the 5th playlist, this gives an error
+            //for (int i = 0; i < allplaylistscontroller.allplaylists.playlists.Count; i++)
+            //{
+            //    if (allplaylistscontroller.allplaylists.playlists[i].TrackListID == playlistController.Playlist.TrackListID) // checks if i is equal to the pressed buttons content
+            //    {
+            //        allplaylistscontroller.RemovePlaylist(allplaylistscontroller.allplaylists.playlists[i]); // removes the button with the id of i
+            //        break; // stops the loop, if you count 5 playlists and delete one then the loop still goes on to the 5th playlist, this gives an error
                     
-                }
-            }
+            //    }
+            //}
         }
 
         private void ChangeNameButton_Click(object sender, RoutedEventArgs e) //Change the name of the playlist

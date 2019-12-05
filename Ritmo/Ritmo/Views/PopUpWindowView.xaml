@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBox HorizontalAlignment="Left" HorizontalContentAlignment="Right" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="{Binding TextBoxMessage, Mode=OneWay}" VerticalAlignment="Top" Width="272"/>
-        <Button Command="{Binding TransferCommand}" Width="Auto" Height="20" Margin="188,41,54,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding OnOkayClickCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Width="Auto" Height="20" Margin="188,41,54,0" VerticalAlignment="Top"/>
         <Button Content="Cancel" Click="Button_Click" Height="20" Margin="243,41,10,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

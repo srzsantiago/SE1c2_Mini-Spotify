@@ -14,7 +14,7 @@ namespace Ritmo.ViewModels
         IWindowManager WindowManager = new WindowManager();
 
         #region Command
-        public ICommand TransferCommand;
+        public ICommand OnOkayClickCommand;
         #endregion
 
         #region Popupwindow Attributes
@@ -60,13 +60,13 @@ namespace Ritmo.ViewModels
         {
             ViewModel = viewModel;
 
-            TransferCommand = new RelayCommand(Transfer);
+            OnOkayClickCommand = new RelayCommand<object>(OnOkayClick);
 
             ButtonContent = "Add playlist";
             TextBoxMessage = "Enter playlist name...";
         }
 
-        private void Transfer()
+        private void OnOkayClick(object param)
         {
             ViewModel.AddPlaylist("Test");
         }

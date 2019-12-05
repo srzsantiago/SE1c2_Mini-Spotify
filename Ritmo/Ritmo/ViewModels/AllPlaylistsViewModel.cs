@@ -1,5 +1,7 @@
 ﻿using Caliburn.Micro;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using Ritmo.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,6 +21,16 @@ namespace Ritmo.ViewModels
         private ObservableCollection<Playlist> _allPlaylistsCollection = new ObservableCollection<Playlist>();
         private static AllPlaylistsController _allPlaylistsController;
         private string _newName;
+        private bool _popUpIsOpen;
+
+        public bool PopUpIsOpen
+        {
+            get { return _popUpIsOpen; }
+            set { _popUpIsOpen = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
 
         public string NewName
         {
@@ -43,8 +55,9 @@ namespace Ritmo.ViewModels
 
         #region Commands
         public ICommand OpenPlaylistViewModelCommand { get; set; }
+        public ICommand AddPlaylistCommand { get; set; }
         public ICommand DeletePlaylistCommand { get; set; }
-        public ICommand OpenAddPlaylistCommand { get; set; }
+        public ICommand ControlPopUpCommand { get; set; }
         #endregion
 
         public AllPlaylistsViewModel() //MainWindowViewModel mainWindow
@@ -79,7 +92,9 @@ namespace Ritmo.ViewModels
             int id = AllPlaylistsCollection.Count();
             //This is for testing
 
-            AllPlaylistsController.AddTrackList(new Playlist($"{name}") { TrackListID = id } );
+            AllPlaylistsController.AddTrackList(new Playlist($"{name}") { TrackListID = id, CreationDate = DateTime.Now} );
+            SetAllPlaylistsCollection();
+            ControlPopUp();
         }
 
         private void DeletePlaylist(int playlistID)
@@ -87,13 +102,21 @@ namespace Ritmo.ViewModels
             AllPlaylistsController.RemovePlaylist(AllPlaylistsController.GetPlaylist(playlistID));
         }
 
-        private void OpenAddPlaylist()
+        private void ControlPopUp()
         {
+
             //new Window() { Content = new PopUpWindowViewModel(this) }.Show();
 
-            IWindowManager windowManager = new WindowManager();
+            //IWindowManager windowManager = new WindowManager();
+            //windowManager.ShowDialog(new PopUpWindowViewModel(this));
 
-            windowManager.ShowDialog(new PopUpWindowViewModel(this));
+            //MessageBox.Show(new PopUpWindowView(), "kaas");
+            //Messenger.Default.Send(new NotificationMessage("ShowAddPlaylist"));
+
+            if (PopUpIsOpen)
+                PopUpIsOpen = false;
+            else if (!PopUpIsOpen)
+                PopUpIsOpen = true;
         }
         
 
@@ -101,8 +124,9 @@ namespace Ritmo.ViewModels
         private void InitializeCommands()
         {
             OpenPlaylistViewModelCommand = new RelayCommand<int>(OpenPlaylistViewModel);
-            OpenAddPlaylistCommand = new RelayCommand(OpenAddPlaylist);
+            AddPlaylistCommand = new RelayCommand<string>(AddPlaylist);
             DeletePlaylistCommand = new RelayCommand<int>(DeletePlaylist);
+            ControlPopUpCommand = new RelayCommand(ControlPopUp);
         }
         #endregion
 
