@@ -138,29 +138,26 @@ namespace Ritmo.ViewModels
         //Changes to the previous track and set CurrentTrackElement
         public void PrevTrack()
         {
-            TimeSpan t1 = new TimeSpan(0, 0, 3); //Set timer for 3 seconds
-            if (CurrentTrackElement.Position <= t1) //If the song is under 3 seconds, go to the previous song
+            TimeSpan timer = new TimeSpan(0, 0, 3); //Set timer for 3 seconds
+            if (CurrentTrackElement.Position <= timer) //If the song is under 3 seconds, go to the previous song
             {
-                //Checks if CurrentTrack is the first. If it is, it nothing will happen. 
-                //Call rewind track here
+                //Checks if CurrentTrack is the first. If it is, the track starts from beginning 
                 if (PlayQueueController.PQ.CurrentTrack.Equals(PlayQueueController.PQ.TrackWaitingList.First.Value)) 
                 {
                     CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
-                    CurrentTrackElement.Play(); //Play the current song
                 }
                 else
                 {
                     PlayQueueController.PreviousTrack();
                     MyQueueScreenToViewModel.ShowElements();
                     CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
-                    PlayTrack();
                 }
             }
             else //Else play the current song from the start (0 sec)
             {
                 CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
-                CurrentTrackElement.Play(); //Play the current song
             }
+            PlayTrack();
         }
 
         public void ShuffleWaitinglist()
