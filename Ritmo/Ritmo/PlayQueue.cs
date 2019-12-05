@@ -15,7 +15,7 @@ namespace Ritmo
         public Queue<Track> TrackQueue { get; set; }
         public Track CurrentTrack { get; set; }
         public Track WaitingListToQueueTrack { get; set; }
-        public double CurrentVolume { get; set; }
+        public double CurrentVolume { get; set; } = 0.5;
         public bool IsMute { get; set; }
         public bool TrackWaitingListEnded { get; set; }
         public bool IsPaused { get; set; }

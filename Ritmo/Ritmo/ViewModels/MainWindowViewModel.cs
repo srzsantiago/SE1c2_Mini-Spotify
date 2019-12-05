@@ -58,7 +58,7 @@ namespace Ritmo.ViewModels
 
         private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual };
         private Uri _currentTrackSource; //Unused
-        private double _currentTrackVolume = 0.5;
+        private Double _currentTrackVolume;
         private Uri _playButtonIcon = new Uri("/ImageResources/playicon.ico", UriKind.RelativeOrAbsolute);
         private Uri _muteButtonIcon = new Uri("/ImageResources/unmute.png", UriKind.RelativeOrAbsolute);
         private double oldVolume = 0;
@@ -73,7 +73,7 @@ namespace Ritmo.ViewModels
             get { return _currentTrackSource; }
             set { _currentTrackSource = value; }
         } //Unused
-        public double CurrentTrackVolume
+        public Double CurrentTrackVolume
         {
             get { return _currentTrackVolume; }
             set
@@ -92,9 +92,11 @@ namespace Ritmo.ViewModels
         {
             InitializeCommands();
             InitializeViewModels();
-            InitializeCurrentTrackElement();
+            
 
             PlayQueue = PlayQueueController.PQ;
+
+            InitializeCurrentTrackElement();
 
             TestTrackMethod();
         }
@@ -180,6 +182,7 @@ namespace Ritmo.ViewModels
         public void VolumeSlider_ValueChanged(double VolumeSliderValue)
         {
             CurrentTrackElement.Volume = VolumeSliderValue; // gets the slider value and puts it as volume
+            PlayQueueController.SetVolume(VolumeSliderValue);
             if (CurrentTrackElement.Volume > 0)
             {
                 PlayQueue.IsMute = false; // sets bool to false because its not muted
@@ -197,7 +200,7 @@ namespace Ritmo.ViewModels
             }
             else // else if volume is not muted
             {
-                PlayQueue.IsMute = true;
+                PlayQueueController.SetMute();
                 oldVolume = CurrentTrackElement.Volume; // saves the old volume
                 VolumeSlider_ValueChanged(0); // changes the slider volume value to 0
             }
@@ -229,6 +232,7 @@ namespace Ritmo.ViewModels
         {
             //CurrentTrackElement.Source = CurrentTrackSource;
             CurrentTrackElement.MediaEnded += Track_Ended;
+            CurrentTrackVolume = PlayQueue.CurrentVolume;
             CurrentTrackElement.Volume = CurrentTrackVolume;
         }
         #endregion
