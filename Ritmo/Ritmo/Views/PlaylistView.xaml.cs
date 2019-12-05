@@ -110,19 +110,7 @@ namespace Ritmo.Views
             //    DurationColumn.Children.Clear();
             //}
 
-            //private void PlaylistMenuButton_Click(object sender, RoutedEventArgs e) //Opens or closes the optionsmenu to set the name of the playlist or delete the playlist
-            //{
-            //    if (!playlistMenuPanel) //If panel is closed
-            //    {
-            //        PlaylistMenuGrid.Height = +60; //Open the stackpanel
-            //        playlistMenuPanel = true;
-            //    }
-            //    else
-            //    {
-            //        PlaylistMenuGrid.Height = 0;  //Else close the stackpanel
-            //        playlistMenuPanel = false;
-            //    }
-            //}
+            
 
             //private void ButtonMenu_Click(object sender, RoutedEventArgs e) //Opens or closes the optiosnmenu to add songs to playlist/queue or delete a song
             //{

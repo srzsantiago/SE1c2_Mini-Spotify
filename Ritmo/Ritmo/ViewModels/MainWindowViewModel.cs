@@ -36,7 +36,9 @@ namespace Ritmo.ViewModels
         public Screen FollowingViewModel { get; set; } = new FollowingViewModel();
         public Screen AllPlaylistsViewModel { get; set; } 
         public Screen MyQueueViewModel { get; set; }
+        public Screen PlaylistViewModel { get; set; } = new PlaylistViewModel();
 
+               
         public Screen CurrentViewModel
         {
             get { return _currentViewModel; }
@@ -204,7 +206,7 @@ namespace Ritmo.ViewModels
                 Name = "RingtoneUnatco",
                 Artist = "Santi",
                 Duration = 120,
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneUnatco.mp3"),
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
             Track testTrack2 = new Track()
             {
