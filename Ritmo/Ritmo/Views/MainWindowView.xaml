@@ -103,7 +103,9 @@
             <Image x:Name="MuteButtonIcon" Source="{Binding MuteButtonIcon}" />
         </Button>
         <Button Command="{Binding LoopCommand}" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="10.4,10.6,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49">
-            <Image x:Name="RepeatModeIcon" Source="{Binding RepeatModeIcon}" />
-        </Button>
+            <Image x:Name="RepeatModeIcon" Source="{Binding RepeatModeIcon}" /></Button>
+            <Button x:Name="shuffleButton" Grid.Column="1" HorizontalAlignment="Left" Margin="437,21,0,0" Grid.Row="1" VerticalAlignment="Top" Command="{Binding ShuffleWaitinglistCommand}" Width="40" Height="38">
+                <Image x:Name="ShuffleButtonIcon" Source="{ Binding ShuffleButtonIcon }"/>
+            </Button>
     </Grid>
 </Window>

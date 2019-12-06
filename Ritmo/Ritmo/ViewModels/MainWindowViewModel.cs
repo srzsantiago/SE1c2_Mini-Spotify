@@ -21,10 +21,10 @@ namespace Ritmo.ViewModels
         public PlaylistController PlaylistController = new PlaylistController("TestPlaylist");
         public AllPlaylistsController AllPlaylistsController = new AllPlaylistsController();
         public PlayQueueController PlayQueueController = new PlayQueueController();
+
         public PlayQueue PlayQueue = new PlayQueue();
+
         public MyQueueViewModel MyQueueScreenToViewModel;
-        private bool isMuted = false;
-        static double OldVolume = 0;
 
         #region Commands
         public ICommand ChangeViewModelCommand { get; set; }
@@ -36,7 +36,7 @@ namespace Ritmo.ViewModels
         public Screen SearchViewModel { get; set; } = new SearchViewModel();
         public Screen CategoriesViewModel { get; set; } = new CategoriesViewModel();
         public Screen FollowingViewModel { get; set; } = new FollowingViewModel();
-        public Screen AllPlaylistsViewModel { get; set; } 
+        public Screen AllPlaylistsViewModel { get; set; }
         public Screen MyQueueViewModel { get; set; }
 
         public Screen CurrentViewModel
@@ -58,12 +58,16 @@ namespace Ritmo.ViewModels
         public ICommand ShuffleWaitinglistCommand { get; set; }
         public ICommand LoopCommand { get; set; }
 
-        private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual};
+        private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual };
         private Uri _currentTrackSource; //Unused
-        private double _currentTrackVolume = 0.5;
+        private Double _currentTrackVolume;
         private Uri _playButtonIcon = new Uri("/ImageResources/playicon.ico", UriKind.RelativeOrAbsolute);
         private Uri _muteButtonIcon = new Uri("/ImageResources/unmute.png", UriKind.RelativeOrAbsolute);
+
         private Uri _repeatModeIcon = new Uri("/ImageResources/loopOff.png", UriKind.RelativeOrAbsolute);
+
+        private Uri _shuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
+        private double oldVolume = 0;
 
         public MediaElement CurrentTrackElement
         {
@@ -75,27 +79,35 @@ namespace Ritmo.ViewModels
             get { return _currentTrackSource; }
             set { _currentTrackSource = value; }
         } //Unused
-        public double CurrentTrackVolume
+        public Double CurrentTrackVolume
         {
             get { return _currentTrackVolume; }
-            set 
-            { 
+            set
+            {
                 _currentTrackVolume = value;
                 VolumeSlider_ValueChanged(value);
             }
         }
- 
+
         public Uri PlayButtonIcon { get { return _playButtonIcon; } set { _playButtonIcon = value; NotifyOfPropertyChange(); } }
 
         public Uri MuteButtonIcon { get { return _muteButtonIcon; } set { _muteButtonIcon = value; NotifyOfPropertyChange(); } }
 
+
         public Uri RepeatModeIcon { get { return _repeatModeIcon; } set { _repeatModeIcon = value; NotifyOfPropertyChange("RepeatModeIcon"); } }
+
+        public Uri ShuffleButtonIcon { get { return _shuffleButtonIcon; } set { _shuffleButtonIcon = value; NotifyOfPropertyChange(); } }
+
         #endregion
 
         public MainWindowViewModel()
         {
             InitializeCommands();
             InitializeViewModels();
+            
+
+            PlayQueue = PlayQueueController.PQ;
+
             InitializeCurrentTrackElement();
 
             TestTrackMethod();
@@ -154,34 +166,46 @@ namespace Ritmo.ViewModels
         //Changes to the previous track and set CurrentTrackElement
         public void PrevTrack()
         {
-            TimeSpan t1 = new TimeSpan(0, 0, 3); //Set timer for 3 seconds
-            if (CurrentTrackElement.Position <= t1) //If the song is under 3 seconds, go to the previous song
+            TimeSpan timer = new TimeSpan(0, 0, 3); //Set timer for 3 seconds
+            if (CurrentTrackElement.Position <= timer) //If the song is under 3 seconds, go to the previous song
             {
-                //Checks if CurrentTrack is the first. If it is, it nothing will happen. 
-                //Call rewind track here
+                //Checks if CurrentTrack is the first. If it is, the track starts from beginning 
                 if (PlayQueueController.PQ.CurrentTrack.Equals(PlayQueueController.PQ.TrackWaitingList.First.Value)) 
                 {
                     CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
-                    CurrentTrackElement.Play(); //Play the current song
                 }
                 else
                 {
+                    if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat) //If repeatMode is TrackRepeat set repeatMode to TrackListRepeat
+                    {
+                        RepeatModeIcon = new Uri("/ImageResources/LoopTrackWaitingList.png", UriKind.RelativeOrAbsolute);
+                        PlayQueueController.PQ.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
+                        PlayQueue.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
+                    }
                     PlayQueueController.PreviousTrack();
                     MyQueueScreenToViewModel.ShowElements();
                     CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
-                    PlayTrack();
                 }
             }
             else //Else play the current song from the start (0 sec)
             {
                 CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
-                CurrentTrackElement.Play(); //Play the current song
-            }   
+            }
+            PlayTrack();
         }
 
         public void ShuffleWaitinglist()
         {
-            PlayQueueController.ShuffleTrackWaitingList();
+            
+            if(PlayQueue.IsShuffle == true)
+            {
+                PlayQueueController.ShuffleTrackWaitingList();
+                ShuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
+            } else
+            {
+                PlayQueueController.UnShuffleTrackWaitingList();
+                ShuffleButtonIcon = new Uri("/ImageResources/shuffle.png", UriKind.RelativeOrAbsolute);
+            }
             MyQueueScreenToViewModel.ShowElements();
         }
 
@@ -229,36 +253,30 @@ namespace Ritmo.ViewModels
         public void VolumeSlider_ValueChanged(double VolumeSliderValue)
         {
             CurrentTrackElement.Volume = VolumeSliderValue; // gets the slider value and puts it as volume
+            PlayQueueController.SetVolume(VolumeSliderValue);
             if (CurrentTrackElement.Volume > 0)
             {
-                isMuted = false; // sets bool to false because its not muted
+                PlayQueue.IsMute = false; // sets bool to false because its not muted
                 MuteButtonIcon = new Uri("/ImageResources/unmute.png", UriKind.RelativeOrAbsolute); // puts the volume image to the unmuted png
-            } else
-            {
-                MuteButtonIcon = new Uri("/ImageResources/mute.png", UriKind.RelativeOrAbsolute); // puts the volume image to the muted png because the volume is 0
             }
-            
+            else
+                MuteButtonIcon = new Uri("/ImageResources/mute.png", UriKind.RelativeOrAbsolute); // puts the volume image to the muted png because the volume is 0
         }
 
         private void MuteVolume()
         {
-            if(isMuted) // checks if volume is already muted
+            if (PlayQueue.IsMute) // checks if volume is already muted
             {
-                isMuted = false;
-                if (OldVolume > 0) // if the old volume is not 0, and you click on the unmute button then the old volume will be put as the volume again
-                {
-                    VolumeSlider_ValueChanged(OldVolume);
-                    MuteButtonIcon = new Uri("/ImageResources/unmute.png", UriKind.RelativeOrAbsolute); // sets unmuted png as button icon
-                }
-            } else // else if volume is not muted
+                VolumeSlider_ValueChanged(oldVolume);
+            }
+            else // else if volume is not muted
             {
-                isMuted = true;
-                OldVolume = CurrentTrackElement.Volume; // saves the old volume
+                PlayQueueController.SetMute();
+                oldVolume = CurrentTrackElement.Volume; // saves the old volume
                 VolumeSlider_ValueChanged(0); // changes the slider volume value to 0
-                MuteButtonIcon = new Uri("/ImageResources/mute.png", UriKind.RelativeOrAbsolute); // changes the icon of the button to the muted icon
-                
             }
         }
+
 
         #endregion
 
@@ -286,6 +304,7 @@ namespace Ritmo.ViewModels
         {
             //CurrentTrackElement.Source = CurrentTrackSource;
             CurrentTrackElement.MediaEnded += Track_Ended;
+            CurrentTrackVolume = PlayQueue.CurrentVolume;
             CurrentTrackElement.Volume = CurrentTrackVolume;
         }
         #endregion
@@ -298,10 +317,11 @@ namespace Ritmo.ViewModels
 
         public void TestTrackMethod()
         {
-            
-            Track testTrack1 = new Track() {
+
+            Track testTrack1 = new Track()
+            {
                 TrackId = 1,
-                Name = "RingtoneUnatco",
+                Name = "1",
                 Artist = "Santi",
                 Duration = 120,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneUnatco.mp3"),
@@ -309,7 +329,7 @@ namespace Ritmo.ViewModels
             Track testTrack2 = new Track()
             {
                 TrackId = 2,
-                Name = "RingtoneRoundabout",
+                Name = "2",
                 Artist = "Dio",
                 Duration = 90,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
@@ -317,7 +337,7 @@ namespace Ritmo.ViewModels
             Track testTrack3 = new Track()
             {
                 TrackId = 3,
-                Name = "Powerup1",
+                Name = "3",
                 Artist = "Tristan",
                 Duration = 100,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
@@ -325,7 +345,7 @@ namespace Ritmo.ViewModels
             Track testTrack4 = new Track()
             {
                 TrackId = 4,
-                Name = "Powerup2",
+                Name = "4",
                 Artist = "Marloes",
                 Duration = 70,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
@@ -333,23 +353,23 @@ namespace Ritmo.ViewModels
             Track testTrack5 = new Track()
             {
                 TrackId = 5,
-                Name = "Powerup2",
+                Name = "5",
                 Artist = "Susan",
                 Duration = 70,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
             Track testTrack6 = new Track()
             {
-                TrackId = 5,
-                Name = "Gun's Roses",
+                TrackId = 6,
+                Name = "Queue1",
                 Artist = "Susan",
                 Duration = 30,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
             Track testTrack7 = new Track()
             {
-                TrackId = 5,
-                Name = "Metal Gear",
+                TrackId = 7,
+                Name = "Queue2",
                 Artist = "Solid Snake",
                 Duration = 90,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\MetalGearSolid.mp3"),
@@ -357,23 +377,23 @@ namespace Ritmo.ViewModels
             //Track testTrack4 = new Track() { AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav") };
             PlaylistController.AddTrack(testTrack1);
             PlaylistController.AddTrack(testTrack2);
-            PlaylistController.AddTrack(testTrack6);
+            PlaylistController.AddTrack(testTrack3);
+            PlaylistController.AddTrack(testTrack4);
             PlaylistController.AddTrack(testTrack5);
-            PlaylistController.AddTrack(testTrack7);
 
+            PlayQueueController.AddTrack(testTrack6);
+            PlayQueueController.AddTrack(testTrack7);
 
             //PlayQueueController.AddTrack(testTrack3);
             //PlayQueueController.AddTrack(testTrack4);
-            
-            
 
-
+            
             //Speelt track en zet playlist in wachtrij
             PlayQueueController.PlayTrack(PlaylistController.Playlist.Tracks.First.Value, PlaylistController.Playlist);
-            
+
             //Zet de CurrentTrack als audio die afgespeeld wordt
-            CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;             
-            
+            CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
+
             MyQueueScreenToViewModel.ShowElements();
         }
     }
