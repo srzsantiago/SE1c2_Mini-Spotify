@@ -23,5 +23,9 @@ namespace Ritmo.UnitTests
             //Assert
             Assert.IsTrue(TestMWVM.CurrentViewModel.Equals(TestHVM)); //Checks if the ViewModel has changed
         }
+
+
+        // doesnt work yet?
+    
     }
 }

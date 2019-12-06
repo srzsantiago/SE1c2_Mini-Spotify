@@ -41,7 +41,7 @@ namespace Ritmo
 
         public void PauseTrack()
         { 
-            PQ.IsPaused = true; 
+            PQ.IsPaused = !PQ.IsPaused; 
             /////////////////////////////////EVENT
         }
 

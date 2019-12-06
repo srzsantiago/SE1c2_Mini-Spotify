@@ -63,17 +63,23 @@
                 <RowDefinition Height="134"/>
                 <RowDefinition Height="134"/>
             </Grid.RowDefinitions>
-
+            <StackPanel Grid.Row="0">
+                <Image Source="{Binding TestLogo}" HorizontalAlignment="Left" Height="101" Margin="10,10,0,0" VerticalAlignment="Top" Width="150"/>
+            </StackPanel>
             <StackPanel Grid.Row="1">
+                <Separator/>
                 <Button x:Name="Home_Button" Content="Home" CommandParameter="{Binding HomeViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}" />
                 <Button x:Name="Search_Button" Content="Search" CommandParameter="{Binding SearchViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
                 <Button x:Name="Categories_Button" Content="Categories" CommandParameter="{Binding CategoriesViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
                 <Button x:Name="Following_Button"  Content="Following" CommandParameter="{Binding FollowingViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
             </StackPanel>
             <StackPanel Grid.Row="2">
+                <Separator/>
                 <Button x:Name="AllPlaylist_Button" Content="My Playlists" CommandParameter="{Binding AllPlaylistsViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}" />
                 <Button x:Name="MyQueue_Button" Content="My Queue" CommandParameter="{Binding MyQueueViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
+                <Separator/>
             </StackPanel>
+
         </Grid>
 
         <!-- Frame view -->
@@ -84,7 +90,7 @@
         <!-- Background color -->
 
         <Grid Grid.Row="1"  Width="124" HorizontalAlignment="Center" Margin="264,32,434,0" Grid.Column="1">
-            <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Command="{Binding PlayTrackCommand}" Style="{StaticResource PlayButtonStyle}" Width="40" Height="Auto">
+            <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Command="{Binding TrackControlCommand}" Style="{StaticResource PlayButtonStyle}" Width="40" Height="Auto">
                 <Image x:Name="PlayButtonIcon" Source="{Binding PlayButtonIcon}" />
             </Button>
             <Button x:Name="PrevButton" Margin="0,0,80,0" Command="{Binding PrevTrackCommand}" Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">
