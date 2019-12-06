@@ -40,7 +40,7 @@ namespace Ritmo.Views
             
             allplaylistcontroller = AllPlaylistsViewModel.AllPlaylistsController;
             InitializeComponent();
-            testAllPlayLists();
+            //testAllPlayLists();
             GetPlayListsGUI();
 
         }
@@ -127,26 +127,26 @@ namespace Ritmo.Views
         }
 
         // maakt playlists aan en voegt de playlists toe aan de lijst, waarna deze zullen geladen worden in AllPlayListsView window in de GUI
-        public void testAllPlayLists()
-        {
-            if(allplaylistcontroller.allplaylists.playlists.Count == 0) { 
-                Playlist testplaylist1 = new Playlist(0, "playlist1", 100, DateTime.Today);
-                Playlist testplaylist2 = new Playlist(1, "playlist2", 200, DateTime.Today);
-                Playlist testplaylist3 = new Playlist(2, "playlist3", 400, DateTime.Today.AddDays(1));
-                Playlist testplaylist4 = new Playlist(3, "playlist4", 5000, DateTime.Today.AddMonths(4));
-                Playlist testplaylist5 = new Playlist(4, "playlist5", 2222, DateTime.Today);
-                Track t1 = new Track("name");
-                Track track2 = new Track("lol");
-                testplaylist1.Tracks.AddLast(t1);
-                testplaylist2.Tracks.AddLast(track2);
+        //public void testAllPlayLists()
+        //{
+        //    if(allplaylistcontroller.allplaylists.playlists.Count == 0) { 
+        //        Playlist testplaylist1 = new Playlist(0, "playlist1", 100, DateTime.Today);
+        //        Playlist testplaylist2 = new Playlist(1, "playlist2", 200, DateTime.Today);
+        //        Playlist testplaylist3 = new Playlist(2, "playlist3", 400, DateTime.Today.AddDays(1));
+        //        Playlist testplaylist4 = new Playlist(3, "playlist4", 5000, DateTime.Today.AddMonths(4));
+        //        Playlist testplaylist5 = new Playlist(4, "playlist5", 2222, DateTime.Today);
+        //        Track t1 = new Track("name");
+        //        Track track2 = new Track("lol");
+        //        testplaylist1.Tracks.AddLast(t1);
+        //        testplaylist2.Tracks.AddLast(track2);
 
-                allplaylistcontroller.AddTrackList(testplaylist1);
-                allplaylistcontroller.AddTrackList(testplaylist2);
-                allplaylistcontroller.AddTrackList(testplaylist3);
-                allplaylistcontroller.AddTrackList(testplaylist4);
-                allplaylistcontroller.AddTrackList(testplaylist5);
-            }
-        }
+        //        allplaylistcontroller.AddTrackList(testplaylist1);
+        //        allplaylistcontroller.AddTrackList(testplaylist2);
+        //        allplaylistcontroller.AddTrackList(testplaylist3);
+        //        allplaylistcontroller.AddTrackList(testplaylist4);
+        //        allplaylistcontroller.AddTrackList(testplaylist5);
+        //    }
+        //}
 
         private void Menu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -179,7 +179,7 @@ namespace Ritmo.Views
                 
             } else
             {
-                Playlist playlist = new Playlist(1 , x, 100, DateTime.Today); // id is going to be unique when we use the database
+                Playlist playlist = new Playlist(x); // id is going to be unique when we use the database
                 allplaylistcontroller.AddTrackList(playlist);
                 GetPlayListsGUI();
             }

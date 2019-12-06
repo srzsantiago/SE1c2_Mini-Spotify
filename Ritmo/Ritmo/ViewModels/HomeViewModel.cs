@@ -243,18 +243,18 @@ namespace Ritmo.ViewModels
             });
             
 
-            PlaylistController testplaylist1 = new PlaylistController("playlist1");
-            PlaylistController testplaylist2 = new PlaylistController("playlist2");
-            PlaylistController testplaylist3 = new PlaylistController("playlist3");
-            PlaylistController testplaylist4 = new PlaylistController("playlist4");
-            PlaylistController testplaylist5 = new PlaylistController("playlist5");
+            //PlaylistController testplaylist1 = new PlaylistController("playlist1");
+            //PlaylistController testplaylist2 = new PlaylistController("playlist2");
+            //PlaylistController testplaylist3 = new PlaylistController("playlist3");
+            //PlaylistController testplaylist4 = new PlaylistController("playlist4");
+            //PlaylistController testplaylist5 = new PlaylistController("playlist5");
 
 
-            mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist1.Playlist);
-            mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist2.Playlist);
-            mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist3.Playlist);
-            mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist4.Playlist);
-            mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist5.Playlist);
+            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist1.Playlist);
+            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist2.Playlist);
+            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist3.Playlist);
+            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist4.Playlist);
+            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist5.Playlist);
 
         }
 
