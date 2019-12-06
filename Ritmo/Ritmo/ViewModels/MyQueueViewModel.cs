@@ -305,7 +305,7 @@ namespace Ritmo.ViewModels
         //Refreshes queue view
         private void ClearQueue()
         {
-            mwvm.PlayQueueController.PQ.TrackQueue.Clear();
+            mwvm.PlayQueueController.ClearQueue();
             ShowQueueElements();
         }
     }

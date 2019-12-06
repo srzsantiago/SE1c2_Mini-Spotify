@@ -291,5 +291,20 @@ namespace Ritmo.UnitTests
             //Assert
             Assert.AreEqual(result, true); //Check if the volume is mute, should be true.
         }
+
+        //Method to clear the queue
+        [TestMethod]
+        public void ClearQueue_QueueCleared_ReturnsTrue()
+        {
+            //Assert
+            PlayQueueController playQueueController = new PlayQueueController();
+            playQueueController.AddTrack(new Track("TestTrack"));
+
+            //Act
+            playQueueController.ClearQueue();
+
+            //Assert
+            Assert.IsTrue(playQueueController.PQ.TrackQueue.Count == 0);
+        }
     }
 }

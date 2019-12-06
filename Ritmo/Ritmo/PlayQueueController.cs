@@ -127,6 +127,11 @@ namespace Ritmo
             }
         }
 
+        public void ClearQueue() //Clear the entire queue of track
+        {
+            PQ.TrackQueue.Clear();
+        }
+
 
         public void RemoveTrackFromWaitingList(Track track)//Remove track from the waitinglist(Copy of a tracklist)
         {
