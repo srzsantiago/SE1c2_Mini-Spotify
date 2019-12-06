@@ -41,7 +41,7 @@ namespace Ritmo
 
         public void PauseTrack()
         { 
-            PQ.IsPaused = true; 
+            PQ.IsPaused = !PQ.IsPaused; 
             /////////////////////////////////EVENT
         }
 
@@ -50,29 +50,16 @@ namespace Ritmo
                 PQ.CurrentTrack = PQ.TrackQueue.Dequeue();
             else
             {
-                try
+                //play next song in the tracklist if the Repeatmode is OFF or TrackListRepeat
+                if (PQ.RepeatMode == PlayQueue.RepeatModes.Off || PQ.RepeatMode == PlayQueue.RepeatModes.TrackListRepeat)
                 {
-                    //play next song in the tracklist if the Repeatmode is OFF or TrackListRepeat
-                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
+                    try
                     {
                         PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Next.Value;
                         PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
                         PQ.TrackWaitingListEnded = false;
                     }
-                    //play the same track again while mode is TrackRepeat
-                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
-                        PQ.CurrentTrack = PQ.CurrentTrack;
-                }
-                catch
-                {
-                    //throw new Exception("There is no next track available");
-                    
-                    //this stage is only for test. In the next Sprint it will be changed.=====================
-                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
-                    {
-                        PQ.CurrentTrack = PQ.TrackWaitingList.First.Value;
-                    }
-                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.Off))
+                    catch
                     {
                         PQ.TrackWaitingListEnded = true;
                         PQ.IsPaused = true;
@@ -80,9 +67,12 @@ namespace Ritmo
                         PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
                     }
                 }
-
+                //play the same track again while mode is TrackRepeat
+                else if (PQ.RepeatMode == PlayQueue.RepeatModes.TrackRepeat)
+                {
+                    PQ.CurrentTrack = PQ.CurrentTrack;
+                }
             }
-            
         }
 
         public void PreviousTrack() //Set the PreviousTrack as the CurrentTrack
@@ -99,7 +89,6 @@ namespace Ritmo
             {
                 PQ.CurrentTrack = PQ.WaitingListToQueueTrack;
             }
-
         }
 
         public void AddTrack(Track track) //Add track to the queue
@@ -138,6 +127,11 @@ namespace Ritmo
             }
         }
 
+        public void ClearQueue() //Clear the entire queue of track
+        {
+            PQ.TrackQueue.Clear();
+        }
+
 
         public void RemoveTrackFromWaitingList(Track track)//Remove track from the waitinglist(Copy of a tracklist)
         {
@@ -167,18 +161,14 @@ namespace Ritmo
             LinkedList<Track> randomtracks = new LinkedList<Track>();
 
                 // Checks if the current-playing track belongs to the TrackWachtingList
-                if (currentlist.Contains(PQ.CurrentTrack))
+                if (currentlist.Contains(PQ.WaitingListToQueueTrack))
                 {
                     // Removes the current track from the list of tracks that will be shuffled 
-                    currentlist.Remove(PQ.CurrentTrack);
+                    currentlist.Remove(PQ.WaitingListToQueueTrack);
                     // Adds the currently playing track as first track of the random list before the shuffled tracks
-                    randomtracks.AddFirst(PQ.CurrentTrack);
+                    randomtracks.AddFirst(PQ.WaitingListToQueueTrack);
                 }
-                else
-                {
-                    PQ.WaitingListToQueueTrack = null;
-                }
-
+                
                 // count the number of tracks that will be shuffled
                 int size = currentlist.Count;
                 int cijfer;
@@ -225,11 +215,18 @@ namespace Ritmo
             PQ.TrackWaitingList = PQ.OriginalTrackWaitingList;
 
             // Check if the current track is in the originalwaiting list, if not; add the current track as first value
-            if (!PQ.OriginalTrackWaitingList.Contains(PQ.CurrentTrack))
+            if (!PQ.OriginalTrackWaitingList.Contains(PQ.WaitingListToQueueTrack))
             {
-                PQ.OriginalTrackWaitingList.AddFirst(PQ.CurrentTrack);
+                PQ.OriginalTrackWaitingList.AddFirst(PQ.WaitingListToQueueTrack);
             }
-            
+            //int count = 0;
+            //foreach (var item in PQ.TrackWaitingList)
+            //{
+            //    if (item.Equals(PQ.TrackWaitingList.ElementAt(count)))
+            //        PQ.WaitingListToQueueTrack = item;
+            //}
+
+
             PQ.IsShuffle = true;
         }
 

@@ -3,31 +3,25 @@ using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.Linq.Mapping;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace Ritmo.ViewModels
 {
     public class HomeViewModel : Screen
     {
-        //List<Track> allTestTrack = new List<Track>();
+        List<Track> allTestTrack = new List<Track>();
         MainWindowViewModel mainWindowViewModel;
         private int clickedbuttonvalue;
 
-
+        #region stackpanels
         private StackPanel _tracknamesColumn;
 
         public StackPanel TracknamesColumn
         {
-            get 
+            get
             {
                 if (_tracknamesColumn == null)
                     _tracknamesColumn = new StackPanel();
@@ -61,7 +55,7 @@ namespace Ritmo.ViewModels
             }
             set { _addQueueColumn = value; }
         }
-        
+        #endregion
 
         private ListBox _playlistboxes;
 
@@ -73,11 +67,14 @@ namespace Ritmo.ViewModels
                     _playlistboxes = new ListBox();
                 return _playlistboxes;
             }
-            set { _playlistboxes = value;
+            set
+            {
+                _playlistboxes = value;
                 NotifyOfPropertyChange("Playlistboxes");
             }
         }
 
+        #region observablecollections
         private ObservableCollection<TestItems> _allTestTrack;
 
         public ObservableCollection<TestItems> AllTestTrack
@@ -101,11 +98,15 @@ namespace Ritmo.ViewModels
                     _allPlaylist = new ObservableCollection<Playlist>();
                 return _allPlaylist;
             }
-            set { _allPlaylist = value;
+            set
+            {
+                _allPlaylist = value;
                 NotifyOfPropertyChange("AllPlaylist");
             }
         }
+        #endregion
 
+        #region commands
         private ICommand _addToPlaylistCommand;
 
         public ICommand AddToPlaylistCommand
@@ -133,6 +134,10 @@ namespace Ritmo.ViewModels
                 _addToQueueCommand = value;
             }
         }
+        #endregion
+
+
+
 
         private Playlist selectedItem;
         public Playlist SelectedItem
@@ -147,12 +152,12 @@ namespace Ritmo.ViewModels
                 {
                     if (item.TrackID == clickedbuttonvalue)
                     {
-                        for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.allplaylists.playlists.Count; i++)
+                        for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
                         {
-                            if (selectedItem.Equals(mainWindowViewModel.AllPlaylistsController.allplaylists.playlists.ElementAt(i)))
+                            if (selectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
                             {
                                 Track testTrack = new Track() { Name = item.Name, Artist = item.Artist, AudioFile = item.AudioFile, Duration = item.Duration, TrackId = item.TrackID };
-                                mainWindowViewModel.AllPlaylistsController.allplaylists.playlists.ElementAt(i).Tracks.AddLast(testTrack);
+                                mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
                             }
                         }
 
@@ -177,7 +182,7 @@ namespace Ritmo.ViewModels
 
         public void testAllPlayLists()
         {
-            
+
 
             Track track1 = new Track(1, "track1", "JOHANNES", 10);
             Track track2 = new Track(2, "track2", "Tristan", 10);
@@ -241,7 +246,7 @@ namespace Ritmo.ViewModels
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
                 ButtonID = count,
             });
-            
+
 
             //PlaylistController testplaylist1 = new PlaylistController("playlist1");
             //PlaylistController testplaylist2 = new PlaylistController("playlist2");
@@ -271,7 +276,7 @@ namespace Ritmo.ViewModels
             clickedbuttonvalue = (int)sender;
             AllPlaylist = new ObservableCollection<Playlist>();
 
-            foreach (var item in mainWindowViewModel.AllPlaylistsController.allplaylists.playlists)
+            foreach (var item in mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists)
             {
                 AllPlaylist.Add(item);
             }
@@ -306,13 +311,13 @@ namespace Ritmo.ViewModels
             {
                 if (item.TrackID == clickedbuttonvalue)
                 {
-                    for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.allplaylists.playlists.Count; i++)
+                    for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
                     {
-                        
-                        if (selectedItem.Equals(mainWindowViewModel.AllPlaylistsController.allplaylists.playlists.ElementAt(i)))
+
+                        if (selectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
                         {
                             Track testTrack = new Track() { Name = item.Name, Artist = item.Artist, AudioFile = item.AudioFile, Duration = item.Duration, TrackId = item.TrackID };
-                            mainWindowViewModel.AllPlaylistsController.allplaylists.playlists.ElementAt(i).Tracks.AddLast(testTrack);
+                            mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
                         }
                     }
 
@@ -330,6 +335,6 @@ namespace Ritmo.ViewModels
         public String Album { get; set; }
         public int Duration { get; set; }
         public Uri AudioFile { get; set; }
-        
+
     }
 }

@@ -1,5 +1,4 @@
-﻿using Caliburn.Micro;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ritmo.ViewModels;
 using System;
 using System.Collections.Generic;

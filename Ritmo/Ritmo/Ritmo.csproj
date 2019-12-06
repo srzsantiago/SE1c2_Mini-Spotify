@@ -250,6 +250,9 @@
     <Resource Include="ImageResources\unmute.png" />
     <Resource Include="ImageResources\unshuffle.png" />
     <Resource Include="ImageResources\shuffle.png" />
+    <Resource Include="ImageResources\loopOff.png" />
+    <Resource Include="ImageResources\loopTrack.png" />
+    <Resource Include="ImageResources\LoopTrackWaitingList.png" />
     <Content Include="TestFiles\Gun%27sRoses.mp3" />
     <Content Include="TestFiles\MetalGearSolid.mp3" />
     <Content Include="TestFiles\Powerup1.wav" />

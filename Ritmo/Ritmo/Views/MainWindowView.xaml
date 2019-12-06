@@ -32,12 +32,13 @@
         <DataTemplate x:Name="AllPlaylistsViewTemplate" DataType="{x:Type viewmodels:AllPlaylistsViewModel}">
             <views:AllPlayListsView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="PlaylistViewTemplate" DataType="{x:Type viewmodels:PlaylistViewModel}">
+            <views:PlaylistView DataContext="{Binding}"/>
+        </DataTemplate>
         <DataTemplate x:Name="MyQueueViewTemplate" DataType="{x:Type viewmodels:MyQueueViewModel}">
             <views:MyQueueView DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="playlistViewTemplate" DataType="{x:Type viewmodels:PlaylistViewModel}">
-            <views:PlaylistView DataContext="{Binding}"/>
-        </DataTemplate>
+
         <!--#endregion-->
 
     </Window.Resources>
@@ -83,7 +84,7 @@
         <!-- Background color -->
 
         <Grid Grid.Row="1"  Width="124" HorizontalAlignment="Center" Margin="264,32,434,0" Grid.Column="1">
-            <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Command="{Binding PlayTrackCommand}" Style="{StaticResource PlayButtonStyle}" Width="40" Height="Auto">
+            <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Command="{Binding TrackControlCommand}" Style="{StaticResource PlayButtonStyle}" Width="40" Height="Auto">
                 <Image x:Name="PlayButtonIcon" Source="{Binding PlayButtonIcon}" />
             </Button>
             <Button x:Name="PrevButton" Margin="0,0,80,0" Command="{Binding PrevTrackCommand}" Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">
@@ -102,8 +103,11 @@
         <Button Command="{Binding MuteTrackCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="610,21,0,0" Grid.Row="1" VerticalAlignment="Top" Width="40" Height="38">
             <Image x:Name="MuteButtonIcon" Source="{Binding MuteButtonIcon}" />
         </Button>
-        <Button x:Name="shuffleButton" Grid.Column="1" HorizontalAlignment="Left" Margin="437,21,0,0" Grid.Row="1" VerticalAlignment="Top" Command="{Binding ShuffleWaitinglistCommand}" Width="40" Height="38">
-            <Image x:Name="ShuffleButtonIcon" Source="{ Binding ShuffleButtonIcon }"/>
+        <Button Command="{Binding LoopCommand}" Grid.Column="1" HorizontalAlignment="Left" Height="33" Margin="484.4,6.6,0,0" VerticalAlignment="Top" Width="33" RenderTransformOrigin="-0.494,-0.459" Grid.Row="1">
+            <Image x:Name="RepeatModeIcon" Source="{Binding RepeatModeIcon}" Height="28" Width="28" />
+        </Button>
+        <Button x:Name="shuffleButton" Grid.Column="1" HorizontalAlignment="Left" Margin="484.4,42.6,0,0" Grid.Row="1" VerticalAlignment="Top" Command="{Binding ShuffleWaitinglistCommand}" Width="33" Height="33">
+            <Image x:Name="ShuffleButtonIcon" Source="{ Binding ShuffleButtonIcon }" Height="28" Width="28"/>
         </Button>
     </Grid>
 </Window>
