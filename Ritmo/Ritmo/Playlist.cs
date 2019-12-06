@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Ritmo
 {
@@ -6,10 +7,15 @@ namespace Ritmo
     {
         public Playlist(string name) : base(name)
         {
+            AddplaylistQuery();
         }
 
-        public Playlist(int tracklistid, string name, int duration, DateTime datetime) : base(tracklistid, name, duration, datetime)
+        public void AddplaylistQuery()
         {
+            String sql = "";
+            sql = "INSERT INTO Playlist (name, creationDate) VALUES ('" + this.Name + "','" + this.CreationDate + "')";
+            Database.DatabaseConnector.InsertQueryDB(sql);
         }
+
     }
 }

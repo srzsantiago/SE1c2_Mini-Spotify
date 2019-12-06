@@ -90,7 +90,7 @@
         <!-- Background color -->
 
         <Grid Grid.Row="1"  Width="124" HorizontalAlignment="Center" Margin="264,32,434,0" Grid.Column="1">
-            <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Command="{Binding PlayTrackCommand}" Style="{StaticResource PlayButtonStyle}" Width="40" Height="Auto">
+            <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Command="{Binding TrackControlCommand}" Style="{StaticResource PlayButtonStyle}" Width="40" Height="Auto">
                 <Image x:Name="PlayButtonIcon" Source="{Binding PlayButtonIcon}" />
             </Button>
             <Button x:Name="PrevButton" Margin="0,0,80,0" Command="{Binding PrevTrackCommand}" Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">

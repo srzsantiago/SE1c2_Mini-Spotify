@@ -20,7 +20,7 @@ namespace Ritmo
         public bool IsMute { get; set; }
         public bool IsShuffle { get; set; }
         public bool TrackWaitingListEnded { get; set; }
-        public bool IsPaused { get; set; }
+        public bool IsPaused { get; set; } = true;
         public RepeatModes RepeatMode { get; set; }
                
 

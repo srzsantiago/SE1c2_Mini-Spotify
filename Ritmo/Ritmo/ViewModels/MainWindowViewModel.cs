@@ -53,7 +53,7 @@ namespace Ritmo.ViewModels
         #endregion
 
         #region CurrentTrack commands and attributes
-        public ICommand PlayTrackCommand { get; set; }
+        public ICommand TrackControlCommand { get; set; }
         public ICommand NextTrackCommand { get; set; }
         public ICommand PrevTrackCommand { get; set; }
         public ICommand MuteTrackCommand { get; set; }
@@ -133,11 +133,29 @@ namespace Ritmo.ViewModels
         //Pauses track and updates play/pausebutton
         public void PauseTrack()
         {
+            CurrentTrackElement.Pause();
+            PlayButtonIcon = new Uri(@"\ImageResources\playicon.ico", UriKind.Relative);
+        }
+
+        //Pauses track when the WaitingList has ended.
+        private void PauseTrackOnWaitingListEnd()
+        {
             if (PlayQueueController.PQ.TrackWaitingListEnded)
             {
-                CurrentTrackElement.Pause();
-                PlayButtonIcon = new Uri(@"\ImageResources\playicon.ico", UriKind.Relative);
+                PauseTrack();
             }
+        }
+
+        //Alternates between pausing and playing track
+        public void TrackControl()
+        {
+            if (!PlayQueueController.PQ.IsPaused)
+            {
+                PauseTrack();
+            }
+            else
+                PlayTrack();
+            PlayQueueController.PauseTrack();
         }
 
         //Changes to next track, set CurrentTrackElement and plays track.
@@ -156,7 +174,7 @@ namespace Ritmo.ViewModels
             }
             else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.Off) //If repeatmode is off, after playlist is played, pause the track
             {
-                PauseTrack();
+                PauseTrackOnWaitingListEnd();
             } 
             else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackListRepeat) //If the repeatmode is TrackListRepeat, set the trackWaitingListEnded to false
             {
@@ -197,7 +215,10 @@ namespace Ritmo.ViewModels
             {
                 CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
             }
-            PlayTrack();
+            if (!PlayQueueController.PQ.IsPaused)
+            {
+                PlayTrack();
+            }
         }
 
         public void ShuffleWaitinglist()
@@ -229,7 +250,7 @@ namespace Ritmo.ViewModels
             else
             {
                 NextTrack();
-                PauseTrack();
+                PauseTrackOnWaitingListEnd();
             }
         }
 
@@ -292,7 +313,7 @@ namespace Ritmo.ViewModels
         public void InitializeCommands()
         {
             ChangeViewModelCommand = new RelayCommand<Screen>(ChangeViewModel); //Sets the command to the corresponding method
-            PlayTrackCommand = new RelayCommand(PlayTrack);
+            TrackControlCommand = new RelayCommand(TrackControl);
             NextTrackCommand = new RelayCommand(NextTrack);
             PrevTrackCommand = new RelayCommand(PrevTrack);
             MuteTrackCommand = new RelayCommand(MuteVolume);
