@@ -8,6 +8,8 @@ namespace Ritmo.UnitTests
     [TestClass]
     public class AllPlaylistsControllerTest
     {
+        AllPlaylistsController AllPlaylistsController = new AllPlaylistsController();
+
         //Method: AddTrackList(Playlist playlist) - Add playlist to list of all playlists, success scenario, returns true.
         [TestMethod]
         public void AddTrackList_SuccessScenario_ReturnsTrue()
@@ -18,7 +20,7 @@ namespace Ritmo.UnitTests
             AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
             //Act
             allPlaylistsController.AddTrackList(playlist); //Add a playlist called 'Name'
-            result = allPlaylistsController.allplaylists.playlists.Contains(playlist);
+            result = allPlaylistsController.AllPlaylists.Playlists.Contains(playlist);
             //Assert 
             Assert.AreEqual(result, true); //Checks if the playlist 'Name' is added -> should be true
         }
@@ -35,7 +37,7 @@ namespace Ritmo.UnitTests
             //Act
             allPlaylistsController.AddTrackList(playlist); //Add a playlist called 'Name'
             allPlaylistsController.AddTrackList(playlist1); //Add a second playlist called 'Name'
-            result = allPlaylistsController.allplaylists.playlists.Contains(playlist) && allPlaylistsController.allplaylists.playlists.Contains(playlist1);
+            result = allPlaylistsController.AllPlaylists.Playlists.Contains(playlist) && allPlaylistsController.AllPlaylists.Playlists.Contains(playlist1);
             //Assert
             Assert.AreEqual(result, true); //Checks if the list of all playlists contains the playlists called 'Name' twice -> should be true.
         }
@@ -51,7 +53,7 @@ namespace Ritmo.UnitTests
             //Act
             allPlaylistsController.AddTrackList(playlist); //Add playlist called 'Name'
             allPlaylistsController.RemovePlaylist(playlist); // Remove playlist called 'Name'
-            result = allPlaylistsController.allplaylists.playlists.Contains(playlist);
+            result = allPlaylistsController.AllPlaylists.Playlists.Contains(playlist);
             //Assert
             Assert.AreEqual(result, false); //Checks if the playlist called 'Name' exists -> returns false
         }
@@ -66,6 +68,21 @@ namespace Ritmo.UnitTests
             AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
             //Act / Assert
             allPlaylistsController.RemovePlaylist(playlist); //Remove not excisisting playlist -> returns exception
+        }
+
+        [TestMethod]
+        public void GetPlaylist_GetPlaylist_ReturnsPlaylist()
+        {
+            //Arrange
+            Playlist TestPlaylist = new Playlist("TestPlaylist") { TrackListID = 1 };
+            AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
+            allPlaylistsController.AddTrackList(TestPlaylist);
+
+            //Act
+            Playlist ReturnedPlaylist = allPlaylistsController.GetPlaylist(1);
+
+            //Assert
+            Assert.AreEqual(TestPlaylist, ReturnedPlaylist);
         }
     }
 }

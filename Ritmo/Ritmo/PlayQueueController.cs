@@ -50,29 +50,16 @@ namespace Ritmo
                 PQ.CurrentTrack = PQ.TrackQueue.Dequeue();
             else
             {
-                try
+                //play next song in the tracklist if the Repeatmode is OFF or TrackListRepeat
+                if (PQ.RepeatMode == PlayQueue.RepeatModes.Off || PQ.RepeatMode == PlayQueue.RepeatModes.TrackListRepeat)
                 {
-                    //play next song in the tracklist if the Repeatmode is OFF or TrackListRepeat
-                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.Off) || PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
+                    try
                     {
                         PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Next.Value;
                         PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
                         PQ.TrackWaitingListEnded = false;
                     }
-                    //play the same track again while mode is TrackRepeat
-                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackRepeat))
-                        PQ.CurrentTrack = PQ.CurrentTrack;
-                }
-                catch
-                {
-                    //throw new Exception("There is no next track available");
-                    
-                    //this stage is only for test. In the next Sprint it will be changed.=====================
-                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.TrackListRepeat))
-                    {
-                        PQ.CurrentTrack = PQ.TrackWaitingList.First.Value;
-                    }
-                    if (PQ.RepeatMode.Equals(PlayQueue.RepeatModes.Off))
+                    catch
                     {
                         PQ.TrackWaitingListEnded = true;
                         PQ.IsPaused = true;
@@ -80,9 +67,12 @@ namespace Ritmo
                         PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
                     }
                 }
-
+                //play the same track again while mode is TrackRepeat
+                else if (PQ.RepeatMode == PlayQueue.RepeatModes.TrackRepeat)
+                {
+                    PQ.CurrentTrack = PQ.CurrentTrack;
+                }
             }
-            
         }
 
         public void PreviousTrack() //Set the PreviousTrack as the CurrentTrack
@@ -99,7 +89,6 @@ namespace Ritmo
             {
                 PQ.CurrentTrack = PQ.WaitingListToQueueTrack;
             }
-
         }
 
         public void AddTrack(Track track) //Add track to the queue
