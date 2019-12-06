@@ -14,6 +14,9 @@ namespace Ritmo.ViewModels
 {
     public class PlaylistViewModel : Screen
     {
+        public PlaylistController playlistController;
+        public MainWindowViewModel mainWindow;
+
         #region boolForBoxes
         private bool _isChangeNameBoxOpen;
 
@@ -43,6 +46,9 @@ namespace Ritmo.ViewModels
         private string _changeName;
         private string _errorMessage;
         private string _playlistName;
+        private string _playlistCreationDate;
+        private string _playlistDuration;
+
         public string ChangeName
         {
             get
@@ -75,6 +81,22 @@ namespace Ritmo.ViewModels
                 NotifyOfPropertyChange("PlaylistName");
             }
         }
+
+
+        public string PlaylistDuration
+        {
+            get { return _playlistDuration; }
+            set { _playlistDuration = value; }
+        }
+
+
+        public string PlaylistCreationDate
+        {
+            get { return _playlistCreationDate; }
+            set { _playlistCreationDate = value; }
+        }
+
+
         #endregion
 
         #region ObservableCollections
@@ -180,17 +202,29 @@ namespace Ritmo.ViewModels
 
             }
         }
-
+        
+        private ICommand _deleteTrackCommand;
+        public ICommand DeleteTrackCommand
+        {
+            get
+            {
+                return _deleteTrackCommand;
+            }
+            set
+            {
+                _deleteTrackCommand = value;
+            }
+        }
         #endregion
 
-        public PlaylistViewModel()
+        public PlaylistViewModel( MainWindowViewModel mainWindow ,Playlist playlist)
         {
-            TestMethode();
+            this.mainWindow = mainWindow;
+            playlistController = new PlaylistController(playlist);
+            LoadElements();
+            LoadPlaylistInfo();
             InitializeCommands();
-            PlaylistName = "test";
 
-            
-            
         }
 
         public void InitializeCommands()
@@ -201,57 +235,32 @@ namespace Ritmo.ViewModels
             _deletePlaylistCommand = new RelayCommand<object>(this.DeletePlaylistClick);
             _ascendingSortCommand = new RelayCommand<object>(this.AscendingSortClick);
             _descendingSortCommand = new RelayCommand<object>(this.DescendingSortClick);
+            _deleteTrackCommand = new RelayCommand<object>(this.DeleteTrackClick);
         }
 
-        public void TestMethode()
+        public void LoadPlaylistInfo()
         {
-            PlayListTracksOC.Add(new Track
-            {
-                TrackId = 1,
-                Album = "testAlbum",
-                Artist = "Santi",
-                Duration = 10,
-                Name = "Track1",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-            });
-            PlayListTracksOC.Add(new Track
-            {
-                TrackId = 2,
-                Album = "testAlbum",
-                Artist = "Tristan",
-                Duration = 10,
-                Name = "Track2",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-            });
-            PlayListTracksOC.Add(new Track
-            {
-                TrackId = 3,
-                Album = "testAlbum",
-                Artist = "Stefan",
-                Duration = 10,
-                Name = "Track3",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-            });
-            PlayListTracksOC.Add(new Track
-            {
-                TrackId = 4,
-                Album = "testAlbum",
-                Artist = "Susan",
-                Duration = 10,
-                Name = "Track4",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-            });
-            PlayListTracksOC.Add(new Track
-            {
-                TrackId = 5,
-                Album = "testAlbum",
-                Artist = "Marloes",
-                Duration = 10,
-                Name = "Track5",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-            });
-
+            PlaylistName = playlistController.Playlist.Name;
+            PlaylistDuration = playlistController.Playlist.TrackListDuration.ToString();
+            PlaylistCreationDate = playlistController.Playlist.CreationDate.ToString();
         }
+        public void LoadElements()
+        {
+            PlayListTracksOC = new ObservableCollection<Track>();
+            foreach (var item in playlistController.Playlist.Tracks)
+            {
+                PlayListTracksOC.Add(new Track
+                {
+                    TrackId = item.TrackId,
+                    Name = item.Name,
+                    Artist = item.Artist,
+                    Album = item.Album,
+                    Duration = item.Duration,
+                    AudioFile = item.AudioFile,
+                });
+            }
+        }
+
 
         private void OpenChangeNameClick() //Change the name of the playlist
         {
@@ -273,7 +282,7 @@ namespace Ritmo.ViewModels
                 {
                     ErrorMessage = "Please write a name";
                 }
-                else if (ChangeName.Equals("SameName"))//dit moet nog aangepakt worden
+                else if (ChangeName.Equals(PlaylistName))
                 {
                     ErrorMessage = "The name must me a new name";
                 }
@@ -284,7 +293,10 @@ namespace Ritmo.ViewModels
                     }
                     else
                     {
-                        //change the name of the playlist
+                        playlistController.SetName(ChangeName);
+                        //must be changed in the database aswel
+                        PlaylistName = ChangeName;
+                        ChangeName = "";
                         IsChangeNameBoxOpen = false;
                     }
                 }
@@ -302,7 +314,8 @@ namespace Ritmo.ViewModels
 
             if (action.Equals("Delete"))
             {
-                //Playlist logico om de playlist te verwijderen
+                //Playlist logica om de playlist te verwijderen
+                mainWindow.ChangeViewModel(mainWindow.HomeViewModel);
                 IsDeletePlaylistBoxOpen = false;
             }
             else
@@ -315,18 +328,32 @@ namespace Ritmo.ViewModels
         {
             string orderBy = (string) sender;
 
-            PlaylistName = orderBy + "ASC";
-            //playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, orderBy, true);
-            //ShowObjects();
+            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, orderBy, true);
+            LoadElements();
         }
 
         private void DescendingSortClick(object sender)
         {
             string orderBy = (string)sender;
 
-            PlaylistName = orderBy + "DES";
-            //playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, orderBy, false);
-            //ShowObjects();
+            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, orderBy, false);
+            LoadElements();
+        }
+
+        public void DeleteTrackClick(object sender)
+        {
+            int index = (int)sender;
+            int count = playlistController.Playlist.Tracks.Count;
+            for (int i = 0; i < count; i++)
+            {
+                if (playlistController.Playlist.Tracks.ElementAt(i).TrackId == index)
+                {
+                    Track track=playlistController.Playlist.Tracks.ElementAt(i);
+                    playlistController.RemoveTrack(track);
+                    LoadElements();
+                    break;
+                }
+            }
         }
 
 

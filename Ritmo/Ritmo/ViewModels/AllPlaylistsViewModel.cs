@@ -14,7 +14,7 @@ namespace Ritmo.ViewModels
         
 
         public MainWindowViewModel MainWindow { get; set; }
-        public PlaylistViewModel PlaylistViewModel { get; set; } = new PlaylistViewModel();
+        public PlaylistViewModel PlaylistViewModel { get; set; }
         public ICommand OpenPlaylistViewModelCommand { get; set; }
 
         private static AllPlaylistsController _allPlaylistsController;
