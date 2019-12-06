@@ -7,7 +7,7 @@ namespace Ritmo
     {
         public Playlist(string name) : base(name)
         {
-            AddplaylistQuery();
+            //AddplaylistQuery();
         }
 
         public void AddplaylistQuery()

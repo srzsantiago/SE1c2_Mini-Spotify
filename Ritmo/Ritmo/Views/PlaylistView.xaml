@@ -58,7 +58,7 @@
                 <TextBox Text="{Binding ChangeName,Mode=TwoWay}" Margin="20,59,20,0" Height="18" VerticalAlignment="Top"/>
                 <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="50"  Width="140">
                     <Button Content="Change name" Margin="0,3,0,0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" 
-                            Command="{Binding ChangeNameCommand}" CommandParameter="Change"/>
+                            Command="{Binding ChangeNameCommand}" CommandParameter="Change" IsDefault="True"/>
                     <Button Content="Cancel" Margin="83,3,0,0" 
                         Command="{Binding ChangeNameCommand}"  CommandParameter="Cancel" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="39"/>
                 </Grid>
@@ -69,7 +69,7 @@
                 <Label Content="Are you sure you want to delete this playlist?" Margin="5,40,0,0"/>
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="50"  Width="140">
                     <Button Content="Delete" Margin="0,3,0,0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" 
-                            Command="{Binding DeletePlaylistCommand}" CommandParameter="Delete"/>
+                            Command="{Binding DeletePlaylistCommand}" CommandParameter="Delete" IsDefault="True"/>
                     <Button Content="Cancel" Margin="83,3,0,0" 
                         Command="{Binding DeletePlaylistCommand}"  CommandParameter="Cancel" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="39"/>
                 </Grid>

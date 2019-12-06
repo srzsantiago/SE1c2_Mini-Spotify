@@ -10,13 +10,13 @@ namespace Ritmo
 {
     public class AllPlaylists
     {
-        public List<Playlist> playlists
+        public List<Playlist> Playlists
         { get; set; } // the list where all the playlists go into.
 
         public AllPlaylists()
         {
-            playlists = new List<Playlist>();
-            GetPlaylists();
+            Playlists = new List<Playlist>();
+            //GetPlaylists();
 
         }
         public void GetPlaylists()
@@ -46,7 +46,7 @@ namespace Ritmo
                 }
                 if(count % 2 == 0)
                 {
-                    playlists.Add(new Playlist(name) { CreationDate = Convert.ToDateTime(creationDate) });
+                    Playlists.Add(new Playlist(name) { CreationDate = Convert.ToDateTime(creationDate) });
                     Console.WriteLine(name + creationDate);
                 }
             }

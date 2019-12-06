@@ -34,7 +34,7 @@
                     <TextBox Name="NewName" Text="{Binding NewName}" Margin="20,0,20,54" Height="18" VerticalAlignment="Bottom" />
                     <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="50"  Width="140">
                         <Button Content="Add Playlist" Margin="0,16,0,14" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="78"
-                                Command="{Binding AddPlaylistCommand}" CommandParameter="{Binding Text, ElementName=NewName}"/>
+                                Command="{Binding AddPlaylistCommand}" CommandParameter="{Binding Text, ElementName=NewName}" IsDefault="True"/>
                         <Button Content="Cancel" Margin="83,3,0,0" 
                             Command="{Binding ControlPopUpCommand}" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="39"/>
                     </Grid>
