@@ -338,7 +338,7 @@ namespace Ritmo.ViewModels
                 Artist = "Dio",
                 Album = "testalbum",
                 Duration = 90,
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneUnatco.mp3"),
             };
             Track testTrack3 = new Track()
             {
@@ -356,7 +356,7 @@ namespace Ritmo.ViewModels
                 Artist = "Marloes",
                 Album = "testalbum",
                 Duration = 70,
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav"),
             };
             Track testTrack5 = new Track()
             {
