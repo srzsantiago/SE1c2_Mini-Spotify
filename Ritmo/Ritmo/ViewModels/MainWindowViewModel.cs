@@ -20,6 +20,7 @@ namespace Ritmo.ViewModels
     {
         public PlaylistController PlaylistController = new PlaylistController("TestPlaylist");
         public PlayQueueController PlayQueueController = new PlayQueueController();
+        public AllPlaylistsController AllPlaylistsController = new AllPlaylistsController();
 
         public PlayQueue PlayQueue = new PlayQueue();
 
@@ -52,7 +53,7 @@ namespace Ritmo.ViewModels
         #endregion
 
         #region CurrentTrack commands and attributes
-        public ICommand PlayTrackCommand { get; set; }
+        public ICommand TrackControlCommand { get; set; }
         public ICommand NextTrackCommand { get; set; }
         public ICommand PrevTrackCommand { get; set; }
         public ICommand MuteTrackCommand { get; set; }
@@ -68,6 +69,7 @@ namespace Ritmo.ViewModels
         private Uri _repeatModeIcon = new Uri("/ImageResources/loopOff.png", UriKind.RelativeOrAbsolute);
 
         private Uri _shuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
+        private Uri _testLogo = new Uri("/ImageResources/Test_Logo.png", UriKind.RelativeOrAbsolute);
         private double oldVolume = 0;
 
         public MediaElement CurrentTrackElement
@@ -99,6 +101,8 @@ namespace Ritmo.ViewModels
 
         public Uri ShuffleButtonIcon { get { return _shuffleButtonIcon; } set { _shuffleButtonIcon = value; NotifyOfPropertyChange(); } }
 
+        public Uri TestLogo { get { return _testLogo; } set { _testLogo = value; NotifyOfPropertyChange(); } }
+
         #endregion
 
         public MainWindowViewModel()
@@ -129,11 +133,29 @@ namespace Ritmo.ViewModels
         //Pauses track and updates play/pausebutton
         public void PauseTrack()
         {
+            CurrentTrackElement.Pause();
+            PlayButtonIcon = new Uri(@"\ImageResources\playicon.ico", UriKind.Relative);
+        }
+
+        //Pauses track when the WaitingList has ended.
+        private void PauseTrackOnWaitingListEnd()
+        {
             if (PlayQueueController.PQ.TrackWaitingListEnded)
             {
-                CurrentTrackElement.Pause();
-                PlayButtonIcon = new Uri(@"\ImageResources\playicon.ico", UriKind.Relative);
+                PauseTrack();
             }
+        }
+
+        //Alternates between pausing and playing track
+        public void TrackControl()
+        {
+            if (!PlayQueueController.PQ.IsPaused)
+            {
+                PauseTrack();
+            }
+            else
+                PlayTrack();
+            PlayQueueController.PauseTrack();
         }
 
         //Changes to next track, set CurrentTrackElement and plays track.
@@ -143,18 +165,18 @@ namespace Ritmo.ViewModels
             MyQueueScreenToViewModel.ShowElements();
             CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
 
-            if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat)
+            if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat) //If the mode is TrackRepeat, set mode to TrackListRepeat and set the next track as currentTrack
             {
                 RepeatModeIcon = new Uri("/ImageResources/LoopTrackWaitingList.png", UriKind.RelativeOrAbsolute);
                 PlayQueueController.PQ.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
                 PlayQueue.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
                 NextTrack();
             }
-            else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.Off)
+            else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.Off) //If repeatmode is off, after playlist is played, pause the track
             {
-                PauseTrack();
+                PauseTrackOnWaitingListEnd();
             } 
-            else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackListRepeat)
+            else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackListRepeat) //If the repeatmode is TrackListRepeat, set the trackWaitingListEnded to false
             {
                 PlayQueueController.PQ.TrackWaitingListEnded = false;
             }
@@ -162,7 +184,7 @@ namespace Ritmo.ViewModels
             if (!PlayQueueController.PQ.TrackWaitingListEnded)
                 PlayTrack();
             else
-                PauseTrack(); //Bugs out Queue. Now TrackWaitingList will not pause when it's finished
+                PauseTrack();
         }
 
         //Changes to the previous track and set CurrentTrackElement
@@ -180,8 +202,8 @@ namespace Ritmo.ViewModels
                 {
                     if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat) //If repeatMode is TrackRepeat set repeatMode to TrackListRepeat
                     {
-                        RepeatModeIcon = new Uri("/ImageResources/LoopTrackWaitingList.png", UriKind.RelativeOrAbsolute);
-                        PlayQueueController.PQ.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
+                        RepeatModeIcon = new Uri("/ImageResources/LoopTrackWaitingList.png", UriKind.RelativeOrAbsolute); //Set icon
+                        PlayQueueController.PQ.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat; //Set repeatmode trackListRepeat
                         PlayQueue.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
                     }
                     PlayQueueController.PreviousTrack();
@@ -193,7 +215,10 @@ namespace Ritmo.ViewModels
             {
                 CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
             }
-            PlayTrack();
+            if (!PlayQueueController.PQ.IsPaused)
+            {
+                PlayTrack();
+            }
         }
 
         public void ShuffleWaitinglist()
@@ -216,34 +241,35 @@ namespace Ritmo.ViewModels
         //If the playQueue has played all tracks, CurrentTrack will be set to the first Track in TrackWaitingList and the audio will be paused.
         public void Track_Ended(Object sender, EventArgs e)
         {
-            if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat)
+            if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat) //If the repeatMode is TrackRepeat, track will start from the beginning when track is ended
             {
-                TimeSpan timerNull = new TimeSpan(0, 0, 0);
-                CurrentTrackElement.Position = timerNull;
+                TimeSpan timerNull = new TimeSpan(0, 0, 0); //Set timer to 0 sec.
+                CurrentTrackElement.Position = timerNull; 
                 CurrentTrackElement.Play();
             }
             else
             {
                 NextTrack();
-                PauseTrack();
+                PauseTrackOnWaitingListEnd();
             }
         }
 
+        //Repeatmodes -> if the button is clicked another repeatMode is set and the icon changes, default value is off.
         public void LoopWaitinglist()
         {
-            if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackListRepeat)
+            if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackListRepeat) //RepeatMode was: TrackListRepeat, changes to: TrackRepeat.
             {
-                RepeatModeIcon = new Uri("/ImageResources/loopTrack.png", UriKind.RelativeOrAbsolute);
-                PlayQueueController.PQ.RepeatMode = PlayQueue.RepeatModes.TrackRepeat;
-                PlayQueue.RepeatMode = PlayQueue.RepeatModes.TrackRepeat;
+                RepeatModeIcon = new Uri("/ImageResources/loopTrack.png", UriKind.RelativeOrAbsolute); //Set icon
+                PlayQueueController.PQ.RepeatMode = PlayQueue.RepeatModes.TrackRepeat; //Set repeatmode trackRepeat
+                PlayQueue.RepeatMode = PlayQueue.RepeatModes.TrackRepeat; //Set repeatmode trackRepeat
             }
-            else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat)
+            else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat) //RepeatMode was: TrackRepeat, changes to: Off.
             {
                 RepeatModeIcon = new Uri("/ImageResources/loopOff.png", UriKind.RelativeOrAbsolute);
                 PlayQueueController.PQ.RepeatMode = PlayQueue.RepeatModes.Off;
                 PlayQueue.RepeatMode = PlayQueue.RepeatModes.Off;
             }
-            else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.Off)
+            else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.Off) //RepeatMode was: Off, changes to: TrackListRepeat.
             {
                 RepeatModeIcon = new Uri("/ImageResources/LoopTrackWaitingList.png", UriKind.RelativeOrAbsolute);
                 PlayQueueController.PQ.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
@@ -287,7 +313,7 @@ namespace Ritmo.ViewModels
         public void InitializeCommands()
         {
             ChangeViewModelCommand = new RelayCommand<Screen>(ChangeViewModel); //Sets the command to the corresponding method
-            PlayTrackCommand = new RelayCommand(PlayTrack);
+            TrackControlCommand = new RelayCommand(TrackControl);
             NextTrackCommand = new RelayCommand(NextTrack);
             PrevTrackCommand = new RelayCommand(PrevTrack);
             MuteTrackCommand = new RelayCommand(MuteVolume);
@@ -296,7 +322,7 @@ namespace Ritmo.ViewModels
         }
         public void InitializeViewModels()
         {
-            HomeViewModel = new HomeViewModel();
+            HomeViewModel = new HomeViewModel(this);
             CurrentViewModel = HomeViewModel;
             AllPlaylistsViewModel = new AllPlaylistsViewModel(this);
             MyQueueViewModel = new MyQueueViewModel(this);
@@ -336,7 +362,7 @@ namespace Ritmo.ViewModels
                 Artist = "Dio",
                 Album = "testalbum",
                 Duration = 90,
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneUnatco.mp3"),
             };
             Track testTrack3 = new Track()
             {
@@ -354,7 +380,7 @@ namespace Ritmo.ViewModels
                 Artist = "Marloes",
                 Album = "testalbum",
                 Duration = 70,
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Powerup1.wav"),
             };
             Track testTrack5 = new Track()
             {

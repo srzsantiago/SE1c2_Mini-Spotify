@@ -42,7 +42,7 @@ namespace Ritmo
 
         public void PauseTrack()
         { 
-            PQ.IsPaused = true; 
+            PQ.IsPaused = !PQ.IsPaused; 
             /////////////////////////////////EVENT
         }
 
@@ -54,13 +54,13 @@ namespace Ritmo
                 //play next song in the tracklist if the Repeatmode is OFF or TrackListRepeat
                 if (PQ.RepeatMode == PlayQueue.RepeatModes.Off || PQ.RepeatMode == PlayQueue.RepeatModes.TrackListRepeat)
                 {
-                    try
+                    try//Try to play the next track
                     {
                         PQ.CurrentTrack = PQ.TrackWaitingList.Find(PQ.WaitingListToQueueTrack).Next.Value;
                         PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
                         PQ.TrackWaitingListEnded = false;
                     }
-                    catch
+                    catch//If there is no next track
                     {
                         PQ.TrackWaitingListEnded = true;
                         PQ.IsPaused = true;
@@ -126,6 +126,11 @@ namespace Ritmo
             {
                 PQ.TrackQueue.Enqueue(helpStack.Dequeue());
             }
+        }
+
+        public void ClearQueue() //Clear the entire queue of track
+        {
+            PQ.TrackQueue.Clear();
         }
 
 

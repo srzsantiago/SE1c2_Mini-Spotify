@@ -284,7 +284,7 @@ namespace Ritmo.ViewModels
                 }
                 else if (ChangeName.Equals(PlaylistName))
                 {
-                    ErrorMessage = "The name must me a new name";
+                    ErrorMessage = "The name must be a new name";
                 }
                 else
                 {
