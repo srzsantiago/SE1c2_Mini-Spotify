@@ -61,7 +61,7 @@ namespace Ritmo.ViewModels
             }
             set { _addQueueColumn = value; }
         }
-
+        #endregion
 
         // private ListBox _playlistboxes;
 
@@ -142,7 +142,9 @@ namespace Ritmo.ViewModels
         }
         #endregion
 
-        #region listbox SelectedItem
+        
+
+
         private Playlist selectedItem;
         //public Playlist SelectedItem
         //{

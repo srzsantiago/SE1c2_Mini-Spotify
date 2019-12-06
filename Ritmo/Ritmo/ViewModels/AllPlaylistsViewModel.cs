@@ -18,7 +18,6 @@ namespace Ritmo.ViewModels
         #region View Attributes
         public MainWindowViewModel MainWindow { get; set; }
         public PlaylistViewModel PlaylistViewModel { get; set; }
-        public ICommand OpenPlaylistViewModelCommand { get; set; }
 
         private bool _popUpIsOpen;
         private string _popUpWarning;
@@ -183,7 +182,7 @@ namespace Ritmo.ViewModels
         {
             Playlist playlist = AllPlaylistsController.GetPlaylist(playlistID);
 
-            MainWindow.ChangeViewModel(new PlaylistViewModel());
+            MainWindow.ChangeViewModel(new PlaylistViewModel(MainWindow, playlist));
         }
 
         private void TestMethod()
