@@ -126,7 +126,12 @@
                             </Style.Triggers>
                         </Style>
                     </StackPanel.Style>
-                    <Label Content="Next In Queue" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30"/>
+                    <Grid>
+                        <Label Content="Next In Queue" HorizontalAlignment="Left" FontSize="30"/>
+                        <Button Content="Clear" Command="{Binding ClearQueueCommand}" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                    
+                    
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2.5*"/>
