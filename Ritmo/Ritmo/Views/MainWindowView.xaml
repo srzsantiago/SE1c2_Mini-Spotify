@@ -32,12 +32,13 @@
         <DataTemplate x:Name="AllPlaylistsViewTemplate" DataType="{x:Type viewmodels:AllPlaylistsViewModel}">
             <views:AllPlayListsView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="PlaylistViewTemplate" DataType="{x:Type viewmodels:PlaylistViewModel}">
+            <views:PlaylistView DataContext="{Binding}"/>
+        </DataTemplate>
         <DataTemplate x:Name="MyQueueViewTemplate" DataType="{x:Type viewmodels:MyQueueViewModel}">
             <views:MyQueueView DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="playlistViewTemplate" DataType="{x:Type viewmodels:PlaylistViewModel}">
-            <views:PlaylistView DataContext="{Binding}"/>
-        </DataTemplate>
+        
         <!--#endregion-->
 
     </Window.Resources>

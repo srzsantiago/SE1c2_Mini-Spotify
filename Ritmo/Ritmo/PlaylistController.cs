@@ -14,7 +14,11 @@ namespace Ritmo
         {
             this.Playlist = new Playlist(name);
         }
-        
+        public PlaylistController(Playlist playlist) // creates a playlist with given name
+        {
+            this.Playlist = playlist;
+        }
+
         public void AddTrack(Track track) // adds a track to the playlist.
         {
             if (Playlist.Tracks.Contains(track))
