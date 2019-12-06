@@ -389,14 +389,8 @@ namespace Ritmo.ViewModels
             PlaylistController.AddTrack(testTrack3);
             PlaylistController.AddTrack(testTrack4);
             PlaylistController.AddTrack(testTrack5);
-            PlaylistController.AddTrack(testTrack6);
-
-
-            PlayQueueController.AddTrack(testTrack3);
-            PlayQueueController.AddTrack(testTrack4);
             
-            
-
+          
             PlayQueueController.AddTrack(testTrack6);
             PlayQueueController.AddTrack(testTrack7);
 

@@ -9,7 +9,8 @@ namespace Ritmo
     public class PlayQueueController
     {
         public PlayQueue PQ { get; set; }
-
+        // Used to memorize the previous track for the unshuffle 
+        int memorizedTrackShuffle;
 
         public PlayQueueController()//Constructor that initializate a new playQueue and link this to the playqueuecontroller
         {
@@ -158,7 +159,9 @@ namespace Ritmo
                 // Checks if the current-playing track belongs to the TrackWachtingList
                 if (currentlist.Contains(PQ.WaitingListToQueueTrack))
                 {
-                    // Removes the current track from the list of tracks that will be shuffled 
+                // set current waitinglistqueTrack to memorizedTrackShuffle, this will be used in the unshuffle method. 
+                memorizedTrackShuffle = currentlist.Find(PQ.WaitingListToQueueTrack).Previous.Value.TrackId;
+                    // Removes the current track from the list of tracks that will be shuffled
                     currentlist.Remove(PQ.WaitingListToQueueTrack);
                     // Adds the currently playing track as first track of the random list before the shuffled tracks
                     randomtracks.AddFirst(PQ.WaitingListToQueueTrack);
@@ -169,30 +172,30 @@ namespace Ritmo
                 int cijfer;
 
                 // list with random ints to create an random order of tracks
-                List<int> randomnummers = new List<int>();
+                List<int> randomIntegers = new List<int>();
 
                 // Generate as much random integers as the number of tracks that will be shuffled
                 for (int i = 1; i <= size; i++)
                 {
                     cijfer = rand.Next(0, size);
                     // check if random number is not already chosen 
-                    if (!randomnummers.Contains(cijfer))
+                    if (!randomIntegers.Contains(cijfer))
                     {
-                        // add unique random number to List
-                        randomnummers.Add(cijfer);
+                    // add unique random number to List
+                    randomIntegers.Add(cijfer);
                     }
                     else
                     {
                         // generate new random numbers as long as the number already exists
-                        while (randomnummers.Contains(cijfer))
+                        while (randomIntegers.Contains(cijfer))
                         {
                             cijfer = rand.Next(0, size);
                         }
-                        randomnummers.Add(cijfer);
+                    randomIntegers.Add(cijfer);
                     }
                 }
                 // Add tracks from current list with random ElementAt to the randomtracks list. This wil create an random order
-                foreach (int i in randomnummers)
+                foreach (int i in randomIntegers)
                 {
                     Track track = currentlist.ElementAt(i);
                     randomtracks.AddLast(track);
@@ -209,18 +212,24 @@ namespace Ritmo
             // Set the very first TrackWaitingList (OriginalTrackWaitingList) as current TrackWaitingList
             PQ.TrackWaitingList = PQ.OriginalTrackWaitingList;
 
-            // Check if the current track is in the originalwaiting list, if not; add the current track as first value
+
+            // Check if the originalTrackWaitingList does not contain WaitingListToQueueTrack
             if (!PQ.OriginalTrackWaitingList.Contains(PQ.WaitingListToQueueTrack))
             {
-                PQ.OriginalTrackWaitingList.AddFirst(PQ.WaitingListToQueueTrack);
-            }
-            //int count = 0;
-            //foreach (var item in PQ.TrackWaitingList)
-            //{
-            //    if (item.Equals(PQ.TrackWaitingList.ElementAt(count)))
-            //        PQ.WaitingListToQueueTrack = item;
-            //}
+                for (int i = 0; i < PQ.OriginalTrackWaitingList.Count; i++)
+                {
+                    // Use each item in the for loop
+                    Track item = PQ.OriginalTrackWaitingList.ElementAt(i);
+                    // check if the current "item" is the memorized one
+                    if (this.memorizedTrackShuffle == item.TrackId)
+                    {
+                        // Add the item to the original trackWaitingList
+                        PQ.OriginalTrackWaitingList.AddAfter(PQ.OriginalTrackWaitingList.Find(item), PQ.WaitingListToQueueTrack);
+                        break;
+                    }
 
+                }
+            }
 
             PQ.IsShuffle = true;
         }
