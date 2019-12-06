@@ -32,12 +32,13 @@
         <DataTemplate x:Name="AllPlaylistsViewTemplate" DataType="{x:Type viewmodels:AllPlaylistsViewModel}">
             <views:AllPlayListsView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="PlaylistViewTemplate" DataType="{x:Type viewmodels:PlaylistViewModel}">
+            <views:PlaylistView DataContext="{Binding}"/>
+        </DataTemplate>
         <DataTemplate x:Name="MyQueueViewTemplate" DataType="{x:Type viewmodels:MyQueueViewModel}">
             <views:MyQueueView DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="playlistViewTemplate" DataType="{x:Type viewmodels:PlaylistViewModel}">
-            <views:PlaylistView DataContext="{Binding}"/>
-        </DataTemplate>
+        
         <!--#endregion-->
 
     </Window.Resources>
@@ -70,7 +71,7 @@
                 <Button x:Name="Following_Button"  Content="Following" CommandParameter="{Binding FollowingViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
             </StackPanel>
             <StackPanel Grid.Row="2">
-                <Button x:Name="MyPlaylist_Button" Content="My Playlists" CommandParameter="{Binding AllPlaylistsViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}" />
+                <Button x:Name="AllPlaylist_Button" Content="My Playlists" CommandParameter="{Binding PlaylistViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}" />
                 <Button x:Name="MyQueue_Button" Content="My Queue" CommandParameter="{Binding MyQueueViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
             </StackPanel>
         </Grid>

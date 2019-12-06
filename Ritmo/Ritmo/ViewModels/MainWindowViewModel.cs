@@ -36,7 +36,9 @@ namespace Ritmo.ViewModels
         public Screen FollowingViewModel { get; set; } = new FollowingViewModel();
         public Screen AllPlaylistsViewModel { get; set; }
         public Screen MyQueueViewModel { get; set; }
+        public Screen PlaylistViewModel { get; set; } 
 
+               
         public Screen CurrentViewModel
         {
             get { return _currentViewModel; }
@@ -101,6 +103,7 @@ namespace Ritmo.ViewModels
             InitializeCurrentTrackElement();
 
             TestTrackMethod();
+            PlaylistViewModel = new PlaylistViewModel(this,PlaylistController.Playlist);
         }
 
         //The methods that control or interact with the CurrentTrackElement
@@ -259,14 +262,16 @@ namespace Ritmo.ViewModels
                 TrackId = 1,
                 Name = "1",
                 Artist = "Santi",
+                Album = "testalbum",
                 Duration = 120,
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneUnatco.mp3"),
+                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
             Track testTrack2 = new Track()
             {
                 TrackId = 2,
                 Name = "2",
                 Artist = "Dio",
+                Album = "testalbum",
                 Duration = 90,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
             };
@@ -275,6 +280,7 @@ namespace Ritmo.ViewModels
                 TrackId = 3,
                 Name = "3",
                 Artist = "Tristan",
+                Album = "testalbum",
                 Duration = 100,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
@@ -283,6 +289,7 @@ namespace Ritmo.ViewModels
                 TrackId = 4,
                 Name = "4",
                 Artist = "Marloes",
+                Album = "testalbum",
                 Duration = 70,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
@@ -291,6 +298,7 @@ namespace Ritmo.ViewModels
                 TrackId = 5,
                 Name = "5",
                 Artist = "Susan",
+                Album = "testalbum",
                 Duration = 70,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
@@ -299,6 +307,7 @@ namespace Ritmo.ViewModels
                 TrackId = 6,
                 Name = "Queue1",
                 Artist = "Susan",
+                Album = "testalbum",
                 Duration = 30,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\Gun'sRoses.mp3"),
             };
@@ -307,6 +316,7 @@ namespace Ritmo.ViewModels
                 TrackId = 7,
                 Name = "Queue2",
                 Artist = "Solid Snake",
+                Album = "testalbum",
                 Duration = 90,
                 AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\MetalGearSolid.mp3"),
             };
@@ -316,6 +326,13 @@ namespace Ritmo.ViewModels
             PlaylistController.AddTrack(testTrack3);
             PlaylistController.AddTrack(testTrack4);
             PlaylistController.AddTrack(testTrack5);
+            PlaylistController.AddTrack(testTrack6);
+
+
+            PlayQueueController.AddTrack(testTrack3);
+            PlayQueueController.AddTrack(testTrack4);
+            
+            
 
             PlayQueueController.AddTrack(testTrack6);
             PlayQueueController.AddTrack(testTrack7);

@@ -12,6 +12,8 @@ namespace Ritmo
         public string Name { get; set; }
         public string Artist { get; set; } // its a string for now, testing
         public int Duration { get; set; } // Duration in seconds
+
+        public string Album { get; set; }
         public Uri AudioFile { get; set; }
 
         public Track()
