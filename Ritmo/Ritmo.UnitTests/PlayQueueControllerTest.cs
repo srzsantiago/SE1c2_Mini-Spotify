@@ -46,7 +46,7 @@ namespace Ritmo.UnitTests
             PlayQueueController playQueueController = new PlayQueueController();
             playQueueController.PQ.IsPaused = true;
             //Act
-            playQueueController.ResumeTrack(); //Resumes currently playing track, when it was paused
+            playQueueController.UnpauseTrack(); //Resumes currently playing track, when it was paused
             bool result = playQueueController.PQ.IsPaused;
             //Assert
             Assert.AreEqual(result, false); //Checks if the currently playing track is paused or playing -> is not paused -> returns false
