@@ -24,6 +24,7 @@ namespace Ritmo.ViewModels
             _outerClickCommand = new RelayCommand<object>(this.OuterClick);
             _innerClickCommand = new RelayCommand<object>(this.InnerClick);
             _addToQueueClickCommand = new RelayCommand<object>(this.AddToQueueClick);
+            ClearQueueCommand = new RelayCommand(ClearQueue);
             ShowElements();
         }
 
@@ -75,6 +76,7 @@ namespace Ritmo.ViewModels
         #region commands
         private ICommand _outerClickCommand;
 
+        public ICommand ClearQueueCommand { get;  set; }
         public ICommand OuterClickCommand
         {
             get
@@ -142,29 +144,7 @@ namespace Ritmo.ViewModels
                 PlayingNowItems = new ObservableCollection<MyQueueItem>();
             }
 
-            if (mwvm.PlayQueueController.PQ.TrackQueue.Count > 0)
-            {
-                //Makes an OB for All tracks in TrackQueue
-                NextInQueueItems = new ObservableCollection<MyQueueItem>();
-                count = 0; //this count is used to give every item a ID
-                foreach (var item in mwvm.PlayQueueController.PQ.TrackQueue)
-                {
-                    //Create a instance for each item in TrackQueue
-                    NextInQueueItems.Add(new MyQueueItem()
-                    {
-                        ButtonID = $"NextInQueue {count}",
-                        Name = item.Name,
-                        Artist = item.Artist,
-                        Album = "Album",
-                        Duration = item.Duration
-                    }); ;
-                    count++;
-                }
-            }
-            else // if CurrentTrack is empty, the OC is cleared.
-            {
-                NextInQueueItems = new ObservableCollection<MyQueueItem>();
-            }
+            ShowQueueElements();
 
             if (mwvm.PlayQueueController.PQ.TrackWaitingList.Count > 0)
             {
@@ -196,6 +176,33 @@ namespace Ritmo.ViewModels
                 NextInQueueItems = new ObservableCollection<MyQueueItem>();
             }
 
+        }
+
+        private void ShowQueueElements()
+        {
+            if (mwvm.PlayQueueController.PQ.TrackQueue.Count > 0)
+            {
+                //Makes an OB for All tracks in TrackQueue
+                NextInQueueItems = new ObservableCollection<MyQueueItem>();
+                count = 0; //this count is used to give every item a ID
+                foreach (var item in mwvm.PlayQueueController.PQ.TrackQueue)
+                {
+                    //Create a instance for each item in TrackQueue
+                    NextInQueueItems.Add(new MyQueueItem()
+                    {
+                        ButtonID = $"NextInQueue {count}",
+                        Name = item.Name,
+                        Artist = item.Artist,
+                        Album = "Album",
+                        Duration = item.Duration
+                    }); ;
+                    count++;
+                }
+            }
+            else // if CurrentTrack is empty, the OC is cleared.
+            {
+                NextInQueueItems = new ObservableCollection<MyQueueItem>();
+            }
         }
 
         private void OuterClick(Object sender)
@@ -294,6 +301,13 @@ namespace Ritmo.ViewModels
             this.ShowElements();
         }
 
+        //Clears all the track from TrackQueue in PlayQeueu model
+        //Refreshes queue view
+        private void ClearQueue()
+        {
+            mwvm.PlayQueueController.PQ.TrackQueue.Clear();
+            ShowQueueElements();
+        }
     }
 
     public class MyQueueItem
