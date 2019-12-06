@@ -167,18 +167,14 @@ namespace Ritmo
             LinkedList<Track> randomtracks = new LinkedList<Track>();
 
                 // Checks if the current-playing track belongs to the TrackWachtingList
-                if (currentlist.Contains(PQ.CurrentTrack))
+                if (currentlist.Contains(PQ.WaitingListToQueueTrack))
                 {
                     // Removes the current track from the list of tracks that will be shuffled 
-                    currentlist.Remove(PQ.CurrentTrack);
+                    currentlist.Remove(PQ.WaitingListToQueueTrack);
                     // Adds the currently playing track as first track of the random list before the shuffled tracks
-                    randomtracks.AddFirst(PQ.CurrentTrack);
+                    randomtracks.AddFirst(PQ.WaitingListToQueueTrack);
                 }
-                else
-                {
-                    PQ.WaitingListToQueueTrack = null;
-                }
-
+                
                 // count the number of tracks that will be shuffled
                 int size = currentlist.Count;
                 int cijfer;
@@ -225,11 +221,18 @@ namespace Ritmo
             PQ.TrackWaitingList = PQ.OriginalTrackWaitingList;
 
             // Check if the current track is in the originalwaiting list, if not; add the current track as first value
-            if (!PQ.OriginalTrackWaitingList.Contains(PQ.CurrentTrack))
+            if (!PQ.OriginalTrackWaitingList.Contains(PQ.WaitingListToQueueTrack))
             {
-                PQ.OriginalTrackWaitingList.AddFirst(PQ.CurrentTrack);
+                PQ.OriginalTrackWaitingList.AddFirst(PQ.WaitingListToQueueTrack);
             }
-            
+            //int count = 0;
+            //foreach (var item in PQ.TrackWaitingList)
+            //{
+            //    if (item.Equals(PQ.TrackWaitingList.ElementAt(count)))
+            //        PQ.WaitingListToQueueTrack = item;
+            //}
+
+
             PQ.IsShuffle = true;
         }
 
