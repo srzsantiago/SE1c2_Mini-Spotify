@@ -160,7 +160,7 @@ namespace Ritmo.UnitTests
             playQueueController.PlayTrack(track); //Assign 'track' as currently playing track and play 'traçk'
             playQueueController.PlayTrack(track1); //Assign 'track1' as currently playing track and play 'traçk1'
             playQueueController.PQ.CurrentTrack = playQueueController.PQ.TrackWaitingList.First.Value;
-            var result = playQueueController.PQ.TrackWaitingList.Last.Value;
+            var result = track;
             playQueueController.PreviousTrack(); //Return to the previous track and play that track
             //Assert
             Assert.AreEqual(result, playQueueController.PQ.CurrentTrack); //Check if the currently playing track was the previous track: 'track'
