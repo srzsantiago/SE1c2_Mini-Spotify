@@ -18,7 +18,7 @@ namespace Ritmo
         public void AddplaylistQuery()
         {
             string sql = $"INSERT INTO Playlist (name, creationDate) VALUES ('{Name}','{CreationDate.ToString("yyyy-MM-dd")}')";
-            DatabaseConnector.InsertQueryDB(sql);
+            //DatabaseConnector.InsertQueryDB(sql);
         }
 
     }

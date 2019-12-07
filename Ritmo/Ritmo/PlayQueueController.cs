@@ -164,8 +164,12 @@ namespace Ritmo
                 // Checks if the current-playing track belongs to the TrackWachtingList
                 if (currentlist.Contains(PQ.WaitingListToQueueTrack))
                 {
-                // set current waitinglistqueTrack to memorizedTrackShuffle, this will be used in the unshuffle method. 
-                memorizedTrackShuffle = currentlist.Find(PQ.WaitingListToQueueTrack).Previous.Value.TrackId;
+                    // set current waitinglistqueTrack to memorizedTrackShuffle, this will be used in the unshuffle method. 
+                    if (!currentlist.First.Value.Equals(PQ.WaitingListToQueueTrack))
+                        memorizedTrackShuffle = currentlist.Find(PQ.WaitingListToQueueTrack).Previous.Value.TrackId;
+                    else
+                        memorizedTrackShuffle = -1;
+
                     // Removes the current track from the list of tracks that will be shuffled
                     currentlist.Remove(PQ.WaitingListToQueueTrack);
                     // Adds the currently playing track as first track of the random list before the shuffled tracks
@@ -221,19 +225,27 @@ namespace Ritmo
             // Check if the originalTrackWaitingList does not contain WaitingListToQueueTrack
             if (!PQ.OriginalTrackWaitingList.Contains(PQ.WaitingListToQueueTrack))
             {
-                for (int i = 0; i < PQ.OriginalTrackWaitingList.Count; i++)
+                if (memorizedTrackShuffle != -1)
                 {
-                    // Use each item in the for loop
-                    Track item = PQ.OriginalTrackWaitingList.ElementAt(i);
-                    // check if the current "item" is the memorized one
-                    if (this.memorizedTrackShuffle == item.TrackId)
+                    for (int i = 0; i < PQ.OriginalTrackWaitingList.Count; i++)
                     {
-                        // Add the item to the original trackWaitingList
-                        PQ.OriginalTrackWaitingList.AddAfter(PQ.OriginalTrackWaitingList.Find(item), PQ.WaitingListToQueueTrack);
-                        break;
-                    }
+                        // Use each item in the for loop
+                        Track item = PQ.OriginalTrackWaitingList.ElementAt(i);
+                        // check if the current "item" is the memorized one
+                        if (this.memorizedTrackShuffle == item.TrackId)
+                        {
+                            // Add the item to the original trackWaitingList
+                            PQ.OriginalTrackWaitingList.AddAfter(PQ.OriginalTrackWaitingList.Find(item), PQ.WaitingListToQueueTrack);
+                            break;
+                        }
 
+                    }
                 }
+                else
+                {
+                    PQ.OriginalTrackWaitingList.AddFirst(PQ.WaitingListToQueueTrack);
+                }
+                
             }
 
             PQ.IsShuffle = true;
