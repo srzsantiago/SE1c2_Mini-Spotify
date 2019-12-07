@@ -158,7 +158,14 @@ namespace Ritmo
         public void ShuffleTrackWaitingList() {
             
             Random rand = new Random();
-            LinkedList<Track> currentlist = PQ.TrackWaitingList;
+            LinkedList<Track> currentlist = new LinkedList<Track>();
+
+            //We place all items from TrackWaitinglist in currentlist without making a reference to the trackwaitingList.
+            foreach (var item in PQ.TrackWaitingList)
+            {
+                currentlist.AddLast(item);
+            }
+
             LinkedList<Track> randomtracks = new LinkedList<Track>();
 
                 // Checks if the current-playing track belongs to the TrackWachtingList
@@ -223,30 +230,30 @@ namespace Ritmo
 
 
             // Check if the originalTrackWaitingList does not contain WaitingListToQueueTrack
-            if (!PQ.OriginalTrackWaitingList.Contains(PQ.WaitingListToQueueTrack))
-            {
-                if (memorizedTrackShuffle != -1)
-                {
-                    for (int i = 0; i < PQ.OriginalTrackWaitingList.Count; i++)
-                    {
-                        // Use each item in the for loop
-                        Track item = PQ.OriginalTrackWaitingList.ElementAt(i);
-                        // check if the current "item" is the memorized one
-                        if (this.memorizedTrackShuffle == item.TrackId)
-                        {
-                            // Add the item to the original trackWaitingList
-                            PQ.OriginalTrackWaitingList.AddAfter(PQ.OriginalTrackWaitingList.Find(item), PQ.WaitingListToQueueTrack);
-                            break;
-                        }
+            //if (!PQ.OriginalTrackWaitingList.Contains(PQ.WaitingListToQueueTrack))
+            //{
+            //    if (memorizedTrackShuffle != -1)
+            //    {
+            //        for (int i = 0; i < PQ.OriginalTrackWaitingList.Count; i++)
+            //        {
+            //            // Use each item in the for loop
+            //            Track item = PQ.OriginalTrackWaitingList.ElementAt(i);
+            //            // check if the current "item" is the memorized one
+            //            if (this.memorizedTrackShuffle == item.TrackId)
+            //            {
+            //                // Add the item to the original trackWaitingList
+            //                PQ.OriginalTrackWaitingList.AddAfter(PQ.OriginalTrackWaitingList.Find(item), PQ.WaitingListToQueueTrack);
+            //                break;
+            //            }
 
-                    }
-                }
-                else
-                {
-                    PQ.OriginalTrackWaitingList.AddFirst(PQ.WaitingListToQueueTrack);
-                }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        PQ.OriginalTrackWaitingList.AddFirst(PQ.WaitingListToQueueTrack);
+            //    }
                 
-            }
+            //}
 
             PQ.IsShuffle = true;
         }
