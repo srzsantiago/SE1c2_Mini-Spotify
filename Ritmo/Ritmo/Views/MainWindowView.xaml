@@ -104,7 +104,7 @@
         <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="35" Margin="545,10,0,0" VerticalAlignment="Top" Width="42" Grid.Column="1" Grid.Row="1"/>
         <ContentControl Content="{Binding CurrentTrackElement}" Margin="326,11,481,60" Grid.Column="1" Grid.Row="1"/>
 
-        <Grid Background="LightGray" HorizontalAlignment="Left" Height="71" Margin="652.4,4.6,0,0" VerticalAlignment="Top" Width="162" Grid.Column="1" Grid.Row="1">
+        <Grid Background="LightGray" HorizontalAlignment="Right" Height="71" Margin="0,0,5.6,4.4" VerticalAlignment="Bottom" Width="162" Grid.Column="1" Grid.Row="1">
             <TextBlock FontFamily="Aldhabi" FontSize="23" VerticalAlignment="Top" Margin="62,7,24,0" HorizontalAlignment="center" Width="76" Height="31"><Run Text="Volume"/></TextBlock>
             <Button Command="{Binding MuteTrackCommand}" RenderTransformOrigin="0.56,-0.947" Margin="22,3,109,35">
                 <Image x:Name="MuteButtonIcon" Source="{Binding MuteButtonIcon}" />
@@ -112,10 +112,10 @@
             <Slider  VerticalAlignment="Top" Margin="0,44,0,0" x:Name="volumeSlider" Cursor="Hand" Minimum="0" Maximum="1" Value="{Binding CurrentTrackVolume}"  IsMoveToPointEnabled="True"  Height="22"/>
         </Grid>
 
-        <Button Command="{Binding LoopCommand}" Grid.Column="1" HorizontalAlignment="Left" Height="33" Margin="614.4,6.6,0,0" VerticalAlignment="Top" Width="33" RenderTransformOrigin="-0.494,-0.459" Grid.Row="1">
+        <Button Command="{Binding LoopCommand}" Grid.Column="1" HorizontalAlignment="Right" Height="33" Margin="0,0,176.6,41.4" VerticalAlignment="Bottom" Width="33" RenderTransformOrigin="-0.494,-0.459" Grid.Row="1">
             <Image x:Name="RepeatModeIcon" Source="{Binding RepeatModeIcon}" Height="28" Width="28" />
         </Button>
-        <Button x:Name="shuffleButton" Grid.Column="1" HorizontalAlignment="Left" Margin="614.4,42.6,0,0" Grid.Row="1" VerticalAlignment="Top" Command="{Binding ShuffleWaitinglistCommand}" Width="33" Height="33">
+        <Button x:Name="shuffleButton" Grid.Column="1" HorizontalAlignment="right" Margin="0,0,176.6,4.4" Grid.Row="1" VerticalAlignment="bottom" Command="{Binding ShuffleWaitinglistCommand}" Width="33" Height="33">
             <Image x:Name="ShuffleButtonIcon" Source="{ Binding ShuffleButtonIcon }" Height="28" Width="28"/>
         </Button>
 
