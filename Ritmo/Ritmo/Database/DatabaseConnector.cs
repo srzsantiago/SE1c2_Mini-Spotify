@@ -223,5 +223,10 @@ namespace Ritmo.Database
             if (!query.ToUpper().StartsWith(queryType.ToString()))
                 throw new Exception($"{queryType} was not used in its corresponding method!");
         }
+
+        public static bool IsSSHConnected()
+        {
+            return sshClient.IsConnected;
+        }
     }
 }
