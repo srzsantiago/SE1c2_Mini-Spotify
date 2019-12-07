@@ -33,7 +33,7 @@ namespace Ritmo
             PlayTrack(track);
         }
 
-        public void ResumeTrack()
+        public void UnpauseTrack()
         {
             PQ.IsPaused= false;
 
@@ -42,7 +42,7 @@ namespace Ritmo
 
         public void PauseTrack()
         { 
-            PQ.IsPaused = !PQ.IsPaused; 
+            PQ.IsPaused = true; 
             /////////////////////////////////EVENT
         }
 

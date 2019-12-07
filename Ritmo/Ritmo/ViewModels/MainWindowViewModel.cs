@@ -127,6 +127,7 @@ namespace Ritmo.ViewModels
             {
                 CurrentTrackElement.Play();
                 PlayButtonIcon = new Uri(@"\ImageResources\pauseicon.ico", UriKind.Relative);
+                PlayQueueController.UnpauseTrack(); //Sets pause bool to true
             }
         }
 
@@ -135,15 +136,7 @@ namespace Ritmo.ViewModels
         {
             CurrentTrackElement.Pause();
             PlayButtonIcon = new Uri(@"\ImageResources\playicon.ico", UriKind.Relative);
-        }
-
-        //Pauses track when the WaitingList has ended.
-        private void PauseTrackOnWaitingListEnd()
-        {
-            if (PlayQueueController.PQ.TrackWaitingListEnded)
-            {
-                PauseTrack();
-            }
+            PlayQueueController.PauseTrack(); //Sets pause bool to true
         }
 
         //Alternates between pausing and playing track
@@ -151,11 +144,12 @@ namespace Ritmo.ViewModels
         {
             if (!PlayQueueController.PQ.IsPaused)
             {
-                PauseTrack();
+                PauseTrack(); //Pauses media element 
             }
             else
-                PlayTrack();
-            PlayQueueController.PauseTrack();
+            {
+                PlayTrack(); //Starts media element
+            }
         }
 
         //Changes to next track, set CurrentTrackElement and plays track.
@@ -165,6 +159,7 @@ namespace Ritmo.ViewModels
             MyQueueScreenToViewModel.ShowElements();
             CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
 
+            //Check if there are repeatmodes selected
             if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat) //If the mode is TrackRepeat, set mode to TrackListRepeat and set the next track as currentTrack
             {
                 RepeatModeIcon = new Uri("/ImageResources/LoopTrackWaitingList.png", UriKind.RelativeOrAbsolute);
@@ -172,10 +167,10 @@ namespace Ritmo.ViewModels
                 PlayQueue.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
                 NextTrack();
             }
-            else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.Off) //If repeatmode is off, after playlist is played, pause the track
-            {
-                PauseTrackOnWaitingListEnd();
-            } 
+            //else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.Off) //If repeatmode is off, after playlist is played, pause the track
+            //{
+            //    PauseTrackOnWaitingListEnd(); //Overbodig gemaakt
+            //} 
             else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackListRepeat) //If the repeatmode is TrackListRepeat, set the trackWaitingListEnded to false
             {
                 PlayQueueController.PQ.TrackWaitingListEnded = false;
@@ -250,7 +245,6 @@ namespace Ritmo.ViewModels
             else
             {
                 NextTrack();
-                PauseTrackOnWaitingListEnd();
             }
         }
 
