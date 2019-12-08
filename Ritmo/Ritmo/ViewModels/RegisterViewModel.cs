@@ -94,11 +94,11 @@ namespace Ritmo.ViewModels
 
         private void CreateClick(object parameters)
         {
-            var values = parameters as List<object>;
-            var passwordBox = values[0] as PasswordBox;
-            var confirmPasswordBox = values[1] as PasswordBox;
+            var values = parameters as List<object>; //set the multiple parameters in one array
+            var passwordBox = values[0] as PasswordBox; //set the first value in the array as passwordbox
+            var confirmPasswordBox = values[1] as PasswordBox;//set the second value in the array as confirmpasswordbox
 
-            if(!Name.Equals("") && IsValidEmail(Email) && IsPasswordMatch(passwordBox, confirmPasswordBox))
+            if (!Name.Equals("") && IsValidEmail(Email) && IsPasswordMatch(passwordBox, confirmPasswordBox)) //information validation
             {
                 //Register register = new Register(Name, Email, passwordBox.Password, confirmPasswordBox.Password);
                 this.TryClose();
@@ -109,12 +109,12 @@ namespace Ritmo.ViewModels
             }
         }
 
-        private bool IsPasswordMatch(PasswordBox passwordBox, PasswordBox confirmPasswordBox)
+        private bool IsPasswordMatch(PasswordBox passwordBox, PasswordBox confirmPasswordBox)//check if the passwords match
         {
             return passwordBox.Password == confirmPasswordBox.Password;
         }
 
-        bool IsValidEmail(string email)
+        bool IsValidEmail(string email)//check the email format
         {
             try
             {

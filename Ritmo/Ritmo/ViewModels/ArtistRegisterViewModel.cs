@@ -13,13 +13,16 @@ namespace Ritmo.ViewModels
 {
     public class ArtistRegisterViewModel : Screen
     {
+        #region commands
         public ICommand CancelCommand { get; set; }
         public ICommand SendCommand { get; set; }
         public ICommand GotFocusCommand { get; set; }
-
         public ICommand LostFocusCommand { get; set; }
+        #endregion
 
+        #region labeltext
         private String _filledMail;
+        private string _errorMessage;
 
         public String FilledMail
         {
@@ -31,8 +34,6 @@ namespace Ritmo.ViewModels
             }
         }
 
-        private string _errorMessage;
-
         public string ErrorMessage
         {
             get { if (_errorMessage == null)
@@ -42,7 +43,7 @@ namespace Ritmo.ViewModels
                 NotifyOfPropertyChange("ErrorMessage");
             }
         }
-
+        #endregion
 
 
         public ArtistRegisterViewModel()
@@ -53,13 +54,13 @@ namespace Ritmo.ViewModels
             LostFocusCommand = new RelayCommand(this.LostFocusClick);
         }
 
-        private void LostFocusClick()
+        private void LostFocusClick()//set placeholder of Email Texbox if its empty
         {
             if (string.IsNullOrWhiteSpace(FilledMail))
                 FilledMail = "Enter your mail here...";
         }
 
-        private void GotFocusClick()
+        private void GotFocusClick()//placeholder of Email Textbox
         {
             if (FilledMail.Equals("Enter your mail here..."))
             {
@@ -69,11 +70,11 @@ namespace Ritmo.ViewModels
                 ErrorMessage = "";
         }
 
-        private void SendClick()
+        private void SendClick()//send request for artist account
         {
             string email = FilledMail;
 
-            if (IsValidEmail(email))
+            if (IsValidEmail(email))//check the email format
             {
                 //Ritmo.Register register = new Ritmo.Register(email);
                 this.TryClose();
@@ -86,7 +87,7 @@ namespace Ritmo.ViewModels
             
         }
 
-        bool IsValidEmail(string email)
+        bool IsValidEmail(string email)//check the email format
         {
             try
             {
@@ -100,7 +101,7 @@ namespace Ritmo.ViewModels
             }
         }
 
-        private void CancelClick()
+        private void CancelClick()//cancel button
         {
             this.TryClose();
         }
