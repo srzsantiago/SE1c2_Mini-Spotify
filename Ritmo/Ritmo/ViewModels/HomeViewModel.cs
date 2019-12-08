@@ -283,7 +283,7 @@ namespace Ritmo.ViewModels
                 {
                     Track testTrack = new Track() { Name = item.Name, Artist = item.Artist, AudioFile = item.AudioFile, Duration = item.Duration, TrackId = item.TrackID };
                     mainWindowViewModel.PlayQueueController.AddTrack(testTrack); // adds the song to the queue
-                    mainWindowViewModel.MyQueueScreenToViewModel.ShowElements();
+                    mainWindowViewModel.MyQueueScreenToViewModel.LoadElements();
                 }
 
             }

@@ -27,7 +27,7 @@
             <PasswordBox Name="ConfirmPassword" Height="22" Canvas.Left="155" Canvas.Top="218" Width="120" Background="#E6E5E5"/>
             <TextBox x:Name="emailField" Text="{Binding Email}" Height="24" Canvas.Left="155" TextWrapping="Wrap" Canvas.Top="248" Width="120" Background="#E6E5E5"/>
             <Button x:Name="artistbutton" Command="{Binding ArtistCommand}" Content="I'M AN ARTIST" Canvas.Left="32" Canvas.Top="292" Width="243" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White"/>
-            <Button x:Name="cancelbutton" Command="{Binding CancelCommand}"  Content="CANCEL" Canvas.Left="32" Canvas.Top="320" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Click="Cancelbutton_Click"/>
+            <Button x:Name="cancelbutton" Command="{Binding CancelCommand}"  Content="CANCEL" Canvas.Left="32" Canvas.Top="320" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" />
             <Button x:Name="createbutton" Command="{Binding CreateCommand}" Content="CREATE ACCOUNT" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Canvas.Left="158" Canvas.Top="320">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource Converter}">

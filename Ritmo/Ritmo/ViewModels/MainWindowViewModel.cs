@@ -117,7 +117,7 @@ namespace Ritmo.ViewModels
         public void NextTrack()
         {
             PlayQueueController.NextTrack();
-            MyQueueScreenToViewModel.ShowElements();
+            MyQueueScreenToViewModel.LoadElements();
             CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
             
             if (!PlayQueueController.PQ.TrackWaitingListEnded)
@@ -138,7 +138,7 @@ namespace Ritmo.ViewModels
                 else
                 {
                     PlayQueueController.PreviousTrack();
-                    MyQueueScreenToViewModel.ShowElements();
+                    MyQueueScreenToViewModel.LoadElements();
                     CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
                     PlayTrack();
                 }
@@ -285,7 +285,7 @@ namespace Ritmo.ViewModels
             //Zet de CurrentTrack als audio die afgespeeld wordt
             CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;             
             
-            MyQueueScreenToViewModel.ShowElements();
+            MyQueueScreenToViewModel.LoadElements();
         }
     }
 }
