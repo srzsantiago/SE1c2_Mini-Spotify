@@ -3,10 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Ritmo.Views"
+        xmlns:local="clr-namespace:Ritmo"
+        xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen">
+        d:DataContext="{d:DesignInstance viewmodels:RegisterViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:ConverterParameter x:Name="ConverterParameter"  x:Key="Converter"/>
+    </Window.Resources>
     <Grid Background="LightBlue">
         <Canvas HorizontalAlignment="Left" Height="358" Margin="248,26,0,0" VerticalAlignment="Top" Width="311" Background="White">
             <Label Content="SIGN UP" Canvas.Left="128" Canvas.Top="22"/>
@@ -15,14 +20,22 @@
             <Label Content="Password" Canvas.Left="32" Canvas.Top="182"/>
             <Label Content="Confirm password" Canvas.Left="32" Canvas.Top="214"/>
             <Label Content="Email" Canvas.Left="32" Canvas.Top="244"/>
+            <Label Content="{Binding ErrorMessage}" Foreground="Red" Canvas.Left="32" Canvas.Top="270"/>
 
-            <TextBox x:Name="nameField" Height="24" Canvas.Left="155" TextWrapping="Wrap" Text="TextBox" Canvas.Top="154" Width="120" Background="#E6E5E5"/>
-            <PasswordBox x:Name="passwordField" Height="24" Canvas.Left="155" Canvas.Top="186" Width="120" Background="#E6E5E5"/>
-            <PasswordBox x:Name="confirmpwField" Height="22" Canvas.Left="155" Canvas.Top="218" Width="120" Background="#E6E5E5"/>
-            <TextBox x:Name="emailField" Height="24" Canvas.Left="155" TextWrapping="Wrap" Text="Email@example.com" Canvas.Top="248" Width="120" Background="#E6E5E5"/>
-            <Button x:Name="artistbutton" Content="I'M AN ARTIST" Canvas.Left="32" Canvas.Top="280" Width="243" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Click="Artistbutton_Click"/>
-            <Button x:Name="cancelbutton" Content="CANCEL" Canvas.Left="32" Canvas.Top="308" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Click="Cancelbutton_Click"/>
-            <Button x:Name="createbutton" Content="CREATE ACCOUNT" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Canvas.Left="158" Canvas.Top="308" Click="Createbutton_Click"/>
+            <TextBox x:Name="nameField" Text="{Binding Name}" Height="24" Canvas.Left="155" TextWrapping="Wrap"  Canvas.Top="154" Width="120" Background="#E6E5E5"/>
+            <PasswordBox Name="Password" Height="24" Canvas.Left="155" Canvas.Top="186" Width="120" Background="#E6E5E5"/>
+            <PasswordBox Name="ConfirmPassword" Height="22" Canvas.Left="155" Canvas.Top="218" Width="120" Background="#E6E5E5"/>
+            <TextBox x:Name="emailField" Text="{Binding Email}" Height="24" Canvas.Left="155" TextWrapping="Wrap" Canvas.Top="248" Width="120" Background="#E6E5E5"/>
+            <Button x:Name="artistbutton" Command="{Binding ArtistCommand}" Content="I'M AN ARTIST" Canvas.Left="32" Canvas.Top="292" Width="243" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White"/>
+            <Button x:Name="cancelbutton" Command="{Binding CancelCommand}"  Content="CANCEL" Canvas.Left="32" Canvas.Top="320" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Click="Cancelbutton_Click"/>
+            <Button x:Name="createbutton" Command="{Binding CreateCommand}" Content="CREATE ACCOUNT" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Canvas.Left="158" Canvas.Top="320">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource Converter}">
+                        <Binding ElementName="Password"/>
+                        <Binding ElementName="ConfirmPassword"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
             <Rectangle x:Name="successblock" Fill="White" Height="22" Width="311"/>
             <Label Name="succeslabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="-4"/>
         </Canvas>

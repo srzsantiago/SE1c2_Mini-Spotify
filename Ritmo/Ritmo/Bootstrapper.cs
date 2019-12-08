@@ -23,7 +23,7 @@ namespace Ritmo
             //if (false)
             //    DisplayRootViewFor<LoginViewModel>();
             //else
-                DisplayRootViewFor<MainWindowViewModel>();
+                DisplayRootViewFor<RegisterViewModel>();
         }
 
         protected override void OnExit(object sender, EventArgs e)
