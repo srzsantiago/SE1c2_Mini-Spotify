@@ -263,6 +263,339 @@ namespace Ritmo.UnitTests
             Assert.AreEqual(playQueueController.PQ.RepeatMode, result); //Checks if the repeatMode is TrackRepeat
         }
 
+        //Method to shuffle the WaitingList when playing the first track of the list, returns true if tracks are shuffled. 
+        [TestMethod]
+        public void ShuffleListFromFirstTrack_SuccessScenario_TrackIsFirstTrack()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+            
+            Track track1 = new Track();
+            Track track2 = new Track();
+            Track track3 = new Track();
+            Track track4 = new Track();
+            Track track5 = new Track();
+
+            Playlist playlistnew = new Playlist("New"); //Create new playlist called "New"
+            //Act
+            playlistnew.Tracks.AddLast(track1); //Add track 'track2' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track2); //Add track 'track2' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track3); //Add track 'track2' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track4); //Add track 'track2' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track5); //Add track 'track2' to playlist 'playlistnew'
+            playQueueController.SetTrackWatingList(playlistnew); //Add 'playlistnew' to the trackWaitingList
+            playQueueController.PlayTrack(track1); //Assign 'track1' as currently playing track and play 'traçk'
+            // List with the WaitingList order before shuffle 
+            List<Track> before = new List<Track>();
+            foreach(Track track in playQueueController.PQ.TrackWaitingList)
+            {
+                before.Add(track);
+            }
+            // shuffle the list
+            playQueueController.ShuffleTrackWaitingList();
+            // List with the WaitingList order after shuffle
+            List<Track> after = new List<Track>();
+            foreach (Track track in playQueueController.PQ.TrackWaitingList)
+            {
+                after.Add(track);
+            }
+            // boolean which checks if order is different
+            bool orderHasChanged = false;
+
+            for(int i = 0; i < playQueueController.PQ.TrackWaitingList.Count; i++)
+            {
+                var trackBefore = before[i];
+                var trackAfter = after  [i];
+
+                if(trackBefore != trackAfter)
+                {
+                    orderHasChanged = true;
+                }
+            }
+            
+            //Assert
+            Assert.AreEqual(orderHasChanged, true); //Check if the currently playing track was the previous track: 'track'
+        }
+
+        //Method to unshuffle the WaitingList when playing the first track of the list, returns true if the list has gone back to it's original state.
+        [TestMethod]
+        public void UnshuffleListFromFirstTrack_SuccessScenario_TrackIsFirstTrack()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+
+            Track track1 = new Track();
+            Track track2 = new Track();
+            Track track3 = new Track();
+            Track track4 = new Track();
+            Track track5 = new Track();
+
+            Playlist playlistUnshuffle = new Playlist("New"); //Create new playlist called "New"
+            //Act
+            playlistUnshuffle.Tracks.AddLast(track1); //Add track 'track2' to playlist 'playlistnew'
+            playlistUnshuffle.Tracks.AddLast(track2); //Add track 'track2' to playlist 'playlistnew'
+            playlistUnshuffle.Tracks.AddLast(track3); //Add track 'track2' to playlist 'playlistnew'
+            playlistUnshuffle.Tracks.AddLast(track4); //Add track 'track2' to playlist 'playlistnew'
+            playlistUnshuffle.Tracks.AddLast(track5); //Add track 'track2' to playlist 'playlistnew'
+            playQueueController.SetTrackWatingList(playlistUnshuffle); //Add 'playlistnew' to the trackWaitingList
+            playQueueController.PlayTrack(track1); //Assign 'track1' as currently playing track and play 'traçk'
+            // List with the WaitingList order before shuffle 
+            List<Track> before = new List<Track>();
+            foreach (Track track in playQueueController.PQ.TrackWaitingList)
+            {
+                before.Add(track);
+            }
+            // shuffle the list
+            playQueueController.ShuffleTrackWaitingList();
+            // unshuffle the list
+            playQueueController.UnShuffleTrackWaitingList();
+            // List with the WaitingList order after unshuffle
+            List<Track> unshuffled = new List<Track>();
+            foreach (Track track in playQueueController.PQ.TrackWaitingList)
+            {
+                unshuffled.Add(track);
+            }
+            // boolean which checks if order is the same as the original
+            bool orderIsTheSame = false;
+
+            for (int i = 0; i < playQueueController.PQ.TrackWaitingList.Count; i++)
+            {
+                var trackBefore = before[i];
+                var trackAfter = unshuffled[i];
+
+                if (trackBefore == trackAfter)
+                {
+                    orderIsTheSame = true;
+                }
+            }
+
+            //Assert
+            Assert.AreEqual(orderIsTheSame, true); //Check if the currently playing track was the previous track: 'track'
+        }
+        //Method to shuffle the WaitingList when playing the 3th track of the list, returns true if tracks are shuffled. 
+        [TestMethod]
+        public void ShuffleListFrom3thTrack_SuccessScenario_TrackIsFirstTrack()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+
+            Track track1 = new Track();
+            Track track2 = new Track();
+            Track track3 = new Track();
+            Track track4 = new Track();
+            Track track5 = new Track();
+
+            Playlist playlistnew = new Playlist("New"); //Create new playlist called "New"
+            //Act
+            playlistnew.Tracks.AddLast(track1); //Add track 'track2' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track2); //Add track 'track2' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track3); //Add track 'track2' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track4); //Add track 'track2' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track5); //Add track 'track2' to playlist 'playlistnew'
+            playQueueController.SetTrackWatingList(playlistnew); //Add 'playlistnew' to the trackWaitingList
+            playQueueController.PlayTrack(track3); //Assign 'track1' as currently playing track and play 'traçk'
+            // List with the WaitingList order before shuffle 
+            List<Track> before = new List<Track>();
+            foreach (Track track in playQueueController.PQ.TrackWaitingList)
+            {
+                before.Add(track);
+            }
+            // shuffle the list
+            playQueueController.ShuffleTrackWaitingList();
+            // List with the WaitingList order after shuffle
+            List<Track> after = new List<Track>();
+            foreach (Track track in playQueueController.PQ.TrackWaitingList)
+            {
+                after.Add(track);
+            }
+            // boolean which checks if order is different
+            bool orderHasChanged = false;
+
+            // check for each item in the lists if they are equal or not
+            for (int i = 0; i < playQueueController.PQ.TrackWaitingList.Count; i++)
+            {
+                var trackBefore = before[i];
+                var trackAfter = after[i];
+                // check if they are not equal, if not equal orderhaschanged=true
+                if (trackBefore != trackAfter)
+                {
+                    orderHasChanged = true;
+                }
+            }
+
+            //Assert
+            Assert.AreEqual(orderHasChanged, true); //Check if the currently playing track was the previous track: 'track'
+        }
+
+        //Method to unshuffle the WaitingList when playing the 3th track of the list, returns true if the list has gone back to it's original state. 
+        [TestMethod]
+        public void UnshuffleListFrom3thTrack_SuccessScenario_TrackIsFirstTrack()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+
+            Track track1 = new Track();
+            Track track2 = new Track();
+            Track track3 = new Track();
+            Track track4 = new Track();
+            Track track5 = new Track();
+
+            Playlist playlistUnshuffle = new Playlist("New"); //Create new playlist called "New"
+            //Act
+            playlistUnshuffle.Tracks.AddLast(track1); //Add track 'track2' to playlist 'playlistnew'
+            playlistUnshuffle.Tracks.AddLast(track2); //Add track 'track2' to playlist 'playlistnew'
+            playlistUnshuffle.Tracks.AddLast(track3); //Add track 'track2' to playlist 'playlistnew'
+            playlistUnshuffle.Tracks.AddLast(track4); //Add track 'track2' to playlist 'playlistnew'
+            playlistUnshuffle.Tracks.AddLast(track5); //Add track 'track2' to playlist 'playlistnew'
+            playQueueController.SetTrackWatingList(playlistUnshuffle); //Add 'playlistnew' to the trackWaitingList
+            playQueueController.PlayTrack(track3); //Assign 'track1' as currently playing track and play 'traçk'
+            // List with the WaitingList order before shuffle 
+            List<Track> before = new List<Track>();
+            foreach (Track track in playQueueController.PQ.TrackWaitingList)
+            {
+                before.Add(track);
+            }
+            // shuffle the list
+            playQueueController.ShuffleTrackWaitingList();
+            // unshuffle the list
+            playQueueController.UnShuffleTrackWaitingList();
+            // List with the WaitingList order after unshuffle
+            List<Track> unshuffled = new List<Track>();
+            foreach (Track track in playQueueController.PQ.TrackWaitingList)
+            {
+                unshuffled.Add(track);
+            }
+            // boolean which checks if order is the same as the original
+            bool orderIsTheSame = false;
+            // check for each item in the lists if they are equal or not
+            for (int i = 0; i < playQueueController.PQ.TrackWaitingList.Count; i++)
+            {
+                var trackBefore = before[i];
+                var trackAfter = unshuffled[i];
+                // check if they are not equal, if not equal orderhaschanged=true
+                if (trackBefore == trackAfter)
+                {
+                    orderIsTheSame = true;
+                }
+            }
+
+            //Assert
+            Assert.AreEqual(orderIsTheSame, true); //Check if the currently playing track was the previous track: 'track'
+        }
+
+        //Method to shuffle the WaitingList when playing the 3th track of the list, returns true if tracks are shuffled. 
+        [TestMethod]
+        public void ShuffleListFromNextTrack_SuccessScenario_TrackIsFirstTrack()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+
+            Track track1 = new Track();
+            Track track2 = new Track();
+            Track track3 = new Track();
+            Track track4 = new Track();
+            Track track5 = new Track();
+
+            Playlist playlistnew = new Playlist("New"); //Create new playlist called "New"
+            //Act
+            playlistnew.Tracks.AddLast(track1); //Add track 'track2' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track2); //Add track 'track2' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track3); //Add track 'track2' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track4); //Add track 'track2' to playlist 'playlistnew'
+            playlistnew.Tracks.AddLast(track5); //Add track 'track2' to playlist 'playlistnew'
+            playQueueController.SetTrackWatingList(playlistnew); //Add 'playlistnew' to the trackWaitingList
+            playQueueController.PlayTrack(track1); //Assign 'track1' as currently playing track and play 'traçk'
+            playQueueController.NextTrack(); //Execute nextTrack command to check if the shuffle still works. 
+            // List with the WaitingList order before shuffle 
+            List<Track> before = new List<Track>();
+            foreach (Track track in playQueueController.PQ.TrackWaitingList)
+            {
+                before.Add(track);
+            }
+            // shuffle the list
+            playQueueController.ShuffleTrackWaitingList();
+            // List with the WaitingList order after shuffle
+            List<Track> after = new List<Track>();
+            foreach (Track track in playQueueController.PQ.TrackWaitingList)
+            {
+                after.Add(track);
+            }
+            // boolean which checks if order is different
+            bool orderHasChanged = false;
+
+            // check for each item in the lists if they are equal or not
+            for (int i = 0; i < playQueueController.PQ.TrackWaitingList.Count; i++)
+            {
+                var trackBefore = before[i];
+                var trackAfter = after[i];
+                // check if they are not equal, if not equal orderhaschanged=true
+                if (trackBefore != trackAfter)
+                {
+                    orderHasChanged = true;
+                }
+            }
+
+            //Assert
+            Assert.AreEqual(orderHasChanged, true); //Check if the currently playing track was the previous track: 'track'
+        }
+
+        //Method to unshuffle the WaitingList when playing the 3th track of the list, returns true if the list has gone back to it's original state. 
+        [TestMethod]
+        public void UnshuffleListFromNextTrack_SuccessScenario_TrackIsFirstTrack()
+        {
+            //Arrange
+            PlayQueueController playQueueController = new PlayQueueController();
+
+            Track track1 = new Track();
+            Track track2 = new Track();
+            Track track3 = new Track();
+            Track track4 = new Track();
+            Track track5 = new Track();
+
+            Playlist playlistUnshuffle = new Playlist("New"); //Create new playlist called "New"
+            //Act
+            playlistUnshuffle.Tracks.AddLast(track1); //Add track 'track2' to playlist 'playlistnew'
+            playlistUnshuffle.Tracks.AddLast(track2); //Add track 'track2' to playlist 'playlistnew'
+            playlistUnshuffle.Tracks.AddLast(track3); //Add track 'track2' to playlist 'playlistnew'
+            playlistUnshuffle.Tracks.AddLast(track4); //Add track 'track2' to playlist 'playlistnew'
+            playlistUnshuffle.Tracks.AddLast(track5); //Add track 'track2' to playlist 'playlistnew'
+            playQueueController.SetTrackWatingList(playlistUnshuffle); //Add 'playlistnew' to the trackWaitingList
+            playQueueController.PlayTrack(track1); //Assign 'track1' as currently playing track and play 'traçk'
+            playQueueController.NextTrack(); //Execute nextTrack command to check if the shuffle still works.
+            // List with the WaitingList order before shuffle 
+            List<Track> before = new List<Track>();
+            foreach (Track track in playQueueController.PQ.TrackWaitingList)
+            {
+                before.Add(track);
+            }
+            // shuffle the list
+            playQueueController.ShuffleTrackWaitingList();
+            // unshuffle the list
+            playQueueController.UnShuffleTrackWaitingList();
+            // List with the WaitingList order after unshuffle
+            List<Track> unshuffled = new List<Track>();
+            foreach (Track track in playQueueController.PQ.TrackWaitingList)
+            {
+                unshuffled.Add(track);
+            }
+            // boolean which checks if order is the same as the original
+            bool orderIsTheSame = false;
+            // check for each item in the lists if they are equal or not
+            for (int i = 0; i < playQueueController.PQ.TrackWaitingList.Count; i++)
+            {
+                var trackBefore = before[i];
+                var trackAfter = unshuffled[i];
+                // check if they are not equal, if not equal orderhaschanged=true
+                if (trackBefore == trackAfter)
+                {
+                    orderIsTheSame = true;
+                }
+            }
+
+            //Assert
+            Assert.AreEqual(orderIsTheSame, true); //Check if the currently playing track was the previous track: 'track'
+        }
+
         //Method to set the volume, success scenario, returns current volume.
         [TestMethod]
         public void SetVolume_SuccessScenario_Returns30()
