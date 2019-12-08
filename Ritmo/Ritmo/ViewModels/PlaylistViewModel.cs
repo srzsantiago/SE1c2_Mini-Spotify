@@ -175,12 +175,12 @@ namespace Ritmo.ViewModels
         }
 
 
-        private void OpenChangeNameClick() //Change the name of the playlist
+        private void OpenChangeNameClick() //Open popup grid to change the name of the playlist
         {
             IsChangeNameBoxOpen = true;
         }
 
-        public void OpenDeletePlaylistClick()
+        public void OpenDeletePlaylistClick()//Open popup grid to delete playlist
         {
             IsDeletePlaylistBoxOpen = true;
         }
@@ -189,22 +189,22 @@ namespace Ritmo.ViewModels
         {
             string action = (string)sender; //Sets the chosen action in the popup menu
 
-            if (action.Equals("Change"))
+            if (action.Equals("Change"))//User clicked Change button
             {
-                if (ChangeName.Equals(""))
+                if (ChangeName.Equals(""))//If name is an empty string
                 {
                     ErrorMessage = "Please write a name";
                 }
-                else if (ChangeName.Equals(PlaylistName))
+                else if (ChangeName.Equals(PlaylistName))//If the name didn't change
                 {
                     ErrorMessage = "The name must be a new name";
                 }
                 else
                 {
-                    if(ChangeName.Length >= 32){
+                    if(ChangeName.Length >= 32){//Name is longer than 32 characters
                         ErrorMessage = "The name cannot be longer than 32 characters";
                     }
-                    else
+                    else//Name fullfill all constrains 
                     {
                         PlaylistController.SetName(ChangeName);
                         //must be changed in the database aswel
@@ -215,7 +215,7 @@ namespace Ritmo.ViewModels
                 }
                 
             }
-            else if (action.Equals("Cancel"))
+            else if (action.Equals("Cancel")) //User clicked the Cancel button
             {
                 IsChangeNameBoxOpen = false;
             }
@@ -225,19 +225,19 @@ namespace Ritmo.ViewModels
         {
             string action = (string)sender; //Sets the chosen action in the popup menu
 
-            if (action.Equals("Delete"))
+            if (action.Equals("Delete"))//user clicked delete button
             {
                 //Playlist logica om de playlist te verwijderen
                 MainWindow.ChangeViewModel(MainWindow.HomeViewModel);
                 IsDeletePlaylistBoxOpen = false;
             }
-            else
+            else //User clicked cancel
             {
                 IsDeletePlaylistBoxOpen = false;
             }
         }
 
-        private void AscendingSortClick(object sender)
+        private void AscendingSortClick(object sender)//order playlist Ascending by <sender> as (string) column name
         {
             string orderBy = (string) sender;
 
@@ -245,7 +245,7 @@ namespace Ritmo.ViewModels
             LoadElements();
         }
 
-        private void DescendingSortClick(object sender)
+        private void DescendingSortClick(object sender)//order playlist Descending by <sender> as (string) column name
         {
             string orderBy = (string)sender;
 
@@ -255,11 +255,11 @@ namespace Ritmo.ViewModels
 
         public void DeleteTrackClick(object sender)
         {
-            int index = (int)sender;
+            int index = (int)sender; //get the ID of the track to be deleted
             int count = PlaylistController.Playlist.Tracks.Count;
             for (int i = 0; i < count; i++)
             {
-                if (PlaylistController.Playlist.Tracks.ElementAt(i).TrackId == index)
+                if (PlaylistController.Playlist.Tracks.ElementAt(i).TrackId == index)//compare the index to all ID in the playlist collection
                 {
                     Track track=PlaylistController.Playlist.Tracks.ElementAt(i);
                     PlaylistController.RemoveTrack(track);
