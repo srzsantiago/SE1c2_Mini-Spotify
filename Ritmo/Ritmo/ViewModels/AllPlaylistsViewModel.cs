@@ -148,7 +148,7 @@ namespace Ritmo.ViewModels
                 int id = AllPlaylistsCollection.Count();
                 //This is for testing
 
-                AllPlaylistsController.AddTrackList(new Playlist($"{name}")); //Create playlist and add it to all playlists
+                AllPlaylistsController.AddTrackList(new Playlist($"{name}") { TrackListID = id }); //Create playlist and add it to all playlists
                 SetAllPlaylistsCollection(); //Updates view
                 PopUpControl(); //Hides popup menu
             }

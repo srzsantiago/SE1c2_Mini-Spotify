@@ -14,8 +14,8 @@ namespace Ritmo.ViewModels
 {
     public class PlaylistViewModel : Screen
     {
-        public PlaylistController playlistController;
-        public MainWindowViewModel mainWindow;
+        public PlaylistController PlaylistController;
+        public MainWindowViewModel MainWindow;
 
         #region boolForBoxes
         private bool _isChangeNameBoxOpen;
@@ -24,7 +24,7 @@ namespace Ritmo.ViewModels
         {
             get { return _isChangeNameBoxOpen; }
             set { _isChangeNameBoxOpen = value;
-                NotifyOfPropertyChange("IsChangeNameBoxOpen");
+                NotifyOfPropertyChange();
             }
         }
 
@@ -37,7 +37,7 @@ namespace Ritmo.ViewModels
             set
             {
                 _isDeletePlaylistBoxOpen = value;
-                NotifyOfPropertyChange("IsDeletePlaylistBoxOpen");
+                NotifyOfPropertyChange();
             }
         }
         #endregion
@@ -106,121 +106,42 @@ namespace Ritmo.ViewModels
         {
             get
             {
-                if (_playListTracksOC == null)
-                    _playListTracksOC = new ObservableCollection<Track>();
                 return _playListTracksOC;
             }
-            set { _playListTracksOC = value;
-                NotifyOfPropertyChange("PlayListTracksOC");
+            set 
+            { 
+                _playListTracksOC = value;
+                NotifyOfPropertyChange();
             }
         }
         #endregion
 
         #region CommandForPopUpScreens
-        private ICommand _openChangeNameCommand;
-        public ICommand OpenChangeNameCommand
-        {
-            get
-            {
-                return _openChangeNameCommand;
-            }
-            set
-            {
-                _openChangeNameCommand = value;
-                
-            }
-        }
+        public ICommand OpenChangeNameCommand { get; set; }
 
-
-        private ICommand _openDeletePlaylistCommand;
-        public ICommand OpenDeletePlaylistCommand
-        {
-            get
-            {
-                return _openDeletePlaylistCommand;
-            }
-            set
-            {
-                _openDeletePlaylistCommand = value;
-
-            }
-        }
+        public ICommand OpenDeletePlaylistCommand { get; set; }
+       
         #endregion
 
         #region Command
-        private ICommand _deletePlaylistCommand;
-        public ICommand DeletePlaylistCommand
-        {
-            get
-            {
-                return _deletePlaylistCommand;
-            }
-            set
-            {
-                _deletePlaylistCommand = value;
-            }
-        }
+
+        public ICommand DeletePlaylistCommand { get; set; }
+
+        public ICommand ChangeNameCommand { get; set; }
+
+        public ICommand AscendingSortCommand { get; set; }
+
+        public ICommand DescendingSortCommand { get; set; }
         
-        private ICommand _changeNameCommand;
-        public ICommand ChangeNameCommand
-        {
-            get
-            {
-                return _changeNameCommand;
-            }
-            set
-            {
-                _changeNameCommand = value;
-                
-            }
-        }
-
-        private ICommand _ascendingSortCommand;
-        public ICommand AscendingSortCommand
-        {
-            get
-            {
-                return _ascendingSortCommand;
-            }
-            set
-            {
-                _ascendingSortCommand = value;
-
-            }
-        }
-
-        private ICommand _descendingSortCommand;
-        public ICommand DescendingSortCommand
-        {
-            get
-            {
-                return _descendingSortCommand;
-            }
-            set
-            {
-                _descendingSortCommand = value;
-
-            }
-        }
-        
-        private ICommand _deleteTrackCommand;
-        public ICommand DeleteTrackCommand
-        {
-            get
-            {
-                return _deleteTrackCommand;
-            }
-            set
-            {
-                _deleteTrackCommand = value;
-            }
-        }
+        public ICommand DeleteTrackCommand { get; set; }
         #endregion
 
         public PlaylistViewModel( MainWindowViewModel mainWindow ,Playlist playlist)
         {
-            this.mainWindow = mainWindow;
-            playlistController = new PlaylistController(playlist);
+            MainWindow = mainWindow;
+            PlaylistController = new PlaylistController(playlist);
+            PlayListTracksOC = new ObservableCollection<Track>();
+
             LoadElements();
             LoadPlaylistInfo();
             InitializeCommands();
@@ -229,36 +150,28 @@ namespace Ritmo.ViewModels
 
         public void InitializeCommands()
         {
-            _openChangeNameCommand = new RelayCommand(this.OpenChangeNameClick);
-            _openDeletePlaylistCommand = new RelayCommand(this.OpenDeletePlaylistClick);
-            _changeNameCommand = new RelayCommand<object>(this.ChangeNameClick);
-            _deletePlaylistCommand = new RelayCommand<object>(this.DeletePlaylistClick);
-            _ascendingSortCommand = new RelayCommand<object>(this.AscendingSortClick);
-            _descendingSortCommand = new RelayCommand<object>(this.DescendingSortClick);
-            _deleteTrackCommand = new RelayCommand<object>(this.DeleteTrackClick);
+            OpenChangeNameCommand = new RelayCommand(OpenChangeNameClick);
+            OpenDeletePlaylistCommand = new RelayCommand(OpenDeletePlaylistClick);
+            ChangeNameCommand = new RelayCommand<object>(ChangeNameClick);
+            DeletePlaylistCommand = new RelayCommand<object>(DeletePlaylistClick);
+            AscendingSortCommand = new RelayCommand<object>(AscendingSortClick);
+            DescendingSortCommand = new RelayCommand<object>(DescendingSortClick);
+            DeleteTrackCommand = new RelayCommand<object>(DeleteTrackClick);
         }
 
         public void LoadPlaylistInfo()
         {
-            PlaylistName = playlistController.Playlist.Name;
-            PlaylistDuration = playlistController.Playlist.TrackListDuration.ToString();
-            PlaylistCreationDate = playlistController.Playlist.CreationDate.ToString();
+            PlaylistName = PlaylistController.Playlist.Name;
+            PlaylistDuration = PlaylistController.Playlist.TrackListDuration.ToString();
+            PlaylistCreationDate = PlaylistController.Playlist.CreationDate.ToString();
         }
         public void LoadElements()
         {
-            PlayListTracksOC = new ObservableCollection<Track>();
-            foreach (var item in playlistController.Playlist.Tracks)
-            {
-                PlayListTracksOC.Add(new Track
-                {
-                    TrackId = item.TrackId,
-                    Name = item.Name,
-                    Artist = item.Artist,
-                    Album = item.Album,
-                    Duration = item.Duration,
-                    AudioFile = item.AudioFile,
-                });
-            }
+            PlayListTracksOC.Clear();
+
+            //Adds all tracks from Playlist model to the Observable Collection
+            foreach (var track in PlaylistController.Playlist.Tracks)
+                PlayListTracksOC.Add(track);
         }
 
 
@@ -274,7 +187,7 @@ namespace Ritmo.ViewModels
 
         private void ChangeNameClick(object sender) //Change the name of the playlist
         {
-            string action = (string)sender;
+            string action = (string)sender; //Sets the chosen action in the popup menu
 
             if (action.Equals("Change"))
             {
@@ -293,7 +206,7 @@ namespace Ritmo.ViewModels
                     }
                     else
                     {
-                        playlistController.SetName(ChangeName);
+                        PlaylistController.SetName(ChangeName);
                         //must be changed in the database aswel
                         PlaylistName = ChangeName;
                         ChangeName = "";
@@ -310,12 +223,12 @@ namespace Ritmo.ViewModels
 
         public void DeletePlaylistClick(object sender)
         {
-            string action = (string)sender;
+            string action = (string)sender; //Sets the chosen action in the popup menu
 
             if (action.Equals("Delete"))
             {
                 //Playlist logica om de playlist te verwijderen
-                mainWindow.ChangeViewModel(mainWindow.HomeViewModel);
+                MainWindow.ChangeViewModel(MainWindow.HomeViewModel);
                 IsDeletePlaylistBoxOpen = false;
             }
             else
@@ -328,7 +241,7 @@ namespace Ritmo.ViewModels
         {
             string orderBy = (string) sender;
 
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, orderBy, true);
+            PlaylistController.Playlist.SortTrackList(PlaylistController.Playlist.Tracks, orderBy, true);
             LoadElements();
         }
 
@@ -336,20 +249,20 @@ namespace Ritmo.ViewModels
         {
             string orderBy = (string)sender;
 
-            playlistController.Playlist.SortTrackList(playlistController.Playlist.Tracks, orderBy, false);
+            PlaylistController.Playlist.SortTrackList(PlaylistController.Playlist.Tracks, orderBy, false);
             LoadElements();
         }
 
         public void DeleteTrackClick(object sender)
         {
             int index = (int)sender;
-            int count = playlistController.Playlist.Tracks.Count;
+            int count = PlaylistController.Playlist.Tracks.Count;
             for (int i = 0; i < count; i++)
             {
-                if (playlistController.Playlist.Tracks.ElementAt(i).TrackId == index)
+                if (PlaylistController.Playlist.Tracks.ElementAt(i).TrackId == index)
                 {
-                    Track track=playlistController.Playlist.Tracks.ElementAt(i);
-                    playlistController.RemoveTrack(track);
+                    Track track=PlaylistController.Playlist.Tracks.ElementAt(i);
+                    PlaylistController.RemoveTrack(track);
                     LoadElements();
                     break;
                 }
