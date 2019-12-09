@@ -156,7 +156,7 @@ namespace Ritmo.ViewModels
         public void NextTrack()
         {
             PlayQueueController.NextTrack();
-            MyQueueScreenToViewModel.ShowElements();
+            MyQueueScreenToViewModel.LoadElements();
             CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
 
             //Check if there are repeatmodes selected
@@ -202,7 +202,7 @@ namespace Ritmo.ViewModels
                         PlayQueue.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
                     }
                     PlayQueueController.PreviousTrack();
-                    MyQueueScreenToViewModel.ShowElements();
+                    MyQueueScreenToViewModel.LoadElements();
                     CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
                 }
             }
@@ -228,7 +228,7 @@ namespace Ritmo.ViewModels
                 PlayQueueController.UnShuffleTrackWaitingList();
                 ShuffleButtonIcon = new Uri("/ImageResources/shuffle.png", UriKind.RelativeOrAbsolute);
             }
-            MyQueueScreenToViewModel.ShowElements();
+            MyQueueScreenToViewModel.LoadElements();
         }
 
         //Runs when the track has ended. The next track will be loaded and played.
@@ -422,9 +422,9 @@ namespace Ritmo.ViewModels
             PlayQueueController.PlayTrack(PlaylistController.Playlist.Tracks.First.Value, PlaylistController.Playlist);
 
             //Zet de CurrentTrack als audio die afgespeeld wordt
-            CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
-
-            MyQueueScreenToViewModel.ShowElements();
+            CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;             
+            
+            MyQueueScreenToViewModel.LoadElements();
         }
     }
 }

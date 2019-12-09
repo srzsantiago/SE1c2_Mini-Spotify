@@ -18,16 +18,12 @@ namespace Ritmo.ViewModels
         MainWindowViewModel mwvm;
         int count;
 
-        public MyQueueViewModel(MainWindowViewModel mwvm)
-        {
-            this.mwvm = mwvm;
-            _outerClickCommand = new RelayCommand<object>(this.OuterClick);
-            _innerClickCommand = new RelayCommand<object>(this.InnerClick);
-            _addToQueueClickCommand = new RelayCommand<object>(this.AddToQueueClick);
-            ClearQueueCommand = new RelayCommand(ClearQueue);
-            ShowElements();
-        }
-
+        #region commands
+        public ICommand OuterClickCommand { get; set; }
+        public ICommand InnerClickCommand { get; set; }
+        public ICommand AddToQueueClickCommand { get; set; }
+        public ICommand ClearQueueCommand { get; set; }
+        #endregion
 
         #region Observable collections
         private ObservableCollection<MyQueueItem> _playingNowItems;
@@ -72,54 +68,24 @@ namespace Ritmo.ViewModels
             set { _itemsList = value; }
         }
 
-
-        #region commands
-        private ICommand _outerClickCommand;
-
-        public ICommand ClearQueueCommand { get;  set; }
-        public ICommand OuterClickCommand
+        public MyQueueViewModel(MainWindowViewModel mwvm)
         {
-            get
-            {
-                return _outerClickCommand;
-            }
-            set
-            {
-                _outerClickCommand = value;
-            }
+            this.mwvm = mwvm;
+            OuterClickCommand = new RelayCommand<object>(OuterClick);
+            InnerClickCommand = new RelayCommand<object>(InnerClick);
+            AddToQueueClickCommand = new RelayCommand<object>(AddToQueueClick);
+            ClearQueueCommand = new RelayCommand(ClearQueue);
+            LoadElements();
+        }
+        public void LoadElements()
+        {
+            LoadCurrentTrackItems();
+            LoadNextInQueueItems();
+            LoadNextUpItems();
         }
 
-        private ICommand _innerClickCommand;
-
-        public ICommand InnerClickCommand
-        {
-            get
-            {
-                return _innerClickCommand;
-            }
-            set
-            {
-                _innerClickCommand = value;
-            }
-        }
-
-        private ICommand _addToQueueClickCommand;
-
-        public ICommand AddToQueueClickCommand
-        {
-            get
-            {
-                return _addToQueueClickCommand;
-            }
-            set
-            {
-                _addToQueueClickCommand = value;
-            }
-        }
-
-        #endregion
-
-        public void ShowElements()
+        #region LoadElements
+        public void LoadCurrentTrackItems()
         {
             //Create ObservableCollections(OC) of class MyQueueItem (The class is at the bottom of this file).
             //This OC are used in the XAML of MyQueueView in a ListBox to draw the elements.
@@ -143,9 +109,38 @@ namespace Ritmo.ViewModels
             {
                 PlayingNowItems = new ObservableCollection<MyQueueItem>();
             }
+        }
 
-            ShowQueueElements();
 
+        public void LoadNextInQueueItems()
+        {
+            if (mwvm.PlayQueueController.PQ.TrackQueue.Count > 0)
+            {
+                //Makes an OB for All tracks in TrackQueue
+                NextInQueueItems = new ObservableCollection<MyQueueItem>();
+                count = 0; //this count is used to give every item a ID
+                foreach (var item in mwvm.PlayQueueController.PQ.TrackQueue)
+                {
+                    //Create a instance for each item in TrackQueue
+                    NextInQueueItems.Add(new MyQueueItem()
+                    {
+                        ButtonID = $"NextInQueue {count}",
+                        Name = item.Name,
+                        Artist = item.Artist,
+                        Album = "Album",
+                        Duration = item.Duration
+                    }); ;
+                    count++;
+                }
+            }
+            else // if CurrentTrack is empty, the OC is cleared.
+            {
+                NextInQueueItems = new ObservableCollection<MyQueueItem>();
+            }
+        }
+
+        public void LoadNextUpItems()
+        {
             if (mwvm.PlayQueueController.PQ.TrackWaitingList.Count > 0)
             {
                 //Makes an OB for All tracks in TrackWaitingList
@@ -175,35 +170,9 @@ namespace Ritmo.ViewModels
             {
                 NextInQueueItems = new ObservableCollection<MyQueueItem>();
             }
-
         }
+        #endregion
 
-        private void ShowQueueElements()
-        {
-            if (mwvm.PlayQueueController.PQ.TrackQueue.Count > 0)
-            {
-                //Makes an OB for All tracks in TrackQueue
-                NextInQueueItems = new ObservableCollection<MyQueueItem>();
-                count = 0; //this count is used to give every item a ID
-                foreach (var item in mwvm.PlayQueueController.PQ.TrackQueue)
-                {
-                    //Create a instance for each item in TrackQueue
-                    NextInQueueItems.Add(new MyQueueItem()
-                    {
-                        ButtonID = $"NextInQueue {count}",
-                        Name = item.Name,
-                        Artist = item.Artist,
-                        Album = "Album",
-                        Duration = item.Duration
-                    }); ;
-                    count++;
-                }
-            }
-            else // if CurrentTrack is empty, the OC is cleared.
-            {
-                NextInQueueItems = new ObservableCollection<MyQueueItem>();
-            }
-        }
 
         private void OuterClick(Object sender)
         {
@@ -238,7 +207,7 @@ namespace Ritmo.ViewModels
             }
 
 
-            this.ShowElements();
+            LoadElements();
         }
 
         private void InnerClick(object sender)
@@ -273,7 +242,7 @@ namespace Ritmo.ViewModels
                 mwvm.CurrentTrackElement.Source = playTrack.AudioFile; // play the track
             }
 
-            this.ShowElements();
+            LoadElements();
         }
 
         private void AddToQueueClick(object sender)
@@ -296,9 +265,7 @@ namespace Ritmo.ViewModels
             Track playTrack = mwvm.PlayQueueController.PQ.TrackWaitingList.ElementAt(index);//gets the element at the given index
             mwvm.PlayQueueController.AddTrack(playTrack);
             
-            
-
-            this.ShowElements();
+            LoadElements();
         }
 
         //Clears all the track from TrackQueue in PlayQeueu model
@@ -306,11 +273,11 @@ namespace Ritmo.ViewModels
         private void ClearQueue()
         {
             mwvm.PlayQueueController.ClearQueue();
-            ShowQueueElements();
+            LoadNextInQueueItems();
         }
     }
 
-    public class MyQueueItem
+    public class MyQueueItem//Helping Class for the Observable Collection
     {
         public String ButtonID { get; set; } //composition of a type and an Index
         public String Name { get; set; }

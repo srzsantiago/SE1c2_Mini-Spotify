@@ -164,7 +164,7 @@ namespace Ritmo.ViewModels
                 {
                     Track testTrack = item;
                     mainWindowViewModel.PlayQueueController.AddTrack(testTrack); // adds the song to the queue
-                    mainWindowViewModel.MyQueueScreenToViewModel.ShowElements();
+                    mainWindowViewModel.MyQueueScreenToViewModel.LoadElements();
                 }
 
             }
