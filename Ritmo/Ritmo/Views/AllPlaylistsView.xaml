@@ -18,8 +18,17 @@
         <GridLength x:Key="DurationColumn">175</GridLength>
         <GridLength x:Key="CreationDateColumn">180</GridLength>
         <GridLength x:Key="LastColumn">50</GridLength>
+        <Style x:Key="FocusTextBoxStyle" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsFocused}" Value="True">
+                    <Setter Property="FocusManager.FocusedElement" 
+                Value="{Binding RelativeSource={RelativeSource Self}}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
+    
     <!--Main Grid-->
     <Grid Background="AntiqueWhite" Name="MainGrid">
 
@@ -31,7 +40,7 @@
                         <Label Content="Playlist Name" VerticalContentAlignment="Top" HorizontalContentAlignment="Right" Foreground="White" Canvas.Left="35" FontSize="16" Margin="0,0,0,29"/>
                         <Label Content="{Binding PopUpWarning}" Foreground="DarkRed" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Margin="-158,27,0,29"/>
                     </Grid>
-                    <TextBox Name="NewName" Text="{Binding NewName}" Margin="20,0,20,54" Height="18" VerticalAlignment="Bottom" />
+                    <TextBox Name="NewName" Text="{Binding NewName}" Margin="20,0,20,54"  Height="18" VerticalAlignment="Bottom" />
                     <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="50"  Width="140">
                         <Button Content="Add Playlist" Margin="0,16,0,14" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="78"
                                 Command="{Binding AddPlaylistCommand}" CommandParameter="{Binding Text, ElementName=NewName}" IsDefault="True"/>

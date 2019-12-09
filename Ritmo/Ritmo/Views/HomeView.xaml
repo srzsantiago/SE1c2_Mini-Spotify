@@ -29,12 +29,12 @@
                         <Button Content="{Binding Name}"/>
                         <Button Content="Add to Playlist" Grid.Column="0">
                             <Button.InputBindings>
-                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.AddToPlaylistCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding TrackID}"/>
+                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.AddToPlaylistCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding TrackId}"/>
                             </Button.InputBindings>
                         </Button>
                         <Button Content="Add to queue" Grid.Column="0">
                             <Button.InputBindings>
-                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.AddToQueueCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding TrackID}"/>
+                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.AddToQueueCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding TrackId}"/>
                             </Button.InputBindings>
                         </Button>
                     </StackPanel>

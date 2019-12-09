@@ -75,14 +75,14 @@ namespace Ritmo.ViewModels
         }
 
         #region observablecollections
-        private ObservableCollection<TestItems> _allTestTrack;
+        private ObservableCollection<Track> _allTestTrack;
 
-        public ObservableCollection<TestItems> AllTestTrack
+        public ObservableCollection<Track> AllTestTrack
         {
             get
             {
                 if (_allTestTrack == null)
-                    _allTestTrack = new ObservableCollection<TestItems>();
+                    _allTestTrack = new ObservableCollection<Track>();
                 return _allTestTrack;
             }
             set { _allTestTrack = value; }
@@ -181,60 +181,56 @@ namespace Ritmo.ViewModels
 
 
             int count = 0;
-            AllTestTrack.Add(new TestItems()
-            {
-                TrackID = 6,
-                Album = "testAlbum",
-                Artist = "JOHANNES",
-                Duration = 10,
-                Name = "Track1",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                ButtonID = count,
-            });
-            count++;
-            AllTestTrack.Add(new TestItems()
-            {
-                TrackID = 7,
-                Album = "testAlbum",
-                Artist = "Tristan",
-                Duration = 10,
-                Name = "Track2",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                ButtonID = count,
-            });
-            count++;
-            AllTestTrack.Add(new TestItems()
-            {
-                TrackID = 8,
-                Album = "testAlbum",
-                Artist = "Zapata",
-                Duration = 10,
-                Name = "Track3",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                ButtonID = count,
-            });
-            count++;
-            AllTestTrack.Add(new TestItems()
-            {
-                TrackID = 9,
-                Album = "testAlbum",
-                Artist = "Rodriguez",
-                Duration = 10,
-                Name = "Track4",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                ButtonID = count,
-            });
-            count++;
-            AllTestTrack.Add(new TestItems()
-            {
-                TrackID = 10,
-                Album = "testAlbum",
-                Artist = "Santiago",
-                Duration = 10,
-                Name = "Track5",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                ButtonID = count,
-            });
+            AllTestTrack.Add(new Track()
+                {
+                    TrackId = 6,
+                    Album = "testAlbum",
+                    Artist = "JOHANNES",
+                    Duration = 10,
+                    Name = "Track1",
+                    AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3")
+                });
+            
+
+            AllTestTrack.Add(new Track()
+                {
+                    TrackId = 7,
+                    Album = "testAlbum",
+                    Artist = "Tristan",
+                    Duration = 10,
+                    Name = "Track2",
+                    AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
+                });
+            
+            AllTestTrack.Add(new Track()
+                {
+                    TrackId = 8,
+                    Album = "testAlbum",
+                    Artist = "Zapata",
+                    Duration = 10,
+                    Name = "Track3",
+                    AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
+                });
+            
+            AllTestTrack.Add(new Track()
+                {
+                    TrackId = 9,
+                    Album = "testAlbum",
+                    Artist = "Rodriguez",
+                    Duration = 10,
+                    Name = "Track4",
+                    AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
+                });
+            
+            AllTestTrack.Add(new Track()
+                {
+                    TrackId = 10,
+                    Album = "testAlbum",
+                    Artist = "Santiago",
+                    Duration = 10,
+                    Name = "Track5",
+                    AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
+                });
 
 
             //PlaylistController testplaylist1 = new PlaylistController("playlist1");
@@ -272,9 +268,9 @@ namespace Ritmo.ViewModels
 
             foreach (var item in AllTestTrack) // goes through the tracks
             {
-                if (item.TrackID == _clickedButtonValue) // looks which buttons tag is the same as the trackid
+                if (item.TrackId == _clickedButtonValue) // looks which buttons tag is the same as the trackid
                 {
-                    Track testTrack = new Track() { Name = item.Name, Artist = item.Artist, AudioFile = item.AudioFile, Duration = item.Duration, TrackId = item.TrackID };
+                    Track testTrack = item;
                     mainWindowViewModel.PlayQueueController.AddTrack(testTrack); // adds the song to the queue
                     mainWindowViewModel.MyQueueScreenToViewModel.ShowElements();
                 }
@@ -288,13 +284,13 @@ namespace Ritmo.ViewModels
         {
             foreach (var item in AllTestTrack)
             {
-                if (item.TrackID == _clickedButtonValue)
+                if (item.TrackId == _clickedButtonValue)
                 {
                     for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
                     {
                         if (_selectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
                         {
-                            Track testTrack = new Track() { Name = item.Name, Artist = item.Artist, AudioFile = item.AudioFile, Duration = item.Duration, TrackId = item.TrackID };
+                            Track testTrack = item;
                             mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
                         }
                     }
@@ -309,12 +305,13 @@ namespace Ritmo.ViewModels
     public class TestItems
     {
         public int ButtonID { get; set; } //composition of a type and an Index
-        public int TrackID { get; set; }
-        public String Name { get; set; }
-        public String Artist { get; set; }
-        public String Album { get; set; }
-        public int Duration { get; set; }
-        public Uri AudioFile { get; set; }
+        //public int TrackID { get; set; }
+        //public String Name { get; set; }
+        //public String Artist { get; set; }
+        //public String Album { get; set; }
+        //public int Duration { get; set; }
+        //public Uri AudioFile { get; set; }
+        public Track track { get; set; }
 
     }
 }
