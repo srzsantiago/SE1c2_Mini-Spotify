@@ -48,10 +48,10 @@ namespace Ritmo.ViewModels
 
         public ArtistRegisterViewModel()
         {
-            CancelCommand = new RelayCommand(this.CancelClick);
-            SendCommand = new RelayCommand(this.SendClick);
-            GotFocusCommand = new RelayCommand(this.GotFocusClick);
-            LostFocusCommand = new RelayCommand(this.LostFocusClick);
+            CancelCommand = new RelayCommand(CancelClick);
+            SendCommand = new RelayCommand(SendClick);
+            GotFocusCommand = new RelayCommand(GotFocusClick);
+            LostFocusCommand = new RelayCommand(LostFocusClick);
         }
 
         private void LostFocusClick()//set placeholder of Email Texbox if its empty
@@ -77,7 +77,7 @@ namespace Ritmo.ViewModels
             if (IsValidEmail(email))//check the email format
             {
                 //Ritmo.Register register = new Ritmo.Register(email);
-                this.TryClose();
+                TryClose();
             }
             else
             {
@@ -103,7 +103,7 @@ namespace Ritmo.ViewModels
 
         private void CancelClick()//cancel button
         {
-            this.TryClose();
+            TryClose();
         }
     }
 }

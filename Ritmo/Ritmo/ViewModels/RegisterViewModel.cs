@@ -29,7 +29,7 @@ namespace Ritmo.ViewModels
         }
         public void ChangeViewModel(Screen ViewModel)
         {
-            this.CurrentViewModel = ViewModel;
+            CurrentViewModel = ViewModel;
         }
         #endregion
 
@@ -77,19 +77,19 @@ namespace Ritmo.ViewModels
 
         public RegisterViewModel()
         {
-            CreateCommand = new RelayCommand<object>(this.CreateClick);
-            CancelCommand = new RelayCommand(this.CancelClick);
-            ArtistCommand = new RelayCommand(this.ArtistClick);
+            CreateCommand = new RelayCommand<object>(CreateClick);
+            CancelCommand = new RelayCommand(CancelClick);
+            ArtistCommand = new RelayCommand(ArtistClick);
         }
 
         private void ArtistClick()
         {
-            this.TryClose();
+            TryClose();
         }
 
         private void CancelClick()
         {
-            this.TryClose();
+            TryClose();
         }
 
         private void CreateClick(object parameters)
@@ -101,7 +101,7 @@ namespace Ritmo.ViewModels
             if (!Name.Equals("") && IsValidEmail(Email) && IsPasswordMatch(passwordBox, confirmPasswordBox)) //information validation
             {
                 //Register register = new Register(Name, Email, passwordBox.Password, confirmPasswordBox.Password);
-                this.TryClose();
+                TryClose();
             }
             else
             {
