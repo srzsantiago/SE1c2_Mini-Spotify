@@ -150,22 +150,7 @@ namespace Ritmo.ViewModels
 
                 _selectedItem = value;
                 NotifyOfPropertyChange("SelectedItem");
-                foreach (var item in AllTestTrack)
-                {
-                    if (item.TrackID == clickedbuttonvalue)
-                    {
-                        for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
-                        {
-                            if (_selectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
-                            {
-                                Track testTrack = new Track() { Name = item.Name, Artist = item.Artist, AudioFile = item.AudioFile, Duration = item.Duration, TrackId = item.TrackID };
-                                mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
-                            }
-                        }
-
-                    }
-
-                }
+                
 
             }
         }
@@ -310,7 +295,6 @@ namespace Ritmo.ViewModels
                 {
                     for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
                     {
-
                         if (_selectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
                         {
                             Track testTrack = new Track() { Name = item.Name, Artist = item.Artist, AudioFile = item.AudioFile, Duration = item.Duration, TrackId = item.TrackID };
