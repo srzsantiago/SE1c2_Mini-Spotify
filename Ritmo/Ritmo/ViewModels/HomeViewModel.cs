@@ -78,17 +78,14 @@ namespace Ritmo.ViewModels
         {
             this.mainWindowViewModel = mainWindowViewModel;
             AllPlaylist = new ObservableCollection<Playlist>();
-            TestAllPlayLists();
             LoadListboxPlaylistCommand = new RelayCommand<object>(this.LoadListboxPlaylist);
             AddToQueueCommand = new RelayCommand<object>(this.AddToQueueClick);
+            TestAllPlayLists();
 
         }
 
-        public void TestAllPlayLists()
+        public void TestAllPlayLists()//test methode to gerenate tracks in the homeview.
         {
-
-
-            
             AllTestTrack.Add(new Track()
                 {
                     TrackId = 6,
@@ -140,43 +137,30 @@ namespace Ritmo.ViewModels
                     AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
                 });
 
-
-            //PlaylistController testplaylist1 = new PlaylistController("playlist1");
-            //PlaylistController testplaylist2 = new PlaylistController("playlist2");
-            //PlaylistController testplaylist3 = new PlaylistController("playlist3");
-            //PlaylistController testplaylist4 = new PlaylistController("playlist4");
-            //PlaylistController testplaylist5 = new PlaylistController("playlist5");
-
-
-            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist1.Playlist);
-            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist2.Playlist);
-            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist3.Playlist);
-            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist4.Playlist);
-            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist5.Playlist);
-
         }
 
 
-        private void LoadListboxPlaylist(object sender)
+        private void LoadListboxPlaylist(object sender)//When user click on "Add to playlist" the listbox of Playlists is filled.
         {
+            //get the trackID of the track clicked, so it can be use in the listbox to identify which tracks is going to be add to the selected item
             _clickedButtonValue = (int)sender;
 
-            AllPlaylist.Clear();
+            AllPlaylist.Clear();//clear the ObservableCollection of Playlists to avoid repeated playlists
 
             foreach (var item in mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists)
             {
-                AllPlaylist.Add(item);
+                AllPlaylist.Add(item);//add all playlist to the OC
             }
         }
 
 
-        private void AddToQueueClick(object sender)
+        private void AddToQueueClick(object sender)//Add clicked track to queue
         {
-            _clickedButtonValue = (int)sender;
+            _clickedButtonValue = (int)sender;//get trackID
 
             foreach (var item in AllTestTrack) // goes through the tracks
             {
-                if (item.TrackId == _clickedButtonValue) // looks which buttons tag is the same as the trackid
+                if (item.TrackId == _clickedButtonValue) // looks which trackId match the clicked track
                 {
                     Track testTrack = item;
                     mainWindowViewModel.PlayQueueController.AddTrack(testTrack); // adds the song to the queue
@@ -188,14 +172,15 @@ namespace Ritmo.ViewModels
 
         }
 
-        private void AddTrackToSelectedPlaylist()
+        private void AddTrackToSelectedPlaylist()//This methode is called from the prop SelectedItem. It adds a track to a clicked playlist.
         {
-            foreach (var item in AllTestTrack)
+            foreach (var item in AllTestTrack)//goes through all tracks
             {
-                if (item.TrackId == _clickedButtonValue)
+                if (item.TrackId == _clickedButtonValue)//find the matching Id
                 {
                     for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
                     {
+                        //find the matching playlist
                         if (SelectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
                         {
                             Track testTrack = item;

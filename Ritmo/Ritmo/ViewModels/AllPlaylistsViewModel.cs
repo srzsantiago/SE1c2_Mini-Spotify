@@ -9,7 +9,7 @@ namespace Ritmo.ViewModels
 {
     public class AllPlaylistsViewModel : Screen
     {
-        #region View Attributes
+        #region View Attributes and View Methods
         public MainWindowViewModel MainWindow { get; set; }
         public PlaylistViewModel PlaylistViewModel { get; set; }
 
@@ -140,8 +140,8 @@ namespace Ritmo.ViewModels
         {
             if (name.Equals(""))
                 PopUpMessage("Invalid Playlist name!");
-            else if (AllPlaylistsController.IsDupliaceName(name))
-                PopUpMessage("Playlist name already exists!");
+            else if (name.Length >= 32)
+                PopUpMessage("Playlist name must be less than 32 characters!");
             else
             {
                 //Check database for ID's to ascertain which ID to use
