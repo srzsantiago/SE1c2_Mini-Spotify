@@ -42,7 +42,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox ItemsSource="{Binding AllPlaylist}" SelectedItem="{Binding SelectedItem}" Grid.Column="0" HorizontalAlignment="Left" Height="136" Grid.Row="3" VerticalAlignment="Top" Width="248">
+        <ListBox ItemsSource="{Binding AllPlaylist}" SelectedItem="{Binding SelectedItem}"  Grid.Column="0" HorizontalAlignment="Left" Height="136" Grid.Row="3" VerticalAlignment="Top" Width="248">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Label Content="{Binding Name}"></Label>

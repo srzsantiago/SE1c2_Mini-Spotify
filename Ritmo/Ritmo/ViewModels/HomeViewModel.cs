@@ -14,7 +14,7 @@ namespace Ritmo.ViewModels
     {
         List<Track> allTestTrack = new List<Track>();
         MainWindowViewModel mainWindowViewModel;
-        private int clickedbuttonvalue;
+        private int _clickedButtonValue;
 
         #region stackpanels
         private StackPanel _tracknamesColumn;
@@ -150,7 +150,8 @@ namespace Ritmo.ViewModels
 
                 _selectedItem = value;
                 NotifyOfPropertyChange("SelectedItem");
-                
+                Playlistboxes_SelectionChanged();
+                _selectedItem = null;
 
             }
         }
@@ -161,6 +162,7 @@ namespace Ritmo.ViewModels
         public HomeViewModel(MainWindowViewModel mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
+            AllPlaylist = new ObservableCollection<Playlist>();
             testAllPlayLists();
             _addToPlaylistCommand = new RelayCommand<object>(this.AddToPlayListClick);
             _addToQueueCommand = new RelayCommand<object>(this.AddToQueueClick);
@@ -250,17 +252,12 @@ namespace Ritmo.ViewModels
 
         }
 
-        public void ClearItems()
-        {
-            TracknamesColumn.Children.Clear();
-            AddPlayListColumn.Children.Clear();
-            AddQueueColumn.Children.Clear();
-        }
-
 
         private void AddToPlayListClick(object sender)
         {
-            AllPlaylist = new ObservableCollection<Playlist>();
+            _clickedButtonValue = (int)sender;
+
+            AllPlaylist.Clear();
 
             foreach (var item in mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists)
             {
@@ -271,11 +268,11 @@ namespace Ritmo.ViewModels
 
         private void AddToQueueClick(object sender)
         {
-            clickedbuttonvalue = (int)sender;
+            _clickedButtonValue = (int)sender;
 
             foreach (var item in AllTestTrack) // goes through the tracks
             {
-                if (item.TrackID == clickedbuttonvalue) // looks which buttons tag is the same as the trackid
+                if (item.TrackID == _clickedButtonValue) // looks which buttons tag is the same as the trackid
                 {
                     Track testTrack = new Track() { Name = item.Name, Artist = item.Artist, AudioFile = item.AudioFile, Duration = item.Duration, TrackId = item.TrackID };
                     mainWindowViewModel.PlayQueueController.AddTrack(testTrack); // adds the song to the queue
@@ -287,11 +284,11 @@ namespace Ritmo.ViewModels
 
         }
 
-        private void Playlistboxes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Playlistboxes_SelectionChanged()
         {
             foreach (var item in AllTestTrack)
             {
-                if (item.TrackID == clickedbuttonvalue)
+                if (item.TrackID == _clickedButtonValue)
                 {
                     for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
                     {
@@ -305,6 +302,8 @@ namespace Ritmo.ViewModels
                 }
 
             }
+            AllPlaylist.Clear();
+
         }
     }
     public class TestItems
