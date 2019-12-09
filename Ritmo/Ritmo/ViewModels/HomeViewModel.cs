@@ -12,67 +12,9 @@ namespace Ritmo.ViewModels
 {
     public class HomeViewModel : Screen
     {
-        List<Track> allTestTrack = new List<Track>();
+        
         MainWindowViewModel mainWindowViewModel;
         private int _clickedButtonValue;
-
-        #region stackpanels
-        private StackPanel _tracknamesColumn;
-
-        public StackPanel TracknamesColumn
-        {
-            get
-            {
-                if (_tracknamesColumn == null)
-                    _tracknamesColumn = new StackPanel();
-                return _tracknamesColumn;
-            }
-            set { _tracknamesColumn = value; }
-        }
-
-        private StackPanel _addPlayListColumn;
-
-        public StackPanel AddPlayListColumn
-        {
-            get
-            {
-                if (_addPlayListColumn == null)
-                    _addPlayListColumn = new StackPanel();
-                return _addPlayListColumn;
-            }
-            set { _addPlayListColumn = value; }
-        }
-
-        private StackPanel _addQueueColumn;
-
-        public StackPanel AddQueueColumn
-        {
-            get
-            {
-                if (_addQueueColumn == null)
-                    _addQueueColumn = new StackPanel();
-                return _addQueueColumn;
-            }
-            set { _addQueueColumn = value; }
-        }
-        #endregion
-
-        private ListBox _playlistboxes;
-
-        public ListBox Playlistboxes
-        {
-            get
-            {
-                if (_playlistboxes == null)
-                    _playlistboxes = new ListBox();
-                return _playlistboxes;
-            }
-            set
-            {
-                _playlistboxes = value;
-                NotifyOfPropertyChange("Playlistboxes");
-            }
-        }
 
         #region observablecollections
         private ObservableCollection<Track> _allTestTrack;
@@ -106,40 +48,11 @@ namespace Ritmo.ViewModels
         }
         #endregion
 
-        #region commands
-        private ICommand _addToPlaylistCommand;
+        #region commands and selectedItem
+        public ICommand LoadListboxPlaylistCommand { get; set; }
+        public ICommand AddToQueueCommand { get; set; }        
 
-        public ICommand AddToPlaylistCommand
-        {
-            get
-            {
-                return _addToPlaylistCommand;
-            }
-            set
-            {
-                _addToPlaylistCommand = value;
-            }
-        }
-
-        private ICommand _addToQueueCommand;
-
-        public ICommand AddToQueueCommand
-        {
-            get
-            {
-                return _addToQueueCommand;
-            }
-            set
-            {
-                _addToQueueCommand = value;
-            }
-        }
-        #endregion
-
-
-
-
-        private Playlist _selectedItem;
+        private Playlist _selectedItem; //this is used as a ActionListener for when user click on a item in the listbox of playlists.
         public Playlist SelectedItem
         {
             get { return _selectedItem; }
@@ -149,12 +62,14 @@ namespace Ritmo.ViewModels
                     return;
 
                 _selectedItem = value;
-                NotifyOfPropertyChange("SelectedItem");
-                Playlistboxes_SelectionChanged();
+                NotifyOfPropertyChange();                
+                if(_selectedItem != null) 
+                    AddTrackToSelectedPlaylist(); //Add the track to the selected item in the listbox (Selected item is a playlist)
                 _selectedItem = null;
 
             }
         }
+        #endregion
 
 
 
@@ -163,24 +78,17 @@ namespace Ritmo.ViewModels
         {
             this.mainWindowViewModel = mainWindowViewModel;
             AllPlaylist = new ObservableCollection<Playlist>();
-            testAllPlayLists();
-            _addToPlaylistCommand = new RelayCommand<object>(this.AddToPlayListClick);
-            _addToQueueCommand = new RelayCommand<object>(this.AddToQueueClick);
+            TestAllPlayLists();
+            LoadListboxPlaylistCommand = new RelayCommand<object>(this.LoadListboxPlaylist);
+            AddToQueueCommand = new RelayCommand<object>(this.AddToQueueClick);
 
         }
 
-        public void testAllPlayLists()
+        public void TestAllPlayLists()
         {
 
 
-            Track track1 = new Track(1, "track1", "JOHANNES", 10);
-            Track track2 = new Track(2, "track2", "Tristan", 10);
-            Track track3 = new Track(3, "track3", "ZAPATA", 10);
-            Track track4 = new Track(4, "track4", "rodriguez", 10);
-            Track track5 = new Track(5, "track5", "santiago", 10);
-
-
-            int count = 0;
+            
             AllTestTrack.Add(new Track()
                 {
                     TrackId = 6,
@@ -249,7 +157,7 @@ namespace Ritmo.ViewModels
         }
 
 
-        private void AddToPlayListClick(object sender)
+        private void LoadListboxPlaylist(object sender)
         {
             _clickedButtonValue = (int)sender;
 
@@ -280,7 +188,7 @@ namespace Ritmo.ViewModels
 
         }
 
-        private void Playlistboxes_SelectionChanged()
+        private void AddTrackToSelectedPlaylist()
         {
             foreach (var item in AllTestTrack)
             {
@@ -288,7 +196,7 @@ namespace Ritmo.ViewModels
                 {
                     for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
                     {
-                        if (_selectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
+                        if (SelectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
                         {
                             Track testTrack = item;
                             mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
@@ -302,16 +210,5 @@ namespace Ritmo.ViewModels
 
         }
     }
-    public class TestItems
-    {
-        public int ButtonID { get; set; } //composition of a type and an Index
-        //public int TrackID { get; set; }
-        //public String Name { get; set; }
-        //public String Artist { get; set; }
-        //public String Album { get; set; }
-        //public int Duration { get; set; }
-        //public Uri AudioFile { get; set; }
-        public Track track { get; set; }
-
-    }
+   
 }

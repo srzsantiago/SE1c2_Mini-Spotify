@@ -115,7 +115,7 @@ namespace Ritmo.ViewModels
 
             InitializeCurrentTrackElement();
 
-            //TestTrackMethod();
+            TestTrackMethod();
             PlaylistViewModel = new PlaylistViewModel(this,PlaylistController.Playlist);
         }
 
