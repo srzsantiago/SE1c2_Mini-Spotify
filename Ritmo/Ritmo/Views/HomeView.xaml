@@ -11,13 +11,12 @@
 
     <Grid Background="GhostWhite" Name="structuregridHome" Margin="0,48,0,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="31*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="61*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="2"/>
             <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>

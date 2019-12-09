@@ -120,7 +120,7 @@ namespace Ritmo.ViewModels
         {
             InitializeCommands();
 
-            AllPlaylistsController = new AllPlaylistsController();
+            AllPlaylistsController = mainWindow.AllPlaylistsController;
             MainWindow = mainWindow;
 
             //TestMethod();
