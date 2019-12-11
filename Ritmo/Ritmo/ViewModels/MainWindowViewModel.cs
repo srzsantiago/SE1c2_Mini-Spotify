@@ -348,13 +348,15 @@ namespace Ritmo.ViewModels
         }
         #endregion
 
+        //Methods that control view navigation
         #region View Navigation Methods
-        //Changes CurrentViewModel and sets the frame
+        //Changes CurrentViewModel
         public void ChangeViewModel(Screen viewModel)
         {
             CurrentViewModel = viewModel;
         }
 
+        //Sets previousviewmodelstack and changes viewmodel
         public void ToViewModel(Screen viewModel)
         {
             PreviousViewModelStack.Push(CurrentViewModel); //Adds current viewmodel to previous viewmodel stack
@@ -366,9 +368,9 @@ namespace Ritmo.ViewModels
             if(PreviousViewModelStack.Count != 0)
             {
                 NextViewModelStack.Push(CurrentViewModel); //Places previous viewmodel in next viewmodel stack
-                PreviousViewModel = PreviousViewModelStack.Pop(); //Gets PreviousViewModel
+                PreviousViewModel = PreviousViewModelStack.Pop(); //Gets previous viewmodel from stack
 
-                ChangeViewModel(PreviousViewModel);
+                ChangeViewModel(PreviousViewModel); //Changes viewmodel to previous viewmodel
             }
         }
 
@@ -376,10 +378,9 @@ namespace Ritmo.ViewModels
         {
             if(NextViewModelStack.Count != 0)
             {
-                PreviousViewModel = NextViewModelStack.Peek();
-                NextViewModel = NextViewModelStack.Pop();
+                NextViewModel = NextViewModelStack.Pop(); //Gets next viewmodel from stack
 
-                ToViewModel(NextViewModel);
+                ToViewModel(NextViewModel); //Changes viewmodel to next view model
             }
         }
         #endregion

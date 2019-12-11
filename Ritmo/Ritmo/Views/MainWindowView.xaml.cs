@@ -1,10 +1,18 @@
 ﻿using System.Windows;
-
+using System.Windows.Shell;
 
 namespace Ritmo.Views
 {
     public partial class MainWindowView : Window
     {
+        public MainWindowView()
+        {
+            WindowChrome windowChrome = new WindowChrome();
+            windowChrome.ResizeBorderThickness = new Thickness(4);
+            windowChrome.CaptionHeight = 0;
+            windowChrome.GlassFrameThickness = new Thickness(0);
+            WindowChrome.SetWindowChrome(this, windowChrome);
+        }
 
         private void Maximize_Click(object sender, RoutedEventArgs e)
         {

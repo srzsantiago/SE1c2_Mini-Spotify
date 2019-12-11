@@ -10,7 +10,8 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewmodels:MainWindowViewModel, IsDesignTimeCreatable=True}"
         WindowStartupLocation="CenterScreen"
-        Title="Ritmo" Height="450" Width="800" MinWidth="1000" MinHeight="600">
+        Title="Ritmo" Height="450" Width="800" MinWidth="1000" MinHeight="600"
+        >
 
     <Window.Resources>
         <!--#Region Variables -->
