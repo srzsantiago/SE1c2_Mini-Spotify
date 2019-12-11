@@ -15,6 +15,10 @@ namespace Ritmo
 
         public int TrackListID { get; set; }
 
+        public TrackList()
+        {
+
+        }
         public TrackList(string name)
         {
             Name = name;

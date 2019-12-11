@@ -124,7 +124,6 @@ namespace Ritmo.ViewModels
             MainWindow = mainWindow;
 
             //TestMethod();
-
             SetAllPlaylistsCollection();
         }
 
@@ -134,6 +133,9 @@ namespace Ritmo.ViewModels
         {
             AllPlaylistsCollection.Clear();
             AllPlaylistsController.AllPlaylists.Playlists.ForEach(playlist => AllPlaylistsCollection.Add(playlist));
+
+            Console.WriteLine(AllPlaylistsCollection.Count());
+            Console.WriteLine(AllPlaylistsController.AllPlaylists.Playlists.Count());
         }
 
         public void AddPlaylist(string name)
@@ -144,11 +146,7 @@ namespace Ritmo.ViewModels
                 PopUpMessage("Playlist name must be less than 32 characters!");
             else
             {
-                //Check database for ID's to ascertain which ID to use
-                int id = AllPlaylistsCollection.Count();
-                //This is for testing
-
-                AllPlaylistsController.AddTrackList(new Playlist($"{name}") { TrackListID = id }); //Create playlist and add it to all playlists
+                AllPlaylistsController.AddTrackList(new Playlist(name)); //Create playlist and add it to all playlists
                 SetAllPlaylistsCollection(); //Updates view
                 PopUpControl(); //Hides popup menu
             }

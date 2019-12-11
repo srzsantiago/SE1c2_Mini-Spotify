@@ -8,9 +8,7 @@ namespace Ritmo
     {
         public Playlist(string name) : base(name)
         {
-            //TrackListID unique ID here
             CreationDate = DateTime.Now;
-
             AddplaylistQuery();
         }
 
@@ -18,7 +16,7 @@ namespace Ritmo
         public void AddplaylistQuery()
         {
             string sql = $"INSERT INTO Playlist (name, creationDate) VALUES ('{Name}','{CreationDate.ToString("yyyy-MM-dd")}')";
-            //DatabaseConnector.InsertQueryDB(sql);
+            DatabaseConnector.InsertQueryDB(sql);
         }
 
     }

@@ -169,7 +169,6 @@ namespace Ritmo.ViewModels
         {
             PlayListTracksOC.Clear();
 
-            //Adds all tracks from Playlist model to the Observable Collection
             foreach (var track in PlaylistController.Playlist.Tracks)
                 PlayListTracksOC.Add(track);
         }

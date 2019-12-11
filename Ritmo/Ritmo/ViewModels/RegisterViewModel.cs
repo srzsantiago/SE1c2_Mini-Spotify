@@ -13,6 +13,7 @@ namespace Ritmo.ViewModels
 {
     class RegisterViewModel : Screen
     {
+        IWindowManager Manager = new WindowManager();
 
         #region ViewModel attributes
         private Screen _currentViewModel;
@@ -100,7 +101,8 @@ namespace Ritmo.ViewModels
 
             if (!Name.Equals("") && IsValidEmail(Email) && IsPasswordMatch(passwordBox, confirmPasswordBox)) //information validation
             {
-                //Register register = new Register(Name, Email, passwordBox.Password, confirmPasswordBox.Password);
+                Register register = new Register(Name, Email, passwordBox.Password, confirmPasswordBox.Password);
+                Manager.ShowWindow(new LoginViewModel());
                 TryClose();
             }
             else
