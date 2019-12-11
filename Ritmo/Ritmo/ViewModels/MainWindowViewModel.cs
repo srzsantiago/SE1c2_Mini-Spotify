@@ -27,7 +27,9 @@ namespace Ritmo.ViewModels
         public MyQueueViewModel MyQueueScreenToViewModel;
 
         #region Commands
-        public ICommand ChangeViewModelCommand { get; set; }
+        public ICommand ToViewModelCommand { get; set; }
+        public ICommand ToPreviousViewModelCommand { get; set; }
+        public ICommand ToNextViewModelCommand { get; set; }
         #endregion
 
         #region ViewModel attributes
@@ -38,9 +40,15 @@ namespace Ritmo.ViewModels
         public Screen FollowingViewModel { get; set; } = new FollowingViewModel();
         public Screen AllPlaylistsViewModel { get; set; }
         public Screen MyQueueViewModel { get; set; }
-        public Screen PlaylistViewModel { get; set; } 
+        public Screen PlaylistViewModel { get; set; }
 
-               
+        private Stack<Screen> PreviousViewModelStack;
+        private Stack<Screen> NextViewModelStack;
+
+        private Screen NextViewModel { get; set; }
+
+        public Screen PreviousViewModel { get; set; }
+
         public Screen CurrentViewModel
         {
             get { return _currentViewModel; }
@@ -109,7 +117,7 @@ namespace Ritmo.ViewModels
         {
             InitializeCommands();
             InitializeViewModels();
-            
+            InitializeViewModelNavigation();
 
             PlayQueue = PlayQueueController.PQ;
 
@@ -306,7 +314,10 @@ namespace Ritmo.ViewModels
         #region Initializer methods
         public void InitializeCommands()
         {
-            ChangeViewModelCommand = new RelayCommand<Screen>(ChangeViewModel); //Sets the command to the corresponding method
+            ToViewModelCommand = new RelayCommand<Screen>(ToViewModel); //Sets the command to the corresponding method
+            ToPreviousViewModelCommand = new RelayCommand(ToPreviousViewModel);
+            ToNextViewModelCommand = new RelayCommand(ToNextViewModel);
+
             TrackControlCommand = new RelayCommand(TrackControl);
             NextTrackCommand = new RelayCommand(NextTrack);
             PrevTrackCommand = new RelayCommand(PrevTrack);
@@ -329,13 +340,49 @@ namespace Ritmo.ViewModels
             CurrentTrackVolume = PlayQueue.CurrentVolume;
             CurrentTrackElement.Volume = CurrentTrackVolume;
         }
+
+        private void InitializeViewModelNavigation()
+        {
+            PreviousViewModelStack = new Stack<Screen>();
+            NextViewModelStack = new Stack<Screen>();
+        }
         #endregion
 
+        #region View Navigation Methods
         //Changes CurrentViewModel and sets the frame
-        public void ChangeViewModel(Screen ViewModel)
+        public void ChangeViewModel(Screen viewModel)
         {
-            this.CurrentViewModel = ViewModel;
+            CurrentViewModel = viewModel;
         }
+
+        public void ToViewModel(Screen viewModel)
+        {
+            PreviousViewModelStack.Push(CurrentViewModel); //Adds current viewmodel to previous viewmodel stack
+            ChangeViewModel(viewModel);
+        }
+
+        public void ToPreviousViewModel()
+        {
+            if(PreviousViewModelStack.Count != 0)
+            {
+                NextViewModelStack.Push(CurrentViewModel); //Places previous viewmodel in next viewmodel stack
+                PreviousViewModel = PreviousViewModelStack.Pop(); //Gets PreviousViewModel
+
+                ChangeViewModel(PreviousViewModel);
+            }
+        }
+
+        public void ToNextViewModel()
+        {
+            if(NextViewModelStack.Count != 0)
+            {
+                PreviousViewModel = NextViewModelStack.Peek();
+                NextViewModel = NextViewModelStack.Pop();
+
+                ToViewModel(NextViewModel);
+            }
+        }
+        #endregion
 
         public void TestTrackMethod()
         {

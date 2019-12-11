@@ -18,7 +18,7 @@ namespace Ritmo.UnitTests
             SearchViewModel TestHVM = new SearchViewModel();
 
             //Act
-            TestMWVM.ChangeViewModel(TestHVM); //Change viewmodel
+            TestMWVM.ToViewModel(TestHVM); //Change viewmodel
 
             //Assert
             Assert.IsTrue(TestMWVM.CurrentViewModel.Equals(TestHVM)); //Checks if the ViewModel has changed
