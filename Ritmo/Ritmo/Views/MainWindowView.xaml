@@ -11,6 +11,8 @@
         d:DataContext="{d:DesignInstance viewmodels:MainWindowViewModel, IsDesignTimeCreatable=True}"
         WindowStartupLocation="CenterScreen"
         Title="Ritmo" Height="450" Width="800" MinWidth="1000" MinHeight="600"
+        WindowStyle="None"
+        Background="Transparent"
         >
 
     <Window.Resources>
@@ -43,7 +45,7 @@
         <!--#endregion-->
 
     </Window.Resources>
-
+    
     <Grid>
         <!-- Main Layout -->
         <Grid.ColumnDefinitions>
@@ -67,12 +69,15 @@
                 <ColumnDefinition Width="60"/> <!-- Maximize -->
                 <ColumnDefinition Width="60"/> <!-- Close -->
             </Grid.ColumnDefinitions>
-
+            
+            
+            <Rectangle Name="TopBar" Width="auto" Height="auto" Fill="Transparent" Grid.ColumnSpan="7" MouseDown="Title_Bar_Drag"/>
             <Button Name="Previous" Grid.Column="1" Command="{Binding ToPreviousViewModelCommand}"/>
             <Button Name="Next" Grid.Column="2" Command="{Binding ToNextViewModelCommand}" />
             <Button Name="Minimize" Grid.Column="4" Click="Minimize_Click"/>
             <Button Name="Maximize" Grid.Column="5" Click="Maximize_Click"/> 
-            <Button Name="Close" Grid.Column="6" Click="Close_Click" /> 
+            <Button Name="Close" Grid.Column="6" Click="Close_Click" />
+            
         </Grid>
         
         <!-- Left panel -->
@@ -141,4 +146,5 @@
         </Button>
 
     </Grid>
+    
 </Window>
