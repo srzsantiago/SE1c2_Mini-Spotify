@@ -45,7 +45,7 @@
     </Window.Resources>
 
 
-    <Grid Background="#232426">
+    <Grid Background="{StaticResource MainBlueColor}">
         <!-- Main Layout -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition MaxWidth="170" MinWidth="170" />
@@ -71,12 +71,22 @@
             
             
             <Rectangle Name="TopBar" Width="auto" Height="auto" Fill="Transparent" Grid.ColumnSpan="7" MouseDown="Title_Bar_Drag"/>
-            <Button Name="Previous" Grid.Column="1" Command="{Binding ToPreviousViewModelCommand}"/>
-            <Button Name="Next" Grid.Column="2" Command="{Binding ToNextViewModelCommand}" />
-            <Button Name="Minimize" Grid.Column="4" Click="Minimize_Click"/>
-            <Button Name="Maximize" Grid.Column="5" Click="Maximize_Click"/> 
-            <Button Name="Close" Grid.Column="6" Click="Close_Click" />
-            
+            <Button Name="Previous" Grid.Column="1" Command="{Binding ToPreviousViewModelCommand}" Style="{StaticResource TopBarButtonStyle}">
+                <Image Source="/ImageResources/previouspageicon.png" Width="{StaticResource TopBarIconSize}"/>
+            </Button>
+            <Button Name="Next" Grid.Column="2" Command="{Binding ToNextViewModelCommand}" Style="{StaticResource TopBarButtonStyle}">
+                <Image Source="/ImageResources/nextpageicon.png" Width="{StaticResource TopBarIconSize}"/>
+            </Button>
+            <Button Name="Minimize" Grid.Column="4" Click="Minimize_Click" Style="{StaticResource TopBarButtonStyle}">
+                <Image Source="/ImageResources/MinimiseIcon.ico" Width="{StaticResource TopBarIconSize}"/>
+            </Button>
+            <Button Name="Maximize" Grid.Column="5" Click="Maximize_Click" Style="{StaticResource TopBarButtonStyle}">
+                <Image Source="/ImageResources/MaximiseIcon.ico" Width="{StaticResource TopBarIconSize}"/>
+            </Button>
+            <Button Name="Close" Grid.Column="6" Click="Close_Click" Style="{StaticResource TopBarButtonStyle}">
+                <Image Source="/ImageResources/ExitIcon.ico" Width="{StaticResource TopBarIconSize}"/>
+            </Button>
+
         </Grid>
         
         <!-- Left panel -->
@@ -88,20 +98,20 @@
                 <RowDefinition Height="134"/>
                 <RowDefinition Height="134"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Background="#082C5F">
+            <StackPanel Grid.Row="0" Background="#2D4E7C">
                 <Image Source="{Binding TestLogo}" HorizontalAlignment="Left" Height="101" Margin="10,10,0,0" VerticalAlignment="Top" Width="150"/>
             </StackPanel>
             <StackPanel Grid.Row="1">
                 <Separator/>
-                <Button Foreground="#A6A6A6" x:Name="Home_Button" Content="Home" CommandParameter="{Binding HomeViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource CustomButtonStyle}" />
-                <Button Foreground="#A6A6A6" x:Name="Search_Button" Content="Search" CommandParameter="{Binding SearchViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Foreground="#A6A6A6" x:Name="Categories_Button" Content="Categories" CommandParameter="{Binding CategoriesViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Foreground="#A6A6A6" x:Name="Following_Button"  Content="Following" CommandParameter="{Binding FollowingViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
+                <Button x:Name="Home_Button" Content="Home" CommandParameter="{Binding HomeViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}" />
+                <Button x:Name="Search_Button" Content="Search" CommandParameter="{Binding SearchViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}"/>
+                <Button x:Name="Categories_Button" Content="Categories" CommandParameter="{Binding CategoriesViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}"/>
+                <Button x:Name="Following_Button"  Content="Following" CommandParameter="{Binding FollowingViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}"/>
             </StackPanel>
             <StackPanel Grid.Row="2">
                 <Separator/>
-                <Button Foreground="#A6A6A6" x:Name="AllPlaylist_Button" Content="My Playlists" CommandParameter="{Binding AllPlaylistsViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource CustomButtonStyle}" />
-                <Button Foreground="#A6A6A6" x:Name="MyQueue_Button" Content="My Queue" CommandParameter="{Binding MyQueueViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
+                <Button x:Name="AllPlaylist_Button" Content="My Playlists" CommandParameter="{Binding AllPlaylistsViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}" />
+                <Button x:Name="MyQueue_Button" Content="My Queue" CommandParameter="{Binding MyQueueViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}"/>
                 <Separator/>
             </StackPanel>
 
@@ -119,10 +129,10 @@
                 <Image x:Name="PlayButtonIcon" Source="{Binding PlayButtonIcon}" />
             </Button>
             <Button x:Name="PrevButton" Margin="0,0,80,0" Command="{Binding PrevTrackCommand}" Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">
-                <Image Source="/ImageResources/prevtrackbutton.png"/>
+                <Image Source="/ImageResources/previoustrackicon.ico"/>
             </Button>
             <Button x:Name="NextButton" Margin="80,0,0,0" Command="{Binding NextTrackCommand}"  Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">
-                <Image Source="/ImageResources/nexttrackbutton.png"/>
+                <Image Source="/ImageResources/nexttrackicon.ico"/>
             </Button>
         </Grid>
 

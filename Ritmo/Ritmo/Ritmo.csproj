@@ -152,6 +152,14 @@
     <Compile Include="Views\SearchView.xaml.cs">
       <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
+    <Page Include="StyleResources\GeneralStyleVariables.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StyleResources\TopBarButtonsStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ArtistRegisterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -242,11 +250,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageResources\nexttrackbutton.png" />
-    <Resource Include="ImageResources\prevtrackbutton.png" />
     <Resource Include="ImageResources\searchbutton.png" />
-    <Resource Include="ImageResources\playicon.ico" />
-    <Resource Include="ImageResources\pauseicon.ico" />
     <Resource Include="ImageResources\mute.png" />
     <Resource Include="ImageResources\unmute.png" />
     <Resource Include="ImageResources\unshuffle.png" />
@@ -255,6 +259,15 @@
     <Resource Include="ImageResources\loopTrack.png" />
     <Resource Include="ImageResources\LoopTrackWaitingList.png" />
     <Resource Include="ImageResources\Test_Logo.png" />
+    <Resource Include="ImageResources\ExitIcon.ico" />
+    <Resource Include="ImageResources\MaximiseIcon.ico" />
+    <Resource Include="ImageResources\MinimiseIcon.ico" />
+    <Resource Include="ImageResources\nextpageicon.png" />
+    <Resource Include="ImageResources\previouspageicon.png" />
+    <Resource Include="ImageResources\pauseicon.ico" />
+    <Resource Include="ImageResources\playicon.ico" />
+    <Resource Include="ImageResources\nexttrackicon.ico" />
+    <Resource Include="ImageResources\previoustrackicon.ico" />
     <Content Include="TestFiles\Gun%27sRoses.mp3" />
     <Content Include="TestFiles\MetalGearSolid.mp3" />
     <Content Include="TestFiles\Powerup1.wav" />
