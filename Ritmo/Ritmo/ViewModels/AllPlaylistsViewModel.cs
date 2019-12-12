@@ -176,7 +176,7 @@ namespace Ritmo.ViewModels
         {
             Playlist playlist = AllPlaylistsController.GetPlaylist(playlistID);
 
-            MainWindow.ToViewModel(new PlaylistViewModel(MainWindow, playlist));
+            MainWindow.ToClickedViewModel(new PlaylistViewModel(MainWindow, playlist));
         }
 
         private void TestMethod()

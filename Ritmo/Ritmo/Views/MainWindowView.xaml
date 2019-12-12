@@ -12,7 +12,7 @@
         WindowStartupLocation="CenterScreen"
         Title="Ritmo" Height="450" Width="800" MinWidth="1000" MinHeight="600"
         WindowStyle="None"
-        Background="Transparent"
+        
         >
 
     <Window.Resources>
@@ -45,6 +45,7 @@
         <!--#endregion-->
 
     </Window.Resources>
+
     
     <Grid>
         <!-- Main Layout -->
@@ -94,15 +95,15 @@
             </StackPanel>
             <StackPanel Grid.Row="1">
                 <Separator/>
-                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="Home_Button" Content="Home" CommandParameter="{Binding HomeViewModel}" Command="{Binding ToViewModelCommand}" Style="{StaticResource CustomButtonStyle}" />
-                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="Search_Button" Content="Search" CommandParameter="{Binding SearchViewModel}" Command="{Binding ToViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
-                <Button FontWeight="Bold" Foreground="DarkSlateGray"  x:Name="Categories_Button" Content="Categories" CommandParameter="{Binding CategoriesViewModel}" Command="{Binding ToViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
-                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="Following_Button"  Content="Following" CommandParameter="{Binding FollowingViewModel}" Command="{Binding ToViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
+                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="Home_Button" Content="Home" CommandParameter="{Binding HomeViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource CustomButtonStyle}" />
+                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="Search_Button" Content="Search" CommandParameter="{Binding SearchViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
+                <Button FontWeight="Bold" Foreground="DarkSlateGray"  x:Name="Categories_Button" Content="Categories" CommandParameter="{Binding CategoriesViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
+                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="Following_Button"  Content="Following" CommandParameter="{Binding FollowingViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
             </StackPanel>
             <StackPanel Grid.Row="2">
                 <Separator/>
-                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="AllPlaylist_Button" Content="My Playlists" CommandParameter="{Binding AllPlaylistsViewModel}" Command="{Binding ToViewModelCommand}" Style="{StaticResource CustomButtonStyle}" />
-                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="MyQueue_Button" Content="My Queue" CommandParameter="{Binding MyQueueViewModel}" Command="{Binding ToViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
+                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="AllPlaylist_Button" Content="My Playlists" CommandParameter="{Binding AllPlaylistsViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource CustomButtonStyle}" />
+                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="MyQueue_Button" Content="My Queue" CommandParameter="{Binding MyQueueViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
                 <Separator/>
             </StackPanel>
 
@@ -146,5 +147,5 @@
         </Button>
 
     </Grid>
-    
+   
 </Window>

@@ -27,7 +27,7 @@ namespace Ritmo.ViewModels
         public MyQueueViewModel MyQueueScreenToViewModel;
 
         #region Commands
-        public ICommand ToViewModelCommand { get; set; }
+        public ICommand ToClickedViewModelCommand { get; set; }
         public ICommand ToPreviousViewModelCommand { get; set; }
         public ICommand ToNextViewModelCommand { get; set; }
         #endregion
@@ -314,7 +314,7 @@ namespace Ritmo.ViewModels
         #region Initializer methods
         public void InitializeCommands()
         {
-            ToViewModelCommand = new RelayCommand<Screen>(ToViewModel); //Sets the command to the corresponding method
+            ToClickedViewModelCommand = new RelayCommand<Screen>(ToClickedViewModel); //Sets the command to the corresponding method
             ToPreviousViewModelCommand = new RelayCommand(ToPreviousViewModel);
             ToNextViewModelCommand = new RelayCommand(ToNextViewModel);
 
@@ -363,12 +363,19 @@ namespace Ritmo.ViewModels
             ChangeViewModel(viewModel);
         }
 
+        //Clears next viewmodel stack when another page is opened when not using previous or next
+        public void ToClickedViewModel(Screen viewModel)
+        {
+            NextViewModelStack.Clear();
+            ToViewModel(viewModel);
+        }
+
         public void ToPreviousViewModel()
         {
             if(PreviousViewModelStack.Count != 0)
             {
                 NextViewModelStack.Push(CurrentViewModel); //Places previous viewmodel in next viewmodel stack
-                PreviousViewModel = PreviousViewModelStack.Pop(); //Gets previous viewmodel from stack
+                PreviousViewModel = PreviousViewModelStack.Pop(); //Gets previous viewmodel from previous stack
 
                 ChangeViewModel(PreviousViewModel); //Changes viewmodel to previous viewmodel
             }

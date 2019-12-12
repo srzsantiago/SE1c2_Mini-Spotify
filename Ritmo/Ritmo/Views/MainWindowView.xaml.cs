@@ -7,10 +7,18 @@ namespace Ritmo.Views
     {
         public MainWindowView()
         {
+            SetWindowChrome();
+            
+        }
+
+        //Sets the style of the exterior of the window
+        private void SetWindowChrome()
+        {
             WindowChrome windowChrome = new WindowChrome();
             windowChrome.ResizeBorderThickness = new Thickness(4);
             windowChrome.CaptionHeight = 0;
             windowChrome.GlassFrameThickness = new Thickness(0);
+            windowChrome.CornerRadius = new CornerRadius(1);
             WindowChrome.SetWindowChrome(this, windowChrome);
         }
 
@@ -20,7 +28,6 @@ namespace Ritmo.Views
                 WindowState = WindowState.Normal;
             else
                 WindowState = WindowState.Maximized;
-            
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
