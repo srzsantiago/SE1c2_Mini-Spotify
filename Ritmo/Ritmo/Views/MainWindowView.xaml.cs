@@ -18,7 +18,7 @@ namespace Ritmo.Views
             windowChrome.ResizeBorderThickness = new Thickness(4);
             windowChrome.CaptionHeight = 0;
             windowChrome.GlassFrameThickness = new Thickness(0);
-            windowChrome.CornerRadius = new CornerRadius(1);
+            windowChrome.CornerRadius = new CornerRadius(2);
             WindowChrome.SetWindowChrome(this, windowChrome);
         }
 
