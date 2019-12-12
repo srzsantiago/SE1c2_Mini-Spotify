@@ -2,6 +2,7 @@
 using Ritmo.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Ritmo.UnitTests
@@ -9,23 +10,22 @@ namespace Ritmo.UnitTests
     [TestClass]
     public class MainWindowTest
     {
-        //Method: ChangeViewModel(Screen ViewModel) - Change the view inside the MainWindowView
         [TestMethod]
-        public void ChangeViewModel_ViewModelChanged_ReturnsTrue()
+        public void PreviousViewModel_ViewModel_PreviousViewModelIsCurrentViewModel()
         {
-            //Arrange 
-            MainWindowViewModel TestMWVM = new MainWindowViewModel();
-            SearchViewModel TestHVM = new SearchViewModel();
-
+            //Arrange
+            MainWindowViewModel MWVM = new MainWindowViewModel();
+            AllPlaylistsViewModel APVM = new AllPlaylistsViewModel(MWVM);
+            
             //Act
-            TestMWVM.ToViewModel(TestHVM); //Change viewmodel
+            MWVM.ToViewModel(APVM);
 
             //Assert
-            Assert.IsTrue(TestMWVM.CurrentViewModel.Equals(TestHVM)); //Checks if the ViewModel has changed
+            Assert.AreEqual(MWVM.CurrentViewModel, APVM);
         }
 
 
         // doesnt work yet?
-    
+
     }
 }

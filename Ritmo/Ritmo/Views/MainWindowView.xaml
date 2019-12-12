@@ -11,6 +11,9 @@
         d:DataContext="{d:DesignInstance viewmodels:MainWindowViewModel, IsDesignTimeCreatable=True}"
         WindowStartupLocation="CenterScreen"
         Title="Ritmo" Height="450" Width="800" MinWidth="1000" MinHeight="600"
+        
+        WindowStyle="None"
+        ResizeMode="CanResize"
         >
 
     <Window.Resources>
@@ -44,8 +47,8 @@
 
     </Window.Resources>
 
-
-    <Grid Background="{StaticResource MainBlueColor}">
+    <Border Background="Transparent" >
+    <Grid Background="{StaticResource MainBlueColor}" >
         <!-- Main Layout -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition MaxWidth="170" MinWidth="170" />
@@ -155,5 +158,6 @@
         </Button>
 
     </Grid>
-   
+    </Border>
+
 </Window>
