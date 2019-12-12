@@ -54,10 +54,10 @@
             <RowDefinition/>
             <RowDefinition MinHeight="80" MaxHeight="80"/>
         </Grid.RowDefinitions>
-        
+
         <!-- Window Top Bar -->
         <Grid Background="LightGray" Grid.ColumnSpan="2"></Grid>
-        
+
         <!-- Left panel -->
         <Grid Background="LightGray" Grid.Row="1" Grid.Column="0">
 
@@ -93,6 +93,14 @@
         <Rectangle Grid.ColumnSpan="2" Grid.Row="2" Fill="gray"/>
         <!-- Background color -->
 
+        <Grid Grid.Row="1"  Width="500" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="77.4,450,246.6,0" Height="40" Grid.Column="1" Grid.RowSpan="2">
+            <Label Content="{Binding CurrentTrackTime}" HorizontalAlignment="Left" Height="31" VerticalAlignment="Bottom" Width="55"/>
+            <Slider Value="{Binding CurrentTrackTime}" IsMoveToPointEnabled="True" Minimum="0" Maximum="{Binding TotalTrackTime}" x:Name="TimeSlider" Cursor="Hand" HorizontalAlignment="Center" Height="20" Margin="55,15,58,5" VerticalAlignment="Center" Width="387"/>
+            <Label Content="{Binding TotalTrackTime}" HorizontalAlignment="Left" Height="31" Margin="442,0,0,0" VerticalAlignment="Bottom" Width="58"/>
+        </Grid>
+
+
+
         <Grid Grid.Row="2"  Width="124" HorizontalAlignment="Center" Margin="264,32,434,0" Grid.Column="1">
             <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Command="{Binding TrackControlCommand}" Style="{StaticResource PlayButtonStyle}" Width="40" Height="Auto">
                 <Image x:Name="PlayButtonIcon" Source="{Binding PlayButtonIcon}" />
@@ -105,7 +113,7 @@
             </Button>
         </Grid>
 
-        <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="35" Margin="545,10,0,0" VerticalAlignment="Top" Width="42" Grid.Column="1" Grid.Row="3"/>
+        <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="35" Margin="519.4,42.6,0,0" VerticalAlignment="Top" Width="42" Grid.Column="1" Grid.Row="2"/>
         <ContentControl Content="{Binding CurrentTrackElement}" Margin="326,11,481,60" Grid.Column="1" Grid.Row="1"/>
 
         <Grid Background="LightGray" HorizontalAlignment="Right" Height="71" Margin="0,0,5.6,4.4" VerticalAlignment="Bottom" Width="162" Grid.Column="1" Grid.Row="2">
@@ -116,10 +124,10 @@
             <Slider  VerticalAlignment="Top" Margin="0,44,0,0" x:Name="volumeSlider" Cursor="Hand" Minimum="0" Maximum="1" Value="{Binding CurrentTrackVolume}"  IsMoveToPointEnabled="True"  Height="22"/>
         </Grid>
 
-        <Button Background="Transparent" Command="{Binding LoopCommand}" Grid.Column="1" HorizontalAlignment="Right" Height="33" Margin="0,0,176.6,41.4" VerticalAlignment="Bottom" Width="33" RenderTransformOrigin="-0.494,-0.459" Grid.Row="1" BorderBrush="{x:Null}">
+        <Button Background="Transparent" Command="{Binding LoopCommand}" Grid.Column="1" HorizontalAlignment="Right" Height="33" Margin="0,0,176.6,41.4" VerticalAlignment="Bottom" Width="33" RenderTransformOrigin="-0.494,-0.459" Grid.Row="2" BorderBrush="{x:Null}">
             <Image x:Name="RepeatModeIcon" Source="{Binding RepeatModeIcon}" Height="28" Width="28" />
         </Button>
-        <Button Background="Transparent" x:Name="shuffleButton" Grid.Column="1" HorizontalAlignment="right" Margin="0,0,176.6,4.4" Grid.Row="1" VerticalAlignment="bottom" Command="{Binding ShuffleWaitinglistCommand}" Width="33" Height="33" BorderBrush="{x:Null}">
+        <Button Background="Transparent" x:Name="shuffleButton" Grid.Column="1" HorizontalAlignment="right" Margin="0,0,176.6,4.4" Grid.Row="2" VerticalAlignment="bottom" Command="{Binding ShuffleWaitinglistCommand}" Width="33" Height="33" BorderBrush="{x:Null}">
             <Image x:Name="ShuffleButtonIcon" Source="{ Binding ShuffleButtonIcon }" Height="28" Width="28"/>
         </Button>
 

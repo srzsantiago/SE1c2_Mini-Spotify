@@ -39,7 +39,6 @@ namespace Ritmo.ViewModels
         public Screen AllPlaylistsViewModel { get; set; }
         public Screen MyQueueViewModel { get; set; }
         public Screen PlaylistViewModel { get; set; } 
-
                
         public Screen CurrentViewModel
         {
@@ -63,6 +62,8 @@ namespace Ritmo.ViewModels
         private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual };
         private Uri _currentTrackSource; //Unused
         private Double _currentTrackVolume;
+        private double _currentTrackTime;
+        private double _totalTrackTime;
         private Uri _playButtonIcon = new Uri("/ImageResources/playicon.ico", UriKind.RelativeOrAbsolute);
         private Uri _muteButtonIcon = new Uri("/ImageResources/unmute.png", UriKind.RelativeOrAbsolute);
 
@@ -71,6 +72,7 @@ namespace Ritmo.ViewModels
         private Uri _shuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
         private Uri _testLogo = new Uri("/ImageResources/Test_Logo.png", UriKind.RelativeOrAbsolute);
         private double oldVolume = 0;
+
 
         public MediaElement CurrentTrackElement
         {
@@ -89,6 +91,33 @@ namespace Ritmo.ViewModels
             {
                 _currentTrackVolume = value;
                 VolumeSlider_ValueChanged(value);
+            }
+        }
+
+        public double CurrentTrackTime
+        {
+            get
+            {
+                return _currentTrackTime;
+            }
+            set
+            {
+                _currentTrackTime = value;
+                TimeSlider_ValueChanged(value);
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public double TotalTrackTime
+        {
+            get
+            {
+                return _totalTrackTime;
+            }
+            set
+            {
+                _totalTrackTime = value;
+                NotifyOfPropertyChange();
             }
         }
 
@@ -128,6 +157,8 @@ namespace Ritmo.ViewModels
                 CurrentTrackElement.Play();
                 PlayButtonIcon = new Uri(@"\ImageResources\pauseicon.ico", UriKind.Relative);
                 PlayQueueController.UnpauseTrack(); //Sets pause bool to true
+                TotalTrackTime = PlayQueue.CurrentTrack.Duration;
+
             }
         }
 
@@ -271,6 +302,12 @@ namespace Ritmo.ViewModels
             }
         }
 
+        public void TimeSlider_ValueChanged(double TimeSliderValue)
+        {
+            //CurrentTrackElement.Position.Seconds = TimeSliderValue;
+
+        }
+
         //Changes volume based on slider. 0 is muted and 100 is highest
         public void VolumeSlider_ValueChanged(double VolumeSliderValue)
         {
@@ -328,6 +365,8 @@ namespace Ritmo.ViewModels
             CurrentTrackElement.MediaEnded += Track_Ended;
             CurrentTrackVolume = PlayQueue.CurrentVolume;
             CurrentTrackElement.Volume = CurrentTrackVolume;
+            CurrentTrackTime = CurrentTrackElement.Position.Seconds;
+            TotalTrackTime = CurrentTrackElement.Position.TotalSeconds;
         }
         #endregion
 
