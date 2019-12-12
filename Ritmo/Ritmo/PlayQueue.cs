@@ -38,22 +38,5 @@ namespace Ritmo
         }
 
         
-        public void TrackEnded()
-        {
-            if (TrackQueueHasSongs())
-            {
-                //Set CurrentTrack to TrackQueue dequeue
-            }
-            else if (!CurrentTrack.Equals(TrackWaitingList.Last.Value))
-            {
-                CurrentTrack = TrackWaitingList.Find(CurrentTrack).Next.Value;
-                TrackWaitingListEnded = false;
-            }
-            else
-            {
-                CurrentTrack = TrackWaitingList.First.Value;
-                TrackWaitingListEnded = true;
-            }
-        }
     }
 }
