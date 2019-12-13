@@ -101,6 +101,7 @@
     <Compile Include="AllPlaylistsController.cs" />
     <Compile Include="Artist.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Navigation.cs" />
     <Compile Include="ConverterParameter.cs" />
     <Compile Include="Database\DatabaseConnector.cs" />
     <Compile Include="Database\QueryType.cs" />

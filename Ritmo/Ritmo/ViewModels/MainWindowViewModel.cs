@@ -41,13 +41,6 @@ namespace Ritmo.ViewModels
         public Screen MyQueueViewModel { get; set; }
         public Screen PlaylistViewModel { get; set; }
 
-        private Stack<Screen> PreviousViewModelStack;
-        private Stack<Screen> NextViewModelStack;
-
-        private Screen NextViewModel { get; set; }
-
-        public Screen PreviousViewModel { get; set; }
-
         public Screen CurrentViewModel
         {
             get { return _currentViewModel; }
@@ -56,6 +49,12 @@ namespace Ritmo.ViewModels
                 _currentViewModel = value;
                 NotifyOfPropertyChange();
             }
+        }
+
+        //Method that called by ViewModelChanged event in Navigation class
+        protected virtual void ChangeViewModel(Screen viewModel)
+        {
+            CurrentViewModel = viewModel;
         }
         #endregion
 
@@ -116,8 +115,10 @@ namespace Ritmo.ViewModels
         {
             InitializeCommands();
             InitializeViewModels();
-            InitializeViewModelNavigation();
 
+            Navigation.InitializeViewModelNavigation();
+            Navigation.ViewModelChanged += ChangeViewModel;
+            
             PlayQueue = PlayQueueController.PQ;
 
             InitializeCurrentTrackElement();
@@ -313,9 +314,9 @@ namespace Ritmo.ViewModels
         #region Initializer methods
         public void InitializeCommands()
         {
-            ToClickedViewModelCommand = new RelayCommand<Screen>(ToClickedViewModel); //Sets the command to the corresponding method
-            ToPreviousViewModelCommand = new RelayCommand(ToPreviousViewModel);
-            ToNextViewModelCommand = new RelayCommand(ToNextViewModel);
+            ToClickedViewModelCommand = new RelayCommand<Screen>(Navigation.ToClickedViewModel); //Sets the command to the corresponding method
+            ToPreviousViewModelCommand = new RelayCommand(Navigation.ToPreviousViewModel);
+            ToNextViewModelCommand = new RelayCommand(Navigation.ToNextViewModel);
 
             TrackControlCommand = new RelayCommand(TrackControl);
             NextTrackCommand = new RelayCommand(NextTrack);
@@ -331,6 +332,8 @@ namespace Ritmo.ViewModels
             AllPlaylistsViewModel = new AllPlaylistsViewModel(this);
             MyQueueViewModel = new MyQueueViewModel(this);
             MyQueueScreenToViewModel = (MyQueueViewModel)MyQueueViewModel;
+
+            Navigation.CurrentViewModel = CurrentViewModel; //Sets the CurrentViewModel to the Navigation class
         }
         public void InitializeCurrentTrackElement()
         {
@@ -338,56 +341,6 @@ namespace Ritmo.ViewModels
             CurrentTrackElement.MediaEnded += Track_Ended;
             CurrentTrackVolume = PlayQueue.CurrentVolume;
             CurrentTrackElement.Volume = CurrentTrackVolume;
-        }
-
-        private void InitializeViewModelNavigation()
-        {
-            PreviousViewModelStack = new Stack<Screen>();
-            NextViewModelStack = new Stack<Screen>();
-        }
-        #endregion
-
-        //Methods that control view navigation
-        #region View Navigation Methods
-        //Changes CurrentViewModel
-        public void ChangeViewModel(Screen viewModel)
-        {
-            CurrentViewModel = viewModel;
-        }
-
-        //Sets previousviewmodelstack and changes viewmodel
-        public void ToViewModel(Screen viewModel)
-        {
-            PreviousViewModelStack.Push(CurrentViewModel); //Adds current viewmodel to previous viewmodel stack
-            ChangeViewModel(viewModel);
-        }
-
-        //Clears next viewmodel stack when another page is opened when not using previous or next
-        public void ToClickedViewModel(Screen viewModel)
-        {
-            NextViewModelStack.Clear();
-            ToViewModel(viewModel);
-        }
-
-        public void ToPreviousViewModel()
-        {
-            if(PreviousViewModelStack.Count != 0)
-            {
-                NextViewModelStack.Push(CurrentViewModel); //Places previous viewmodel in next viewmodel stack
-                PreviousViewModel = PreviousViewModelStack.Pop(); //Gets previous viewmodel from previous stack
-
-                ChangeViewModel(PreviousViewModel); //Changes viewmodel to previous viewmodel
-            }
-        }
-
-        public void ToNextViewModel()
-        {
-            if(NextViewModelStack.Count != 0)
-            {
-                NextViewModel = NextViewModelStack.Pop(); //Gets next viewmodel from stack
-
-                ToViewModel(NextViewModel); //Changes viewmodel to next view model
-            }
         }
         #endregion
 

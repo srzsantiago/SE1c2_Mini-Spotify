@@ -227,7 +227,7 @@ namespace Ritmo.ViewModels
             if (action.Equals("Delete"))//user clicked delete button
             {
                 //Playlist logica om de playlist te verwijderen
-                MainWindow.ChangeViewModel(MainWindow.HomeViewModel);
+                Navigation.ToViewModel(MainWindow.HomeViewModel);
                 IsDeletePlaylistBoxOpen = false;
             }
             else //User clicked cancel
