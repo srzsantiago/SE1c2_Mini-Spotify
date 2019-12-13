@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ritmo.Database;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlTypes;
@@ -17,16 +18,16 @@ namespace Ritmo
         {
             Playlists = new List<Playlist>();
             //GetPlaylists();
-
         }
         public void GetPlaylists()
         {
             String sqlquery = "";
             int count = 0;
             
-            sqlquery = "SELECT name, creationDate FROM Playlist"; // the query that is going to get the info from the database
+            sqlquery = "SELECT idPlaylist, name, creationDate FROM Playlist"; // the query that is going to get the info from the database
             // Dictionary<string, object> = the string is the key (so [name] and [creationDate] the object is the value bound to the key)
             List<Dictionary<string, object>> playlistNames = Database.DatabaseConnector.SelectQueryDB(sqlquery); // executing the query
+            int playlistid = 0;
             string name="";
             string creationDate="";
             foreach (var dictionary in playlistNames) { // goes through the dictionary
@@ -42,11 +43,15 @@ namespace Ritmo
                     {
                         creationDate = key.Value.ToString();
                         count++;
+                    } else if (key.Key.Equals("idPlaylist")) // if the key is [idPlaylist]
+                    {
+                        playlistid = Convert.ToInt32(key.Value);
+                        count++;
                     }
                 }
-                if(count % 2 == 0) // if 2 values got assigned (so a name and a creation date)
+                if(count % 3 == 0) // if 3 values got assigned (so an id, name and creation date)
                 {
-                    Playlists.Add(new Playlist(name) { CreationDate = Convert.ToDateTime(creationDate) }); // creates the playlist
+                    Playlists.Add(new Playlist(name) { TrackListID = playlistid, CreationDate = Convert.ToDateTime(creationDate) }); // creates the playlist
                 }
             }
         }

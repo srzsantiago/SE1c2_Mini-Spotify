@@ -20,7 +20,6 @@ namespace Ritmo
         {
 
         }
-
         public Track(int trackId, string name, string artist, int duration)
         {
             TrackId = trackId;

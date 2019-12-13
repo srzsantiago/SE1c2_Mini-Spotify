@@ -34,9 +34,8 @@ namespace Ritmo
 
         public Playlist GetPlaylist(int playlistID)
         {
-            //Set up query to get playlist by playlistID
             List<Playlist> playlists = AllPlaylists.Playlists;
-
+            
             Playlist Result = (from p in AllPlaylists.Playlists
                                where (p.TrackListID == playlistID)
                                select p).Single();
