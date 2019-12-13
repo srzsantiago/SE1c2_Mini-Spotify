@@ -60,4 +60,34 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <!-- Style for Next and Previous buttons -->
+    <Style x:Key="LoopShuffleStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="Transparent"/>
+                <Setter Property="MinHeight" Value="31"/>
+                <Setter Property="MinWidth" Value="31"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="MinHeight" Value="29"/>
+                <Setter Property="MinWidth" Value="29"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

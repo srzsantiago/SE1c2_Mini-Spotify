@@ -254,7 +254,6 @@
     <Resource Include="ImageResources\mute.png" />
     <Resource Include="ImageResources\unmute.png" />
     <Resource Include="ImageResources\unshuffle.png" />
-    <Resource Include="ImageResources\shuffle.png" />
     <Resource Include="ImageResources\loopOff.png" />
     <Resource Include="ImageResources\loopTrack.png" />
     <Resource Include="ImageResources\LoopTrackWaitingList.png" />
@@ -268,6 +267,7 @@
     <Resource Include="ImageResources\playicon.ico" />
     <Resource Include="ImageResources\nexttrackicon.ico" />
     <Resource Include="ImageResources\previoustrackicon.ico" />
+    <Resource Include="ImageResources\shuffle.png" />
     <Content Include="TestFiles\Gun%27sRoses.mp3" />
     <Content Include="TestFiles\MetalGearSolid.mp3" />
     <Content Include="TestFiles\Powerup1.wav" />
