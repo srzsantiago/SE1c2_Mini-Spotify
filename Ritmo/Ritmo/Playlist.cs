@@ -9,7 +9,7 @@ namespace Ritmo
         public Playlist(string name) : base(name)
         {
             CreationDate = DateTime.Now;
-            AddplaylistQuery();
+            //AddplaylistQuery();
         }
 
         //Adds playlist to the database
