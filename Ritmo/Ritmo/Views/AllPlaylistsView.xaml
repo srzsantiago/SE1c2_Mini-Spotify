@@ -32,7 +32,7 @@
     <!--Main Grid-->
     <Grid Background="AntiqueWhite" Name="MainGrid">
 
-        <!--Pop Up Window for adding playlist-->
+        <!--Pop Up Window for adding playlist--><!--
         <Popup x:Name="Test" IsOpen="{Binding PopUpIsOpen}" Placement="Center" StaysOpen="False">
             <Border BorderThickness="1" BorderBrush="DarkSlateGray">
                 <Grid Height="{Binding PopUpSize}" Width="340" Background="Gray" >
@@ -49,7 +49,7 @@
                     </Grid>
                 </Grid>
             </Border>
-        </Popup>
+        </Popup>-->
 
         <!--Top bar-->
         <Grid Background="LightSlateGray" Height="48" VerticalAlignment="Top">
@@ -59,7 +59,7 @@
             <DockPanel Width="50" Height="50" HorizontalAlignment="Right" Margin="20, 0">
                 <Menu DockPanel.Dock="Top" Background="DarkBlue">
                     <MenuItem Icon="" Height="47" Width="50">
-                        <MenuItem Header="New Playlist" Command="{Binding ControlPopUpCommand}"/>
+                        <MenuItem Header="New Playlist" Command="{Binding AddPlaylistCommand}"/>
                     </MenuItem>
                 </Menu>
             </DockPanel>

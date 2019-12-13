@@ -46,12 +46,12 @@
         <DockPanel LastChildFill="True" HorizontalAlignment="Left" Margin="177,5,0,0" VerticalAlignment="Top" Width="53" Height="44">
             <Menu DockPanel.Dock="Top" Width="auto">
                 <MenuItem Header="_≡" Width="53" Height="44">
-                    <MenuItem Header="Change Name" Command="{Binding OpenChangeNameCommand}"/>
-                    <MenuItem Header="Delete Playlist" Command="{Binding OpenDeletePlaylistCommand}"/>
+                    <MenuItem Header="Change Name" Command="{Binding ChangeNameCommand}"/>
+                    <MenuItem Header="Delete Playlist" Command="{Binding DeletePlaylistCommand}"/>
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <Popup x:Name="ChangeNameBox" IsOpen="{Binding IsChangeNameBoxOpen}" Placement="Center">
+        <!--<Popup x:Name="ChangeNameBox" IsOpen="{Binding IsChangeNameBoxOpen}" Placement="Center">
             <Border BorderBrush="Black" BorderThickness="2">
                 <Grid Height="131" Width="340" Background="GhostWhite">
                     <Label Content="Please enter a name for the playlist." Margin="5,20,0,0"/>
@@ -65,7 +65,7 @@
                     </Grid>
                 </Grid>
             </Border>
-        </Popup>
+        </Popup>-->
         <Popup x:Name="DeletePlaylist" IsOpen="{Binding IsDeletePlaylistBoxOpen}" Placement="Center">
             <Border BorderBrush="Black" BorderThickness="2">
                 <Grid Height="131" Width="340" Background="GhostWhite" >

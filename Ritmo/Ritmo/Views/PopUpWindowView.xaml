@@ -5,11 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ritmo.Views"
         mc:Ignorable="d"
-        Title="Delete playlist" Height="101.69" Width="300"
+        Title="{Binding Title}" Height="150" Width="290"
         WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Button Command="{Binding OnOkayClickCommand}"  Content="Delete playlist" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Width="Auto" Height="20" Margin="153,41,54,0" VerticalAlignment="Top"/>
-        <Button Content="Cancel" Click="Button_Click" Height="20" Width="Auto" Margin="243,41,10,0" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="18,10,0,0" TextWrapping="Wrap" Text="Are you sure you want to delete this playlist?" VerticalAlignment="Top" Height="26" Width="254"/>
+    <Grid Margin="0,0,0,-1">
+        <Button Command="{Binding OnOkayCommand}"  Content="{Binding ButtonContent}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Width="Auto" Height="20" Margin="56,90,135,0" VerticalAlignment="Top"/>
+        <Button Content="Cancel" Click="Button_Click" Height="20" Width="Auto" Margin="169,90,59,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="Textblock" HorizontalAlignment="Left" Margin="11,10,0,0" TextWrapping="Wrap" Text="{Binding TextMessage}" VerticalAlignment="Top" Height="26" Width="261"/>
+        <Label Content="{Binding PopUpWarning}" Foreground="DarkRed" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Margin="11,24,10,62"/>
+        <TextBox Height="{Binding TextBoxHeight}" HorizontalAlignment="Left" Margin="11,63,0,0" TextWrapping="Wrap" Text="{Binding TextInput}" VerticalAlignment="Top" Width="261"/>
+
     </Grid>
 </Window>
