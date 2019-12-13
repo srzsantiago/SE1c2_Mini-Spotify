@@ -354,6 +354,53 @@ namespace Ritmo.ViewModels
 
         public void TestTrackMethod()
         {
+            String sqlQuery = "";
+            int count = 0;
+
+            sqlQuery = "SELECT (idTrack, title, path, duration) FROM Track";
+            List<Dictionary<string, object>> trackNames = Database.DatabaseConnector.SelectQueryDB(sqlQuery);
+            int idTrack = 0;
+            string title = "";
+            string path = "";
+            int duration = 0;
+
+            foreach (var dictionary in trackNames)
+            {
+                foreach(var key in dictionary)
+                {
+                    if (key.Key.Equals("idTrack"))
+                    {
+                        idTrack = Convert.ToInt32(key.Value);
+                        count++;
+                    }
+                    else if (key.Key.Equals("title"))
+                    {
+                        title = key.Value.ToString();
+                        count++;
+                    }
+                    else if (key.Key.Equals("path"))
+                    {
+                        path = key.Value.ToString();
+                        count++;
+                    }
+                    else if (key.Key.Equals("duration"))
+                    {
+                        duration = Convert.ToInt32(key.Value);
+                        count++;
+                    }
+                }
+                if(count % 4 == 0)
+                {
+                    Track databaseTrack = new Track() {
+                        TrackId = idTrack,
+                        Name = title,
+                        Artist = "unknown",
+                        Album = "Unknown",
+                        Duration = duration,
+                        AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"" + path), };
+                    PlaylistController.AddTrack( databaseTrack );
+                }
+            }
 
             Track testTrack1 = new Track()
             {
