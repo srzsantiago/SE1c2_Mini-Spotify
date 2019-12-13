@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using GalaSoft.MvvmLight.CommandWpf;
+using Ritmo.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -126,9 +127,9 @@ namespace Ritmo.ViewModels
             else
             {
                 string sqlquery = $"UPDATE Playlist SET name = '{TextInput}' WHERE {PlaylistID} = idPlaylist"; // also updates the database name
-                Database.DatabaseConnector.UpdateQueryDB(sqlquery);
-                playListViewModel.PlaylistName = TextInput; // changes the name on the application
-                this.TryClose();
+                DatabaseConnector.UpdateQueryDB(sqlquery);
+                playListViewModel.ChangeName(TextInput); // changes the name on the application
+                TryClose();
             }
         }
 

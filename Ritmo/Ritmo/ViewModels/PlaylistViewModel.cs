@@ -216,6 +216,13 @@ namespace Ritmo.ViewModels
             windowManager.ShowDialog(new PopUpWindowViewModel(this));
         }
 
+        //Changes name of playlist
+        public void ChangeName(string name)
+        {
+            PlaylistController.SetName(name);
+            PlaylistName = name;
+        }
+
         public void DeletePlaylistClick(object sender)
         {
             //string action = (string)sender; //Sets the chosen action in the popup menu
