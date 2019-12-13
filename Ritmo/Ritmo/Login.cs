@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -56,7 +57,7 @@ namespace Ritmo
                 }
 
 
-                if (databasePassword != password)
+                if (!AuthenticateUser(mail, password, databasePassword))
                 //if (this.password != password)
                 {
                     loggedin = false;
@@ -111,5 +112,23 @@ namespace Ritmo
             }
 
         }
+
+        public bool AuthenticateUser(string username, string password, string databasePassword)
+        {
+            char[] delimiter = { ':' };
+            var split = databasePassword.Split(delimiter);
+           
+            var iterations = Int32.Parse(split[0]);
+            var salt = Convert.FromBase64String(split[1]);
+            var hash = split[2];
+
+            var rfc2898 = new Rfc2898DeriveBytes(password, salt, iterations);
+
+            var PasswordToCheck = Encoding.Default.GetString(rfc2898.GetBytes(32));
+            var storedPassword = hash;
+
+            return PasswordToCheck == storedPassword;
+        }
+
     }
 }

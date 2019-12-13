@@ -55,14 +55,18 @@ namespace Ritmo.ViewModels
 
         public LoginViewModel()
         {
-            LoginCommand = new RelayCommand<Window>(Login);
+            LoginCommand = new RelayCommand<object>(Login);
             NewAccountCommand = new RelayCommand<Window>(NewAccount);
         }
 
         //LoginView is given as argument to close the view in code
-        private void Login(Window LoginView)
+        private void Login(object parameters)
         {
-            Login LoginAttempt = new Login(FilledEmail, FilledPassword);
+            var values = parameters as List<object>; //set the multiple parameters in one array
+            var LoginView = values[0] as Window; //set the first value in the array as passwordbox
+            var PasswordBox = values[1] as PasswordBox;//set the second value in the array as confirmpasswordbox
+
+            Login LoginAttempt = new Login(FilledEmail, PasswordBox.Password);
 
             ErrorColor = Brushes.LightYellow;
 

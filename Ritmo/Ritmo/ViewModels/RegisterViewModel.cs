@@ -101,7 +101,7 @@ namespace Ritmo.ViewModels
 
             if (!Name.Equals("") && IsValidEmail(Email) && IsPasswordMatch(passwordBox, confirmPasswordBox)) //information validation
             {
-                Register register = new Register(Name, Email, passwordBox.Password, confirmPasswordBox.Password);
+                Register register = new Register(Name, Email, passwordBox.Password);
                 Manager.ShowWindow(new LoginViewModel());
                 TryClose();
             }
