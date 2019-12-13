@@ -76,7 +76,7 @@ namespace Ritmo.ViewModels
         private Uri _repeatModeIcon = new Uri("/ImageResources/loopOff.png", UriKind.RelativeOrAbsolute);
 
         private Uri _shuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
-        private Uri _testLogo = new Uri("/ImageResources/Test_Logo.png", UriKind.RelativeOrAbsolute);
+        private Uri _ritmoLogo = new Uri("/ImageResources/RitmoLogo.png", UriKind.RelativeOrAbsolute);
         private double oldVolume = 0;
 
         public MediaElement CurrentTrackElement
@@ -108,7 +108,7 @@ namespace Ritmo.ViewModels
 
         public Uri ShuffleButtonIcon { get { return _shuffleButtonIcon; } set { _shuffleButtonIcon = value; NotifyOfPropertyChange(); } }
 
-        public Uri TestLogo { get { return _testLogo; } set { _testLogo = value; NotifyOfPropertyChange(); } }
+        public Uri RitmoLogo { get { return _ritmoLogo; } set { _ritmoLogo = value; NotifyOfPropertyChange(); } }
 
         #endregion
 

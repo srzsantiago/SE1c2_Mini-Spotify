@@ -11,7 +11,7 @@
     
     <Style x:Key="LeftPanelButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Margin" Value="15, 0, 0, 0"/>
+        <Setter Property="Margin" Value="20, 0, 0, 0"/>
         <Setter Property="Foreground" Value="{StaticResource GeneralWhite}"/>
         <Setter Property="Height" Value="40"/>
         <Setter Property="FontSize" Value="16"/>

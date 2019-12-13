@@ -98,17 +98,19 @@
             </Grid>
 
             <!-- Left panel -->
-            <Grid Grid.Row="1" Grid.Column="0">
+            <Grid Grid.RowSpan="2" Grid.Column="0">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="170"/>
                     <RowDefinition MinHeight="160" Height="*"/>
                     <RowDefinition Height="134"/>
                     <RowDefinition Height="134"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Background="#2D4E7C">
-                    <Image Source="{Binding TestLogo}" HorizontalAlignment="Left" Height="101" Margin="10,10,0,0" VerticalAlignment="Top" Width="150"/>
-                </StackPanel>
+                <!--Logo-->
+                <Grid Margin="15, 50, 15, 10">
+                    <Image Source="{Binding RitmoLogo}" Height="Auto" Width="Auto"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <!--Navigationpanel-->
                 <StackPanel Grid.Row="1">
                     <Separator/>
                     <Button x:Name="Home_Button" Content="Home" CommandParameter="{Binding HomeViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}" />
