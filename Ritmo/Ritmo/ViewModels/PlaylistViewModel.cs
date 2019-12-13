@@ -136,7 +136,12 @@ namespace Ritmo.ViewModels
         public ICommand DeleteTrackCommand { get; set; }
         #endregion
 
-        public PlaylistViewModel( MainWindowViewModel mainWindow ,Playlist playlist)
+        public PlaylistViewModel()
+        {
+
+        }
+
+        public PlaylistViewModel(MainWindowViewModel mainWindow ,Playlist playlist)
         {
             MainWindow = mainWindow;
             PlaylistController = new PlaylistController(playlist);
@@ -145,7 +150,6 @@ namespace Ritmo.ViewModels
             LoadElements();
             LoadPlaylistInfo();
             InitializeCommands();
-
         }
 
         public void InitializeCommands()
@@ -247,7 +251,6 @@ namespace Ritmo.ViewModels
         private void DescendingSortClick(object sender)//order playlist Descending by <sender> as (string) column name
         {
             string orderBy = (string)sender;
-
             PlaylistController.Playlist.SortTrackList(PlaylistController.Playlist.Tracks, orderBy, false);
             LoadElements();
         }

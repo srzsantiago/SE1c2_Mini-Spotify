@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -50,7 +51,9 @@ namespace Ritmo.ViewModels
 
         #region commands and selectedItem
         public ICommand LoadListboxPlaylistCommand { get; set; }
-        public ICommand AddToQueueCommand { get; set; }        
+        public ICommand AddToQueueCommand { get; set; }    
+        
+        public ICommand AddToNewPlaylistCommand { get; set; }
 
         private Playlist _selectedItem; //this is used as a ActionListener for when user click on a item in the listbox of playlists.
         public Playlist SelectedItem
@@ -80,6 +83,7 @@ namespace Ritmo.ViewModels
             AllPlaylist = new ObservableCollection<Playlist>();
             LoadListboxPlaylistCommand = new RelayCommand<object>(this.LoadListboxPlaylist);
             AddToQueueCommand = new RelayCommand<object>(this.AddToQueueClick);
+            AddToNewPlaylistCommand = new RelayCommand<object>(this.AddToNewPlaylistClick);
             TestAllPlayLists();
 
         }
@@ -170,6 +174,32 @@ namespace Ritmo.ViewModels
             }
 
 
+        }
+
+        private void AddToNewPlaylistClick(object sender) // user story opgeschoven dus word later aan gewerkt
+        {
+            //Console.WriteLine("asdada");
+            //string input = Interaction.InputBox("Question?", "Title", "Default Text");
+            //if(input != "")
+            //{
+            //    AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(new Playlist("Default value"));
+            //}
+            //foreach (var item in AllTestTrack)//goes through all tracks
+            //{
+            //    if (item.TrackId == _clickedButtonValue)//find the matching Id
+            //    {
+            //        for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
+            //        {
+            //            //find the matching playlist
+            //            if (SelectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
+            //            {
+            //                Track testTrack = item;
+            //                mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
+            //            }
+            //        }
+
+            //    }
+            //}
         }
 
         private void AddTrackToSelectedPlaylist()//This methode is called from the prop SelectedItem. It adds a track to a clicked playlist.

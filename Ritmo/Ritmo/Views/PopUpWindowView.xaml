@@ -1,0 +1,15 @@
+﻿<Window x:Class="Ritmo.Views.PopUpWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ritmo.Views"
+        mc:Ignorable="d"
+        Title="Delete playlist" Height="101.69" Width="300"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Button Command="{Binding OnOkayClickCommand}"  Content="Delete playlist" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Width="Auto" Height="20" Margin="153,41,54,0" VerticalAlignment="Top"/>
+        <Button Content="Cancel" Click="Button_Click" Height="20" Width="Auto" Margin="243,41,10,0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="18,10,0,0" TextWrapping="Wrap" Text="Are you sure you want to delete this playlist?" VerticalAlignment="Top" Height="26" Width="254"/>
+    </Grid>
+</Window>

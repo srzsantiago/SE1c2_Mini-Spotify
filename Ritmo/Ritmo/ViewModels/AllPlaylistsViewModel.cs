@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using GalaSoft.MvvmLight.Command;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -122,31 +123,39 @@ namespace Ritmo.ViewModels
 
             AllPlaylistsController = mainWindow.AllPlaylistsController;
             MainWindow = mainWindow;
-
             //TestMethod();
             SetAllPlaylistsCollection();
         }
 
         #region AllPlaylists methods
         //Gets every playlist from the AllPlaylists class and places them in AllPlaylists ObservableCollection
-        private void SetAllPlaylistsCollection()
+        public void SetAllPlaylistsCollection()
         {
             AllPlaylistsCollection.Clear();
             AllPlaylistsController.AllPlaylists.Playlists.ForEach(playlist => AllPlaylistsCollection.Add(playlist));
-
-            Console.WriteLine(AllPlaylistsCollection.Count());
-            Console.WriteLine(AllPlaylistsController.AllPlaylists.Playlists.Count());
         }
 
         public void AddPlaylist(string name)
         {
+            int lastID = 0;
+            string sqlquery = "SELECT IDENT_CURRENT('Playlist')"; // gets the last PK id from playlist
+            List<Dictionary<string, object>> result = Database.DatabaseConnector.SelectQueryDB(sqlquery); // executing the query
+
+            foreach (var item in result)
+            {
+                foreach (var key in item)
+                {
+                    lastID = Convert.ToInt32(key.Value) + 1;
+                }
+            }
+            
             if (name.Equals(""))
                 PopUpMessage("Invalid Playlist name!");
             else if (name.Length >= 32)
                 PopUpMessage("Playlist name must be less than 32 characters!");
             else
             {
-                AllPlaylistsController.AddTrackList(new Playlist(name)); //Create playlist and add it to all playlists
+                AllPlaylistsController.AddTrackList(new Playlist(name) { TrackListID = lastID }); //Create playlist and add it to all playlists
                 SetAllPlaylistsCollection(); //Updates view
                 PopUpControl(); //Hides popup menu
             }
@@ -154,8 +163,9 @@ namespace Ritmo.ViewModels
 
         private void DeletePlaylist(int playlistID)
         {
-            AllPlaylistsController.RemovePlaylist(AllPlaylistsController.GetPlaylist(playlistID)); //Removes playlist with playlistID
-            SetAllPlaylistsCollection(); //Updates view
+            IWindowManager windowManager = new WindowManager();
+            windowManager.ShowDialog(new PopUpWindowViewModel(this, playlistID));
+            SetAllPlaylistsCollection();
         }
         #endregion        
 
@@ -173,7 +183,6 @@ namespace Ritmo.ViewModels
         private void OpenPlaylistViewModel(int playlistID)
         {
             Playlist playlist = AllPlaylistsController.GetPlaylist(playlistID);
-
             MainWindow.ChangeViewModel(new PlaylistViewModel(MainWindow, playlist));
         }
 
