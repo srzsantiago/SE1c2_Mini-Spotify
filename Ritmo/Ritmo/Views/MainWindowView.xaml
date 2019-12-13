@@ -118,7 +118,7 @@
                     <Button x:Name="Categories_Button" Content="Categories" CommandParameter="{Binding CategoriesViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}"/>
                     <Button x:Name="Following_Button"  Content="Following" CommandParameter="{Binding FollowingViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}"/>
                 </StackPanel>
-                <StackPanel Grid.Row="2">
+                <StackPanel Grid.Row="2" Height="auto">
                     <Separator/>
                     <Button x:Name="AllPlaylist_Button" Content="My Playlists" CommandParameter="{Binding AllPlaylistsViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}" />
                     <Button x:Name="MyQueue_Button" Content="My Queue" CommandParameter="{Binding MyQueueViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}"/>
