@@ -57,17 +57,6 @@ namespace Ritmo.ViewModels
 
         #endregion
 
-        //private List<string> _itemsList;
-
-        //public List<string> ItemsList
-        //{
-        //    get {
-        //        if (_itemsList == null)
-        //            _itemsList = new List<string>() { "Test1", "Test2" };
-        //        return _itemsList;
-        //    }
-        //    set { _itemsList = value; }
-        //}
 
         public MyQueueViewModel(MainWindowViewModel mainWindowVM)
         {
@@ -195,12 +184,24 @@ namespace Ritmo.ViewModels
 
 
             //Now that we have the type and the index we can define what needs to be done with the pressed element.
-            if (type.Equals("PlayingNow"))
-                //volgende sprint
-                Console.WriteLine();
-            if (type.Equals("NextInQueue"))
-                //vongende sprint
-                Console.WriteLine();
+            if (type.Equals("PlayingNow")) //if the playingnow track is clicked, it will be either played or paused
+            {
+                if (_mainWindowVM.PlayQueueController.PQ.IsPaused)
+                    _mainWindowVM.PlayTrack();
+                else
+                    _mainWindowVM.PauseTrack();
+            }
+            if (type.Equals("NextInQueue")) //play the clicked track in the queue
+            {
+                for (int i = 0; i <= index; i++)
+                {
+                    _mainWindowVM.PlayQueueController.NextTrack();//skip all tracks before the clicked track
+                }
+                _mainWindowVM.CurrentTrackElement.Source = _mainWindowVM.PlayQueueController.PQ.CurrentTrack.AudioFile;//set the currenttrackelement
+
+                if (_mainWindowVM.PlayQueueController.PQ.IsPaused)//check if it is in pause, play the clicked song in the queue.
+                    _mainWindowVM.PlayTrack();
+            }
             if (type.Equals("NextUp"))
             {
                 Track playTrack = _mainWindowVM.PlayQueueController.PQ.TrackWaitingList.ElementAt(index);//gets the element at the given index
@@ -232,12 +233,24 @@ namespace Ritmo.ViewModels
 
 
             //Now that we have the type and the index we can define what needs to be done with the pressed element.
-            if (type.Equals("PlayingNow"))
-                //volgende sprint
-                Console.WriteLine();
-            if (type.Equals("NextInQueue"))
-                //volgende sprint
-                Console.WriteLine();
+            if (type.Equals("PlayingNow")) //if the playingnow track is clicked, it will be either played or paused
+            {
+                if (_mainWindowVM.PlayQueueController.PQ.IsPaused)
+                    _mainWindowVM.PlayTrack();
+                else
+                    _mainWindowVM.PauseTrack();
+            }
+            if (type.Equals("NextInQueue")) //play the clicked track in the queue
+            {
+                for (int i = 0; i <= index; i++)
+                {
+                    _mainWindowVM.PlayQueueController.NextTrack();//skip all tracks before the clicked track
+                }
+                _mainWindowVM.CurrentTrackElement.Source = _mainWindowVM.PlayQueueController.PQ.CurrentTrack.AudioFile;//set the currenttrackelement
+
+                if (_mainWindowVM.PlayQueueController.PQ.IsPaused)//check if it is in pause, play the clicked song in the queue.
+                    _mainWindowVM.PlayTrack();
+            }
             if (type.Equals("NextUp"))
             {
                 Track playTrack = _mainWindowVM.PlayQueueController.PQ.TrackWaitingList.ElementAt(index);//gets the element at the given index
