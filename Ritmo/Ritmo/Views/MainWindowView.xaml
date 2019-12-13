@@ -95,7 +95,7 @@
 
         <Grid Grid.Row="1"  Width="500" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="77.4,450,246.6,0" Height="40" Grid.Column="1" Grid.RowSpan="2">
             <Label Content="{Binding CurrentTrackTime}" HorizontalAlignment="Left" Height="31" VerticalAlignment="Bottom" Width="55"/>
-            <Slider Value="{Binding CurrentTrackTime}" IsMoveToPointEnabled="True" Minimum="0" Maximum="{Binding TotalTrackTime}" x:Name="TimeSlider" Cursor="Hand" HorizontalAlignment="Center" Height="20" Margin="55,15,58,5" VerticalAlignment="Center" Width="387"/>
+            <Slider  IsSnapToTickEnabled="true" TickFrequency="1" Value="{Binding CurrentTrackTime}" IsMoveToPointEnabled="True" Minimum="0" Maximum="{Binding TotalTrackTime}" x:Name="TimeSlider" Cursor="Hand" HorizontalAlignment="Center" Height="20" Margin="55,15,58,5" VerticalAlignment="Center" Width="387"/>
             <Label Content="{Binding TotalTrackTime}" HorizontalAlignment="Left" Height="31" Margin="442,0,0,0" VerticalAlignment="Bottom" Width="58"/>
         </Grid>
 

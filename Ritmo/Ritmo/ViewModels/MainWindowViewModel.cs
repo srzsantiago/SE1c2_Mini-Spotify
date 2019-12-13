@@ -11,8 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Ritmo;
-
-
+using System.Windows.Threading;
 
 namespace Ritmo.ViewModels
 {
@@ -72,6 +71,7 @@ namespace Ritmo.ViewModels
         private Uri _shuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
         private Uri _testLogo = new Uri("/ImageResources/Test_Logo.png", UriKind.RelativeOrAbsolute);
         private double oldVolume = 0;
+        
 
 
         public MediaElement CurrentTrackElement
@@ -91,6 +91,7 @@ namespace Ritmo.ViewModels
             {
                 _currentTrackVolume = value;
                 VolumeSlider_ValueChanged(value);
+                NotifyOfPropertyChange();
             }
         }
 
@@ -158,7 +159,6 @@ namespace Ritmo.ViewModels
                 PlayButtonIcon = new Uri(@"\ImageResources\pauseicon.ico", UriKind.Relative);
                 PlayQueueController.UnpauseTrack(); //Sets pause bool to true
                 TotalTrackTime = PlayQueue.CurrentTrack.Duration;
-
             }
         }
 
@@ -304,8 +304,7 @@ namespace Ritmo.ViewModels
 
         public void TimeSlider_ValueChanged(double TimeSliderValue)
         {
-            //CurrentTrackElement.Position.Seconds = TimeSliderValue;
-
+            CurrentTrackElement.Position = TimeSpan.FromSeconds(TimeSliderValue);
         }
 
         //Changes volume based on slider. 0 is muted and 100 is highest
@@ -361,12 +360,16 @@ namespace Ritmo.ViewModels
         }
         public void InitializeCurrentTrackElement()
         {
+            if(CurrentTrackElement.IsLoaded)
+            {
+                TotalTrackTime = CurrentTrackElement.NaturalDuration.TimeSpan.TotalSeconds;
+                CurrentTrackTime = CurrentTrackElement.Position.Seconds;
+            }
             //CurrentTrackElement.Source = CurrentTrackSource;
             CurrentTrackElement.MediaEnded += Track_Ended;
             CurrentTrackVolume = PlayQueue.CurrentVolume;
             CurrentTrackElement.Volume = CurrentTrackVolume;
-            CurrentTrackTime = CurrentTrackElement.Position.Seconds;
-            TotalTrackTime = CurrentTrackElement.Position.TotalSeconds;
+            
         }
         #endregion
 
