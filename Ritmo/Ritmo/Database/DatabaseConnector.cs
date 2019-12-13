@@ -55,7 +55,7 @@ namespace Ritmo.Database
         public static SqlConnection ConnectDB()
         {
             dbConn = new SqlConnection("SERVER=127.0.0.1;UID=SA;PASSWORD=IctSe1c_Groep2;DATABASE=Ritmo");
-            dbConn.Open();
+            //dbConn.Open();
             if (dbConn.State == ConnectionState.Open)
             {
                 Console.WriteLine("Database connection succeeded.");

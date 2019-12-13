@@ -72,6 +72,10 @@ namespace Ritmo.ViewModels
         private Uri _testLogo = new Uri("/ImageResources/Test_Logo.png", UriKind.RelativeOrAbsolute);
         private double oldVolume = 0;
 
+        private Uri _albumImage = new Uri("/ImageResources/Album_Cover_1.jpg", UriKind.RelativeOrAbsolute);
+        private string _artistName;
+        private string _songName;
+
         public MediaElement CurrentTrackElement
         {
             get { return _currentTrackElement; }
@@ -92,6 +96,10 @@ namespace Ritmo.ViewModels
             }
         }
 
+        public String ArtistName { get { return _artistName; } set { _artistName = value; NotifyOfPropertyChange(); } }
+
+        public String SongName { get { return _songName; } set { _songName = value; NotifyOfPropertyChange(); } }
+
         public Uri PlayButtonIcon { get { return _playButtonIcon; } set { _playButtonIcon = value; NotifyOfPropertyChange(); } }
 
         public Uri MuteButtonIcon { get { return _muteButtonIcon; } set { _muteButtonIcon = value; NotifyOfPropertyChange(); } }
@@ -102,6 +110,8 @@ namespace Ritmo.ViewModels
         public Uri ShuffleButtonIcon { get { return _shuffleButtonIcon; } set { _shuffleButtonIcon = value; NotifyOfPropertyChange(); } }
 
         public Uri TestLogo { get { return _testLogo; } set { _testLogo = value; NotifyOfPropertyChange(); } }
+
+        public Uri AlbumImage { get { return _albumImage; } set { _albumImage = value; NotifyOfPropertyChange(); } } // album image property
 
         #endregion
 
@@ -128,6 +138,9 @@ namespace Ritmo.ViewModels
                 CurrentTrackElement.Play();
                 PlayButtonIcon = new Uri(@"\ImageResources\pauseicon.ico", UriKind.Relative);
                 PlayQueueController.UnpauseTrack(); //Sets pause bool to true
+
+                SongName = PlayQueue.CurrentTrack.Name; // set the name of the current track
+                ArtistName = PlayQueue.CurrentTrack.Artist; // set the artist of the current track 
             }
         }
 
@@ -299,7 +312,6 @@ namespace Ritmo.ViewModels
             }
         }
 
-
         #endregion
 
         //Initialize-methods that are used in the constructor of MainWindowViewModel
@@ -328,6 +340,9 @@ namespace Ritmo.ViewModels
             CurrentTrackElement.MediaEnded += Track_Ended;
             CurrentTrackVolume = PlayQueue.CurrentVolume;
             CurrentTrackElement.Volume = CurrentTrackVolume;
+            SongName = "";
+            ArtistName = "";
+            AlbumImage = new Uri("/ImageResources/Album_Cover_1.jpg", UriKind.RelativeOrAbsolute); // set standard image because albums are not implemented yet. 
         }
         #endregion
 
