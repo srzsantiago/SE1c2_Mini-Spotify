@@ -150,10 +150,10 @@
             <Slider  VerticalAlignment="Top" Margin="0,44,0,0" x:Name="volumeSlider" Cursor="Hand" Minimum="0" Maximum="1" Value="{Binding CurrentTrackVolume}"  IsMoveToPointEnabled="True"  Height="22"/>
         </Grid>
 
-        <Button Background="Transparent" Command="{Binding LoopCommand}" Grid.Column="1" HorizontalAlignment="Right" Height="33" Margin="0,0,176.6,41.4" VerticalAlignment="Bottom" Width="33" RenderTransformOrigin="-0.494,-0.459" Grid.Row="1" BorderBrush="{x:Null}">
+        <Button Background="Transparent" Command="{Binding LoopCommand}" Grid.Column="1" HorizontalAlignment="Right" Height="33" Margin="0,0,176.6,41.4" VerticalAlignment="Bottom" Width="33" RenderTransformOrigin="-0.494,-0.459" Grid.Row="2" BorderBrush="{x:Null}">
             <Image x:Name="RepeatModeIcon" Source="{Binding RepeatModeIcon}" Height="28" Width="28" />
         </Button>
-        <Button Background="Transparent" x:Name="shuffleButton" Grid.Column="1" HorizontalAlignment="right" Margin="0,0,176.6,4.4" Grid.Row="1" VerticalAlignment="bottom" Command="{Binding ShuffleWaitinglistCommand}" Width="33" Height="33" BorderBrush="{x:Null}">
+        <Button Background="Transparent" x:Name="shuffleButton" Grid.Column="1" HorizontalAlignment="right" Margin="0,0,176.6,4.4" Grid.Row="2" VerticalAlignment="bottom" Command="{Binding ShuffleWaitinglistCommand}" Width="33" Height="33" BorderBrush="{x:Null}">
             <Image x:Name="ShuffleButtonIcon" Source="{ Binding ShuffleButtonIcon }" Height="28" Width="28"/>
         </Button>
 
