@@ -123,6 +123,9 @@ namespace Ritmo.ViewModels
 
             AllPlaylistsController = mainWindow.AllPlaylistsController;
             MainWindow = mainWindow;
+
+            AllPlaylistsController.PlaylistDeleted += SetAllPlaylistsCollection; //Assigns method to event of playlist getting removed
+
             //TestMethod();
             SetAllPlaylistsCollection();
         }
@@ -169,7 +172,6 @@ namespace Ritmo.ViewModels
         {
             IWindowManager windowManager = new WindowManager();
             windowManager.ShowDialog(new PopUpWindowViewModel(this, playlistID));
-            SetAllPlaylistsCollection();
         }
         #endregion        
 

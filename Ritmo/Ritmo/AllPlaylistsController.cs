@@ -8,6 +8,9 @@ namespace Ritmo
 {
     public class AllPlaylistsController
     {
+        public delegate void DeletePlaylistEventHandler();
+        public static event DeletePlaylistEventHandler PlaylistDeleted; //Event that will be called when a playlist is removed
+
         public AllPlaylists AllPlaylists { get; set; }
 
         public AllPlaylistsController()
@@ -33,6 +36,7 @@ namespace Ritmo
                 //Database.DatabaseConnector.DeleteQueryDB(sqlquery2);
                 Database.DatabaseConnector.DeleteQueryDB(sqlquery);
                 AllPlaylists.Playlists.Remove(playlist);
+                PlaylistDeleted();
             }
             else
             {

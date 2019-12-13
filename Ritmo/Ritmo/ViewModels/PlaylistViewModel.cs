@@ -17,6 +17,7 @@ namespace Ritmo.ViewModels
         public PlaylistController PlaylistController;
         public MainWindowViewModel MainWindow;
 
+
         #region boolForBoxes
         //private bool _isChangeNameBoxOpen;
 

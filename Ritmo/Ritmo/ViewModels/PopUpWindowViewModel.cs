@@ -135,9 +135,10 @@ namespace Ritmo.ViewModels
 
         public void DeletePlaylistClick(object param)
         {
-            MainWindow.ChangeViewModel(MainWindow.AllPlaylistsViewModel);
+            Navigation.ToViewModel(MainWindow.AllPlaylistsViewModel);
+            Navigation.RemoveViewModel(playListViewModel);
             AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(Playlist);
-            this.TryClose();
+            TryClose();
         }
         #endregion
 
@@ -168,7 +169,8 @@ namespace Ritmo.ViewModels
         {
             Playlist playlist = AllPlaylistsViewModel.AllPlaylistsController.GetPlaylist(PlaylistID); //Removes playlist with playlistID
             AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(playlist); //Removes playlist with playlistID
-            this.TryClose();
+            Navigation.RemovePlaylistViewModel(PlaylistID); //Removes playlist from navigationd
+            TryClose();
         }
 
         public void OnOkayAddPlaylistClick(object param) // the method that adds a new playlist
