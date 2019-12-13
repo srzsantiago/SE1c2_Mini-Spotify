@@ -11,8 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Ritmo;
-
-
+using System.Diagnostics;
 
 namespace Ritmo.ViewModels
 {
@@ -27,7 +26,9 @@ namespace Ritmo.ViewModels
         public MyQueueViewModel MyQueueScreenToViewModel;
 
         #region Commands
-        public ICommand ChangeViewModelCommand { get; set; }
+        public ICommand ToClickedViewModelCommand { get; set; }
+        public ICommand ToPreviousViewModelCommand { get; set; }
+        public ICommand ToNextViewModelCommand { get; set; }
         #endregion
 
         #region ViewModel attributes
@@ -38,9 +39,8 @@ namespace Ritmo.ViewModels
         public Screen FollowingViewModel { get; set; } = new FollowingViewModel();
         public Screen AllPlaylistsViewModel { get; set; }
         public Screen MyQueueViewModel { get; set; }
-        public Screen PlaylistViewModel { get; set; } 
+        public Screen PlaylistViewModel { get; set; }
 
-               
         public Screen CurrentViewModel
         {
             get { return _currentViewModel; }
@@ -49,6 +49,12 @@ namespace Ritmo.ViewModels
                 _currentViewModel = value;
                 NotifyOfPropertyChange();
             }
+        }
+
+        //Method that called by ViewModelChanged event in Navigation class
+        protected virtual void ChangeViewModel(Screen viewModel)
+        {
+            CurrentViewModel = viewModel;
         }
         #endregion
 
@@ -69,7 +75,7 @@ namespace Ritmo.ViewModels
         private Uri _repeatModeIcon = new Uri("/ImageResources/loopOff.png", UriKind.RelativeOrAbsolute);
 
         private Uri _shuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
-        private Uri _testLogo = new Uri("/ImageResources/Test_Logo.png", UriKind.RelativeOrAbsolute);
+        private Uri _ritmoLogo = new Uri("/ImageResources/RitmoLogo.png", UriKind.RelativeOrAbsolute);
         private double oldVolume = 0;
 
         public MediaElement CurrentTrackElement
@@ -101,7 +107,7 @@ namespace Ritmo.ViewModels
 
         public Uri ShuffleButtonIcon { get { return _shuffleButtonIcon; } set { _shuffleButtonIcon = value; NotifyOfPropertyChange(); } }
 
-        public Uri TestLogo { get { return _testLogo; } set { _testLogo = value; NotifyOfPropertyChange(); } }
+        public Uri RitmoLogo { get { return _ritmoLogo; } set { _ritmoLogo = value; NotifyOfPropertyChange(); } }
 
         #endregion
 
@@ -109,8 +115,10 @@ namespace Ritmo.ViewModels
         {
             InitializeCommands();
             InitializeViewModels();
-            
 
+            Navigation.InitializeViewModelNavigation();
+            Navigation.ViewModelChanged += ChangeViewModel;
+            
             PlayQueue = PlayQueueController.PQ;
 
             InitializeCurrentTrackElement();
@@ -306,7 +314,10 @@ namespace Ritmo.ViewModels
         #region Initializer methods
         public void InitializeCommands()
         {
-            ChangeViewModelCommand = new RelayCommand<Screen>(ChangeViewModel); //Sets the command to the corresponding method
+            ToClickedViewModelCommand = new RelayCommand<Screen>(Navigation.ToClickedViewModel); //Sets the command to the corresponding method
+            ToPreviousViewModelCommand = new RelayCommand(Navigation.ToPreviousViewModel);
+            ToNextViewModelCommand = new RelayCommand(Navigation.ToNextViewModel);
+
             TrackControlCommand = new RelayCommand(TrackControl);
             NextTrackCommand = new RelayCommand(NextTrack);
             PrevTrackCommand = new RelayCommand(PrevTrack);
@@ -321,6 +332,8 @@ namespace Ritmo.ViewModels
             AllPlaylistsViewModel = new AllPlaylistsViewModel(this);
             MyQueueViewModel = new MyQueueViewModel(this);
             MyQueueScreenToViewModel = (MyQueueViewModel)MyQueueViewModel;
+
+            Navigation.CurrentViewModel = CurrentViewModel; //Sets the CurrentViewModel to the Navigation class
         }
         public void InitializeCurrentTrackElement()
         {
@@ -330,12 +343,6 @@ namespace Ritmo.ViewModels
             CurrentTrackElement.Volume = CurrentTrackVolume;
         }
         #endregion
-
-        //Changes CurrentViewModel and sets the frame
-        public void ChangeViewModel(Screen ViewModel)
-        {
-            this.CurrentViewModel = ViewModel;
-        }
 
         public void TestTrackMethod()
         {

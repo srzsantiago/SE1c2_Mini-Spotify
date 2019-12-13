@@ -38,6 +38,9 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>RitmoExeIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Caliburn.Micro, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
@@ -98,6 +101,7 @@
     <Compile Include="AllPlaylistsController.cs" />
     <Compile Include="Artist.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Navigation.cs" />
     <Compile Include="ConverterParameter.cs" />
     <Compile Include="Database\DatabaseConnector.cs" />
     <Compile Include="Database\QueryType.cs" />
@@ -156,6 +160,14 @@
     <Compile Include="Views\SearchView.xaml.cs">
       <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
+    <Page Include="StyleResources\GeneralStyleVariables.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StyleResources\TopBarButtonsStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ArtistRegisterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -250,19 +262,27 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageResources\nexttrackbutton.png" />
-    <Resource Include="ImageResources\prevtrackbutton.png" />
     <Resource Include="ImageResources\searchbutton.png" />
-    <Resource Include="ImageResources\playicon.ico" />
-    <Resource Include="ImageResources\pauseicon.ico" />
     <Resource Include="ImageResources\mute.png" />
     <Resource Include="ImageResources\unmute.png" />
     <Resource Include="ImageResources\unshuffle.png" />
-    <Resource Include="ImageResources\shuffle.png" />
     <Resource Include="ImageResources\loopOff.png" />
     <Resource Include="ImageResources\loopTrack.png" />
     <Resource Include="ImageResources\LoopTrackWaitingList.png" />
     <Resource Include="ImageResources\Test_Logo.png" />
+    <Resource Include="ImageResources\ExitIcon.ico" />
+    <Resource Include="ImageResources\MaximiseIcon.ico" />
+    <Resource Include="ImageResources\MinimiseIcon.ico" />
+    <Resource Include="ImageResources\nextpageicon.png" />
+    <Resource Include="ImageResources\previouspageicon.png" />
+    <Resource Include="ImageResources\pauseicon.ico" />
+    <Resource Include="ImageResources\playicon.ico" />
+    <Resource Include="ImageResources\nexttrackicon.ico" />
+    <Resource Include="ImageResources\previoustrackicon.ico" />
+    <Resource Include="ImageResources\shuffle.png" />
+    <Resource Include="ImageResources\RitmoLogo.png" />
+    <Resource Include="Ritmo-4.ico" />
+    <Resource Include="RitmoExeIcon.ico" />
     <Content Include="TestFiles\Gun%27sRoses.mp3" />
     <Content Include="TestFiles\MetalGearSolid.mp3" />
     <Content Include="TestFiles\Powerup1.wav" />

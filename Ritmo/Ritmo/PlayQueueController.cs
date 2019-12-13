@@ -34,14 +34,11 @@ namespace Ritmo
         public void UnpauseTrack()
         {
             PQ.IsPaused= false;
-
-            //???????????????????????????//EVENT
         }
 
         public void PauseTrack()
         { 
             PQ.IsPaused = true; 
-            /////////////////////////////////EVENT
         }
 
         public void NextTrack(){    //Set the NextTrack as the CurrentTrack
@@ -226,7 +223,7 @@ namespace Ritmo
             PQ.IsShuffle = true;
         }
 
-            public void SetVolume(double volume) {//Set the volume to a given value
+        public void SetVolume(double volume) {//Set the volume to a given value
             PQ.CurrentVolume = volume;
         }
 

@@ -10,7 +10,11 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewmodels:MainWindowViewModel, IsDesignTimeCreatable=True}"
         WindowStartupLocation="CenterScreen"
-        Title="Ritmo" Height="450" Width="800" MinWidth="1000" MinHeight="600">
+        Title="Ritmo" Height="450" Width="800" MinWidth="1000" MinHeight="600"
+        
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        >
 
     <Window.Resources>
         <!--#Region Variables -->
@@ -43,85 +47,124 @@
 
     </Window.Resources>
 
-    <Grid>
-        <!-- Main Layout -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition MaxWidth="170" MinWidth="170" />
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition MinHeight="40" MaxHeight="40"/>
-            <RowDefinition/>
-            <RowDefinition MinHeight="80" MaxHeight="80"/>
-        </Grid.RowDefinitions>
-        
-        <!-- Window Top Bar -->
-        <Grid Background="LightGray" Grid.ColumnSpan="2"></Grid>
-        
-        <!-- Left panel -->
-        <Grid Background="LightGray" Grid.Row="1" Grid.Column="0">
-
+    <Border Background="Transparent" >
+        <Grid Background="{StaticResource MainBlueColor}" >
+            <!-- Main Layout -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="170" MinWidth="170" />
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="120"/>
-                <RowDefinition MinHeight="160" Height="*"/>
-                <RowDefinition Height="134"/>
-                <RowDefinition Height="134"/>
+                <RowDefinition MinHeight="40" MaxHeight="40"/>
+                <RowDefinition/>
+                <RowDefinition MinHeight="80" MaxHeight="80"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <Image Source="{Binding TestLogo}" HorizontalAlignment="Left" Height="101" Margin="10,10,0,0" VerticalAlignment="Top" Width="150"/>
-            </StackPanel>
-            <StackPanel Grid.Row="1">
-                <Separator/>
-                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="Home_Button" Content="Home" CommandParameter="{Binding HomeViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}" />
-                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="Search_Button" Content="Search" CommandParameter="{Binding SearchViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
-                <Button FontWeight="Bold" Foreground="DarkSlateGray"  x:Name="Categories_Button" Content="Categories" CommandParameter="{Binding CategoriesViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
-                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="Following_Button"  Content="Following" CommandParameter="{Binding FollowingViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
-            </StackPanel>
-            <StackPanel Grid.Row="2">
-                <Separator/>
-                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="AllPlaylist_Button" Content="My Playlists" CommandParameter="{Binding AllPlaylistsViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}" />
-                <Button FontWeight="Bold" Foreground="DarkSlateGray" x:Name="MyQueue_Button" Content="My Queue" CommandParameter="{Binding MyQueueViewModel}" Command="{Binding ChangeViewModelCommand}" Style="{StaticResource CustomButtonStyle}"/>
-                <Separator/>
-            </StackPanel>
 
+            <!-- Window Top Bar -->
+            <Grid Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="170"/>
+                    <ColumnDefinition Width="60"/>
+                    <!-- Previous -->
+                    <ColumnDefinition Width="60"/>
+                    <!-- Next -->
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60"/>
+                    <!-- Maximize -->
+                    <ColumnDefinition Width="60"/>
+                    <!-- Maximize -->
+                    <ColumnDefinition Width="60"/>
+                    <!-- Close -->
+                </Grid.ColumnDefinitions>
+
+
+                <Rectangle Name="TopBar" Width="auto" Height="auto" Fill="Transparent" Grid.ColumnSpan="7" MouseDown="Title_Bar_Drag"/>
+                <Button Name="Previous" Grid.Column="1" Command="{Binding ToPreviousViewModelCommand}" Style="{StaticResource TopBarButtonStyle}">
+                    <Image Source="/ImageResources/previouspageicon.png" Width="{StaticResource TopBarIconSize}"/>
+                </Button>
+                <Button Name="Next" Grid.Column="2" Command="{Binding ToNextViewModelCommand}" Style="{StaticResource TopBarButtonStyle}">
+                    <Image Source="/ImageResources/nextpageicon.png" Width="{StaticResource TopBarIconSize}"/>
+                </Button>
+                <Button Name="Minimize" Grid.Column="4" Click="Minimize_Click" Style="{StaticResource TopBarButtonStyle}">
+                    <Image Source="/ImageResources/MinimiseIcon.ico" Width="{StaticResource TopBarIconSize}"/>
+                </Button>
+                <Button Name="Maximize" Grid.Column="5" Click="Maximize_Click" Style="{StaticResource TopBarButtonStyle}">
+                    <Image Source="/ImageResources/MaximiseIcon.ico" Width="{StaticResource TopBarIconSize}"/>
+                </Button>
+                <Button Name="Close" Grid.Column="6" Click="Close_Click" Style="{StaticResource TopBarButtonStyle}">
+                    <Image Source="/ImageResources/ExitIcon.ico" Width="{StaticResource TopBarIconSize}"/>
+                </Button>
+
+            </Grid>
+
+            <!-- Left panel -->
+            <Grid Grid.RowSpan="2" Grid.Column="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="170"/>
+                    <RowDefinition MinHeight="160" Height="*"/>
+                    <RowDefinition Height="134"/>
+                    <RowDefinition Height="134"/>
+                </Grid.RowDefinitions>
+                <!--Logo-->
+                <Grid Margin="15, 50, 15, 10">
+                    <Image Source="{Binding RitmoLogo}" Height="Auto" Width="Auto"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <!--Navigationpanel-->
+                <StackPanel Grid.Row="1">
+                    <Separator/>
+                    <Button x:Name="Home_Button" Content="Home" CommandParameter="{Binding HomeViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}" />
+                    <Button x:Name="Search_Button" Content="Search" CommandParameter="{Binding SearchViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}"/>
+                    <Button x:Name="Categories_Button" Content="Categories" CommandParameter="{Binding CategoriesViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}"/>
+                    <Button x:Name="Following_Button"  Content="Following" CommandParameter="{Binding FollowingViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Height="auto">
+                    <Separator/>
+                    <Button x:Name="AllPlaylist_Button" Content="My Playlists" CommandParameter="{Binding AllPlaylistsViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}" />
+                    <Button x:Name="MyQueue_Button" Content="My Queue" CommandParameter="{Binding MyQueueViewModel}" Command="{Binding ToClickedViewModelCommand}" Style="{StaticResource LeftPanelButtonStyle}"/>
+                    <Separator/>
+                </StackPanel>
+
+            </Grid>
+
+            <!-- Frame view -->
+            <ContentControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" Content="{Binding CurrentViewModel}"/>
+
+            <!-- Media control -->
+            <Rectangle Fill="#FF3E3E3E" Grid.Row="3" Width="auto" Height="auto" Grid.ColumnSpan="2"/>
+            <!-- Background color -->
+
+            <Grid  Grid.Row="2"  Width="124" HorizontalAlignment="Center" Margin="264,32,434,0" Grid.Column="1">
+                <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Command="{Binding TrackControlCommand}" Style="{StaticResource PlayButtonStyle}" Width="40" Height="Auto">
+                    <Image x:Name="PlayButtonIcon" Source="{Binding PlayButtonIcon}" />
+                </Button>
+                <Button x:Name="PrevButton" Margin="0,0,80,0" Command="{Binding PrevTrackCommand}" Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">
+                    <Image Source="/ImageResources/previoustrackicon.ico"/>
+                </Button>
+                <Button x:Name="NextButton" Margin="80,0,0,0" Command="{Binding NextTrackCommand}"  Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">
+                    <Image Source="/ImageResources/nexttrackicon.ico"/>
+                </Button>
+            </Grid>
+
+            <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="35" Margin="545,10,0,0" VerticalAlignment="Top" Width="42" Grid.Column="1" Grid.Row="3"/>
+            <ContentControl Content="{Binding CurrentTrackElement}" Margin="326,11,481,60" Grid.Column="1" Grid.Row="1"/>
+
+            <Grid Background="LightGray" HorizontalAlignment="Right" Height="71" Margin="0,0,5.6,4.4" VerticalAlignment="Bottom" Width="162" Grid.Column="1" Grid.Row="2">
+                <TextBlock FontFamily="Aldhabi" FontSize="23" VerticalAlignment="Top" Margin="62,7,24,0" HorizontalAlignment="center" Width="76" Height="31"><Run Text="Volume" /></TextBlock>
+                <Button Background="Transparent" Command="{Binding MuteTrackCommand}" RenderTransformOrigin="0.56,-0.947" Margin="22,3,109,35" BorderBrush="{x:Null}">
+                    <Image x:Name="MuteButtonIcon" Source="{Binding MuteButtonIcon}" />
+                </Button>
+                <Slider  VerticalAlignment="Top" Margin="0,44,0,0" x:Name="volumeSlider" Cursor="Hand" Minimum="0" Maximum="1" Value="{Binding CurrentTrackVolume}"  IsMoveToPointEnabled="True"  Height="22"/>
+            </Grid>
+            <Grid Width="50" Height="70" Grid.Column="1" Margin="0,6,173,4" Grid.Row="2" HorizontalAlignment="Right" >
+                <Button Command="{Binding LoopCommand}" Style="{StaticResource LoopShuffleStyle}" Grid.Column="1" Grid.Row="2" VerticalContentAlignment="Center" Margin="0,0,0,35">
+                    <Image x:Name="RepeatModeIcon" Source="{Binding RepeatModeIcon}" />
+                </Button>
+                <Button Command="{Binding ShuffleWaitinglistCommand}" Style="{StaticResource LoopShuffleStyle}" x:Name="shuffleButton" Margin="0,35,0,0">
+                    <Image x:Name="ShuffleButtonIcon" Source="{ Binding ShuffleButtonIcon }" VerticalAlignment="Center"/>
+                </Button>
+            </Grid>
         </Grid>
+    </Border>
 
-        <!-- Frame view -->
-        <ContentControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" Content="{Binding CurrentViewModel}"/>
-
-        <!-- Media control -->
-        <Rectangle Grid.ColumnSpan="2" Grid.Row="2" Fill="gray"/>
-        <!-- Background color -->
-
-        <Grid Grid.Row="2"  Width="124" HorizontalAlignment="Center" Margin="264,32,434,0" Grid.Column="1">
-            <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Command="{Binding TrackControlCommand}" Style="{StaticResource PlayButtonStyle}" Width="40" Height="Auto">
-                <Image x:Name="PlayButtonIcon" Source="{Binding PlayButtonIcon}" />
-            </Button>
-            <Button x:Name="PrevButton" Margin="0,0,80,0" Command="{Binding PrevTrackCommand}" Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">
-                <Image Source="/ImageResources/prevtrackbutton.png"/>
-            </Button>
-            <Button x:Name="NextButton" Margin="80,0,0,0" Command="{Binding NextTrackCommand}"  Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">
-                <Image Source="/ImageResources/nexttrackbutton.png"/>
-            </Button>
-        </Grid>
-
-        <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="35" Margin="545,10,0,0" VerticalAlignment="Top" Width="42" Grid.Column="1" Grid.Row="3"/>
-        <ContentControl Content="{Binding CurrentTrackElement}" Margin="326,11,481,60" Grid.Column="1" Grid.Row="1"/>
-
-        <Grid Background="LightGray" HorizontalAlignment="Right" Height="71" Margin="0,0,5.6,4.4" VerticalAlignment="Bottom" Width="162" Grid.Column="1" Grid.Row="2">
-            <TextBlock FontFamily="Aldhabi" FontSize="23" VerticalAlignment="Top" Margin="62,7,24,0" HorizontalAlignment="center" Width="76" Height="31"><Run Text="Volume" /></TextBlock>
-            <Button Background="Transparent" Command="{Binding MuteTrackCommand}" RenderTransformOrigin="0.56,-0.947" Margin="22,3,109,35" BorderBrush="{x:Null}">
-                <Image x:Name="MuteButtonIcon" Source="{Binding MuteButtonIcon}" />
-            </Button>
-            <Slider  VerticalAlignment="Top" Margin="0,44,0,0" x:Name="volumeSlider" Cursor="Hand" Minimum="0" Maximum="1" Value="{Binding CurrentTrackVolume}"  IsMoveToPointEnabled="True"  Height="22"/>
-        </Grid>
-
-        <Button Background="Transparent" Command="{Binding LoopCommand}" Grid.Column="1" HorizontalAlignment="Right" Height="33" Margin="0,0,176.6,41.4" VerticalAlignment="Bottom" Width="33" RenderTransformOrigin="-0.494,-0.459" Grid.Row="1" BorderBrush="{x:Null}">
-            <Image x:Name="RepeatModeIcon" Source="{Binding RepeatModeIcon}" Height="28" Width="28" />
-        </Button>
-        <Button Background="Transparent" x:Name="shuffleButton" Grid.Column="1" HorizontalAlignment="right" Margin="0,0,176.6,4.4" Grid.Row="1" VerticalAlignment="bottom" Command="{Binding ShuffleWaitinglistCommand}" Width="33" Height="33" BorderBrush="{x:Null}">
-            <Image x:Name="ShuffleButtonIcon" Source="{ Binding ShuffleButtonIcon }" Height="28" Width="28"/>
-        </Button>
-
-    </Grid>
 </Window>

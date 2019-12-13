@@ -56,13 +56,7 @@
             <Label HorizontalAlignment="Left" Width="172" Content="My Playlists" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="24" Height="44" VerticalAlignment="Top"/>
 
             <!--Playlists menu-->
-            <DockPanel Width="50" Height="50" HorizontalAlignment="Right" Margin="20, 0">
-                <Menu DockPanel.Dock="Top" Background="DarkBlue">
-                    <MenuItem Icon="" Height="47" Width="50">
-                        <MenuItem Header="New Playlist" Command="{Binding AddPlaylistCommand}"/>
-                    </MenuItem>
-                </Menu>
-            </DockPanel>
+            <Button Width="50" Height="50" HorizontalAlignment="Right" Margin="20, 0" Command="{Binding AddPlaylistCommand}" Background="DarkBlue"/>
         </Grid>
 
         <!--Playlist grid-->
