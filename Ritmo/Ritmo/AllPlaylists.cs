@@ -17,7 +17,7 @@ namespace Ritmo
         public AllPlaylists()
         {
             Playlists = new List<Playlist>();
-            //GetPlaylists();
+            GetPlaylists();
         }
         public void GetPlaylists()
         {

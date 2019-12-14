@@ -8,6 +8,9 @@ namespace Ritmo
 {
     public class AllPlaylistsController
     {
+        public delegate void DeletePlaylistEventHandler();
+        public static event DeletePlaylistEventHandler PlaylistDeleted; //Event that will be called when a playlist is removed
+
         public AllPlaylists AllPlaylists { get; set; }
 
         public AllPlaylistsController()
@@ -18,13 +21,22 @@ namespace Ritmo
         public void AddTrackList(Playlist playlist) // adds a playlist to the playlist list.
         {
             AllPlaylists.Playlists.Add(playlist);
+            playlist.AddplaylistQuery();
         }
 
         public void RemovePlaylist(Playlist playlist) // removes a playlist from the playlist list
         {
+            string sqlquery = "";
+            string sqlquery2 = "";
             if (AllPlaylists.Playlists.Contains(playlist)) // checks if the given playlist exists.
             {
+                //sqlquery2 can be used when we have the function to add tracks to the playlist
+                //sqlquery2 = $"DELETE FROM Track_has_Playlist WHERE playlistID = { playlist.TrackListID}";
+                sqlquery = $"DELETE FROM Playlist WHERE idPlaylist = {playlist.TrackListID}";
+                //Database.DatabaseConnector.DeleteQueryDB(sqlquery2);
+                Database.DatabaseConnector.DeleteQueryDB(sqlquery);
                 AllPlaylists.Playlists.Remove(playlist);
+                PlaylistDeleted();
             }
             else
             {
@@ -39,7 +51,6 @@ namespace Ritmo
             Playlist Result = (from p in AllPlaylists.Playlists
                                where (p.TrackListID == playlistID)
                                select p).Single();
-
             return Result;
         }
 

@@ -18,7 +18,7 @@ namespace Ritmo.UnitTests
             AllPlaylistsViewModel APVM = new AllPlaylistsViewModel(MWVM);
             
             //Act
-            MWVM.ToViewModel(APVM);
+            //MWVM.ToViewModel(APVM);
 
             //Assert
             Assert.AreEqual(MWVM.CurrentViewModel, APVM);
