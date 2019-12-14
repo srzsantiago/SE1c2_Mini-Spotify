@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:Ritmo"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
@@ -93,12 +94,18 @@
         <Rectangle Grid.ColumnSpan="2" Grid.Row="2" Fill="gray"/>
         <!-- Background color -->
 
-        <Grid Grid.Row="1"  Width="500" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="77.4,450,246.6,0" Height="40" Grid.Column="1" Grid.RowSpan="2">
+        <Grid Grid.Row="1"  Width="532" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="77.4,450,214.6,0" Height="40" Grid.Column="1" Grid.RowSpan="2">
             <Label Content="{Binding CurrentTrackTime}" HorizontalAlignment="Left" Height="31" VerticalAlignment="Bottom" Width="55"/>
-            <Slider  IsSnapToTickEnabled="true" TickFrequency="1" Value="{Binding CurrentTrackTime}" IsMoveToPointEnabled="True" Minimum="0" Maximum="{Binding TotalTrackTime}" x:Name="TimeSlider" Cursor="Hand" HorizontalAlignment="Center" Height="20" Margin="55,15,58,5" VerticalAlignment="Center" Width="387"/>
-            <Label Content="{Binding TotalTrackTime}" HorizontalAlignment="Left" Height="31" Margin="442,0,0,0" VerticalAlignment="Bottom" Width="58"/>
+            <Slider x:Name="TrackTimeSlider" Value="{Binding CurrentTrackTime, Mode=TwoWay}" Minimum="0" Maximum="{Binding TotalTrackTime}" HorizontalAlignment="Center" Height="20" Margin="55,15,58,5" VerticalAlignment="Center" Width="387" IsSnapToTickEnabled="true" TickFrequency="1" IsMoveToPointEnabled="True">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <i:InvokeCommandAction
+                      Command="{Binding MouseLeftButtonUpCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Slider>
+            <Label Content="{Binding TotalTrackTime}" HorizontalAlignment="Left" Height="31" Margin="458,0,-11,-6" VerticalAlignment="Bottom" Width="85"/>
         </Grid>
-
 
 
         <Grid Grid.Row="2"  Width="124" HorizontalAlignment="Center" Margin="264,32,434,0" Grid.Column="1">

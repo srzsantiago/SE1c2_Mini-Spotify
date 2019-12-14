@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Ritmo;
 using System.Windows.Threading;
+using System.Windows.Controls.Primitives;
 
 namespace Ritmo.ViewModels
 {
@@ -58,21 +59,19 @@ namespace Ritmo.ViewModels
         public ICommand ShuffleWaitinglistCommand { get; set; }
         public ICommand LoopCommand { get; set; }
 
+        private RelayCommand _mouseLeftButtonUpCommand;
         private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual };
         private Uri _currentTrackSource; //Unused
         private Double _currentTrackVolume;
         private double _currentTrackTime;
         private double _totalTrackTime;
+        private double oldVolume = 0;
         private Uri _playButtonIcon = new Uri("/ImageResources/playicon.ico", UriKind.RelativeOrAbsolute);
         private Uri _muteButtonIcon = new Uri("/ImageResources/unmute.png", UriKind.RelativeOrAbsolute);
-
         private Uri _repeatModeIcon = new Uri("/ImageResources/loopOff.png", UriKind.RelativeOrAbsolute);
-
         private Uri _shuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
         private Uri _testLogo = new Uri("/ImageResources/Test_Logo.png", UriKind.RelativeOrAbsolute);
-        private double oldVolume = 0;
-        
-
+        private DispatcherTimer _timerTick = new DispatcherTimer();
 
         public MediaElement CurrentTrackElement
         {
@@ -104,8 +103,7 @@ namespace Ritmo.ViewModels
             set
             {
                 _currentTrackTime = value;
-                TimeSlider_ValueChanged(value);
-                NotifyOfPropertyChange();
+                NotifyOfPropertyChange("CurrentTrackTime");
             }
         }
 
@@ -118,7 +116,23 @@ namespace Ritmo.ViewModels
             set
             {
                 _totalTrackTime = value;
-                NotifyOfPropertyChange();
+                NotifyOfPropertyChange("TotalTrackTime");
+            }
+        }
+
+
+        public RelayCommand MouseLeftButtonUpCommand //Method to handle the event of: "When the left button of the mouse is clicked.
+        {
+            get
+            {
+                return _mouseLeftButtonUpCommand
+                    ?? (_mouseLeftButtonUpCommand = new RelayCommand(
+                    () =>
+                    {
+                        // the handler goes here 
+                        TrackTimeSlider_MouseLeftButtonUp();
+
+                    }));
             }
         }
 
@@ -158,7 +172,7 @@ namespace Ritmo.ViewModels
                 CurrentTrackElement.Play();
                 PlayButtonIcon = new Uri(@"\ImageResources\pauseicon.ico", UriKind.Relative);
                 PlayQueueController.UnpauseTrack(); //Sets pause bool to true
-                TotalTrackTime = PlayQueue.CurrentTrack.Duration;
+                
             }
         }
 
@@ -270,12 +284,30 @@ namespace Ritmo.ViewModels
             if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat) //If the repeatMode is TrackRepeat, track will start from the beginning when track is ended
             {
                 TimeSpan timerNull = new TimeSpan(0, 0, 0); //Set timer to 0 sec.
-                CurrentTrackElement.Position = timerNull; 
+                CurrentTrackElement.Position = timerNull;
                 CurrentTrackElement.Play();
             }
             else
             {
                 NextTrack();
+            }
+        }
+
+        //When the track is opened the total track time will be set of the current track
+        public void Track_Opened(Object sender, EventArgs e)
+        {
+            if (CurrentTrackElement.NaturalDuration.HasTimeSpan)
+            {
+                TotalTrackTime = CurrentTrackElement.NaturalDuration.TimeSpan.TotalSeconds;
+            }
+        }
+
+        //When the track has a 'timeSpan' the current tracktime will be set
+        void TimerTick(object sender, EventArgs e)
+        {
+            if (CurrentTrackElement.NaturalDuration.HasTimeSpan)
+            {
+                CurrentTrackTime = CurrentTrackElement.Position.Seconds + CurrentTrackElement.Position.Minutes*60; //Current track time in seconds and minutes
             }
         }
 
@@ -302,9 +334,13 @@ namespace Ritmo.ViewModels
             }
         }
 
-        public void TimeSlider_ValueChanged(double TimeSliderValue)
+        //When the left button of the mouse is clicked and if the track has a timeSpan, the position of the currentTrack will be set to the currentTrackTime.
+        public void TrackTimeSlider_MouseLeftButtonUp()// object sender, MouseButtonEventArgs e)
         {
-            CurrentTrackElement.Position = TimeSpan.FromSeconds(TimeSliderValue);
+            if (CurrentTrackElement.NaturalDuration.HasTimeSpan)
+            {
+                CurrentTrackElement.Position = TimeSpan.FromSeconds(CurrentTrackTime); //Value of the slider will be set to the audio file
+            }
         }
 
         //Changes volume based on slider. 0 is muted and 100 is highest
@@ -360,15 +396,18 @@ namespace Ritmo.ViewModels
         }
         public void InitializeCurrentTrackElement()
         {
-            if(CurrentTrackElement.IsLoaded)
-            {
-                TotalTrackTime = CurrentTrackElement.NaturalDuration.TimeSpan.TotalSeconds;
-                CurrentTrackTime = CurrentTrackElement.Position.Seconds;
-            }
             //CurrentTrackElement.Source = CurrentTrackSource;
+            CurrentTrackElement.MediaOpened+= Track_Opened;
             CurrentTrackElement.MediaEnded += Track_Ended;
+
+            //The timer to refresh the time fo the element will start
+            _timerTick.Interval = TimeSpan.FromSeconds(1);
+            _timerTick.Tick += new EventHandler(TimerTick);
+            _timerTick.Start();
+
             CurrentTrackVolume = PlayQueue.CurrentVolume;
             CurrentTrackElement.Volume = CurrentTrackVolume;
+
             
         }
         #endregion
