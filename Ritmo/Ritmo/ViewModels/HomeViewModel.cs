@@ -90,57 +90,44 @@ namespace Ritmo.ViewModels
 
         public void TestAllPlayLists()//test methode to gerenate tracks in the homeview.
         {
-            AllTestTrack.Add(new Track()
-                {
-                    TrackId = 6,
-                    Album = "testAlbum",
-                    Artist = "A",
-                    Duration = 20,
-                    Name = "Track1",
-                    AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3")
-                });
-            
+            int count = 0;
+            string sql = "SELECT idTrack, title, path, genre, date, duration FROM Track";
+            List<Dictionary<string, object>> tracks = Database.DatabaseConnector.SelectQueryDB(sql);
 
-            AllTestTrack.Add(new Track()
-                {
-                    TrackId = 7,
-                    Album = "testAlbum",
-                    Artist = "C",
-                    Duration = 40,
-                    Name = "Track2",
-                    AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                });
-            
-            AllTestTrack.Add(new Track()
-                {
-                    TrackId = 8,
-                    Album = "testAlbum",
-                    Artist = "B",
-                    Duration = 100,
-                    Name = "Track3",
-                    AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                });
-            
-            AllTestTrack.Add(new Track()
-                {
-                    TrackId = 9,
-                    Album = "testAlbum",
-                    Artist = "Rodriguez",
-                    Duration = 10,
-                    Name = "Track4",
-                    AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                });
-            
-            AllTestTrack.Add(new Track()
-                {
-                    TrackId = 10,
-                    Album = "testAlbum",
-                    Artist = "Santiago",
-                    Duration = 10,
-                    Name = "Track5",
-                    AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                });
+            int id = 0;
+            string title = "";
+            string path = "";
+            int duration = 0;
 
+            foreach (var dictionary in tracks)
+            {
+                foreach (var key in dictionary)
+                {
+                    if(key.Key.Equals("idTrack"))
+                    {
+                        id = (int)key.Value;
+                        count++;
+                    } else if(key.Key.Equals("title"))
+                    {
+                        title = (string)key.Value;
+                        count++;
+                    }
+                    else if (key.Key.Equals("path"))
+                    {
+                        path = (string)key.Value;
+                        count++;
+                    }
+                    else if (key.Key.Equals("duration"))
+                    {
+                        duration = (int)key.Value;
+                        count++;
+                    }
+                }
+                if(count % 4 == 0)
+                {
+                    AllTestTrack.Add(new Track() { TrackId = id, Name = title, Duration = duration, AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + path), Artist = "test", Album = "test" });
+                }
+            }
         }
 
 
@@ -215,6 +202,10 @@ namespace Ritmo.ViewModels
                         {
                             Track testTrack = item;
                             mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
+
+                            string sql = $"INSERT INTO Track_has_Playlist VALUES ({item.TrackId}, {SelectedItem.TrackListID} )";
+                            Database.DatabaseConnector.InsertQueryDB(sql);
+                              
                         }
                     }
 

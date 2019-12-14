@@ -59,18 +59,18 @@ namespace Ritmo.ViewModels
             NewAccountCommand = new RelayCommand<Window>(NewAccount);
         }
 
-        //LoginView is given as argument to close the view in code
+        //LoginView is given as object parameters which contains the loginView and the passwordbox from the xaml
         private void Login(object parameters)
         {
             var values = parameters as List<object>; //set the multiple parameters in one array
             var LoginView = values[0] as Window; //set the first value in the array as passwordbox
             var PasswordBox = values[1] as PasswordBox;//set the second value in the array as confirmpasswordbox
 
-            Login LoginAttempt = new Login(FilledEmail, PasswordBox.Password);
+            Login LoginAttempt = new Login(FilledEmail, PasswordBox.Password); //try to login with the given mail and password
 
             ErrorColor = Brushes.LightYellow;
 
-            if (LoginAttempt.loggedin == true) //Uitgecomment omdat ik niet een correct email en ww weet
+            if (LoginAttempt.loggedin == true)//Authentication is succesful.
             {
                 LoginMessage = "Success";
                 Manager.ShowWindow(new MainWindowViewModel());

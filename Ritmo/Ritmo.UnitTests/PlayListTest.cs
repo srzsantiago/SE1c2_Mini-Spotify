@@ -33,16 +33,5 @@ namespace Ritmo.UnitTests
             Assert.AreEqual(result, true); //Returns true
         }
 
-        [TestMethod]
-        public void ChangeViewModel()
-        {
-            //Arrage
-
-            //Act
-
-            Navigation.ChangeViewModel(new AllPlaylistsViewModel()); 
-            //Assert
-            Assert.IsTrue(Navigation.CurrentViewModel is AllPlaylistsViewModel);
-        }
     }
 }

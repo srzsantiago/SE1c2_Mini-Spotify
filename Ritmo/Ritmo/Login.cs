@@ -10,102 +10,55 @@ namespace Ritmo
 {
     public class Login
     {
-        private Person _user;
+        private readonly Person _user;
         public bool loggedin = false;
         AccessLevel access { get; set; }
-
-        // Hard-coded credentials, uncomment code in 'Login' to use database credentials. 
-        public string emailThis = "";
-        public string passwordThis = "";
         public AccessLevel accessdb = AccessLevel.user;
 
-        // login function
-        public Login(string mail, string password)
+
+
+        public Login(string mail, string password)//LoginAttempt
         {
-            
- 
-            String sql,Output = "";
-            int level = 1;
-            
+            mail = mail.ToLower(); //set the mail to lowerCase.
 
             //GET EMAILADRESSES FROM DATABASE
-            sql = "SELECT email FROM Person WHERE email = " + "'" + mail + "'";
+            string sql = $"SELECT email FROM Person WHERE email = '{mail}'";
             List<Dictionary<string, object>> Email = Database.DatabaseConnector.SelectQueryDB(sql);
-            string databaseMail = "";
 
-            foreach(var dictionary in Email)
+            if (Email.Count > 0)//if there is a match with the given email
             {
-                foreach (var keyValue in dictionary)
-                {
-                    databaseMail =  keyValue.Value.ToString();
-                }
-            }
 
-            if(databaseMail == mail)
-            //if (this.email == email)
-            {
-                sql = "SELECT password FROM Person WHERE email = " + "'" + mail + "'";
-                List<Dictionary<string, object>> Password = Database.DatabaseConnector.SelectQueryDB(sql);
-                string databasePassword = "";
-
-                foreach (var dictionary in Password)
-                {
-                    foreach (var keyValue in dictionary)
-                    {
-                        databasePassword = keyValue.Value.ToString();
-                    }
-                }
+                //get the password and rol for the given email from the databse
+                sql = $"SELECT password, rol FROM Person WHERE email = '{mail}'";
+                List<Dictionary<string, object>> PasswordAndRole = Database.DatabaseConnector.SelectQueryDB(sql);
+                string databasePassword = PasswordAndRole.ElementAt(0).ElementAt(0).Value.ToString();//set databasePassword
+                int databaseRole = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(1).Value.ToString());//set databaseRole as a int
 
 
-                if (!AuthenticateUser(mail, password, databasePassword))
-                //if (this.password != password)
+                if (!AuthenticateUser(mail, password, databasePassword))//check if the given password match the password from the database
                 {
                     loggedin = false;
                 }
                 else
                 {
-                    emailThis = mail;
-                    passwordThis = password;
-                    sql = "SELECT rol FROM Person WHERE email = " + "'" + mail + "'";
-                    List<Dictionary<string, object>> Role = Database.DatabaseConnector.SelectQueryDB(sql);
-                    int databaseRole = 1;
-
-                    foreach (var dictionary in Role)
-                    {
-                        foreach (var keyValue in dictionary)
-                        {
-                            string databaseRoleString = keyValue.Value.ToString();
-                            databaseRole = Int32.Parse(databaseRoleString);
-                        }
-                    }
-
+                    //create a user in the application with the correspondent AccessLevel/Role
                     if (databaseRole == 1)
                     {
-                        this.access = AccessLevel.user;
+                        access = AccessLevel.user;
+                        _user = new User(loggedin);
                     } else if (databaseRole == 2)
                     {
                         this.access = AccessLevel.artist;
+                        _user = new Artist(this.loggedin, "naam moet uit db", "Producer moet uit db");
                     } else if (databaseRole == 3)
                     {
                         this.access = AccessLevel.admin;
-                    }
-                    //this.access = accessdb;
-                    loggedin = true;
-                    // create new user with the loggedin bool and the access enum value
-                    if (access == AccessLevel.user)
-                    {
-                        _user = new User(this.loggedin);
-                    }
-                    else if (access == AccessLevel.artist)
-                    {
-                        _user = new Artist(this.loggedin, "naam moet uit db", "Producer moet uit db");
-                    }
-                    else if (access == AccessLevel.admin)
-                    {
                         _user = new Administrator(this.loggedin);
                     }
+                    
+                    loggedin = true;
                 }  
-            } else
+            } else //the given email doesn't exist in our database
             {
                 loggedin = false;
                 Console.WriteLine("Username not found in our database");
@@ -115,19 +68,19 @@ namespace Ritmo
 
         public bool AuthenticateUser(string username, string password, string databasePassword)
         {
-            char[] delimiter = { ':' };
-            var split = databasePassword.Split(delimiter);
+            char[] delimiter = { ':' };//the databasePassword contains an ItarationNumber, and salt and a hash. These are separated by a :
+            var split = databasePassword.Split(delimiter);//split the databasePassword
            
-            var iterations = Int32.Parse(split[0]);
+            var iterations = Int32.Parse(split[0]); 
             var salt = Convert.FromBase64String(split[1]);
             var hash = split[2];
 
-            var rfc2898 = new Rfc2898DeriveBytes(password, salt, iterations);
+            var rfc2898 = new Rfc2898DeriveBytes(password, salt, iterations);//create a PBKDF2 hash with the same salt and iteration as the password stored in the database
 
             var PasswordToCheck = Encoding.Default.GetString(rfc2898.GetBytes(32));
             var storedPassword = hash;
 
-            return PasswordToCheck == storedPassword;
+            return PasswordToCheck == storedPassword; //compare the given password hash and the databasepassword hash
         }
 
     }
