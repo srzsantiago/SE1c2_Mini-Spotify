@@ -194,7 +194,7 @@ namespace Ritmo.ViewModels
                     }
                 }
 
-            if (TextInput == null)
+            if (string.IsNullOrEmpty(TextInput))
             {
                 PopUpWarning = "Please insert a valid name"; // warning appears when the textbox was left empty
             } else if(TextInput.Length >= 32)

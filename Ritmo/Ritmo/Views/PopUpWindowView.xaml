@@ -24,8 +24,8 @@
         <TextBlock x:Name="Textblock" TextWrapping="Wrap" Text="{Binding TextMessage}" FontSize="16" 
                    HorizontalAlignment="right" VerticalAlignment="Center" Height="auto" Width="auto" Grid.Row="0" />
         <Label Content="{Binding PopUpWarning}" Foreground="DarkRed" Width="Auto" Height="Auto" HorizontalAlignment="Right" VerticalAlignment="Center"  Grid.Row="1"/>
-        <TextBox Height="{Binding TextBoxHeight}"  TextWrapping="NoWrap" Text="{Binding TextInput}" 
-                 HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Width="275" TextAlignment="Right" VerticalContentAlignment="Center" Focusable="True"/>
+            <TextBox Height="{Binding TextBoxHeight}"  TextWrapping="NoWrap" Text="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" 
+                 HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Width="275" TextAlignment="Right" VerticalContentAlignment="Center" Focusable="True" />
 
             <Button Command="{Binding OnOkayCommand}"  Content="{Binding ButtonContent}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" FontSize="16" 
                 Width="auto" Height="auto" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,62,0" Style="{StaticResource PopUpWindowStyle}" Foreground="White" IsDefault="True"/>
