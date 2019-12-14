@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ritmo.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,24 +25,37 @@ namespace Ritmo
             playlist.AddplaylistQuery();
         }
 
+        public bool IsPlaylistEmpty(int playlistid)
+        {
+            string sql = $"SELECT idTrack FROM Track WHERE idTrack IN (SELECT trackID FROM Track_has_Playlist WHERE playlistID = {playlistid})";
+
+            List<Dictionary<string, object>> idlist = DatabaseConnector.SelectQueryDB(sql);
+
+            if (idlist.Count == 0)
+                return true;
+            else
+                return false;
+        }
+
         public void RemovePlaylist(Playlist playlist) // removes a playlist from the playlist list
         {
-            string sqlquery = "";
-            string sqlquery2 = "";
+            string sqlquery;
+            string sqlquery2;
             if (AllPlaylists.Playlists.Contains(playlist)) // checks if the given playlist exists.
             {
-                //sqlquery2 can be used when we have the function to add tracks to the playlist
-                //sqlquery2 = $"DELETE FROM Track_has_Playlist WHERE playlistID = { playlist.TrackListID}";
+                if (!IsPlaylistEmpty(playlist.TrackListID))
+                {
+                    sqlquery2 = $"DELETE FROM Track_has_Playlist WHERE playlistID = { playlist.TrackListID}";
+                    DatabaseConnector.DeleteQueryDB(sqlquery2);
+                }
+
                 sqlquery = $"DELETE FROM Playlist WHERE idPlaylist = {playlist.TrackListID}";
-                //Database.DatabaseConnector.DeleteQueryDB(sqlquery2);
-                Database.DatabaseConnector.DeleteQueryDB(sqlquery);
+                DatabaseConnector.DeleteQueryDB(sqlquery);
                 AllPlaylists.Playlists.Remove(playlist);
                 PlaylistDeleted();
             }
             else
-            {
                 throw new Exception("This playlist does not exists.");
-            }
         }
 
         public Playlist GetPlaylist(int playlistID)
