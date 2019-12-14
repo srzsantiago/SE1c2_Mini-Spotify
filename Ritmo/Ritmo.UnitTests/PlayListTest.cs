@@ -30,5 +30,6 @@ namespace Ritmo.UnitTests
             //Assert
             Assert.AreEqual(result, true); //Returns true
         }
+
     }
 }
