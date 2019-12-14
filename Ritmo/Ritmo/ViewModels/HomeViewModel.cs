@@ -17,6 +17,15 @@ namespace Ritmo.ViewModels
         MainWindowViewModel mainWindowViewModel;
         private int _clickedButtonValue;
 
+        private int _addtonewplaylistheight;
+
+        public int AddToNewPlaylistHeight
+        {
+            get { return _addtonewplaylistheight; }
+            set { _addtonewplaylistheight = value; NotifyOfPropertyChange(); }
+        }
+
+
         #region observablecollections
         private ObservableCollection<Track> _allTestTrack;
 
@@ -87,55 +96,11 @@ namespace Ritmo.ViewModels
             TestAllPlayLists();
 
         }
-
-        public void TestAllPlayLists()//test methode to gerenate tracks in the homeview.
-        {
-            int count = 0;
-            string sql = "SELECT idTrack, title, path, genre, date, duration FROM Track";
-            List<Dictionary<string, object>> tracks = Database.DatabaseConnector.SelectQueryDB(sql);
-
-            int id = 0;
-            string title = "";
-            string path = "";
-            int duration = 0;
-
-            foreach (var dictionary in tracks)
-            {
-                foreach (var key in dictionary)
-                {
-                    if(key.Key.Equals("idTrack"))
-                    {
-                        id = (int)key.Value;
-                        count++;
-                    } else if(key.Key.Equals("title"))
-                    {
-                        title = (string)key.Value;
-                        count++;
-                    }
-                    else if (key.Key.Equals("path"))
-                    {
-                        path = (string)key.Value;
-                        count++;
-                    }
-                    else if (key.Key.Equals("duration"))
-                    {
-                        duration = (int)key.Value;
-                        count++;
-                    }
-                }
-                if(count % 4 == 0)
-                {
-                    AllTestTrack.Add(new Track() { TrackId = id, Name = title, Duration = duration, AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + path), Artist = "test", Album = "test" });
-                }
-            }
-        }
-
-
         private void LoadListboxPlaylist(object sender)//When user click on "Add to playlist" the listbox of Playlists is filled.
         {
             //get the trackID of the track clicked, so it can be use in the listbox to identify which tracks is going to be add to the selected item
             _clickedButtonValue = (int)sender;
-
+            AddToNewPlaylistHeight = 30;
             AllPlaylist.Clear();//clear the ObservableCollection of Playlists to avoid repeated playlists
 
             foreach (var item in mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists)
@@ -163,12 +128,56 @@ namespace Ritmo.ViewModels
 
         }
 
+        public Track GetTrackDB(int trackid)
+        {
+            Track track = null;
+            int count = 0;
+            string sql = $"SELECT idTrack, title, path, duration FROM Track WHERE idTrack = {trackid}";
+            List<Dictionary<string, object>> tracks = Database.DatabaseConnector.SelectQueryDB(sql);
+
+            int id = 0;
+            string title = "";
+            string path = "";
+            int duration = 0;
+
+            foreach (var dictionary in tracks)
+            {
+                foreach (var key in dictionary)
+                {
+                    if (key.Key.Equals("idTrack"))
+                    {
+                        id = (int)key.Value;
+                        count++;
+                    }
+                    else if (key.Key.Equals("title"))
+                    {
+                        title = (string)key.Value;
+                        count++;
+                    }
+                    else if (key.Key.Equals("path"))
+                    {
+                        path = (string)key.Value;
+                        count++;
+                    }
+                    else if (key.Key.Equals("duration"))
+                    {
+                        duration = (int)key.Value;
+                        count++;
+                    }
+                }
+                if (count % 4 == 0)
+                {
+                    track = new Track() { TrackId = id, Name = title, Duration = duration, AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + path), Artist = "test", Album = "test"};
+                }
+            }
+            return track;
+        }
+
         private void AddToNewPlaylistClick(object sender) // user story opgeschoven dus word later aan gewerkt
         {
-            //Console.WriteLine("asdada");
-            //string input = Interaction.InputBox("Question?", "Title", "Default Text");
-            //if(input != "")
-            //{
+            IWindowManager windowManager = new WindowManager();
+            windowManager.ShowDialog(new PopUpWindowViewModel(this, _clickedButtonValue));
+
             //    AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(new Playlist("Default value"));
             //}
             //foreach (var item in AllTestTrack)//goes through all tracks
@@ -191,6 +200,7 @@ namespace Ritmo.ViewModels
 
         private void AddTrackToSelectedPlaylist()//This methode is called from the prop SelectedItem. It adds a track to a clicked playlist.
         {
+            bool contains = false;
             foreach (var item in AllTestTrack)//goes through all tracks
             {
                 if (item.TrackId == _clickedButtonValue)//find the matching Id
@@ -201,11 +211,31 @@ namespace Ritmo.ViewModels
                         if (SelectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
                         {
                             Track testTrack = item;
-                            mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
+                            int playlistid = mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).TrackListID;
+                            string selectsql = $"SELECT idTrack FROM Track WHERE idTrack IN (SELECT trackID FROM Track_has_Playlist WHERE playlistID = {playlistid})";
+                            List<Dictionary<string, object>> ids = Database.DatabaseConnector.SelectQueryDB(selectsql);
 
-                            string sql = $"INSERT INTO Track_has_Playlist VALUES ({item.TrackId}, {SelectedItem.TrackListID} )";
-                            Database.DatabaseConnector.InsertQueryDB(sql);
-                              
+                            foreach (var dictionary in ids)
+                            {
+                                foreach (var key in dictionary)
+                                {
+                                    if((int)key.Value == testTrack.TrackId)
+                                    {
+                                        contains = true;
+                                    }
+                                }
+                            }
+
+                            if (!contains)
+                            {
+                                mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
+                                string sql = $"INSERT INTO Track_has_Playlist VALUES ({item.TrackId}, {SelectedItem.TrackListID} )";
+                                Database.DatabaseConnector.InsertQueryDB(sql);
+                            } else
+                            {
+                                IWindowManager windowManager = new WindowManager();
+                                windowManager.ShowDialog(new PopUpWindowViewModel(this));
+                            }
                         }
                     }
 
@@ -214,6 +244,49 @@ namespace Ritmo.ViewModels
             }
             AllPlaylist.Clear();
 
+        }
+
+        public void TestAllPlayLists()//test methode to gerenate tracks in the homeview.
+        {
+            int count = 0;
+            string sql = "SELECT idTrack, title, path, genre, date, duration FROM Track";
+            List<Dictionary<string, object>> tracks = Database.DatabaseConnector.SelectQueryDB(sql);
+
+            int id = 0;
+            string title = "";
+            string path = "";
+            int duration = 0;
+
+            foreach (var dictionary in tracks)
+            {
+                foreach (var key in dictionary)
+                {
+                    if (key.Key.Equals("idTrack"))
+                    {
+                        id = (int)key.Value;
+                        count++;
+                    }
+                    else if (key.Key.Equals("title"))
+                    {
+                        title = (string)key.Value;
+                        count++;
+                    }
+                    else if (key.Key.Equals("path"))
+                    {
+                        path = (string)key.Value;
+                        count++;
+                    }
+                    else if (key.Key.Equals("duration"))
+                    {
+                        duration = (int)key.Value;
+                        count++;
+                    }
+                }
+                if (count % 4 == 0)
+                {
+                    AllTestTrack.Add(new Track() { TrackId = id, Name = title, Duration = duration, AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + path), Artist = "test", Album = "test" });
+                }
+            }
         }
     }
    

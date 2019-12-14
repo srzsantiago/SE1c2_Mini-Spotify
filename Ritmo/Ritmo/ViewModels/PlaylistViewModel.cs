@@ -112,8 +112,32 @@ namespace Ritmo.ViewModels
         {
             PlayListTracksOC.Clear();
 
-            foreach (var track in PlaylistController.Playlist.Tracks)
-                PlayListTracksOC.Add(track);
+            int count = 0;
+            string sql = $"SELECT idTrack, title, duration FROM Track WHERE idTrack IN (SELECT trackID FROM Track_has_Playlist WHERE playlistID = {PlaylistController.Playlist.TrackListID})";
+            List<Dictionary<string, object>> tracks = Database.DatabaseConnector.SelectQueryDB(sql);
+
+            string name = "";
+            int duration = 0;
+
+            foreach (var dictionary in tracks)
+            {
+                foreach (var key in dictionary)
+                {
+                    if(key.Key.Equals("title"))
+                    {
+                        name = (string)key.Value;
+                        count++;
+                    } else if(key.Key.Equals("duration"))
+                    {
+                        duration = (int)key.Value;
+                        count++;
+                    }
+                }
+                if(count % 2 == 0)
+                {
+                    PlayListTracksOC.Add(new Track() { Name = name, Duration = duration });
+                }
+            }
         }
 
         private void ChangeNameClick(object sender) //Change the name of the playlist
