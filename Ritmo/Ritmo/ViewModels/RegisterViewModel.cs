@@ -35,6 +35,7 @@ namespace Ritmo.ViewModels
         }
         #endregion
 
+        #region Color
         private Brush _errorColor;
 
         public Brush ErrorColor
@@ -46,8 +47,9 @@ namespace Ritmo.ViewModels
                 NotifyOfPropertyChange();
             }
         }
+        #endregion
 
-        #region labels
+        #region Labels
         private string _name;
         private string _email;
         private string _errorMessage;
@@ -117,7 +119,7 @@ namespace Ritmo.ViewModels
             if (!Name.Equals("") && IsValidEmail(Email) && IsPasswordMatch(passwordBox, confirmPasswordBox)) //information validation
             {
                 Register registerAttempt = new Register(Name, Email, passwordBox.Password);
-                string message = registerAttempt.ToString();
+                string message = registerAttempt.ToString();//get the registerAttempt message
                 if(message.Equals("This email already exists"))
                 {
                     ErrorColor = Brushes.LightYellow;
@@ -125,7 +127,7 @@ namespace Ritmo.ViewModels
                 }
                 else
                 {
-                    Manager.ShowWindow(new LoginViewModel());
+                    Manager.ShowWindow(new LoginViewModel());//register succeed, send user to login page.
                     TryClose();
                 }
             }
