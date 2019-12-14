@@ -31,32 +31,12 @@
     
     <!--Main Grid-->
     <Grid Background="AntiqueWhite" Name="MainGrid">
-
-        <!--Pop Up Window for adding playlist-->
-        <Popup x:Name="Test" IsOpen="{Binding PopUpIsOpen}" Placement="Center" StaysOpen="False">
-            <Border BorderThickness="1" BorderBrush="DarkSlateGray">
-                <Grid Height="{Binding PopUpSize}" Width="340" Background="Gray" >
-                    <Grid RenderTransformOrigin="0.5,0.5" Margin="180,10,20,47">
-                        <Label Content="Playlist Name" VerticalContentAlignment="Top" HorizontalContentAlignment="Right" Foreground="White" Canvas.Left="35" FontSize="16" Margin="0,0,0,29"/>
-                        <Label Content="{Binding PopUpWarning}" Foreground="DarkRed" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Margin="-158,27,0,29"/>
-                    </Grid>
-                    <TextBox Name="NewName" Text="{Binding NewName}" Margin="20,0,20,54"  Height="18" VerticalAlignment="Bottom" />
-                    <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="50"  Width="140">
-                        <Button Content="Add Playlist" Margin="0,16,0,14" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="78"
-                                Command="{Binding AddPlaylistCommand}" CommandParameter="{Binding Text, ElementName=NewName}" IsDefault="True"/>
-                        <Button Content="Cancel" Margin="83,3,0,0" 
-                            Command="{Binding ControlPopUpCommand}" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="39"/>
-                    </Grid>
-                </Grid>
-            </Border>
-        </Popup>
-
         <!--Top bar-->
         <Grid Background="LightSlateGray" Height="48" VerticalAlignment="Top">
             <Label HorizontalAlignment="Left" Width="172" Content="My Playlists" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="24" Height="44" VerticalAlignment="Top"/>
 
             <!--Playlists menu-->
-            <Button Width="50" Height="50" HorizontalAlignment="Right" Margin="20, 0" Command="{Binding ControlPopUpCommand}" Background="DarkBlue"/>
+            <Button Width="50" Height="50" HorizontalAlignment="Right" Margin="20, 0" Command="{Binding AddPlaylistCommand}" Background="DarkBlue"/>
         </Grid>
 
         <!--Playlist grid-->

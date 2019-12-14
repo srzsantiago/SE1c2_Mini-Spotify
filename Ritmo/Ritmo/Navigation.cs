@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Caliburn.Micro;
+using Ritmo.ViewModels;
 
 namespace Ritmo
 {
@@ -14,8 +15,8 @@ namespace Ritmo
 
         private static Stack<Screen> _previousViewModelStack = new Stack<Screen>();
         private static Stack<Screen> _nextViewModelStack = new Stack<Screen>();
-        private static Screen NextViewModel { get; set; }
-        private static Screen PreviousViewModel { get; set; }
+        private static Screen _nextViewModel { get; set; }
+        private static Screen _previousViewModel { get; set; }
         public static Screen CurrentViewModel { get; set; }
 
         //Sets CurrentViewModel in this class
@@ -45,9 +46,9 @@ namespace Ritmo
             if (_previousViewModelStack.Count != 0)
             {
                 _nextViewModelStack.Push(CurrentViewModel); //Places previous viewmodel in next viewmodel stack
-                PreviousViewModel = _previousViewModelStack.Pop(); //Gets previous viewmodel from previous stack
+                _previousViewModel = _previousViewModelStack.Pop(); //Gets previous viewmodel from previous stack
 
-                ChangeViewModel(PreviousViewModel); //Changes viewmodel to previous viewmodel
+                ChangeViewModel(_previousViewModel); //Changes viewmodel to previous viewmodel
             }
         }
 
@@ -55,12 +56,36 @@ namespace Ritmo
         {
             if (_nextViewModelStack.Count != 0)
             {
-                NextViewModel = _nextViewModelStack.Pop(); //Gets next viewmodel from stack
+                _nextViewModel = _nextViewModelStack.Pop(); //Gets next viewmodel from stack
 
-                ToViewModel(NextViewModel); //Changes viewmodel to next view model
+                ToViewModel(_nextViewModel); //Changes viewmodel to next view model
             }
         }
 
+        //Searches for PlaylistViewModel in stack based on playlistID and calls RemoveViewModel if there's a match
+        private static void RemovePlaylistViewModelFromStack(Stack<Screen> viewModelStack, int playlistID)
+        {
+            foreach (Screen item in viewModelStack)
+            {
+                if(item is PlaylistViewModel)
+                {
+                    if(((PlaylistViewModel)item).PlaylistController.Playlist.TrackListID == playlistID)
+                    {
+                        RemoveViewModel(item);
+                        return;
+                    }
+                }
+            }
+        }
+
+        //Calls RemovePlaylistViewModelFromStack with both stacks and playlistID
+        public static void RemovePlaylistViewModel(int playlistID)
+        {
+            RemovePlaylistViewModelFromStack(_previousViewModelStack, playlistID);
+            RemovePlaylistViewModelFromStack(_nextViewModelStack, playlistID);
+        }
+
+        //Checks if viewmodel is in a stack and call RemoveViewModelFromStack to remove it
         public static void RemoveViewModel(Screen viewModel)
         {
             if (_nextViewModelStack.Contains(viewModel))

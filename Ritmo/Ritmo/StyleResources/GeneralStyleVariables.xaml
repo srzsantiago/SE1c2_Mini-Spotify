@@ -10,5 +10,4 @@
     <SolidColorBrush x:Key="SecondaryBlueMouseOver" Color="#1D3E6C"/>
     <SolidColorBrush x:Key="SecondaryBlueMouseClick" Color="#20315F"/>
 
-    
 </ResourceDictionary>

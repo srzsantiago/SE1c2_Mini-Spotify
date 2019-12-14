@@ -84,5 +84,33 @@ namespace Ritmo.UnitTests
             //Assert
             Assert.AreEqual(TestPlaylist, ReturnedPlaylist);
         }
+
+        [TestMethod]
+        public void GetPlaylist_FromDatabase_ReturnsPlaylist()
+        {
+            //Arrange
+            AllPlaylistsController.AddTrackList(new Playlist("playlist1")); //Create playlist and add it to all playlists
+
+            bool result = false;
+            string sql = "SELECT * FROM Playlist";
+            //Act
+            List<Dictionary<string, object>> playlists = Database.DatabaseConnector.SelectQueryDB(sql);
+
+            foreach (var dictionary in playlists)
+            {
+                foreach (var key in dictionary)
+                {
+                    if(key.Key.Equals("name"))
+                    {
+                        if(key.Value.ToString() == "playlist1")
+                        {
+                            result = true;
+                        }
+                    }
+                }
+            }
+            //Assert
+            Assert.AreEqual(result, true);
+        }
     }
 }
