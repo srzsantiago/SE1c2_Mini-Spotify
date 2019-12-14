@@ -94,8 +94,8 @@ namespace Ritmo.ViewModels
                 {
                     TrackId = 6,
                     Album = "testAlbum",
-                    Artist = "JOHANNES",
-                    Duration = 10,
+                    Artist = "A",
+                    Duration = 20,
                     Name = "Track1",
                     AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3")
                 });
@@ -105,8 +105,8 @@ namespace Ritmo.ViewModels
                 {
                     TrackId = 7,
                     Album = "testAlbum",
-                    Artist = "Tristan",
-                    Duration = 10,
+                    Artist = "C",
+                    Duration = 40,
                     Name = "Track2",
                     AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
                 });
@@ -115,8 +115,8 @@ namespace Ritmo.ViewModels
                 {
                     TrackId = 8,
                     Album = "testAlbum",
-                    Artist = "Zapata",
-                    Duration = 10,
+                    Artist = "B",
+                    Duration = 100,
                     Name = "Track3",
                     AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
                 });

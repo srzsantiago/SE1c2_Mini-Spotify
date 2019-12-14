@@ -17,63 +17,10 @@ namespace Ritmo.ViewModels
         public PlaylistController PlaylistController;
         public MainWindowViewModel MainWindow;
 
-
-        #region boolForBoxes
-        //private bool _isChangeNameBoxOpen;
-
-        //public bool IsChangeNameBoxOpen
-        //{
-        //    get { return _isChangeNameBoxOpen; }
-        //    set { _isChangeNameBoxOpen = value;
-        //        NotifyOfPropertyChange();
-        //    }
-        //}
-
-
-        //private bool _isDeletePlaylistBoxOpen;
-
-        //public bool IsDeletePlaylistBoxOpen
-        //{
-        //    get { return _isDeletePlaylistBoxOpen; }
-        //    set
-        //    {
-        //        _isDeletePlaylistBoxOpen = value;
-        //        NotifyOfPropertyChange();
-        //    }
-        //}
-        #endregion
-
         #region StringForLabels
-        //private string _changeName;
-        //private string _errorMessage;
         private static string _playlistName;
         private string _playlistCreationDate;
         private string _playlistDuration;
-
-        //public string ChangeName
-        //{
-        //    get
-        //    {
-        //        if (_changeName == null)
-        //            _changeName = "";
-        //        return _changeName;
-        //    }
-        //    set { _changeName = value;
-        //        NotifyOfPropertyChange("ChangeName");
-        //    }
-        //}
-
-        //public string ErrorMessage
-        //{
-        //    get { if (_errorMessage == null)
-        //            _errorMessage = "";
-        //        return _errorMessage; }
-        //    set
-        //    {
-        //        _errorMessage = value;
-        //        NotifyOfPropertyChange("ErrorMessage");
-        //    }
-        //}
 
         public string PlaylistName
         {
@@ -117,13 +64,6 @@ namespace Ritmo.ViewModels
         }
         #endregion
 
-        #region CommandForPopUpScreens
-        //public ICommand OpenChangeNameCommand { get; set; }
-
-        //public ICommand OpenDeletePlaylistCommand { get; set; }
-       
-        #endregion
-
         #region Command
 
         public ICommand DeletePlaylistCommand { get; set; }
@@ -155,8 +95,6 @@ namespace Ritmo.ViewModels
 
         public void InitializeCommands()
         {
-            //OpenChangeNameCommand = new RelayCommand(OpenChangeNameClick);
-            //OpenDeletePlaylistCommand = new RelayCommand(OpenDeletePlaylistClick);
             ChangeNameCommand = new RelayCommand<object>(ChangeNameClick);
             DeletePlaylistCommand = new RelayCommand<object>(DeletePlaylistClick);
             AscendingSortCommand = new RelayCommand<object>(AscendingSortClick);
@@ -180,39 +118,6 @@ namespace Ritmo.ViewModels
 
         private void ChangeNameClick(object sender) //Change the name of the playlist
         {
-
-            //string action = (string)sender; //Sets the chosen action in the popup menu
-
-            //if (action.Equals("Change"))//User clicked Change button
-            //{
-            //    if (ChangeName.Equals(""))//If name is an empty string
-            //    {
-            //        ErrorMessage = "Please write a name";
-            //    }
-            //    else if (ChangeName.Equals(PlaylistName))//If the name didn't change
-            //    {
-            //        ErrorMessage = "The name must be a new name";
-            //    }
-            //    else
-            //    {
-            //        if(ChangeName.Length >= 32){//Name is longer than 32 characters
-            //            ErrorMessage = "The name cannot be longer than 32 characters";
-            //        }
-            //        else//Name fullfill all constrains 
-            //        {
-            //            PlaylistController.SetName(ChangeName);
-            //            //must be changed in the database aswel
-            //            PlaylistName = ChangeName;
-            //            ChangeName = "";
-            //            IsChangeNameBoxOpen = false;
-            //        }
-            //    }
-
-            //}
-            //else if (action.Equals("Cancel")) //User clicked the Cancel button
-            //{
-            //    IsChangeNameBoxOpen = false;
-            //}
             IWindowManager windowManager = new WindowManager();
             windowManager.ShowDialog(new PopUpWindowViewModel(this));
         }
@@ -226,18 +131,6 @@ namespace Ritmo.ViewModels
 
         public void DeletePlaylistClick(object sender)
         {
-            //string action = (string)sender; //Sets the chosen action in the popup menu
-
-            //if (action.Equals("Delete"))//user clicked delete button
-            //{
-            //    //Playlist logica om de playlist te verwijderen
-            //    MainWindow.ChangeViewModel(MainWindow.HomeViewModel);
-            //    IsDeletePlaylistBoxOpen = false;
-            //}
-            //else //User clicked cancel
-            //{
-            //    IsDeletePlaylistBoxOpen = false;
-            //}
             IWindowManager windowManager = new WindowManager();
             windowManager.ShowDialog(new PopUpWindowViewModel(this, this.PlaylistController.Playlist, MainWindow));
             NotifyOfPropertyChange();

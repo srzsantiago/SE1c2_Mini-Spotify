@@ -8,11 +8,11 @@
         Title="{Binding Title}" Height="150" Width="290"
         WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,0,-1">
-        <Button Command="{Binding OnOkayCommand}"  Content="{Binding ButtonContent}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Width="Auto" Height="20" Margin="56,90,135,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding OnOkayCommand}"  Content="{Binding ButtonContent}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Width="Auto" Height="20" Margin="40,90,131,0" VerticalAlignment="Top"/>
         <Button Content="Cancel" Click="Button_Click" Height="20" Width="Auto" Margin="169,90,59,0" VerticalAlignment="Top"/>
         <TextBlock x:Name="Textblock" HorizontalAlignment="Left" Margin="11,10,0,0" TextWrapping="Wrap" Text="{Binding TextMessage}" VerticalAlignment="Top" Height="26" Width="261"/>
         <Label Content="{Binding PopUpWarning}" Foreground="DarkRed" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Margin="11,24,10,62"/>
-        <TextBox Height="{Binding TextBoxHeight}" HorizontalAlignment="Left" Margin="11,63,0,0" TextWrapping="Wrap" Text="{Binding TextInput}" VerticalAlignment="Top" Width="261"/>
+        <TextBox Height="{Binding TextBoxHeight}" HorizontalAlignment="Left" Margin="11,63,0,0" TextWrapping="NoWrap" Text="{Binding TextInput}" VerticalAlignment="Top" Width="261"/>
 
     </Grid>
 </Window>

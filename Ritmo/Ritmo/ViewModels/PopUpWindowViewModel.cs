@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -99,10 +100,11 @@ namespace Ritmo.ViewModels
             OnOkayCommand = new RelayCommand<object>(ChangeNameClick);
         }
 
-        public PopUpWindowViewModel(PlaylistViewModel viewModel, Playlist playlist, MainWindowViewModel mainwindow)
+        public PopUpWindowViewModel(PlaylistViewModel viewModel, Playlist playlist, MainWindowViewModel mainwindow) // used when deleting a playlist from the inside of the playlist
         {
             ButtonContent = "Delete this playlist";
             Title = "Delete playlist";
+            TextMessage = "Are you sure you want to delete this playlist?";
             playListViewModel = viewModel;
             Playlist = playlist;
             MainWindow = mainwindow;
@@ -120,7 +122,7 @@ namespace Ritmo.ViewModels
             {
                 PopUpWarning = "Name can't be longer than 32 characters"; // warning appears when the name is 32 characters long
             }
-            else if (TextInput.Equals(playListViewModel.PlaylistName))//If the name didn't change
+            else if (TextInput.Equals(playListViewModel.PlaylistName)) //If the name didn't change
             {
                 PopUpWarning = "The name can't be the same as the old name";
             }
