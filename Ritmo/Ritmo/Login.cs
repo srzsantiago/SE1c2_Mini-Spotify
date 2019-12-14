@@ -16,20 +16,20 @@ namespace Ritmo
         public AccessLevel accessdb = AccessLevel.user;
 
 
-       
+
         public Login(string mail, string password)//LoginAttempt
         {
             mail = mail.ToLower(); //set the mail to lowerCase.
 
             //GET EMAILADRESSES FROM DATABASE
-            string sql = "SELECT email FROM Person WHERE email = " + "'" + mail + "'";
+            string sql = $"SELECT email FROM Person WHERE email = '{mail}'";
             List<Dictionary<string, object>> Email = Database.DatabaseConnector.SelectQueryDB(sql);
 
             if (Email.Count > 0)//if there is a match with the given email
             {
 
                 //get the password and rol for the given email from the databse
-                sql = "SELECT password, rol FROM Person WHERE email = " + "'" + mail + "'";
+                sql = $"SELECT password, rol FROM Person WHERE email = '{mail}'";
                 List<Dictionary<string, object>> PasswordAndRole = Database.DatabaseConnector.SelectQueryDB(sql);
                 string databasePassword = PasswordAndRole.ElementAt(0).ElementAt(0).Value.ToString();//set databasePassword
                 int databaseRole = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(1).Value.ToString());//set databaseRole as a int
@@ -71,7 +71,7 @@ namespace Ritmo
             char[] delimiter = { ':' };//the databasePassword contains an ItarationNumber, and salt and a hash. These are separated by a :
             var split = databasePassword.Split(delimiter);//split the databasePassword
            
-            var iterations = Int32.Parse(split[0]);
+            var iterations = Int32.Parse(split[0]); 
             var salt = Convert.FromBase64String(split[1]);
             var hash = split[2];
 
