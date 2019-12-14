@@ -62,7 +62,7 @@ namespace Ritmo
             }
         }
 
-        //Searches for PlaylistViewModel in stack and returns it
+        //Searches for PlaylistViewModel in stack based on playlistID and calls RemoveViewModel if there's a match
         private static void RemovePlaylistViewModelFromStack(Stack<Screen> viewModelStack, int playlistID)
         {
             foreach (Screen item in viewModelStack)
@@ -78,13 +78,14 @@ namespace Ritmo
             }
         }
 
-        //Calls Removeplaylistviewmodelfromstack with both stacks
+        //Calls RemovePlaylistViewModelFromStack with both stacks and playlistID
         public static void RemovePlaylistViewModel(int playlistID)
         {
             RemovePlaylistViewModelFromStack(_previousViewModelStack, playlistID);
             RemovePlaylistViewModelFromStack(_nextViewModelStack, playlistID);
         }
 
+        //Checks if viewmodel is in a stack and call RemoveViewModelFromStack to remove it
         public static void RemoveViewModel(Screen viewModel)
         {
             if (_nextViewModelStack.Contains(viewModel))
