@@ -17,7 +17,7 @@ namespace Ritmo.ViewModels
         IWindowManager WindowManager = new WindowManager();
         MainWindowViewModel MainWindow;
 
-        static Playlist Playlist;
+        public Playlist Playlist;
         #region Command
         public ICommand OnOkayCommand { get; set; }
 
@@ -30,7 +30,7 @@ namespace Ritmo.ViewModels
         private string _textMessage;
         private int _textboxheight;
         private string _textinput;
-        static int PlaylistID;
+        private int _playlistID;
         private string _popupwarning;
         private string _title;
 
@@ -97,7 +97,7 @@ namespace Ritmo.ViewModels
             TextBoxHeight = 40;
             
             playListViewModel = viewModel;
-            PlaylistID = viewModel.PlaylistController.Playlist.TrackListID;
+            _playlistID = viewModel.PlaylistController.Playlist.TrackListID;
             OnOkayCommand = new RelayCommand<object>(ChangeNameClick);
         }
 
@@ -110,6 +110,7 @@ namespace Ritmo.ViewModels
             playListViewModel = viewModel;
             Playlist = playlist;
             MainWindow = mainwindow;
+            _playlistID = viewModel.PlaylistController.Playlist.TrackListID;
 
             OnOkayCommand = new RelayCommand<object>(DeletePlaylistClick);
         }
@@ -130,7 +131,7 @@ namespace Ritmo.ViewModels
             }
             else
             {
-                string sqlquery = $"UPDATE Playlist SET name = '{TextInput}' WHERE {PlaylistID} = idPlaylist"; // also updates the database name
+                string sqlquery = $"UPDATE Playlist SET name = '{TextInput}' WHERE {_playlistID} = idPlaylist"; // also updates the database name
                 DatabaseConnector.UpdateQueryDB(sqlquery);
                 playListViewModel.ChangeName(TextInput); // changes the name on the application
                 TryClose();
@@ -140,7 +141,7 @@ namespace Ritmo.ViewModels
         public void DeletePlaylistClick(object param)
         {
             Navigation.ChangeViewModel(MainWindow.AllPlaylistsViewModel);
-            Navigation.RemovePlaylistViewModel(PlaylistID); //Removes playlist from navigation
+            Navigation.RemovePlaylistViewModel(_playlistID); //Removes playlist from navigation
             AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(Playlist); 
             TryClose();
         }
@@ -156,7 +157,7 @@ namespace Ritmo.ViewModels
 
             allPlaylistViewModel = viewModel;
             OnOkayCommand = new RelayCommand<object>(OnOkayDeleteClick);
-            PlaylistID = playlistID;
+            _playlistID = playlistID;
         }
 
         // gets called when you want to add a new playlist
@@ -173,9 +174,9 @@ namespace Ritmo.ViewModels
 
         public void OnOkayDeleteClick(object param) // the method that deletes the playlist
         {
-            Playlist playlist = AllPlaylistsViewModel.AllPlaylistsController.GetPlaylist(PlaylistID); //Removes playlist with playlistID
+            Playlist playlist = AllPlaylistsViewModel.AllPlaylistsController.GetPlaylist(_playlistID); //Removes playlist with playlistID
             AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(playlist); //Removes playlist with playlistID
-            Navigation.RemovePlaylistViewModel(PlaylistID); //Removes playlist from navigationd
+            Navigation.RemovePlaylistViewModel(_playlistID); //Removes playlist from navigationd
             TryClose();
         }
 
