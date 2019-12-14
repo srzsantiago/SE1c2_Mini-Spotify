@@ -24,7 +24,15 @@ namespace Ritmo
         public static void ChangeViewModel(Screen viewModel)
         {
             CurrentViewModel = viewModel;
-            ViewModelChanged(CurrentViewModel); //Calls event to change view in MainWindow
+            try
+            {
+                ViewModelChanged(CurrentViewModel); //Calls event to change view in MainWindow
+            }catch(NullReferenceException e)
+            {
+                //MainWindowView is not instantiated
+                //Under normal circumstances impossible. This Try Catch is for testing purposes.
+            }
+            
         }
 
         //Adds currentviewmodel to previousviewmodelstack and changes viewmodel
@@ -65,17 +73,22 @@ namespace Ritmo
         //Searches for PlaylistViewModel in stack based on playlistID and calls RemoveViewModel if there's a match
         private static void RemovePlaylistViewModelFromStack(Stack<Screen> viewModelStack, int playlistID)
         {
-            foreach (Screen item in viewModelStack)
+            List<Screen> removalList = StackToList(viewModelStack);
+            int initialCount = removalList.Count;
+
+            for (int i = 0; i < removalList.Count; i++)
             {
-                if(item is PlaylistViewModel)
+                if (removalList[i] is PlaylistViewModel)
                 {
-                    if(((PlaylistViewModel)item).PlaylistController.Playlist.TrackListID == playlistID)
+                    if (((PlaylistViewModel)removalList[i]).PlaylistController.Playlist.TrackListID == playlistID)
                     {
-                        RemoveViewModel(item);
-                        return;
+                        removalList.RemoveAll(x => x.Equals(removalList[i]));
+                        i--;
                     }
                 }
             }
+            if (removalList.Count < initialCount)
+                RebuildListToStack(removalList, viewModelStack);
         }
 
         //Calls RemovePlaylistViewModelFromStack with both stacks and playlistID
@@ -83,8 +96,12 @@ namespace Ritmo
         {
             RemovePlaylistViewModelFromStack(_previousViewModelStack, playlistID);
             RemovePlaylistViewModelFromStack(_nextViewModelStack, playlistID);
+
+            if(CurrentViewModel is PlaylistViewModel)
+                ChangeViewModel(_previousViewModelStack.Pop());
         }
 
+        
         //Checks if viewmodel is in a stack and call RemoveViewModelFromStack to remove it
         public static void RemoveViewModel(Screen viewModel)
         {
@@ -95,16 +112,28 @@ namespace Ritmo
                 RemoveViewModelFromStack(_previousViewModelStack, viewModel);
         }
 
+        //DEPRECATED
         private static void RemoveViewModelFromStack(Stack<Screen> viewModelStack, Screen viewModel)
         {
             //Creates list from stack and removes viewmodel
-            List<Screen> removalList = viewModelStack.ToList(); 
-            removalList.Remove(viewModel); 
+            List<Screen> removalList = StackToList(viewModelStack);
+            removalList.Remove(viewModel);
 
+            RebuildListToStack(removalList, viewModelStack);
+        }
+
+        private static List<Screen> StackToList(Stack<Screen> viewModelStack)
+        {
+            return viewModelStack.ToList();
+        }
+
+        private static void RebuildListToStack(List<Screen> removalList, Stack<Screen> viewModelStack)
+        {
             viewModelStack.Clear(); //Clears stack
-
-            removalList.ForEach(vm => viewModelStack.Push(vm)); //Rebuilds stack with list
-
+            
+            //Rebuilds stack with list
+            removalList.Reverse();
+            removalList.ForEach(vm => viewModelStack.Push(vm));
         }
 
         public static void InitializeViewModelNavigation()

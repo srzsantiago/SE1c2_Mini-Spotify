@@ -57,6 +57,7 @@ namespace Ritmo.ViewModels
 
         #endregion
 
+        public MyQueueViewModel() { }
 
         public MyQueueViewModel(MainWindowViewModel mainWindowVM)
         {

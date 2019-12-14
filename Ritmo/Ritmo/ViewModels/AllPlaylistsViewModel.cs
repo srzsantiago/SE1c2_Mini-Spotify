@@ -45,6 +45,8 @@ namespace Ritmo.ViewModels
         public ICommand DeletePlaylistCommand { get; set; }
         #endregion
 
+        public AllPlaylistsViewModel() { }
+
         public AllPlaylistsViewModel(MainWindowViewModel mainWindow)
         {
             InitializeCommands();

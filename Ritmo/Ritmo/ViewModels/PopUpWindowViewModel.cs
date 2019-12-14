@@ -139,8 +139,8 @@ namespace Ritmo.ViewModels
 
         public void DeletePlaylistClick(object param)
         {
-            Navigation.ToViewModel(MainWindow.AllPlaylistsViewModel);
-            Navigation.RemoveViewModel(playListViewModel); //Removes playlist from navigation
+            Navigation.ChangeViewModel(MainWindow.AllPlaylistsViewModel);
+            Navigation.RemovePlaylistViewModel(PlaylistID); //Removes playlist from navigation
             AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(Playlist); 
             TryClose();
         }

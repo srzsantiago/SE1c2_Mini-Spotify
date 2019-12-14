@@ -77,20 +77,21 @@ namespace Ritmo.ViewModels
         public ICommand DeleteTrackCommand { get; set; }
         #endregion
 
-        public PlaylistViewModel()
-        {
+        public PlaylistViewModel(){ }
 
-        }
-
-        public PlaylistViewModel(MainWindowViewModel mainWindow ,Playlist playlist)
+        public PlaylistViewModel(Playlist playlist)
         {
-            MainWindow = mainWindow;
             PlaylistController = new PlaylistController(playlist);
             PlayListTracksOC = new ObservableCollection<Track>();
 
             LoadElements();
             LoadPlaylistInfo();
             InitializeCommands();
+        }
+
+        public PlaylistViewModel(MainWindowViewModel mainWindow ,Playlist playlist) : this(playlist)
+        {
+            MainWindow = mainWindow;
         }
 
         public void InitializeCommands()

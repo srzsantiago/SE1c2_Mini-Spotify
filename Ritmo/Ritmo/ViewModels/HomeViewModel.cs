@@ -75,7 +75,7 @@ namespace Ritmo.ViewModels
         #endregion
 
 
-
+        public HomeViewModel() { }
 
         public HomeViewModel(MainWindowViewModel mainWindowViewModel)
         {
