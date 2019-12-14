@@ -88,18 +88,20 @@ namespace Ritmo.ViewModels
 
         #region PlaylistViewModel constructors + click methods
 
+        //Constructor to set the Add Playlist functionality
         public PopUpWindowViewModel(PlaylistViewModel viewModel)
         {
             ButtonContent = "Change name";
             TextMessage = "What name do you want to give the playlist";
             Title = "Change playlist name";
-            TextBoxHeight = 25;
+            TextBoxHeight = 40;
             
             playListViewModel = viewModel;
             PlaylistID = viewModel.PlaylistController.Playlist.TrackListID;
             OnOkayCommand = new RelayCommand<object>(ChangeNameClick);
         }
 
+        //Constructor to set the Delete Playlist functionality
         public PopUpWindowViewModel(PlaylistViewModel viewModel, Playlist playlist, MainWindowViewModel mainwindow) // used when deleting a playlist from the inside of the playlist
         {
             ButtonContent = "Delete this playlist";
@@ -138,14 +140,15 @@ namespace Ritmo.ViewModels
         public void DeletePlaylistClick(object param)
         {
             Navigation.ToViewModel(MainWindow.AllPlaylistsViewModel);
-            Navigation.RemoveViewModel(playListViewModel);
-            AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(Playlist);
+            Navigation.RemoveViewModel(playListViewModel); //Removes playlist from navigation
+            AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(Playlist); 
             TryClose();
         }
         #endregion
 
         #region AllPlaylistsViewModel constructors + click methods
-        public PopUpWindowViewModel(AllPlaylistsViewModel viewModel, int playlistID) // gets called when you want to delete a playlist
+        // gets called when you want to delete a playlist
+        public PopUpWindowViewModel(AllPlaylistsViewModel viewModel, int playlistID) 
         {
             ButtonContent = "Delete playlist";
             TextMessage = "Are you sure you want to delete this playlist?";
@@ -155,8 +158,9 @@ namespace Ritmo.ViewModels
             OnOkayCommand = new RelayCommand<object>(OnOkayDeleteClick);
             PlaylistID = playlistID;
         }
-        
-        public PopUpWindowViewModel(AllPlaylistsViewModel viewModel) // gets called when you want to add a new playlist
+
+        // gets called when you want to add a new playlist
+        public PopUpWindowViewModel(AllPlaylistsViewModel viewModel)
         {
             TextBoxHeight = 25;
             ButtonContent = "Add playlist";
