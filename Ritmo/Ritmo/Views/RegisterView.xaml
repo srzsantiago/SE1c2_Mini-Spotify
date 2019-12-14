@@ -20,15 +20,17 @@
             <Label Content="Password" Canvas.Left="32" Canvas.Top="182"/>
             <Label Content="Confirm password" Canvas.Left="32" Canvas.Top="214"/>
             <Label Content="Email" Canvas.Left="32" Canvas.Top="244"/>
-            <Label Content="{Binding ErrorMessage}" Foreground="Red" Canvas.Left="32" Canvas.Top="270"/>
+            <Rectangle x:Name="successblock" Fill="{Binding ErrorColor}" Height="22" Width="311"/>
+            <Label Name="succeslabel" Content="{Binding ErrorMessage}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="-4"/>
+            
 
-            <TextBox x:Name="nameField" Text="{Binding Name}" Height="24" Canvas.Left="155" TextWrapping="Wrap"  Canvas.Top="154" Width="120" Background="#E6E5E5"/>
-            <PasswordBox Name="Password" Height="24" Canvas.Left="155" Canvas.Top="186" Width="120" Background="#E6E5E5"/>
-            <PasswordBox Name="ConfirmPassword" Height="22" Canvas.Left="155" Canvas.Top="218" Width="120" Background="#E6E5E5"/>
-            <TextBox x:Name="emailField" Text="{Binding Email}" Height="24" Canvas.Left="155" TextWrapping="Wrap" Canvas.Top="248" Width="120" Background="#E6E5E5"/>
+            <TextBox TabIndex="1" x:Name="nameField" Text="{Binding Name}" Height="24" Canvas.Left="155" TextWrapping="Wrap"  Canvas.Top="154" Width="120" Background="#E6E5E5"/>
+            <PasswordBox TabIndex="2" Name="Password" Height="24" Canvas.Left="155" Canvas.Top="186" Width="120" Background="#E6E5E5"/>
+            <PasswordBox TabIndex="3" Name="ConfirmPassword" Height="22" Canvas.Left="155" Canvas.Top="218" Width="120" Background="#E6E5E5"/>
+            <TextBox TabIndex="4" x:Name="emailField" Text="{Binding Email}" Height="24" Canvas.Left="155" TextWrapping="Wrap" Canvas.Top="248" Width="120" Background="#E6E5E5"/>
             <Button x:Name="artistbutton" Command="{Binding ArtistCommand}" Content="I'M AN ARTIST" Canvas.Left="32" Canvas.Top="292" Width="243" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White"/>
             <Button x:Name="cancelbutton" Command="{Binding CancelCommand}"  Content="CANCEL" Canvas.Left="32" Canvas.Top="320" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" />
-            <Button x:Name="createbutton" Command="{Binding CreateCommand}" Content="CREATE ACCOUNT" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Canvas.Left="158" Canvas.Top="320">
+            <Button x:Name="createbutton" Command="{Binding CreateCommand}" IsDefault="True" Content="CREATE ACCOUNT" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Canvas.Left="158" Canvas.Top="320">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource Converter}">
                         <Binding ElementName="Password"/>
@@ -36,8 +38,8 @@
                     </MultiBinding>
                 </Button.CommandParameter>
             </Button>
-            <Rectangle x:Name="successblock" Fill="White" Height="22" Width="311"/>
-            <Label Name="succeslabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="-4"/>
+            
+            
         </Canvas>
 
 

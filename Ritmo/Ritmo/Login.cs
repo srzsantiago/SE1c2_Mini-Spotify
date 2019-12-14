@@ -14,60 +14,74 @@ namespace Ritmo
         public bool loggedin = false;
         AccessLevel access { get; set; }
         public AccessLevel accessdb = AccessLevel.user;
+        private string message = "";
 
 
 
         public Login(string mail, string password)//LoginAttempt
         {
-            mail = mail.ToLower(); //set the mail to lowerCase.
 
-            //GET EMAILADRESSES FROM DATABASE
-            string sql = $"SELECT email FROM Person WHERE email = '{mail}'";
-            List<Dictionary<string, object>> Email = Database.DatabaseConnector.SelectQueryDB(sql);
-
-            if (Email.Count > 0)//if there is a match with the given email
+            if (mail != null && password != null)
             {
+                mail = mail.ToLower(); //set the mail to lowerCase.
 
-                //get the password and rol for the given email from the databse
-                sql = $"SELECT password, rol FROM Person WHERE email = '{mail}'";
-                List<Dictionary<string, object>> PasswordAndRole = Database.DatabaseConnector.SelectQueryDB(sql);
-                string databasePassword = PasswordAndRole.ElementAt(0).ElementAt(0).Value.ToString();//set databasePassword
-                int databaseRole = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(1).Value.ToString());//set databaseRole as a int
+                //GET EMAILADRESSES FROM DATABASE
+                string sql = $"SELECT email FROM Person WHERE email = '{mail}'";
+                List<Dictionary<string, object>> Email = Database.DatabaseConnector.SelectQueryDB(sql);
+
+                if (Email.Count > 0)//if there is a match with the given email
+                {
+
+                    //get the password and rol for the given email from the databse
+                    sql = $"SELECT password, rol FROM Person WHERE email = '{mail}'";
+                    List<Dictionary<string, object>> PasswordAndRole = Database.DatabaseConnector.SelectQueryDB(sql);
+                    string databasePassword = PasswordAndRole.ElementAt(0).ElementAt(0).Value.ToString();//set databasePassword
+                    int databaseRole = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(1).Value.ToString());//set databaseRole as a int
 
 
-                if (!AuthenticateUser(mail, password, databasePassword))//check if the given password match the password from the database
+                    if (!AuthenticateUser(mail, password, databasePassword))//check if the given password match the password from the database
+                    {
+                        loggedin = false;
+                    }
+                    else
+                    {
+                        //create a user in the application with the correspondent AccessLevel/Role
+                        if (databaseRole == 1)
+                        {
+                            access = AccessLevel.user;
+                            _user = new User(loggedin);
+                        }
+                        else if (databaseRole == 2)
+                        {
+                            this.access = AccessLevel.artist;
+                            _user = new Artist(this.loggedin, "naam moet uit db", "Producer moet uit db");
+                        }
+                        else if (databaseRole == 3)
+                        {
+                            this.access = AccessLevel.admin;
+                            _user = new Administrator(this.loggedin);
+                        }
+
+                        loggedin = true;
+                    }
+                }
+                else //the given email doesn't exist in our database
                 {
                     loggedin = false;
+                    message = "Username does not exist, register below!";
                 }
-                else
-                {
-                    //create a user in the application with the correspondent AccessLevel/Role
-                    if (databaseRole == 1)
-                    {
-                        access = AccessLevel.user;
-                        _user = new User(loggedin);
-                    } else if (databaseRole == 2)
-                    {
-                        this.access = AccessLevel.artist;
-                        _user = new Artist(this.loggedin, "naam moet uit db", "Producer moet uit db");
-                    } else if (databaseRole == 3)
-                    {
-                        this.access = AccessLevel.admin;
-                        _user = new Administrator(this.loggedin);
-                    }
-                    
-                    loggedin = true;
-                }  
-            } else //the given email doesn't exist in our database
-            {
-                loggedin = false;
-                Console.WriteLine("Username not found in our database");
             }
+        }
 
+        public override string ToString()
+        {
+            return message; 
         }
 
         public bool AuthenticateUser(string username, string password, string databasePassword)
         {
+            //if you want more information about how PBKDF2 works see the document "Advies password hashing"
+
             char[] delimiter = { ':' };//the databasePassword contains an ItarationNumber, and salt and a hash. These are separated by a :
             var split = databasePassword.Split(delimiter);//split the databasePassword
            

@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Caliburn.Micro;
 using GalaSoft.MvvmLight.Command;
 
@@ -33,6 +34,18 @@ namespace Ritmo.ViewModels
             CurrentViewModel = ViewModel;
         }
         #endregion
+
+        private Brush _errorColor;
+
+        public Brush ErrorColor
+        {
+            get { return _errorColor; }
+            set
+            {
+                _errorColor = value;
+                NotifyOfPropertyChange();
+            }
+        }
 
         #region labels
         private string _name;
@@ -85,11 +98,13 @@ namespace Ritmo.ViewModels
 
         private void ArtistClick()
         {
+            Manager.ShowWindow(new ArtistRegisterViewModel());
             TryClose();
         }
 
         private void CancelClick()
         {
+            Manager.ShowWindow(new LoginViewModel());
             TryClose();
         }
 
@@ -101,12 +116,22 @@ namespace Ritmo.ViewModels
 
             if (!Name.Equals("") && IsValidEmail(Email) && IsPasswordMatch(passwordBox, confirmPasswordBox)) //information validation
             {
-                Register register = new Register(Name, Email, passwordBox.Password);
-                Manager.ShowWindow(new LoginViewModel());
-                TryClose();
+                Register registerAttempt = new Register(Name, Email, passwordBox.Password);
+                string message = registerAttempt.ToString();
+                if(message.Equals("This email already exists"))
+                {
+                    ErrorColor = Brushes.LightYellow;
+                    ErrorMessage = message;
+                }
+                else
+                {
+                    Manager.ShowWindow(new LoginViewModel());
+                    TryClose();
+                }
             }
             else
             {
+                ErrorColor = Brushes.LightYellow;
                 ErrorMessage = "One or more fields are incorrect.";
             }
         }
