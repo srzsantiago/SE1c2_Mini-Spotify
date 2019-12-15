@@ -9,6 +9,7 @@ namespace Ritmo.Views
         {
             SetWindowChrome();
             MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight - 9; //Fixes fullscreen bug
+            MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth - 9;
         }
 
         //Sets the style of the exterior of the window

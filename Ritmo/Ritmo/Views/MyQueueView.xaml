@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid Background="White">
+    <Grid Background="{StaticResource MainBlueColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="46*"/>
             <RowDefinition Height="179*"/>
@@ -50,20 +50,20 @@
                         </Style>
                     </StackPanel.Style>
                     <!-- column header -->
-                    <Label Content="Now Playing" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30"/>
-                    <Grid>
+                    <Label Content="Now Playing" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MainLabelStyle}"/>
+                    <Grid Margin="{StaticResource MarginRow}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2.5*"/>
-                            <ColumnDefinition Width="6*"/>
-                            <ColumnDefinition Width="4.5*"/>
-                            <ColumnDefinition Width="5*"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="{StaticResource PlayColumn}"/>
+                            <ColumnDefinition Width="{StaticResource NameColumn}"/>
+                            <ColumnDefinition Width="{StaticResource ArtistColumn}"/>
+                            <ColumnDefinition Width="{StaticResource AlbumColumn}"/>
+                            <ColumnDefinition Width="{StaticResource DotColumn}"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="" Grid.Column="0"/>
-                        <Label Content="Name" Grid.Column="1"/>
-                        <Label Content="Artist" Grid.Column="2"/>
-                        <Label Content="Album" Grid.Column="3"/>
-                        <Label Content="Duration" Grid.Column="4"/>
+                        <Label Content="Name" Grid.Column="1" Style="{StaticResource LabelRowStyle}"/>
+                        <Label Content="Artist" Grid.Column="2" Style="{StaticResource LabelRowStyle}"/>
+                        <Label Content="Album" Grid.Column="3" Style="{StaticResource LabelRowStyle}"/>
+                        <Label Content="Duration" Grid.Column="4" Style="{StaticResource LabelRowStyle}"/>
                     </Grid>
                     <!-- ListBox with ItemTemplate for each component in the ObservableCollection  -->
                     <ListBox ItemsSource="{Binding PlayingNowItems}" BorderThickness="0" HorizontalContentAlignment="Stretch">
@@ -74,7 +74,7 @@
                         </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Button HorizontalContentAlignment="Stretch">
+                                <Button HorizontalContentAlignment="Stretch" Style="{StaticResource OuterButtonStyle}">
                                     <Button.InputBindings>
                                         <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
                                     </Button.InputBindings>
@@ -83,21 +83,21 @@
                                             <RowDefinition Height="30" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2.5*" />
-                                            <ColumnDefinition Width="6*" />
-                                            <ColumnDefinition Width="4.5*" />
-                                            <ColumnDefinition Width="5*" />
-                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="{StaticResource PlayColumn}"/>
+                                            <ColumnDefinition Width="{StaticResource NameColumn}"/>
+                                            <ColumnDefinition Width="{StaticResource ArtistColumn}"/>
+                                            <ColumnDefinition Width="{StaticResource AlbumColumn}"/>
+                                            <ColumnDefinition Width="{StaticResource DotColumn}"/>
                                         </Grid.ColumnDefinitions>
-                                        <Button Content="Play" Grid.Column="0">
+                                        <Button Content="Play" Grid.Column="0" Style="{StaticResource InnerButtonStyle}">
                                             <Button.InputBindings>
                                                 <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
                                             </Button.InputBindings>
                                         </Button>
-                                        <Label Content="{Binding Name}" Grid.Column="1"/>
-                                        <Label Content="{Binding Artist}" Grid.Column="2"/>
-                                        <Label Content="{Binding Album}" Grid.Column="3"/>
-                                        <Label Content="{Binding Duration}" Grid.Column="4"/>
+                                        <Label Content="{Binding Name}" Grid.Column="1" Style="{StaticResource TrackRowStyle}"/>
+                                        <Label Content="{Binding Artist}" Grid.Column="2" Style="{StaticResource TrackRowStyle}"/>
+                                        <Label Content="{Binding Album}" Grid.Column="3" Style="{StaticResource TrackRowStyle}"/>
+                                        <Label Content="{Binding Duration}" Grid.Column="4" Style="{StaticResource TrackRowStyle}"/>
                                         <MenuItem Click="AddPresetButton_Click" Grid.Column="4" Header="⋯" HorizontalAlignment="Center" Height="30" Width="95" >
                                             <MenuItem.ContextMenu>
                                                 <ContextMenu>
@@ -126,24 +126,24 @@
                         </Style>
                     </StackPanel.Style>
                     <Grid>
-                        <Label Content="Next In Queue" HorizontalAlignment="Left" FontSize="30"/>
-                        <Button Content="Clear Queue" Command="{Binding ClearQueueCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,15,20,15" Width="80" />
+                        <Label Content="Next In Queue" HorizontalAlignment="Left" FontSize="30" Style="{StaticResource MainLabelStyle}"/>
+                        <Button Content="Clear Queue" Command="{Binding ClearQueueCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,15,20,15" Style="{StaticResource ClearQueueStyle}"/>
                     </Grid>
-                    
-                    
-                    <Grid>
+
+
+                    <Grid Margin="{StaticResource MarginRow}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2.5*"/>
-                            <ColumnDefinition Width="6*"/>
-                            <ColumnDefinition Width="4.5*"/>
-                            <ColumnDefinition Width="5*"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="{StaticResource PlayColumn}"/>
+                            <ColumnDefinition Width="{StaticResource NameColumn}"/>
+                            <ColumnDefinition Width="{StaticResource ArtistColumn}"/>
+                            <ColumnDefinition Width="{StaticResource AlbumColumn}"/>
+                            <ColumnDefinition Width="{StaticResource DotColumn}"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="" Grid.Column="0"/>
-                        <Label Content="Name" Grid.Column="1"/>
-                        <Label Content="Artist" Grid.Column="2"/>
-                        <Label Content="Album" Grid.Column="3"/>
-                        <Label Content="Duration" Grid.Column="4"/>
+                        <Label Content="Name" Grid.Column="1" Style="{StaticResource LabelRowStyle}"/>
+                        <Label Content="Artist" Grid.Column="2" Style="{StaticResource LabelRowStyle}"/>
+                        <Label Content="Album" Grid.Column="3" Style="{StaticResource LabelRowStyle}"/>
+                        <Label Content="Duration" Grid.Column="4" Style="{StaticResource LabelRowStyle}"/>
                     </Grid>
                     <ListBox ItemsSource="{Binding NextInQueueItems}" BorderThickness="0" HorizontalContentAlignment="Stretch">
                         <ListBox.ItemContainerStyle>
@@ -153,7 +153,7 @@
                         </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Button HorizontalContentAlignment="Stretch">
+                                <Button HorizontalContentAlignment="Stretch" Style="{StaticResource OuterButtonStyle}">
                                     <Button.InputBindings>
                                         <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
                                     </Button.InputBindings>
@@ -162,21 +162,21 @@
                                             <RowDefinition Height="30" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2.5*" />
-                                            <ColumnDefinition Width="6*" />
-                                            <ColumnDefinition Width="4.5*" />
-                                            <ColumnDefinition Width="5*" />
-                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="{StaticResource PlayColumn}" />
+                                            <ColumnDefinition Width="{StaticResource NameColumn}"/>
+                                            <ColumnDefinition Width="{StaticResource ArtistColumn}"/>
+                                            <ColumnDefinition Width="{StaticResource AlbumColumn}"/>
+                                            <ColumnDefinition Width="{StaticResource DotColumn}"/>
                                         </Grid.ColumnDefinitions>
-                                        <Button Content="Play" Grid.Column="0">
+                                        <Button Content="Play" Grid.Column="0" Style="{StaticResource InnerButtonStyle}">
                                             <Button.InputBindings>
                                                 <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
                                             </Button.InputBindings>
                                         </Button>
-                                        <Label Content="{Binding Name}" Grid.Column="1"/>
-                                        <Label Content="{Binding Artist}" Grid.Column="2"/>
-                                        <Label Content="{Binding Album}" Grid.Column="3"/>
-                                        <Label Content="{Binding Duration}" Grid.Column="4"/>
+                                        <Label Content="{Binding Name}" Grid.Column="1" Style="{StaticResource TrackRowStyle}"/>
+                                        <Label Content="{Binding Artist}" Grid.Column="2" Style="{StaticResource TrackRowStyle}"/>
+                                        <Label Content="{Binding Album}" Grid.Column="3" Style="{StaticResource TrackRowStyle}"/>
+                                        <Label Content="{Binding Duration}" Grid.Column="4" Style="{StaticResource TrackRowStyle}"/>
                                         <MenuItem Click="AddPresetButton_Click" Grid.Column="4" Header="⋯" HorizontalAlignment="Center" Height="30" Width="95" >
                                             <MenuItem.ContextMenu>
                                                 <ContextMenu>
@@ -204,20 +204,20 @@
                             </Style.Triggers>
                         </Style>
                     </StackPanel.Style>
-                    <Label Content="Next Up" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30"/>
-                    <Grid>
+                    <Label Content="Next Up" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" Style="{StaticResource MainLabelStyle}"/>
+                    <Grid Margin="{StaticResource MarginRow}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2.5*"/>
-                            <ColumnDefinition Width="6*"/>
-                            <ColumnDefinition Width="4.5*"/>
-                            <ColumnDefinition Width="5*"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="{StaticResource PlayColumn}"/>
+                            <ColumnDefinition Width="{StaticResource NameColumn}"/>
+                            <ColumnDefinition Width="{StaticResource ArtistColumn}"/>
+                            <ColumnDefinition Width="{StaticResource AlbumColumn}"/>
+                            <ColumnDefinition Width="{StaticResource DotColumn}"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="" Grid.Column="0"/>
-                        <Label Content="Name" Grid.Column="1"/>
-                        <Label Content="Artist" Grid.Column="2"/>
-                        <Label Content="Album" Grid.Column="3"/>
-                        <Label Content="Duration" Grid.Column="4"/>
+                        <Label Content="" Grid.Column="0" />
+                        <Label Content="Name" Grid.Column="1" Style="{StaticResource LabelRowStyle}"/>
+                        <Label Content="Artist" Grid.Column="2" Style="{StaticResource LabelRowStyle}"/>
+                        <Label Content="Album" Grid.Column="3" Style="{StaticResource LabelRowStyle}"/>
+                        <Label Content="Duration" Grid.Column="4" Style="{StaticResource LabelRowStyle}"/>
                     </Grid>
                     <ListBox ItemsSource="{Binding NextUpItems}" BorderThickness="0" HorizontalContentAlignment="Stretch">
                         <ListBox.ItemContainerStyle>
@@ -227,7 +227,7 @@
                         </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Button HorizontalContentAlignment="Stretch">
+                                <Button HorizontalContentAlignment="Stretch" Style="{StaticResource OuterButtonStyle}">
                                     <Button.InputBindings>
                                         <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OuterClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
                                     </Button.InputBindings>
@@ -236,21 +236,21 @@
                                             <RowDefinition Height="30" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2.5*" />
-                                            <ColumnDefinition Width="6*" />
-                                            <ColumnDefinition Width="4.5*" />
-                                            <ColumnDefinition Width="5*" />
-                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="{StaticResource PlayColumn}"/>
+                                            <ColumnDefinition Width="{StaticResource NameColumn}"/>
+                                            <ColumnDefinition Width="{StaticResource ArtistColumn}"/>
+                                            <ColumnDefinition Width="{StaticResource AlbumColumn}"/>
+                                            <ColumnDefinition Width="{StaticResource DotColumn}"/>
                                         </Grid.ColumnDefinitions>
-                                        <Button Content="Play" Grid.Column="0">
+                                        <Button Content="Play" Grid.Column="0" Style="{StaticResource InnerButtonStyle}">
                                             <Button.InputBindings>
                                                 <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.InnerClickCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding ButtonID}"/>
                                             </Button.InputBindings>
                                         </Button>
-                                        <Label Content="{Binding Name}" Grid.Column="1"/>
-                                        <Label Content="{Binding Artist}" Grid.Column="2"/>
-                                        <Label Content="{Binding Album}" Grid.Column="3"/>
-                                        <Label Content="{Binding Duration}" Grid.Column="4"/>
+                                        <Label Content="{Binding Name}" Grid.Column="1" Style="{StaticResource TrackRowStyle}"/>
+                                        <Label Content="{Binding Artist}" Grid.Column="2" Style="{StaticResource TrackRowStyle}"/>
+                                        <Label Content="{Binding Album}" Grid.Column="3" Style="{StaticResource TrackRowStyle}"/>
+                                        <Label Content="{Binding Duration}" Grid.Column="4" Style="{StaticResource TrackRowStyle}"/>
                                         <MenuItem Click="AddPresetButton_Click" Grid.Column="4" Header="⋯" HorizontalAlignment="Center" Height="30" Width="95" >
                                             <MenuItem.ContextMenu>
                                                 <ContextMenu>
