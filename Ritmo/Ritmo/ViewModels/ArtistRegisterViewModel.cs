@@ -13,6 +13,8 @@ namespace Ritmo.ViewModels
 {
     public class ArtistRegisterViewModel : Screen
     {
+        IWindowManager Manager = new WindowManager();
+
         #region commands
         public ICommand CancelCommand { get; set; }
         public ICommand SendCommand { get; set; }
@@ -103,6 +105,7 @@ namespace Ritmo.ViewModels
 
         private void CancelClick()//cancel button
         {
+            Manager.ShowWindow(new LoginViewModel());
             TryClose();
         }
     }

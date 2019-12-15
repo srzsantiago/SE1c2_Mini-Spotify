@@ -10,6 +10,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance viewmodels:ArtistRegisterViewModel, IsDesignTimeCreatable=True}"
         Title="ArtistRegisterView" Height="450" Width="800">
     <Grid Background="LightBlue">

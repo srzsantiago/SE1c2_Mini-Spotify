@@ -77,7 +77,15 @@ namespace Ritmo.ViewModels
                 LoginView.Close();
             }
             else
-                LoginMessage = "Failed, incorrect email or password";
+            {
+                
+                string message = LoginAttempt.ToString();
+                if(message.Equals("Username does not exist, register below!"))
+                    LoginMessage = message;
+                else
+                    LoginMessage = "Failed, incorrect email or password";
+            }
+                
         }
 
         //LoginView is given as argument to close the view in code
