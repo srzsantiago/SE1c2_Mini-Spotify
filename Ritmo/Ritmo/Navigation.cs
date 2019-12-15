@@ -112,7 +112,7 @@ namespace Ritmo
                 RemoveViewModelFromStack(_previousViewModelStack, viewModel);
         }
 
-        //DEPRECATED
+        
         private static void RemoveViewModelFromStack(Stack<Screen> viewModelStack, Screen viewModel)
         {
             //Creates list from stack and removes viewmodel
@@ -122,6 +122,7 @@ namespace Ritmo
             RebuildListToStack(removalList, viewModelStack);
         }
 
+        //Changes a stack to a list
         private static List<Screen> StackToList(Stack<Screen> viewModelStack)
         {
             return viewModelStack.ToList();
@@ -136,10 +137,21 @@ namespace Ritmo
             removalList.ForEach(vm => viewModelStack.Push(vm));
         }
 
+        //Used in MainWindow to initialize navigation
         public static void InitializeViewModelNavigation()
         {
             _previousViewModelStack = new Stack<Screen>();
             _nextViewModelStack = new Stack<Screen>();
+        }
+
+
+        ///<summary>
+        ///Not used in application! For testing purposes only!
+        ///</summary>
+        public static void ClearStacks()
+        {
+            _previousViewModelStack.Clear();
+            _nextViewModelStack.Clear();
         }
     }
 }

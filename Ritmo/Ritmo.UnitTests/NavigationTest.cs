@@ -18,11 +18,16 @@ namespace Ritmo.UnitTests
         public void TestInitialize()
         {
             //Sets up HomeViewModel as CurrentViewModel to simulate application starting up
-            //Doing this for every test will guarantee a clean testing environment
-            Navigation.ChangeViewModel(new HomeViewModel());
+            Navigation.ChangeViewModel(_homeViewModel);
 
         }
+
         [TestCleanup]
+        public void TestCleanUp()
+        {
+            //Guarantees clean working environment for every test.
+            Navigation.ClearStacks();
+        }
 
         [TestMethod]
         public void ToViewModel_ChangeViewModel_ViewModelChanged()
@@ -79,6 +84,7 @@ namespace Ritmo.UnitTests
             //Assert
             //CurrentViewModel should be initialized CurrentViewModel
             Assert.IsTrue(Navigation.CurrentViewModel is HomeViewModel);
+
         }
 
         [TestMethod]
@@ -172,10 +178,11 @@ namespace Ritmo.UnitTests
             //Arrange
             //Go to playlist viewmodel, then another viewmodel and then open playlist viewmodel again. Repeat 3 times.
             Playlist testPlaylist = new Playlist("Test") { TrackListID = 1 };
+            Navigation.ToViewModel(_allPlaylistViewModel);
             for (int i = 0; i < 3; i++)
             {
                 Navigation.ToViewModel(new PlaylistViewModel(testPlaylist));
-                Navigation.ToViewModel(_allPlaylistViewModel);
+                
             }
 
             //Act
