@@ -69,7 +69,7 @@
 
             <Border BorderBrush="Black" BorderThickness="1" Height="2" VerticalAlignment="Top" Grid.ColumnSpan="5" MinWidth="500"/>
         </Grid>
-        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding PlayListTracksOC}" Grid.Row="2" >
+        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding PlayListTracksOC}" Grid.Row="2" Height="Auto">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

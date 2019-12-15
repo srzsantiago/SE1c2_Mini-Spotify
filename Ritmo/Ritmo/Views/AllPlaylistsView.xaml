@@ -62,7 +62,7 @@
             <!--List of all playlists-->
             <ListBox Grid.Row="2" ItemsSource="{Binding AllPlaylistsCollection}" 
                      Height="auto"  Background="Transparent" Grid.ColumnSpan="4" 
-                     HorizontalContentAlignment="Stretch" Padding="0" BorderThickness="0">
+                     HorizontalContentAlignment="Stretch" Padding="0" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Padding" Value="0"/>
