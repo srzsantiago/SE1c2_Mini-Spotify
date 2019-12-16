@@ -1,18 +1,12 @@
 ﻿using Caliburn.Micro;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Ritmo;
 using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
+
 
 namespace Ritmo.ViewModels
 {
@@ -52,14 +46,37 @@ namespace Ritmo.ViewModels
         #endregion
 
         #region CurrentTrack commands and attributes
+        private ICommand _mouseLeftButtonUpCommand;
+        private ICommand _dragCompletedCommand;
+
         public ICommand TrackControlCommand { get; set; }
         public ICommand NextTrackCommand { get; set; }
         public ICommand PrevTrackCommand { get; set; }
         public ICommand MuteTrackCommand { get; set; }
         public ICommand ShuffleWaitinglistCommand { get; set; }
         public ICommand LoopCommand { get; set; }
+        public ICommand MouseLeftButtonUpCommand //Method to handle the event of: "When the left button of the mouse is clicked.
+        {
+            get
+            {
+                if (_mouseLeftButtonUpCommand == null)
+                    _mouseLeftButtonUpCommand = new RelayCommand<MouseButtonEventArgs>(TrackTimeSlider_ChangeTimeMouse);
 
-        private RelayCommand _mouseLeftButtonUpCommand;
+                return _mouseLeftButtonUpCommand;
+            }
+        }
+
+        public ICommand DragCompletedCommand //Method to handle the event of: "When the left button of the mouse is clicked.
+        {
+            get
+            {
+                if (_dragCompletedCommand == null)
+                    _dragCompletedCommand = new RelayCommand<DragCompletedEventArgs>(TrackTimeSlider_DragCompleted);
+
+                return _dragCompletedCommand;
+            }
+        }
+
         private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual };
         private Uri _currentTrackSource; //Unused
         private Double _currentTrackVolume;
@@ -117,22 +134,6 @@ namespace Ritmo.ViewModels
             {
                 _totalTrackTime = value;
                 NotifyOfPropertyChange("TotalTrackTime");
-            }
-        }
-
-
-        public RelayCommand MouseLeftButtonUpCommand //Method to handle the event of: "When the left button of the mouse is clicked.
-        {
-            get
-            {
-                return _mouseLeftButtonUpCommand
-                    ?? (_mouseLeftButtonUpCommand = new RelayCommand(
-                    () =>
-                    {
-                        // the handler goes here 
-                        TrackTimeSlider_MouseLeftButtonUp();
-
-                    }));
             }
         }
 
@@ -335,12 +336,18 @@ namespace Ritmo.ViewModels
         }
 
         //When the left button of the mouse is clicked and if the track has a timeSpan, the position of the currentTrack will be set to the currentTrackTime.
-        public void TrackTimeSlider_MouseLeftButtonUp()// object sender, MouseButtonEventArgs e)
+        public void TrackTimeSlider_ChangeTimeMouse(MouseButtonEventArgs e)
         {
             if (CurrentTrackElement.NaturalDuration.HasTimeSpan)
             {
                 CurrentTrackElement.Position = TimeSpan.FromSeconds(CurrentTrackTime); //Value of the slider will be set to the audio file
             }
+        }
+
+        public void TrackTimeSlider_DragCompleted(DragCompletedEventArgs e)
+        {
+                CurrentTrackElement.Position = TimeSpan.FromSeconds(CurrentTrackTime); //Value of the slider will be set to the audio file
+            
         }
 
         //Changes volume based on slider. 0 is muted and 100 is highest

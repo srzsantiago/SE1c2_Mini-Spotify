@@ -99,8 +99,11 @@
             <Slider x:Name="TrackTimeSlider" Value="{Binding CurrentTrackTime, Mode=TwoWay}" Minimum="0" Maximum="{Binding TotalTrackTime}" HorizontalAlignment="Center" Height="20" Margin="55,15,58,5" VerticalAlignment="Center" Width="387" IsSnapToTickEnabled="true" TickFrequency="1" IsMoveToPointEnabled="True">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonUp">
-                        <i:InvokeCommandAction
-                      Command="{Binding MouseLeftButtonUpCommand}" />
+                        <i:InvokeCommandAction Command="{Binding MouseLeftButtonUpCommand}" />
+                    </i:EventTrigger>
+
+                    <i:EventTrigger EventName="ValueChanged">
+                        <i:InvokeCommandAction Command="{Binding DragCompletedCommand}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Slider>

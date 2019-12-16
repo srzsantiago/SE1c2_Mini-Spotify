@@ -5,6 +5,5 @@ namespace Ritmo.Views
 {
     public partial class MainWindowView : Window
     {
-
     }
 }
