@@ -278,6 +278,10 @@
     <Resource Include="ImageResources\loopTrack.png" />
     <Resource Include="ImageResources\LoopTrackWaitingList.png" />
     <Resource Include="ImageResources\Test_Logo.png" />
+    <Resource Include="ImageResources\Album_Cover_4.jpg" />
+    <Resource Include="ImageResources\Album_Cover_3.jpg" />
+    <Resource Include="ImageResources\Album_Cover_2.jpg" />
+    <Resource Include="ImageResources\Album_Cover_1.jpg" />
     <Resource Include="ImageResources\ExitIcon.ico" />
     <Resource Include="ImageResources\MaximiseIcon.ico" />
     <Resource Include="ImageResources\MinimiseIcon.ico" />

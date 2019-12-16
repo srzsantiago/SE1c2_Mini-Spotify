@@ -26,6 +26,26 @@ namespace Ritmo
             Name = name;
             Artist = artist;
             Duration = duration;
-        }       
+        }
+
+        // function to get the album image which belongs to a track 
+        public string getAlbumCover(int id) // uses this id to select the right album which belongs to this track 
+        {
+            String sqlQuery = "";
+            string albumCover = ""; // string to return the path of the image
+
+            sqlQuery = $"SELECT image FROM Album WHERE idAlbum IN(SELECT albumID FROM Track_has_Album WHERE trackID = { id })"; // select query which uses the connection table
+            List<Dictionary<string, object>> albumImages = Database.DatabaseConnector.SelectQueryDB(sqlQuery); // run the query
+
+            // get the results
+            foreach (var dictionary in albumImages) 
+            {
+                foreach (var key in dictionary)
+                {
+                    albumCover = key.Value.ToString(); //set the string with the path of the image
+                }
+            }
+            return albumCover; // return the image path with the album cover image
+        }
     }
 }

@@ -78,6 +78,10 @@ namespace Ritmo.ViewModels
         private Uri _ritmoLogo = new Uri("/ImageResources/RitmoLogo.png", UriKind.RelativeOrAbsolute);
         private double oldVolume = 0;
 
+        private Uri _albumImage = new Uri("/ImageResources/Album_Cover_1.jpg", UriKind.RelativeOrAbsolute);
+        private string _artistName;
+        private string _songName;
+
         public MediaElement CurrentTrackElement
         {
             get { return _currentTrackElement; }
@@ -98,6 +102,10 @@ namespace Ritmo.ViewModels
             }
         }
 
+        public String ArtistName { get { return _artistName; } set { _artistName = value; NotifyOfPropertyChange(); } }
+
+        public String SongName { get { return _songName; } set { _songName = value; NotifyOfPropertyChange(); } }
+
         public Uri PlayButtonIcon { get { return _playButtonIcon; } set { _playButtonIcon = value; NotifyOfPropertyChange(); } }
 
         public Uri MuteButtonIcon { get { return _muteButtonIcon; } set { _muteButtonIcon = value; NotifyOfPropertyChange(); } }
@@ -108,6 +116,8 @@ namespace Ritmo.ViewModels
         public Uri ShuffleButtonIcon { get { return _shuffleButtonIcon; } set { _shuffleButtonIcon = value; NotifyOfPropertyChange(); } }
 
         public Uri RitmoLogo { get { return _ritmoLogo; } set { _ritmoLogo = value; NotifyOfPropertyChange(); } }
+
+        public Uri AlbumImage { get { return _albumImage; } set { _albumImage = value; NotifyOfPropertyChange(); } } // album image property
 
         #endregion
 
@@ -136,6 +146,10 @@ namespace Ritmo.ViewModels
                 CurrentTrackElement.Play();
                 PlayButtonIcon = new Uri(@"\ImageResources\pauseicon.ico", UriKind.Relative);
                 PlayQueueController.UnpauseTrack(); //Sets pause bool to true
+
+                SongName = PlayQueue.CurrentTrack.Name; // set the name of the current track
+                ArtistName = PlayQueue.CurrentTrack.Artist; // set the artist of the current track 
+                AlbumImage = new Uri(@"" + PlayQueue.CurrentTrack.getAlbumCover(PlayQueue.CurrentTrack.TrackId), UriKind.Relative); // set the album image by calling the "getAlbumCover" function 
             }
         }
 
@@ -307,7 +321,6 @@ namespace Ritmo.ViewModels
             }
         }
 
-
         #endregion
 
         //Initialize-methods that are used in the constructor of MainWindowViewModel
@@ -341,11 +354,62 @@ namespace Ritmo.ViewModels
             CurrentTrackElement.MediaEnded += Track_Ended;
             CurrentTrackVolume = PlayQueue.CurrentVolume;
             CurrentTrackElement.Volume = CurrentTrackVolume;
+            SongName = ""; //initialize SongName
+            ArtistName = ""; //initialize artist name
+            AlbumImage = new Uri("", UriKind.RelativeOrAbsolute); //initialize album image field 
         }
         #endregion
 
         public void TestTrackMethod()
         {
+            //test with tracks in database (only tracks from database wil show album images)
+            String sqlQuery = "";
+            int count = 0;
+
+            sqlQuery = "SELECT idTrack, title, path, duration FROM Track"; // select query to select all tracks from database
+            List<Dictionary<string, object>> trackNames = Database.DatabaseConnector.SelectQueryDB(sqlQuery);
+            int idTrack = 0;
+            string title = "";
+            string path = "";
+            int duration = 0;
+
+            foreach (var dictionary in trackNames) // loop trough results to get the values
+            {
+                foreach(var key in dictionary)
+                {
+                    if (key.Key.Equals("idTrack")) // check if the key contains the id
+                    {
+                        idTrack = Convert.ToInt32(key.Value); // convert to the variable above
+                        count++; // add one to the counter to calculate later 
+                    }
+                    else if (key.Key.Equals("title"))
+                    {
+                        title = key.Value.ToString();
+                        count++;
+                    }
+                    else if (key.Key.Equals("path"))
+                    {
+                        path = key.Value.ToString();
+                        count++;
+                    }
+                    else if (key.Key.Equals("duration"))
+                    {
+                        duration = Convert.ToInt32(key.Value);
+                        count++;
+                    }
+                }
+                if(count % 4 == 0) // calculate each row of results (the results contain 4 rows)
+                {
+                    Track databaseTrack = new Track() { // create new track with info from the database
+                        TrackId = idTrack,
+                        Name = title,
+                        Artist = "unknown",
+                        Album = "Unknown",
+                        Duration = duration,
+                        AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"" + path), };
+                    PlaylistController.AddTrack( databaseTrack); // add track to the queue 
+                }
+            }
 
             Track testTrack1 = new Track()
             {

@@ -76,7 +76,32 @@
                     <ColumnDefinition Width="60"/>
                     <!-- Close -->
                 </Grid.ColumnDefinitions>
+    
+        <!-- Frame view -->
+            <ContentControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" Content="{Binding CurrentViewModel}"/>
 
+            <!-- Media control -->
+            <Rectangle Fill="#FF3E3E3E" Grid.Row="3" Width="auto" Height="auto" Grid.ColumnSpan="2"/>
+            <!-- Background color -->
+
+            <Grid Grid.Row="1" Width="200" HorizontalAlignment="Left" Margin="0" Grid.Column="0">
+            <Image x:Name="AlbumImage" Width="80" HorizontalAlignment="left" Source="{Binding AlbumImage}"/>
+            <Label x:Name="SongName" Content="{Binding SongName}" HorizontalAlignment="Left" Margin="85,10,0,0" VerticalAlignment="Top" Width="115"/>
+            <Label x:Name="ArtistName" Content="{Binding ArtistName}" HorizontalAlignment="Left" Margin="85,41,0,0" VerticalAlignment="Top" Width="115"/>
+
+        </Grid>
+
+            <Grid  Grid.Row="2"  Width="124" HorizontalAlignment="Center" Margin="264,32,434,0" Grid.Column="1">
+                <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Command="{Binding TrackControlCommand}" Style="{StaticResource PlayButtonStyle}" Width="40" Height="Auto">
+                    <Image x:Name="PlayButtonIcon" Source="{Binding PlayButtonIcon}" />
+                </Button>
+                <Button x:Name="PrevButton" Margin="0,0,80,0" Command="{Binding PrevTrackCommand}" Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">
+                    <Image Source="/ImageResources/previoustrackicon.ico"/>
+                </Button>
+                <Button x:Name="NextButton" Margin="80,0,0,0" Command="{Binding NextTrackCommand}"  Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">
+                    <Image Source="/ImageResources/nexttrackicon.ico"/>
+                </Button>
+            </Grid>
 
                 <Rectangle Name="TopBar" Width="auto" Height="auto" Fill="Transparent" Grid.ColumnSpan="7" MouseDown="Title_Bar_Drag"/>
                 <Button Name="Previous" Grid.Column="1" Command="{Binding ToPreviousViewModelCommand}" Style="{StaticResource TopBarButtonStyle}">
@@ -127,24 +152,7 @@
 
             </Grid>
 
-            <!-- Frame view -->
-            <ContentControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" Content="{Binding CurrentViewModel}"/>
-
-            <!-- Media control -->
-            <Rectangle Fill="#FF3E3E3E" Grid.Row="3" Width="auto" Height="auto" Grid.ColumnSpan="2"/>
-            <!-- Background color -->
-
-            <Grid  Grid.Row="2"  Width="124" HorizontalAlignment="Center" Margin="264,32,434,0" Grid.Column="1">
-                <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Command="{Binding TrackControlCommand}" Style="{StaticResource PlayButtonStyle}" Width="40" Height="Auto">
-                    <Image x:Name="PlayButtonIcon" Source="{Binding PlayButtonIcon}" />
-                </Button>
-                <Button x:Name="PrevButton" Margin="0,0,80,0" Command="{Binding PrevTrackCommand}" Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">
-                    <Image Source="/ImageResources/previoustrackicon.ico"/>
-                </Button>
-                <Button x:Name="NextButton" Margin="80,0,0,0" Command="{Binding NextTrackCommand}"  Style="{StaticResource TrackNavButtonStyle}" Width="15" Height="Auto">
-                    <Image Source="/ImageResources/nexttrackicon.ico"/>
-                </Button>
-            </Grid>
+           
 
             <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="35" Margin="545,10,0,0" VerticalAlignment="Top" Width="42" Grid.Column="1" Grid.Row="3"/>
             <ContentControl Content="{Binding CurrentTrackElement}" Margin="326,11,481,60" Grid.Column="1" Grid.Row="1"/>

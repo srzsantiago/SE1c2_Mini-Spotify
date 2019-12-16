@@ -550,7 +550,7 @@ namespace Ritmo.UnitTests
             Track track2 = new Track();
             Track track3 = new Track();
             Track track4 = new Track();
-            Track track5 = new Track();
+            Track track5 = new Track(); 
 
             Playlist playlistUnshuffle = new Playlist("New"); //Create new playlist called "New"
             //Act
