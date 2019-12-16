@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ritmo.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,13 +36,13 @@ namespace Ritmo
         }
 
         // function to get the album image which belongs to a track 
-        public string getAlbumCover(int id) // uses this id to select the right album which belongs to this track 
+        public string GetAlbumCover(int id) // uses this id to select the right album which belongs to this track 
         {
-            String sqlQuery = "";
+            string sqlQuery;
             string albumCover = ""; // string to return the path of the image
 
             sqlQuery = $"SELECT image FROM Album WHERE idAlbum IN(SELECT albumID FROM Track_has_Album WHERE trackID = { id })"; // select query which uses the connection table
-            List<Dictionary<string, object>> albumImages = Database.DatabaseConnector.SelectQueryDB(sqlQuery); // run the query
+            List<Dictionary<string, object>> albumImages = DatabaseConnector.SelectQueryDB(sqlQuery); // run the query
 
             // get the results
             foreach (var dictionary in albumImages) 

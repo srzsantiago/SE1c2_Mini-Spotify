@@ -28,7 +28,7 @@ namespace Ritmo
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            //DatabaseConnector.DisconnectSSH();
+            DatabaseConnector.DisconnectSSH();
         }
 
     }
