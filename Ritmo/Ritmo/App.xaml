@@ -10,6 +10,10 @@
                 </ResourceDictionary>
                 <ResourceDictionary Source="StyleResources/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="StyleResources/MediaButtonsStyle.xaml"/>
+                <ResourceDictionary Source="StyleResources/TopBarButtonsStyle.xaml"/>
+                <ResourceDictionary Source="StyleResources/GeneralStyleVariables.xaml"/>
+                <ResourceDictionary Source="StyleResources/ScrollViewerStyle.xaml"/>
+                <ResourceDictionary Source="StyleResources/MyQueueStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -20,7 +20,7 @@ namespace Ritmo
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             DatabaseConnector.ConnectSSH();
-            //if (false)
+            //if (true)
             //    DisplayRootViewFor<LoginViewModel>();
             //else
             DisplayRootViewFor<MainWindowViewModel>();
@@ -28,7 +28,7 @@ namespace Ritmo
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            //DatabaseConnector.DisconnectSSH();
+            DatabaseConnector.DisconnectSSH();
         }
 
     }

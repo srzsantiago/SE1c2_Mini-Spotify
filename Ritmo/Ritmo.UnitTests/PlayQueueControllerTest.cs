@@ -631,7 +631,7 @@ namespace Ritmo.UnitTests
         {
             //Assert
             PlayQueueController playQueueController = new PlayQueueController();
-            playQueueController.AddTrack(new Track("TestTrack"));
+            playQueueController.AddTrack(new Track());
 
             //Act
             playQueueController.ClearQueue();

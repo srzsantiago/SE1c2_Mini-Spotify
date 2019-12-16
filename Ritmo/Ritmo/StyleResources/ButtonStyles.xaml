@@ -1,12 +1,20 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Ritmo">
-    <Style x:Key="CustomButtonStyle" TargetType="Button">
+                    xmlns:local="clr-namespace:Ritmo"
+                    
+                    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="GeneralStyleVariables.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    
+    <Style x:Key="LeftPanelButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Margin" Value="10, 0, 0, 0"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Margin" Value="20, 0, 0, 0"/>
+        <Setter Property="Foreground" Value="{StaticResource GeneralWhite}"/>
         <Setter Property="Height" Value="40"/>
-        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontSize" Value="16"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -18,7 +26,30 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="PopUpWindowStyle" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource SecondaryBlueColor}"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource SecondaryBlueMouseOver}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource SecondaryBlueMouseClick}"/>
             </Trigger>
         </Style.Triggers>
     </Style>

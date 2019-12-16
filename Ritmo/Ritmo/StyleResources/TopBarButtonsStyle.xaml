@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Ritmo"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+
+    <!--Reference to General Color Scheme-->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="GeneralStyleVariables.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- Variables -->
+    <System:Double x:Key="TopBarIconSize">10</System:Double>
+
+    <!-- Style for Play button -->
+    <Style x:Key="TopBarButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource SecondaryBlueColor}"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource SecondaryBlueMouseOver}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource SecondaryBlueMouseClick}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

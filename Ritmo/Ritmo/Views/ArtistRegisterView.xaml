@@ -3,17 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Ritmo.Views"
+        xmlns:local="clr-namespace:Ritmo"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
+        xmlns:views="clr-namespace:Ritmo.Views"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        d:DataContext="{d:DesignInstance viewmodels:ArtistRegisterViewModel, IsDesignTimeCreatable=True}"
         Title="ArtistRegisterView" Height="450" Width="800">
     <Grid Background="LightBlue">
         <Canvas HorizontalAlignment="Left" Height="358" Margin="248,26,0,0" VerticalAlignment="Top" Width="311" Background="White">
             <Label Content="ARTIST" Canvas.Left="128" Canvas.Top="12"/>
             <Image Height="77" Canvas.Left="116" Canvas.Top="43" Width="79" Source="https://www.childhood.org.au/app/uploads/2017/07/ACF-logo-placeholder.png"/>
-            <Label Content="Email" Canvas.Left="32" Canvas.Top="277"/>
-            <TextBox x:Name="filledmail" Height="24" Canvas.Left="75" TextWrapping="Wrap" Text="Email@example.com" Canvas.Top="277" Width="200" Background="#E6E5E5"/>
-            <Button x:Name="sendbutton" Content="SEND REQUEST" Canvas.Left="32" Canvas.Top="308" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Click="Sendbutton_Click"/>
-            <Button x:Name="cancelbutton" Content="CANCEL" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Canvas.Left="158" Canvas.Top="308" Click="Cancelbutton_Click_1"/>
+            <Label Content="{Binding ErrorMessage}" Canvas.Left="73" Foreground="Red" Canvas.Top="270" FontSize="10"/>
+            <Label Content="Email" Canvas.Left="32" Canvas.Top="290"/>
+            <TextBox Height="24" Canvas.Left="75" TextWrapping="Wrap" Text="{Binding FilledMail}" Canvas.Top="290" Width="200" Background="#E6E5E5">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="GotFocus">
+                        <i:InvokeCommandAction Command="{Binding GotFocusCommand}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="LostFocus">
+                        <i:InvokeCommandAction Command="{Binding LostFocusCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <Button x:Name="sendbutton" Content="SEND REQUEST" Command="{Binding SendCommand}" Canvas.Left="32" Canvas.Top="325" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White"/>
+            <Button x:Name="cancelbutton" Content="CANCEL" Command="{Binding CancelCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Canvas.Left="158" Canvas.Top="325" />
             <TextBlock Canvas.Left="32" TextWrapping="Wrap" Canvas.Top="123" Height="149" Width="243"><Run Text="Hi,"/><LineBreak/><Run/><LineBreak/><Run Text="Are you an artist yourself? Or a content manager of an artist?"/><LineBreak/><Run Text="Would you like to upload your content to our platform?"/><LineBreak/><Run/><LineBreak/><Run Text="Please enter your email and send your request. "/></TextBlock>
         </Canvas>
     </Grid>

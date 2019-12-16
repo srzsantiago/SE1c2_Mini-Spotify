@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,77 +13,19 @@ namespace Ritmo.ViewModels
 {
     public class HomeViewModel : Screen
     {
-        List<Track> allTestTrack = new List<Track>();
+        
         MainWindowViewModel mainWindowViewModel;
-        private int clickedbuttonvalue;
-
-        #region stackpanels
-        private StackPanel _tracknamesColumn;
-
-        public StackPanel TracknamesColumn
-        {
-            get
-            {
-                if (_tracknamesColumn == null)
-                    _tracknamesColumn = new StackPanel();
-                return _tracknamesColumn;
-            }
-            set { _tracknamesColumn = value; }
-        }
-
-        private StackPanel _addPlayListColumn;
-
-        public StackPanel AddPlayListColumn
-        {
-            get
-            {
-                if (_addPlayListColumn == null)
-                    _addPlayListColumn = new StackPanel();
-                return _addPlayListColumn;
-            }
-            set { _addPlayListColumn = value; }
-        }
-
-        private StackPanel _addQueueColumn;
-
-        public StackPanel AddQueueColumn
-        {
-            get
-            {
-                if (_addQueueColumn == null)
-                    _addQueueColumn = new StackPanel();
-                return _addQueueColumn;
-            }
-            set { _addQueueColumn = value; }
-        }
-        #endregion
-
-        private ListBox _playlistboxes;
-
-        public ListBox Playlistboxes
-        {
-            get
-            {
-                if (_playlistboxes == null)
-                    _playlistboxes = new ListBox();
-                return _playlistboxes;
-            }
-            set
-            {
-                _playlistboxes = value;
-                NotifyOfPropertyChange("Playlistboxes");
-            }
-        }
+        private int _clickedButtonValue;
 
         #region observablecollections
-        private ObservableCollection<TestItems> _allTestTrack;
+        private ObservableCollection<Track> _allTestTrack;
 
-        public ObservableCollection<TestItems> AllTestTrack
+        public ObservableCollection<Track> AllTestTrack
         {
             get
             {
                 if (_allTestTrack == null)
-                    _allTestTrack = new ObservableCollection<TestItems>();
+                    _allTestTrack = new ObservableCollection<Track>();
                 return _allTestTrack;
             }
             set { _allTestTrack = value; }
@@ -106,198 +49,113 @@ namespace Ritmo.ViewModels
         }
         #endregion
 
-        #region commands
-        private ICommand _addToPlaylistCommand;
+        #region commands and selectedItem
+        public ICommand LoadListboxPlaylistCommand { get; set; }
+        public ICommand AddToQueueCommand { get; set; }    
+        
+        public ICommand AddToNewPlaylistCommand { get; set; }
 
-        public ICommand AddToPlaylistCommand
+        private Playlist _selectedItem; //this is used as a ActionListener for when user click on a item in the listbox of playlists.
+        public Playlist SelectedItem
         {
-            get
-            {
-                return _addToPlaylistCommand;
-            }
+            get { return _selectedItem; }
             set
             {
-                _addToPlaylistCommand = value;
-            }
-        }
+                if (value == _selectedItem)
+                    return;
 
-        private ICommand _addToQueueCommand;
+                _selectedItem = value;
+                NotifyOfPropertyChange();                
+                if(_selectedItem != null) 
+                    AddTrackToSelectedPlaylist(); //Add the track to the selected item in the listbox (Selected item is a playlist)
+                _selectedItem = null;
 
-        public ICommand AddToQueueCommand
-        {
-            get
-            {
-                return _addToQueueCommand;
-            }
-            set
-            {
-                _addToQueueCommand = value;
             }
         }
         #endregion
 
 
-
-
-        private Playlist selectedItem;
-        public Playlist SelectedItem
-        {
-            get { return selectedItem; }
-            set
-            {
-                if (selectedItem == value)
-                    return;
-                selectedItem = value;
-                foreach (var item in AllTestTrack)
-                {
-                    if (item.TrackID == clickedbuttonvalue)
-                    {
-                        for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
-                        {
-                            if (selectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
-                            {
-                                Track testTrack = new Track() { Name = item.Name, Artist = item.Artist, AudioFile = item.AudioFile, Duration = item.Duration, TrackId = item.TrackID };
-                                mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
-                            }
-                        }
-
-                    }
-
-                }
-
-            }
-        }
-
-
-
+        public HomeViewModel() { }
 
         public HomeViewModel(MainWindowViewModel mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
-            testAllPlayLists();
-            _addToPlaylistCommand = new RelayCommand<object>(this.AddToPlayListClick);
-            _addToQueueCommand = new RelayCommand<object>(this.AddToQueueClick);
-
-        }
-
-        public void testAllPlayLists()
-        {
-
-
-            Track track1 = new Track(1, "track1", "JOHANNES", 10);
-            Track track2 = new Track(2, "track2", "Tristan", 10);
-            Track track3 = new Track(3, "track3", "ZAPATA", 10);
-            Track track4 = new Track(4, "track4", "rodriguez", 10);
-            Track track5 = new Track(5, "track5", "santiago", 10);
-
-
-            int count = 0;
-            AllTestTrack.Add(new TestItems()
-            {
-                TrackID = 6,
-                Album = "testAlbum",
-                Artist = "JOHANNES",
-                Duration = 10,
-                Name = "Track1",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                ButtonID = count,
-            });
-            count++;
-            AllTestTrack.Add(new TestItems()
-            {
-                TrackID = 7,
-                Album = "testAlbum",
-                Artist = "Tristan",
-                Duration = 10,
-                Name = "Track2",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                ButtonID = count,
-            });
-            count++;
-            AllTestTrack.Add(new TestItems()
-            {
-                TrackID = 8,
-                Album = "testAlbum",
-                Artist = "Zapata",
-                Duration = 10,
-                Name = "Track3",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                ButtonID = count,
-            });
-            count++;
-            AllTestTrack.Add(new TestItems()
-            {
-                TrackID = 9,
-                Album = "testAlbum",
-                Artist = "Rodriguez",
-                Duration = 10,
-                Name = "Track4",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                ButtonID = count,
-            });
-            count++;
-            AllTestTrack.Add(new TestItems()
-            {
-                TrackID = 10,
-                Album = "testAlbum",
-                Artist = "Santiago",
-                Duration = 10,
-                Name = "Track5",
-                AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\TestFiles\RingtoneRoundabout.mp3"),
-                ButtonID = count,
-            });
-
-
-            //PlaylistController testplaylist1 = new PlaylistController("playlist1");
-            //PlaylistController testplaylist2 = new PlaylistController("playlist2");
-            //PlaylistController testplaylist3 = new PlaylistController("playlist3");
-            //PlaylistController testplaylist4 = new PlaylistController("playlist4");
-            //PlaylistController testplaylist5 = new PlaylistController("playlist5");
-
-
-            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist1.Playlist);
-            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist2.Playlist);
-            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist3.Playlist);
-            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist4.Playlist);
-            //mainWindowViewModel.AllPlaylistsController.AddTrackList(testplaylist5.Playlist);
-
-        }
-
-        public void ClearItems()
-        {
-            TracknamesColumn.Children.Clear();
-            AddPlayListColumn.Children.Clear();
-            AddQueueColumn.Children.Clear();
-        }
-
-
-        private void AddToPlayListClick(object sender)
-        {
-            clickedbuttonvalue = (int)sender;
             AllPlaylist = new ObservableCollection<Playlist>();
+            LoadListboxPlaylistCommand = new RelayCommand<object>(this.LoadListboxPlaylist);
+            AddToQueueCommand = new RelayCommand<object>(this.AddToQueueClick);
+            AddToNewPlaylistCommand = new RelayCommand<object>(this.AddToNewPlaylistClick);
+            TestAllPlayLists();
+
+        }
+
+        public void TestAllPlayLists()//test methode to gerenate tracks in the homeview.
+        {
+            int count = 0;
+            string sql = "SELECT idTrack, title, path, genre, date, duration FROM Track";
+            List<Dictionary<string, object>> tracks = Database.DatabaseConnector.SelectQueryDB(sql);
+
+            int id = 0;
+            string title = "";
+            string path = "";
+            int duration = 0;
+
+            foreach (var dictionary in tracks)
+            {
+                foreach (var key in dictionary)
+                {
+                    if(key.Key.Equals("idTrack"))
+                    {
+                        id = (int)key.Value;
+                        count++;
+                    } else if(key.Key.Equals("title"))
+                    {
+                        title = (string)key.Value;
+                        count++;
+                    }
+                    else if (key.Key.Equals("path"))
+                    {
+                        path = (string)key.Value;
+                        count++;
+                    }
+                    else if (key.Key.Equals("duration"))
+                    {
+                        duration = (int)key.Value;
+                        count++;
+                    }
+                }
+                if(count % 4 == 0)
+                {
+                    AllTestTrack.Add(new Track() { TrackId = id, Name = title, Duration = duration, AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + path), Artist = "test", Album = "test" });
+                }
+            }
+        }
+
+
+        private void LoadListboxPlaylist(object sender)//When user click on "Add to playlist" the listbox of Playlists is filled.
+        {
+            //get the trackID of the track clicked, so it can be use in the listbox to identify which tracks is going to be add to the selected item
+            _clickedButtonValue = (int)sender;
+
+            AllPlaylist.Clear();//clear the ObservableCollection of Playlists to avoid repeated playlists
 
             foreach (var item in mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists)
             {
-                AllPlaylist.Add(item);
+                AllPlaylist.Add(item);//add all playlist to the OC
             }
-            //Playlistboxes.Height = 340;
-
-
-
         }
 
 
-        private void AddToQueueClick(object sender)
+        private void AddToQueueClick(object sender)//Add clicked track to queue
         {
-            clickedbuttonvalue = (int)sender;
+            _clickedButtonValue = (int)sender;//get trackID
 
             foreach (var item in AllTestTrack) // goes through the tracks
             {
-                if (item.TrackID == clickedbuttonvalue) // looks which buttons tag is the same as the trackid
+                if (item.TrackId == _clickedButtonValue) // looks which trackId match the clicked track
                 {
-                    Track testTrack = new Track() { Name = item.Name, Artist = item.Artist, AudioFile = item.AudioFile, Duration = item.Duration, TrackId = item.TrackID };
+                    Track testTrack = item;
                     mainWindowViewModel.PlayQueueController.AddTrack(testTrack); // adds the song to the queue
-                    mainWindowViewModel.MyQueueScreenToViewModel.ShowElements();
+                    mainWindowViewModel.MyQueueScreenToViewModel.LoadElements();
                 }
 
             }
@@ -305,36 +163,58 @@ namespace Ritmo.ViewModels
 
         }
 
-        private void Playlistboxes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void AddToNewPlaylistClick(object sender) // user story opgeschoven dus word later aan gewerkt
         {
-            foreach (var item in AllTestTrack)
+            //Console.WriteLine("asdada");
+            //string input = Interaction.InputBox("Question?", "Title", "Default Text");
+            //if(input != "")
+            //{
+            //    AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(new Playlist("Default value"));
+            //}
+            //foreach (var item in AllTestTrack)//goes through all tracks
+            //{
+            //    if (item.TrackId == _clickedButtonValue)//find the matching Id
+            //    {
+            //        for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
+            //        {
+            //            //find the matching playlist
+            //            if (SelectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
+            //            {
+            //                Track testTrack = item;
+            //                mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
+            //            }
+            //        }
+
+            //    }
+            //}
+        }
+
+        private void AddTrackToSelectedPlaylist()//This methode is called from the prop SelectedItem. It adds a track to a clicked playlist.
+        {
+            foreach (var item in AllTestTrack)//goes through all tracks
             {
-                if (item.TrackID == clickedbuttonvalue)
+                if (item.TrackId == _clickedButtonValue)//find the matching Id
                 {
                     for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
                     {
-
-                        if (selectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
+                        //find the matching playlist
+                        if (SelectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
                         {
-                            Track testTrack = new Track() { Name = item.Name, Artist = item.Artist, AudioFile = item.AudioFile, Duration = item.Duration, TrackId = item.TrackID };
+                            Track testTrack = item;
                             mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
+
+                            string sql = $"INSERT INTO Track_has_Playlist VALUES ({item.TrackId}, {SelectedItem.TrackListID} )";
+                            Database.DatabaseConnector.InsertQueryDB(sql);
+                              
                         }
                     }
 
                 }
 
             }
+            AllPlaylist.Clear();
+
         }
     }
-    public class TestItems
-    {
-        public int ButtonID { get; set; } //composition of a type and an Index
-        public int TrackID { get; set; }
-        public String Name { get; set; }
-        public String Artist { get; set; }
-        public String Album { get; set; }
-        public int Duration { get; set; }
-        public Uri AudioFile { get; set; }
-
-    }
+   
 }

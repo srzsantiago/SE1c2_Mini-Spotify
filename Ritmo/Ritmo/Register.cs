@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,81 +9,59 @@ namespace Ritmo
 {
     public class Register
     {
-        public string   Message;
+        public string Message;
 
-        String sql, Output = "";
+        String sql;
         private bool mailexists = false;
-        public string existingTestMail = "email@example.com"; 
+        private int _numberOfIterations = 50000; //set the number of iterations used in PBKDF2 to avoid Brute force
 
-        public Register(string name, string mail, string password, string confirmpw)
+        //register for normal user
+        public Register(string name, string mail, string password)
         {
-            if(password == confirmpw)
+            
+            //Check if the filled email exist
+            sql = $"SELECT email FROM Person WHERE email = '{mail}'";
+            List<Dictionary<string, object>> EmailExist = Database.DatabaseConnector.SelectQueryDB(sql);
+            
+            if(EmailExist.Count > 0)//if the list contains more than one record, it means the email is already in use
             {
-                sql = "SELECT email FROM Person WHERE email = " + "'" + mail + "'";
-                List<Dictionary<string, object>> Email = Database.DatabaseConnector.SelectQueryDB(sql);
-                List<string> databaseMail = new List<string>();
+                mailexists = true;
+            }
+            
+            if (!mailexists)//if the mail is not in use
+            {
+                string HashedPassword = GenerateHash(password); //Generate a PBKDF2 password hashed
 
-                foreach (var dictionary in Email)
-                {
-                    foreach (var keyValue in dictionary)
-                    {
-                        databaseMail.Add(keyValue.Value.ToString());
-                    }
-                }
+                sql = "INSERT INTO Person VALUES (" + "'" + mail + "', '" + HashedPassword + "', '" + name + "', " + 1 + ")";
+                Database.DatabaseConnector.InsertQueryDB(sql);
 
-                foreach (string dbmail in databaseMail)
-                {
-                    if(mail == dbmail)
-                    {
-                        this.mailexists = true;
-                    }
-                }
-
-                //if (email != Output)
-                if (this.mailexists == false)
-                {
-                    Message = "Your account has been successfully created";
-
-                    sql = "INSERT INTO Person VALUES (" + "'" + mail + "', '" + password + "', '" + name + "', " + 1 + ")";
-                    Database.DatabaseConnector.InsertQueryDB(sql);
-                }
-                else
-                {
-                    Message = "This email already exists";
-                }
+                Message = "Your account has been successfully created";
             }
             else
             {
-                Message = "The passwords do not match";
+                Message = "This email already exists";
             }
+            
         }
 
+
+        //register for artist
         public Register(string mail)
         {
+            //Check if the filled email exist
             sql = "SELECT email FROM Person WHERE email = " + "'" + mail + "'";
-            List<Dictionary<string, object>> Email = Database.DatabaseConnector.SelectQueryDB(sql);
-            List<string> databaseMail = new List<string>();
+            List<Dictionary<string, object>> EmailExist = Database.DatabaseConnector.SelectQueryDB(sql);
 
-            foreach (var dictionary in Email)
+            if (EmailExist.Count > 0)//if the list contains more than one record, it means the email is already in use
             {
-                foreach (var keyValue in dictionary)
-                {
-                    databaseMail.Add(keyValue.Value.ToString());
-                }
+                mailexists = true;
             }
 
-            foreach (string dbmail in databaseMail)
-            {
-                if (mail == dbmail)
-                {
-                    this.mailexists = true;
-                }
-            }
-
-            if (this.mailexists == false)
+            if (!mailexists)//if the mail is not in use
             {
                 sql = "INSERT INTO Person VALUES (" + "'" + mail + "', '" + "', '"  + "', " + 2 + ")";
                 Database.DatabaseConnector.InsertQueryDB(sql);
+                Message = "Your account has been successfully created";
             } else
             {
                 Message = "This email already exists";
@@ -92,6 +71,28 @@ namespace Ritmo
         public override string ToString()
         {
             return Message;
+        }
+
+        public string GenerateHash(string password)
+        {
+            var salt = GenerateSalt();//generate a salt, a 24 array of random bytes
+
+            var rfc2898 = new Rfc2898DeriveBytes(password, salt, _numberOfIterations);//PBKDF2 function to hash the password
+
+            var saltAsString = Convert.ToBase64String(salt);//convert the salt to a string so it can be stored in teh database
+            var hash = Encoding.Default.GetString(rfc2898.GetBytes(32)); //convert hash to string
+
+            return _numberOfIterations + ":" + saltAsString + ":" + hash;
+        }
+
+        public static byte[] GenerateSalt()//generate a array of random bytes
+        {
+            var salt = new byte[24];
+
+            var randomProvider = new RNGCryptoServiceProvider();
+            randomProvider.GetBytes(salt);
+
+            return salt;
         }
     }
 }
