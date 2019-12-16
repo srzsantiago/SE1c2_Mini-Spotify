@@ -141,6 +141,7 @@ namespace Ritmo.ViewModels
 
                 SongName = PlayQueue.CurrentTrack.Name; // set the name of the current track
                 ArtistName = PlayQueue.CurrentTrack.Artist; // set the artist of the current track 
+                AlbumImage = new Uri(@"" + PlayQueue.CurrentTrack.getAlbumCover(PlayQueue.CurrentTrack.TrackId), UriKind.Relative); 
             }
         }
 
@@ -357,7 +358,7 @@ namespace Ritmo.ViewModels
             String sqlQuery = "";
             int count = 0;
 
-            sqlQuery = "SELECT (idTrack, title, path, duration) FROM Track";
+            sqlQuery = "SELECT idTrack, title, path, duration FROM Track";
             List<Dictionary<string, object>> trackNames = Database.DatabaseConnector.SelectQueryDB(sqlQuery);
             int idTrack = 0;
             string title = "";
@@ -389,7 +390,7 @@ namespace Ritmo.ViewModels
                         count++;
                     }
                 }
-                if(count % 4 == 0)
+                if(count % 3 == 0)
                 {
                     Track databaseTrack = new Track() {
                         TrackId = idTrack,
@@ -398,7 +399,7 @@ namespace Ritmo.ViewModels
                         Album = "Unknown",
                         Duration = duration,
                         AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"" + path), };
-                    PlaylistController.AddTrack( databaseTrack );
+                    PlaylistController.AddTrack( databaseTrack);
                 }
             }
 
