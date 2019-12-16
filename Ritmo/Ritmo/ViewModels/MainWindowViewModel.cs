@@ -15,9 +15,7 @@ namespace Ritmo.ViewModels
         public PlaylistController PlaylistController = new PlaylistController("TestPlaylist");
         public PlayQueueController PlayQueueController = new PlayQueueController();
         public AllPlaylistsController AllPlaylistsController = new AllPlaylistsController();
-
         public PlayQueue PlayQueue = new PlayQueue();
-
         public MyQueueViewModel MyQueueScreenToViewModel;
 
         #region Commands
@@ -55,7 +53,8 @@ namespace Ritmo.ViewModels
         public ICommand MuteTrackCommand { get; set; }
         public ICommand ShuffleWaitinglistCommand { get; set; }
         public ICommand LoopCommand { get; set; }
-        public ICommand MouseLeftButtonUpCommand //Method to handle the event of: "When the left button of the mouse is clicked.
+
+        public ICommand MouseLeftButtonUpCommand //Method to handle the event of: When the left button of the mouse is clicked.
         {
             get
             {
@@ -66,7 +65,7 @@ namespace Ritmo.ViewModels
             }
         }
 
-        public ICommand DragCompletedCommand //Method to handle the event of: "When the left button of the mouse is clicked.
+        public ICommand DragCompletedCommand //Method to handle the event of: Drag is complete.
         {
             get
             {
@@ -111,7 +110,7 @@ namespace Ritmo.ViewModels
             }
         }
 
-        public double CurrentTrackTime
+        public double CurrentTrackTime //Current time of the playing track, also known as het current position.
         {
             get
             {
@@ -124,7 +123,7 @@ namespace Ritmo.ViewModels
             }
         }
 
-        public double TotalTrackTime
+        public double TotalTrackTime //Total time of the playing track, also known as het total position.
         {
             get
             {
@@ -344,10 +343,13 @@ namespace Ritmo.ViewModels
             }
         }
 
+        //When the user drags the slider and lets it go and if the track has a timeSpan, the position of the currentTrack will be set to the currentTrackTime.
         public void TrackTimeSlider_DragCompleted(DragCompletedEventArgs e)
         {
+            if (CurrentTrackElement.NaturalDuration.HasTimeSpan)
+            {
                 CurrentTrackElement.Position = TimeSpan.FromSeconds(CurrentTrackTime); //Value of the slider will be set to the audio file
-            
+            }
         }
 
         //Changes volume based on slider. 0 is muted and 100 is highest
@@ -414,8 +416,6 @@ namespace Ritmo.ViewModels
 
             CurrentTrackVolume = PlayQueue.CurrentVolume;
             CurrentTrackElement.Volume = CurrentTrackVolume;
-
-            
         }
         #endregion
 
