@@ -96,10 +96,6 @@
 
         </Grid>
 
-        <Grid Grid.Row="1"  Width="124" HorizontalAlignment="Center" Margin="264,0,434,50" Grid.Column="1">
-            <Label x:Name="SongNameCenter" Content="{Binding SongName}" HorizontalAlignment="Left" Margin="9,0,0,0" VerticalAlignment="Top" Width="115"/>
-        </Grid>
-
         <Grid Grid.Row="1"  Width="124" HorizontalAlignment="Center" Margin="264,32,434,0" Grid.Column="1">
             <Button x:Name="PlayButton" Margin="0,0,0,0" Grid.Row="1" Command="{Binding TrackControlCommand}" Style="{StaticResource PlayButtonStyle}" Width="40" Height="Auto">
                 <Image x:Name="PlayButtonIcon" Source="{Binding PlayButtonIcon}" />
