@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
-
+using System.Windows;
 
 namespace Ritmo.ViewModels
 {
@@ -45,7 +45,8 @@ namespace Ritmo.ViewModels
 
         #region CurrentTrack commands and attributes
         private ICommand _mouseLeftButtonUpCommand;
-        private ICommand _dragCompletedCommand;
+        private ICommand _valueChangedCommand;
+        private ICommand _mouseDownCommand;
 
         public ICommand TrackControlCommand { get; set; }
         public ICommand NextTrackCommand { get; set; }
@@ -54,25 +55,36 @@ namespace Ritmo.ViewModels
         public ICommand ShuffleWaitinglistCommand { get; set; }
         public ICommand LoopCommand { get; set; }
 
-        public ICommand MouseLeftButtonUpCommand //Method to handle the event of: When the left button of the mouse is clicked.
+        public ICommand MouseLeftButtonUpCommand //Method to handle the event of: When the left button of the mouse is up.
         {
             get
             {
                 if (_mouseLeftButtonUpCommand == null)
-                    _mouseLeftButtonUpCommand = new RelayCommand<MouseButtonEventArgs>(TrackTimeSlider_ChangeTimeMouse);
+                    _mouseLeftButtonUpCommand = new RelayCommand<MouseButtonEventArgs>(MouseLeftButtonUp);
 
                 return _mouseLeftButtonUpCommand;
             }
         }
 
-        public ICommand DragCompletedCommand //Method to handle the event of: Drag is complete.
+        public ICommand MouseDownCommand //Method to handle the event of: When the left button of the mouse is down.
         {
             get
             {
-                if (_dragCompletedCommand == null)
-                    _dragCompletedCommand = new RelayCommand<DragCompletedEventArgs>(TrackTimeSlider_DragCompleted);
+                if (_mouseDownCommand == null)
+                    _mouseDownCommand = new RelayCommand<MouseButtonEventArgs>(MouseDown);
 
-                return _dragCompletedCommand;
+                return _mouseDownCommand;
+            }
+        }
+
+        public ICommand ValueChangedCommand //Method to handle the event of: dragging of the thumb
+        {
+            get
+            {
+                if (_valueChangedCommand == null)
+                    _valueChangedCommand = new RelayCommand<RoutedPropertyChangedEventArgs<double>>(TrackTimeSlider_ValueChanged);
+
+                return _valueChangedCommand;
             }
         }
 
@@ -88,6 +100,7 @@ namespace Ritmo.ViewModels
         private Uri _shuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
         private Uri _testLogo = new Uri("/ImageResources/Test_Logo.png", UriKind.RelativeOrAbsolute);
         private DispatcherTimer _timerTick = new DispatcherTimer();
+        private bool _mouse_down = false;
 
         public MediaElement CurrentTrackElement
         {
@@ -154,7 +167,6 @@ namespace Ritmo.ViewModels
             InitializeCommands();
             InitializeViewModels();
             
-
             PlayQueue = PlayQueueController.PQ;
 
             InitializeCurrentTrackElement();
@@ -172,7 +184,6 @@ namespace Ritmo.ViewModels
                 CurrentTrackElement.Play();
                 PlayButtonIcon = new Uri(@"\ImageResources\pauseicon.ico", UriKind.Relative);
                 PlayQueueController.UnpauseTrack(); //Sets pause bool to true
-                
             }
         }
 
@@ -263,12 +274,12 @@ namespace Ritmo.ViewModels
 
         public void ShuffleWaitinglist()
         {
-            
-            if(PlayQueue.IsShuffle == true)
+            if (PlayQueue.IsShuffle == true)
             {
                 PlayQueueController.ShuffleTrackWaitingList();
                 ShuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
-            } else
+            } 
+            else
             {
                 PlayQueueController.UnShuffleTrackWaitingList();
                 ShuffleButtonIcon = new Uri("/ImageResources/shuffle.png", UriKind.RelativeOrAbsolute);
@@ -305,7 +316,7 @@ namespace Ritmo.ViewModels
         //When the track has a 'timeSpan' the current tracktime will be set
         void TimerTick(object sender, EventArgs e)
         {
-            if (CurrentTrackElement.NaturalDuration.HasTimeSpan)
+            if (!_mouse_down && CurrentTrackElement.NaturalDuration.HasTimeSpan)
             {
                 CurrentTrackTime = CurrentTrackElement.Position.Seconds + CurrentTrackElement.Position.Minutes*60; //Current track time in seconds and minutes
             }
@@ -334,19 +345,26 @@ namespace Ritmo.ViewModels
             }
         }
 
-        //When the left button of the mouse is clicked and if the track has a timeSpan, the position of the currentTrack will be set to the currentTrackTime.
-        public void TrackTimeSlider_ChangeTimeMouse(MouseButtonEventArgs e)
+        //When the left button of the mouse is up and if the track has a timeSpan, the position of the currentTrack will be set to the currentTrackTime.
+        //The mouse is not down
+        public void MouseLeftButtonUp(MouseButtonEventArgs e)
         {
+            _mouse_down = false;
             if (CurrentTrackElement.NaturalDuration.HasTimeSpan)
-            {
+
                 CurrentTrackElement.Position = TimeSpan.FromSeconds(CurrentTrackTime); //Value of the slider will be set to the audio file
-            }
+        }
+
+        //When the left button of the mouse is down, the mouse down is true.
+        public void MouseDown(MouseButtonEventArgs e)
+        {
+            _mouse_down = true;
         }
 
         //When the user drags the slider and lets it go and if the track has a timeSpan, the position of the currentTrack will be set to the currentTrackTime.
-        public void TrackTimeSlider_DragCompleted(DragCompletedEventArgs e)
+        public void TrackTimeSlider_ValueChanged(RoutedPropertyChangedEventArgs<double> e)
         {
-            if (CurrentTrackElement.NaturalDuration.HasTimeSpan)
+            if (_mouse_down)
             {
                 CurrentTrackElement.Position = TimeSpan.FromSeconds(CurrentTrackTime); //Value of the slider will be set to the audio file
             }

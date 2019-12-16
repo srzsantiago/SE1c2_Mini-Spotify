@@ -96,14 +96,18 @@
 
         <Grid Grid.Row="1"  Width="532" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="77.4,450,214.6,0" Height="40" Grid.Column="1" Grid.RowSpan="2">
             <Label Content="{Binding CurrentTrackTime}" HorizontalAlignment="Left" Height="31" VerticalAlignment="Bottom" Width="55"/>
-            <Slider x:Name="TrackTimeSlider" Value="{Binding CurrentTrackTime, Mode=TwoWay}" Minimum="0" Maximum="{Binding TotalTrackTime}" HorizontalAlignment="Center" Height="20" Margin="55,15,58,5" VerticalAlignment="Center" Width="387" IsSnapToTickEnabled="true" TickFrequency="1" IsMoveToPointEnabled="True">
+            <Slider x:Name="TrackTimeSlider" Value="{Binding CurrentTrackTime}" Minimum="0" Maximum="{Binding TotalTrackTime}" HorizontalAlignment="Center" Height="20" Margin="55,15,58,5" VerticalAlignment="Center" Width="387" IsSnapToTickEnabled="true" TickFrequency="1" IsMoveToPointEnabled="True">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonUp">
                         <i:InvokeCommandAction Command="{Binding MouseLeftButtonUpCommand}" />
                     </i:EventTrigger>
 
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding MouseDownCommand}" />
+                    </i:EventTrigger>
+
                     <i:EventTrigger EventName="ValueChanged">
-                        <i:InvokeCommandAction Command="{Binding DragCompletedCommand}" />
+                        <i:InvokeCommandAction Command="{Binding ValueChangedCommand}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Slider>
