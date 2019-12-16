@@ -11,9 +11,9 @@
 
     <Grid Background="GhostWhite" Name="structuregridHome" Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="31*"/>
-            <ColumnDefinition Width="8*"/>
-            <ColumnDefinition Width="61*"/>
+            <ColumnDefinition Width="307*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="488*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
 
-        <ListBox ItemsSource='{Binding AllTestTrack }' Grid.Column="2" Grid.Row="3" Width="250" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <ListBox ItemsSource='{Binding AllTestTrack }' Grid.Column="2" Grid.Row="2" Width="250" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -42,14 +42,34 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox ItemsSource="{Binding AllPlaylist}" SelectedItem="{Binding SelectedItem}"  Grid.Column="0" HorizontalAlignment="Left" Height="136" Grid.Row="3" VerticalAlignment="Top" Width="248">
+        <ListBox ItemsSource="{Binding AllPlaylist}" SelectedItem="{Binding SelectedItem}"  Grid.Column="0" HorizontalAlignment="Left" Height="136" Grid.Row="2" VerticalAlignment="Top" Width="307">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Label Content="{Binding Name}"></Label>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Name="AddToNewPlaylist" Content="Add to new Playlist" Command="{Binding AddToNewPlaylistCommand}" HorizontalAlignment="Left" Margin="70,214,0,0" Grid.Row="2" VerticalAlignment="Top" Width="137" Height="{Binding AddToNewPlaylistHeight}" CommandParameter="{Binding TrackId}"/>
+        <Button Name="AddToNewPlaylist" Content="Add to new Playlist" Command="{Binding AddToNewPlaylistCommand}" HorizontalAlignment="Left" Margin="70,214,0,0" Grid.Row="2" VerticalAlignment="Top" Width="137" Height="20" CommandParameter="{Binding TrackId}"/>
+
+        <!--<TextBlock Grid.Row="2" FontSize="22" Name="txtScrolling" Grid.Column="2" Margin="0,272,240,-272">
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="translate" />
+            </TextBlock.RenderTransform>
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <DoubleAnimation
+                        From="1200" To="-1200"
+                        Storyboard.TargetName="translate"
+                        Storyboard.TargetProperty="X"
+                        Duration="0:0:9" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+    This is the Text to Scroll AAAAAAAAAAAAAAAAAAAAAAA
+        </TextBlock>-->
 
     </Grid>
 

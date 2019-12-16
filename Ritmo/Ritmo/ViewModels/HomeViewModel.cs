@@ -78,7 +78,6 @@ namespace Ritmo.ViewModels
                 if(_selectedItem != null) 
                     AddTrackToSelectedPlaylist(); //Add the track to the selected item in the listbox (Selected item is a playlist)
                 _selectedItem = null;
-
             }
         }
         #endregion
@@ -177,25 +176,7 @@ namespace Ritmo.ViewModels
         {
             IWindowManager windowManager = new WindowManager();
             windowManager.ShowDialog(new PopUpWindowViewModel(this, _clickedButtonValue));
-
-            //    AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(new Playlist("Default value"));
-            //}
-            //foreach (var item in AllTestTrack)//goes through all tracks
-            //{
-            //    if (item.TrackId == _clickedButtonValue)//find the matching Id
-            //    {
-            //        for (int i = 0; i < mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.Count; i++)
-            //        {
-            //            //find the matching playlist
-            //            if (SelectedItem.Equals(mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i)))
-            //            {
-            //                Track testTrack = item;
-            //                mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
-            //            }
-            //        }
-
-            //    }
-            //}
+            AddToNewPlaylistHeight = 0;
         }
 
         private void AddTrackToSelectedPlaylist()//This methode is called from the prop SelectedItem. It adds a track to a clicked playlist.
@@ -238,12 +219,9 @@ namespace Ritmo.ViewModels
                             }
                         }
                     }
-
                 }
-
             }
             AllPlaylist.Clear();
-
         }
 
         public void TestAllPlayLists()//test methode to gerenate tracks in the homeview.

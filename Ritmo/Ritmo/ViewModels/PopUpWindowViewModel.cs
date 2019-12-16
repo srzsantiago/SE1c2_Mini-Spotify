@@ -206,19 +206,7 @@ namespace Ritmo.ViewModels
         }
 
         public void OnOkayAddPlaylistClick(object param) // the method that adds a new playlist
-        {
-                int lastID = 0;
-                string sqlquery = "SELECT IDENT_CURRENT('Playlist')"; // gets the last PK id from playlist
-                List<Dictionary<string, object>> result = Database.DatabaseConnector.SelectQueryDB(sqlquery); // executing the query
-
-                foreach (var item in result)
-                {
-                    foreach (var key in item)
-                    {
-                        lastID = Convert.ToInt32(key.Value) + 1;
-                    }
-                }
-
+        { 
             if (TextInput == null)
             {
                 PopUpWarning = "Please insert a valid name"; // warning appears when the textbox was left empty
@@ -227,7 +215,7 @@ namespace Ritmo.ViewModels
                 PopUpWarning = "Name can't be longer than 32 characters"; // warning appears when the name is 32 characters long
             } else
             {
-                AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(new Playlist(TextInput) { TrackListID = lastID }); //Create playlist and add it to all playlists
+                AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(new Playlist(TextInput) { TrackListID = GetLastID() }); //Create playlist and add it to all playlists
                 this.TryClose();
             }
         }
@@ -258,18 +246,6 @@ namespace Ritmo.ViewModels
 
         public void OnAddPlaylistClick(object param) // the method that adds a new playlist
         {
-            int lastID = 0;
-            string sqlquery = "SELECT IDENT_CURRENT('Playlist')"; // gets the last PK id from playlist
-            List<Dictionary<string, object>> result = Database.DatabaseConnector.SelectQueryDB(sqlquery); // executing the query
-
-            foreach (var item in result)
-            {
-                foreach (var key in item)
-                {
-                    lastID = Convert.ToInt32(key.Value) + 1;
-                }
-            }
-
             if (TextInput == null)
             {
                 PopUpWarning = "Please insert a valid name"; // warning appears when the textbox was left empty
@@ -281,19 +257,41 @@ namespace Ritmo.ViewModels
             else
             {
                 Track test = homeViewModel.GetTrackDB(Trackid);
-                Playlist playlist = new Playlist(TextInput) { TrackListID = lastID };
+                Playlist playlist = new Playlist(TextInput) { TrackListID = GetLastID() };
                 AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(playlist); //Create playlist and add it to all playlists
-                foreach (var item in AllPlaylistsViewModel.AllPlaylistsController.AllPlaylists.Playlists)
+                foreach (var _playlist in AllPlaylistsViewModel.AllPlaylistsController.AllPlaylists.Playlists)
                 {
-                    if(item.TrackListID == test.TrackId)
+                    if(_playlist.TrackListID == playlist.TrackListID)
                     {
-                        item.Tracks.AddLast(test);
+                        string sql = $"INSERT INTO Track_has_Playlist VALUES ({test.TrackId}, {playlist.TrackListID} )";
+                        Database.DatabaseConnector.InsertQueryDB(sql);
                     }
                 }
+                MainWindow.AllPlaylistsViewModel.NotifyOfPropertyChange();
                 this.TryClose();
             }
         }
 
+        #endregion
+
+        #region methods
+
+        public int GetLastID()
+        {
+
+            int lastID = 0;
+            string sqlquery = "SELECT IDENT_CURRENT('Playlist')"; // gets the last PK id from playlist
+            List<Dictionary<string, object>> result = Database.DatabaseConnector.SelectQueryDB(sqlquery); // executing the query
+
+            foreach (var item in result)
+            {
+                foreach (var key in item)
+                {
+                    lastID = Convert.ToInt32(key.Value) + 1;
+                }
+            }
+            return lastID;
+        }
         #endregion
     }
 }
