@@ -44,7 +44,7 @@ namespace Ritmo.ViewModels
         #endregion
 
         #region CurrentTrack commands and attributes
-        private ICommand _mouseLeftButtonUpCommand;
+        private ICommand _mouseUpCommand;
         private ICommand _valueChangedCommand;
         private ICommand _mouseDownCommand;
 
@@ -55,14 +55,14 @@ namespace Ritmo.ViewModels
         public ICommand ShuffleWaitinglistCommand { get; set; }
         public ICommand LoopCommand { get; set; }
 
-        public ICommand MouseLeftButtonUpCommand //Method to handle the event of: When the left button of the mouse is up.
+        public ICommand MouseUpCommand //Method to handle the event of: When the left button of the mouse is up.
         {
             get
             {
-                if (_mouseLeftButtonUpCommand == null)
-                    _mouseLeftButtonUpCommand = new RelayCommand<MouseButtonEventArgs>(MouseLeftButtonUp);
+                if (_mouseUpCommand == null)
+                    _mouseUpCommand = new RelayCommand<MouseButtonEventArgs>(MouseUp);
 
-                return _mouseLeftButtonUpCommand;
+                return _mouseUpCommand;
             }
         }
 
@@ -347,11 +347,10 @@ namespace Ritmo.ViewModels
 
         //When the left button of the mouse is up and if the track has a timeSpan, the position of the currentTrack will be set to the currentTrackTime.
         //The mouse is not down
-        public void MouseLeftButtonUp(MouseButtonEventArgs e)
+        public void MouseUp(MouseButtonEventArgs e)
         {
             _mouse_down = false;
             if (CurrentTrackElement.NaturalDuration.HasTimeSpan)
-
                 CurrentTrackElement.Position = TimeSpan.FromSeconds(CurrentTrackTime); //Value of the slider will be set to the audio file
         }
 
@@ -367,7 +366,9 @@ namespace Ritmo.ViewModels
             if (_mouse_down)
             {
                 CurrentTrackElement.Position = TimeSpan.FromSeconds(CurrentTrackTime); //Value of the slider will be set to the audio file
+                
             }
+            _mouse_down = false;
         }
 
         //Changes volume based on slider. 0 is muted and 100 is highest

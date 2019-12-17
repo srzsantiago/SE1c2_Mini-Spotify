@@ -98,8 +98,8 @@
             <Label Content="{Binding CurrentTrackTime}" HorizontalAlignment="Left" Height="31" VerticalAlignment="Bottom" Width="55"/>
             <Slider x:Name="TrackTimeSlider" Value="{Binding CurrentTrackTime}" Minimum="0" Maximum="{Binding TotalTrackTime}" HorizontalAlignment="Center" Height="20" Margin="55,15,58,5" VerticalAlignment="Center" Width="387" IsSnapToTickEnabled="true" TickFrequency="1" IsMoveToPointEnabled="True">
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                        <i:InvokeCommandAction Command="{Binding MouseLeftButtonUpCommand}" />
+                    <i:EventTrigger EventName="PreviewMouseUp">
+                        <i:InvokeCommandAction Command="{Binding MouseUpCommand}" />
                     </i:EventTrigger>
 
                     <i:EventTrigger EventName="PreviewMouseDown">
