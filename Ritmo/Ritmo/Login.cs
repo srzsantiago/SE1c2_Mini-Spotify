@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,107 +10,92 @@ namespace Ritmo
 {
     public class Login
     {
-        private Person _user;
+        private readonly Person _user;
         public bool loggedin = false;
         AccessLevel access { get; set; }
-
-        // Hard-coded credentials, uncomment code in 'Login' to use database credentials. 
-        public string emailThis = "";
-        public string passwordThis = "";
         public AccessLevel accessdb = AccessLevel.user;
+        private string message = "";
 
-        // login function
-        public Login(string mail, string password)
+
+
+        public Login(string mail, string password)//LoginAttempt
         {
-            
- 
-            String sql,Output = "";
-            int level = 1;
-            
 
-            //GET EMAILADRESSES FROM DATABASE
-            sql = "SELECT email FROM Person WHERE email = " + "'" + mail + "'";
-            List<Dictionary<string, object>> Email = Database.DatabaseConnector.SelectQueryDB(sql);
-            string databaseMail = "";
-
-            foreach(var dictionary in Email)
+            if (mail != null && password != null)
             {
-                foreach (var keyValue in dictionary)
-                {
-                    databaseMail =  keyValue.Value.ToString();
-                }
-            }
+                mail = mail.ToLower(); //set the mail to lowerCase.
 
-            if(databaseMail == mail)
-            //if (this.email == email)
-            {
-                sql = "SELECT password FROM Person WHERE email = " + "'" + mail + "'";
-                List<Dictionary<string, object>> Password = Database.DatabaseConnector.SelectQueryDB(sql);
-                string databasePassword = "";
+                //GET EMAILADRESSES FROM DATABASE
+                string sql = $"SELECT email FROM Person WHERE email = '{mail}'";
+                List<Dictionary<string, object>> Email = Database.DatabaseConnector.SelectQueryDB(sql);
 
-                foreach (var dictionary in Password)
+                if (Email.Count > 0)//if there is a match with the given email
                 {
-                    foreach (var keyValue in dictionary)
+
+                    //get the password and role for the given email from the databse
+                    sql = $"SELECT password, role FROM Person WHERE email = '{mail}'";
+                    List<Dictionary<string, object>> PasswordAndRole = Database.DatabaseConnector.SelectQueryDB(sql);
+                    string databasePassword = PasswordAndRole.ElementAt(0).ElementAt(0).Value.ToString();//set databasePassword
+                    int databaseRole = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(1).Value.ToString());//set databaseRole as a int
+
+
+                    if (!AuthenticateUser(mail, password, databasePassword))//check if the given password match the password from the database
                     {
-                        databasePassword = keyValue.Value.ToString();
+                        loggedin = false;
+                    }
+                    else
+                    {
+                        //create a user in the application with the correspondent AccessLevel/Role
+                        if (databaseRole == 1)
+                        {
+                            access = AccessLevel.user;
+                            _user = new User(loggedin);
+                        }
+                        else if (databaseRole == 2)
+                        {
+                            this.access = AccessLevel.artist;
+                            _user = new Artist(this.loggedin, "naam moet uit db", "Producer moet uit db");
+                        }
+                        else if (databaseRole == 3)
+                        {
+                            this.access = AccessLevel.admin;
+                            _user = new Administrator(this.loggedin);
+                        }
+
+                        loggedin = true;
                     }
                 }
-
-
-                if (databasePassword != password)
-                //if (this.password != password)
+                else //the given email doesn't exist in our database
                 {
                     loggedin = false;
+                    message = "Username does not exist, register below!";
                 }
-                else
-                {
-                    emailThis = mail;
-                    passwordThis = password;
-                    sql = "SELECT rol FROM Person WHERE email = " + "'" + mail + "'";
-                    List<Dictionary<string, object>> Role = Database.DatabaseConnector.SelectQueryDB(sql);
-                    int databaseRole = 1;
-
-                    foreach (var dictionary in Role)
-                    {
-                        foreach (var keyValue in dictionary)
-                        {
-                            string databaseRoleString = keyValue.Value.ToString();
-                            databaseRole = Int32.Parse(databaseRoleString);
-                        }
-                    }
-
-                    if (databaseRole == 1)
-                    {
-                        this.access = AccessLevel.user;
-                    } else if (databaseRole == 2)
-                    {
-                        this.access = AccessLevel.artist;
-                    } else if (databaseRole == 3)
-                    {
-                        this.access = AccessLevel.admin;
-                    }
-                    //this.access = accessdb;
-                    loggedin = true;
-                    // create new user with the loggedin bool and the access enum value
-                    if (access == AccessLevel.user)
-                    {
-                        _user = new User(this.loggedin);
-                    }
-                    else if (access == AccessLevel.artist)
-                    {
-                        _user = new Artist(this.loggedin, "naam moet uit db", "Producer moet uit db");
-                    }
-                    else if (access == AccessLevel.admin)
-                    {
-                        _user = new Administrator(this.loggedin);
-                    }
-                }  
-            } else
-            {
-                loggedin = false;
-                Console.WriteLine("Username not found in our database");
             }
-
         }
+
+        public override string ToString()
+        {
+            return message; 
+        }
+
+        public bool AuthenticateUser(string username, string password, string databasePassword)
+        {
+            //if you want more information about how PBKDF2 works see the document "Advies password hashing"
+
+            char[] delimiter = { ':' };//the databasePassword contains an ItarationNumber, and salt and a hash. These are separated by a :
+            var split = databasePassword.Split(delimiter);//split the databasePassword
+           
+            var iterations = Int32.Parse(split[0]); 
+            var salt = Convert.FromBase64String(split[1]);
+            var hash = split[2];
+
+            var rfc2898 = new Rfc2898DeriveBytes(password, salt, iterations);//create a PBKDF2 hash with the same salt and iteration as the password stored in the database
+
+            var PasswordToCheck = Encoding.Default.GetString(rfc2898.GetBytes(32));
+            var storedPassword = hash;
+
+            return PasswordToCheck == storedPassword; //compare the given password hash and the databasepassword hash
+        }
+
     }
 }

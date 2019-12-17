@@ -9,15 +9,14 @@
              xmlns:viewmodels="clr-namespace:Ritmo.ViewModels">
     <!--d:DataContext="{d:DesignInstance viewmodels:HomeViewModel, IsDesignTimeCreatable=True}">-->
 
-    <Grid Background="GhostWhite" Name="structuregridHome" Margin="0,48,0,0">
+    <Grid Background="GhostWhite" Name="structuregridHome" Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="31*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="61*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="2"/>
             <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -30,12 +29,12 @@
                         <Button Content="{Binding Name}"/>
                         <Button Content="Add to Playlist" Grid.Column="0">
                             <Button.InputBindings>
-                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.AddToPlaylistCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding TrackID}"/>
+                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.LoadListboxPlaylistCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding TrackId}"/>
                             </Button.InputBindings>
                         </Button>
                         <Button Content="Add to queue" Grid.Column="0">
                             <Button.InputBindings>
-                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.AddToQueueCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding TrackID}"/>
+                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.AddToQueueCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding TrackId}"/>
                             </Button.InputBindings>
                         </Button>
                     </StackPanel>
@@ -43,13 +42,14 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox ItemsSource="{Binding AllPlaylist}" SelectedItem="{Binding SelectedItem}" Grid.Column="0" HorizontalAlignment="Left" Height="136" Grid.Row="3" VerticalAlignment="Top" Width="248">
+        <ListBox ItemsSource="{Binding AllPlaylist}" SelectedItem="{Binding SelectedItem}"  Grid.Column="0" HorizontalAlignment="Left" Height="136" Grid.Row="3" VerticalAlignment="Top" Width="248">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Label Content="{Binding Name}"></Label>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Button Content="Add to new Playlist" Command="{Binding AddToNewPlaylistClick}" HorizontalAlignment="Left" Margin="70,214,0,0" Grid.Row="2" VerticalAlignment="Top" Width="137"/>
 
     </Grid>
 

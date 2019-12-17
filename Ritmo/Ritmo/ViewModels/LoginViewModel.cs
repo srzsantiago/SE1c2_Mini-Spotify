@@ -24,6 +24,7 @@ namespace Ritmo.ViewModels
         private string _filledEmail;
         private string _loginMessage;
         private Brush _errorColor;
+        private Uri _ritmoLogo = new Uri("/ImageResources/RitmoLogo.png", UriKind.RelativeOrAbsolute);
 
         public Brush ErrorColor
         {
@@ -51,29 +52,44 @@ namespace Ritmo.ViewModels
             get { return _filledPassword; }
             set { _filledPassword = value; }
         }
+
+        public Uri RitmoLogo { get { return _ritmoLogo; } set { _ritmoLogo = value; NotifyOfPropertyChange(); } }
+
         #endregion
 
         public LoginViewModel()
         {
-            LoginCommand = new RelayCommand<Window>(Login);
+            LoginCommand = new RelayCommand<object>(Login);
             NewAccountCommand = new RelayCommand<Window>(NewAccount);
         }
 
-        //LoginView is given as argument to close the view in code
-        private void Login(Window LoginView)
+        //LoginView is given as object parameters which contains the loginView and the passwordbox from the xaml
+        private void Login(object parameters)
         {
-            Login LoginAttempt = new Login(FilledEmail, FilledPassword);
+            var values = parameters as List<object>; //set the multiple parameters in one array
+            var LoginView = values[0] as Window; //set the first value in the array as passwordbox
+            var PasswordBox = values[1] as PasswordBox;//set the second value in the array as confirmpasswordbox
+
+            Login LoginAttempt = new Login(FilledEmail, PasswordBox.Password); //try to login with the given mail and password
 
             ErrorColor = Brushes.LightYellow;
 
-            if (LoginAttempt.loggedin == true) //Uitgecomment omdat ik niet een correct email en ww weet
+            if (LoginAttempt.loggedin == true)//Authentication is succesful.
             {
                 LoginMessage = "Success";
                 Manager.ShowWindow(new MainWindowViewModel());
                 LoginView.Close();
             }
             else
-                LoginMessage = "Failed, incorrect email or password";
+            {
+                
+                string message = LoginAttempt.ToString();
+                if(message.Equals("Username does not exist, register below!"))
+                    LoginMessage = message;
+                else
+                    LoginMessage = "Failed, incorrect email or password";
+            }
+                
         }
 
         //LoginView is given as argument to close the view in code

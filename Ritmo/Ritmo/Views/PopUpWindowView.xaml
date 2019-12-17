@@ -1,0 +1,37 @@
+﻿<Window x:Class="Ritmo.Views.PopUpWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ritmo.Views"
+        mc:Ignorable="d"
+        Title="{Binding Title}" Height="auto" Width="300"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight"
+        WindowStyle="None"
+        Background="{StaticResource GeneralWhite}"
+        ResizeMode="NoResize"
+        >
+    
+    <Border BorderBrush="{StaticResource MainBlueColor}" BorderThickness="3" Padding="8" CornerRadius="2">
+        <Grid>
+            <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="45" />
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="Textblock" TextWrapping="Wrap" Text="{Binding TextMessage}" FontSize="16" 
+                   HorizontalAlignment="right" VerticalAlignment="Center" Height="auto" Width="auto" Grid.Row="0" />
+        <Label Content="{Binding PopUpWarning}" Foreground="DarkRed" Width="Auto" Height="Auto" HorizontalAlignment="Right" VerticalAlignment="Center"  Grid.Row="1"/>
+            <TextBox Height="{Binding TextBoxHeight}"  TextWrapping="NoWrap" Text="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" 
+                 HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Width="275" TextAlignment="Right" VerticalContentAlignment="Center" Focusable="True" />
+
+            <Button Command="{Binding OnOkayCommand}"  Content="{Binding ButtonContent}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" FontSize="16" 
+                Width="auto" Height="auto" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,62,0" Style="{StaticResource PopUpWindowStyle}" Foreground="White" IsDefault="True"/>
+
+            <Button Content="Cancel" Click="Button_Click" Style="{StaticResource PopUpWindowStyle}" Foreground="White"
+                Height="auto" Width="auto" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="3" FontSize="16"/>
+        </Grid>
+    </Border>
+</Window>

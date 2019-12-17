@@ -4,21 +4,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Ritmo.Views"
+        xmlns:local="clr-namespace:Ritmo"
         mc:Ignorable="d"
         xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
         xmlns:views="clr-namespace:Ritmo.Views"
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="450" Width="800">
-    
+    <Window.Resources>
+        <local:ConverterParameter x:Name="ConverterParameter"  x:Key="Converter"/>
+    </Window.Resources>
     <Grid Background="LightBlue">
-        <Canvas HorizontalAlignment="Left" Height="358" Margin="248,26,0,0" VerticalAlignment="Top" Width="311" Background="White">
-            <Image Height="77" Canvas.Left="116" Canvas.Top="27" Width="79" Source="https://www.childhood.org.au/app/uploads/2017/07/ACF-logo-placeholder.png"/>
+        <Canvas HorizontalAlignment="Center" Height="358" VerticalAlignment="Center" Width="311" Background="White">
+            <Image Height="77" Canvas.Left="116" Canvas.Top="27" Width="79" Source="{Binding RitmoLogo}"/>
             <Label Content="Password" Canvas.Left="32" Canvas.Top="160"/>
             <Label Content="Email" Canvas.Left="32" Canvas.Top="129"/>
-            <TextBox x:Name="FilledPassword" BorderBrush="Transparent" Height="24" Canvas.Left="116" Canvas.Top="164" Width="159" Background="#E6E5E5"/>
-            <TextBox x:Name="FilledEmail" BorderBrush="Transparent" Height="24" Canvas.Left="116" TextWrapping="Wrap" Text="Email@example.com" Canvas.Top="131" Width="159" Background="#E6E5E5"/>
-            <Button CommandParameter="{Binding ElementName=LoginWindow}" Command="{Binding LoginCommand}" Content="SIGN IN" Canvas.Left="116"  Canvas.Top="216" Width="79" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Height="25"/>
+            <PasswordBox Name="FilledPassword" TabIndex="2" BorderBrush="Transparent" Height="24" Canvas.Left="116" Canvas.Top="164" Width="159" Background="#E6E5E5"/>
+            <TextBox x:Name="FilledEmail" TabIndex="1" BorderBrush="Transparent" Height="24" Canvas.Left="116" TextWrapping="Wrap" Text="Email@example.com" Canvas.Top="131" Width="159" Background="#E6E5E5"/>
+            <Button Command="{Binding LoginCommand}" IsDefault="True" Content="SIGN IN" Canvas.Left="116"  Canvas.Top="216" Width="79" BorderBrush="Transparent" Background="#B7B7B9" Foreground="White" Height="25">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource Converter}">
+                        <Binding ElementName="LoginWindow"/>
+                        <Binding ElementName="FilledPassword"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
             <Rectangle x:Name="successblock" Fill="{Binding ErrorColor}" Height="22" Width="311"/>
             <Label Name="succeslabel" Content="{Binding LoginMessage}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="-4"/>
             <TextBlock Canvas.Left="93" TextWrapping="Wrap" Canvas.Top="262" Width="123">

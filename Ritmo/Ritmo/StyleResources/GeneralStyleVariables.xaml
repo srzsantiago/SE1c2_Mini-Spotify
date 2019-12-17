@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Ritmo"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+
+    <SolidColorBrush x:Key="MainBlueColor" Color="#393846"/>
+    <SolidColorBrush x:Key="SecondaryBlueColor" Color="#2D4E7C"/>
+    <SolidColorBrush x:Key="GeneralWhite" Color="#D2D0D4"/>
+
+    <SolidColorBrush x:Key="SecondaryBlueMouseOver" Color="#1D3E6C"/>
+    <SolidColorBrush x:Key="SecondaryBlueMouseClick" Color="#20315F"/>
+
+</ResourceDictionary>
