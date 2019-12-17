@@ -49,6 +49,12 @@ namespace Ritmo.ViewModels
         }
         #endregion
 
+        #region Logo
+        private Uri _ritmoLogo = new Uri("/ImageResources/RitmoLogo.png", UriKind.RelativeOrAbsolute);
+
+        public Uri RitmoLogo{ get { return _ritmoLogo; } set { _ritmoLogo = value; NotifyOfPropertyChange(); } }
+        #endregion
+
         #region Labels
         private string _name;
         private string _email;
@@ -120,7 +126,7 @@ namespace Ritmo.ViewModels
             {
                 Register registerAttempt = new Register(Name, Email, passwordBox.Password);
                 string message = registerAttempt.ToString();//get the registerAttempt message
-                if(message.Equals("This email already exists"))
+                if (message.Equals("This email already exists") || message.Equals("Password must be minimum 8 and maximum 20 characters"))
                 {
                     ErrorColor = Brushes.LightYellow;
                     ErrorMessage = message;
@@ -131,10 +137,16 @@ namespace Ritmo.ViewModels
                     TryClose();
                 }
             }
-            else
+            else //If one or more fields are incorrect
             {
+                ErrorMessage = "";//reset the ErrorMessage
+
                 ErrorColor = Brushes.LightYellow;
-                ErrorMessage = "One or more fields are incorrect.";
+                if ((Name.Equals("") || !IsValidEmail(Email)) || !IsPasswordMatch(passwordBox, confirmPasswordBox))
+                    ErrorMessage = "One or more fields are incorrect";
+                if (!IsPasswordMatch(passwordBox, confirmPasswordBox) && !Name.Equals("") && IsValidEmail(Email))
+                    ErrorMessage = "Passwords do not match!";
+                
             }
         }
 

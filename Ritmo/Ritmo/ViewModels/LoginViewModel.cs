@@ -24,6 +24,7 @@ namespace Ritmo.ViewModels
         private string _filledEmail;
         private string _loginMessage;
         private Brush _errorColor;
+        private Uri _ritmoLogo = new Uri("/ImageResources/RitmoLogo.png", UriKind.RelativeOrAbsolute);
 
         public Brush ErrorColor
         {
@@ -51,6 +52,9 @@ namespace Ritmo.ViewModels
             get { return _filledPassword; }
             set { _filledPassword = value; }
         }
+
+        public Uri RitmoLogo { get { return _ritmoLogo; } set { _ritmoLogo = value; NotifyOfPropertyChange(); } }
+
         #endregion
 
         public LoginViewModel()

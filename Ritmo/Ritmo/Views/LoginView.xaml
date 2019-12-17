@@ -14,8 +14,8 @@
         <local:ConverterParameter x:Name="ConverterParameter"  x:Key="Converter"/>
     </Window.Resources>
     <Grid Background="LightBlue">
-        <Canvas HorizontalAlignment="Left" Height="358" Margin="248,26,0,0" VerticalAlignment="Top" Width="311" Background="White">
-            <Image Height="77" Canvas.Left="116" Canvas.Top="27" Width="79" Source="https://www.childhood.org.au/app/uploads/2017/07/ACF-logo-placeholder.png"/>
+        <Canvas HorizontalAlignment="Center" Height="358" VerticalAlignment="Center" Width="311" Background="White">
+            <Image Height="77" Canvas.Left="116" Canvas.Top="27" Width="79" Source="{Binding RitmoLogo}"/>
             <Label Content="Password" Canvas.Left="32" Canvas.Top="160"/>
             <Label Content="Email" Canvas.Left="32" Canvas.Top="129"/>
             <PasswordBox Name="FilledPassword" TabIndex="2" BorderBrush="Transparent" Height="24" Canvas.Left="116" Canvas.Top="164" Width="159" Background="#E6E5E5"/>

@@ -18,7 +18,8 @@ namespace Ritmo
         //register for normal user
         public Register(string name, string mail, string password)
         {
-            
+            name = name.ToLower();
+
             //Check if the filled email exist
             sql = $"SELECT email FROM Person WHERE email = '{mail}'";
             List<Dictionary<string, object>> EmailExist = Database.DatabaseConnector.SelectQueryDB(sql);
@@ -30,12 +31,20 @@ namespace Ritmo
             
             if (!mailexists)//if the mail is not in use
             {
-                string HashedPassword = GenerateHash(password); //Generate a PBKDF2 password hashed
+                if(password.Length <= 8 && password.Length >= 20)
+                {
+                    string HashedPassword = GenerateHash(password); //Generate a PBKDF2 password hashed
 
-                sql = "INSERT INTO Person VALUES (" + "'" + mail + "', '" + HashedPassword + "', '" + name + "', " + 1 + ")";
-                Database.DatabaseConnector.InsertQueryDB(sql);
+                    sql = "INSERT INTO Person VALUES (" + "'" + mail + "', '" + HashedPassword + "', '" + name + "', " + 1 + ")";
+                    Database.DatabaseConnector.InsertQueryDB(sql);
 
-                Message = "Your account has been successfully created";
+                    Message = "Your account has been successfully created";
+                }
+                else
+                {
+                    Message = "Password must be minimum 8 and maximum 20 characters";
+                }
+                
             }
             else
             {
