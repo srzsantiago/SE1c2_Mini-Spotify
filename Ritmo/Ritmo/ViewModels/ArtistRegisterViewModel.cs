@@ -105,7 +105,7 @@ namespace Ritmo.ViewModels
 
         private void CancelClick()//cancel button
         {
-            Manager.ShowWindow(new LoginViewModel());
+            Manager.ShowWindow(new RegisterViewModel());
             TryClose();
         }
     }
