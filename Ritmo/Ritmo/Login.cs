@@ -32,8 +32,8 @@ namespace Ritmo
                 if (Email.Count > 0)//if there is a match with the given email
                 {
 
-                    //get the password and rol for the given email from the databse
-                    sql = $"SELECT password, rol FROM Person WHERE email = '{mail}'";
+                    //get the password and role for the given email from the databse
+                    sql = $"SELECT password, role FROM Person WHERE email = '{mail}'";
                     List<Dictionary<string, object>> PasswordAndRole = Database.DatabaseConnector.SelectQueryDB(sql);
                     string databasePassword = PasswordAndRole.ElementAt(0).ElementAt(0).Value.ToString();//set databasePassword
                     int databaseRole = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(1).Value.ToString());//set databaseRole as a int
