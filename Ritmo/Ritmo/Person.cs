@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 namespace Ritmo
 {
 
-    abstract class Person
+    public abstract class Person
     {
-        bool loggedin { get; set; }
-        AccessLevel access;
+        public bool Loggedin { get; set; }
+        public AccessLevel Access { get; set; }
+        public int PersonID { get; set; }
 
         // create user after login, this user can be used to check the acces to other classes. 
-        public Person(bool loggedin, AccessLevel access) 
+        public Person(bool loggedin, AccessLevel access, int personID) 
         {
-            this.loggedin = loggedin;
-            this.access = access; 
+            Loggedin = loggedin;
+            Access = access;
+            PersonID = personID;
         }
     }
 }

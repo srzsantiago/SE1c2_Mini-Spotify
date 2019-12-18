@@ -74,10 +74,10 @@ namespace Ritmo.ViewModels
 
             ErrorColor = Brushes.LightYellow;
 
-            if (LoginAttempt.loggedin == true)//Authentication is succesful.
+            if (LoginAttempt.isLoggedin == true)//Authentication is succesful.
             {
                 LoginMessage = "Success";
-                Manager.ShowWindow(new MainWindowViewModel());
+                Manager.ShowWindow(new MainWindowViewModel(LoginAttempt));
                 LoginView.Close();
             }
             else

@@ -10,8 +10,8 @@ namespace Ritmo
 {
     public class Login
     {
-        private readonly Person _user;
-        public bool loggedin = false;
+        public static Person User { get; set; }
+        public bool isLoggedin = false;
         AccessLevel access { get; set; }
         public AccessLevel accessdb = AccessLevel.user;
         private string message = "";
@@ -33,15 +33,15 @@ namespace Ritmo
                 {
 
                     //get the password and role for the given email from the databse
-                    sql = $"SELECT password, role FROM Person WHERE email = '{mail}'";
+                    sql = $"SELECT password, role, personID FROM Person WHERE email = '{mail}'";
                     List<Dictionary<string, object>> PasswordAndRole = Database.DatabaseConnector.SelectQueryDB(sql);
                     string databasePassword = PasswordAndRole.ElementAt(0).ElementAt(0).Value.ToString();//set databasePassword
                     int databaseRole = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(1).Value.ToString());//set databaseRole as a int
-
+                    int databasePersonID = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(2).Value.ToString());
 
                     if (!AuthenticateUser(mail, password, databasePassword))//check if the given password match the password from the database
                     {
-                        loggedin = false;
+                        isLoggedin = false;
                     }
                     else
                     {
@@ -49,25 +49,25 @@ namespace Ritmo
                         if (databaseRole == 1)
                         {
                             access = AccessLevel.user;
-                            _user = new User(loggedin);
+                            User = new User(isLoggedin, databasePersonID);
                         }
                         else if (databaseRole == 2)
                         {
                             this.access = AccessLevel.artist;
-                            _user = new Artist(this.loggedin, "naam moet uit db", "Producer moet uit db");
+                            User = new Artist(isLoggedin, "naam moet uit db", "Producer moet uit db", databasePersonID);
                         }
                         else if (databaseRole == 3)
                         {
                             this.access = AccessLevel.admin;
-                            _user = new Administrator(this.loggedin);
+                            User = new Administrator(isLoggedin, databasePersonID);
                         }
 
-                        loggedin = true;
+                        isLoggedin = true;
                     }
                 }
                 else //the given email doesn't exist in our database
                 {
-                    loggedin = false;
+                    isLoggedin = false;
                     message = "Username does not exist, register below!";
                 }
             }

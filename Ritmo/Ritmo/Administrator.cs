@@ -8,7 +8,7 @@ namespace Ritmo
 {
     class Administrator:Person
     {
-        public Administrator(bool loggedin) : base(loggedin, AccessLevel.user)
+        public Administrator(bool loggedin, int personID) : base(loggedin, AccessLevel.user, personID)
         {
 
         }
