@@ -17,12 +17,12 @@ namespace Ritmo.ViewModels
 {
     public class MainWindowViewModel : Screen
     {
-        public static Login User { get; set; }
+        public Login User { get; set; }
 
 
         public PlaylistController PlaylistController = new PlaylistController("testplaylist");
         public PlayQueueController PlayQueueController = new PlayQueueController();
-        public AllPlaylistsController AllPlaylistsController = new AllPlaylistsController();
+        public AllPlaylistsController AllPlaylistsController;
 
         public PlayQueue PlayQueue = new PlayQueue();
 
@@ -128,14 +128,15 @@ namespace Ritmo.ViewModels
         {
             User = loggedinUser;
 
+            PlayQueue = PlayQueueController.PQ;
+            AllPlaylistsController = new AllPlaylistsController(User.User.ConsumerID);
+
             InitializeCommands();
             InitializeViewModels();
 
             Navigation.InitializeViewModelNavigation();
             Navigation.ViewModelChanged += ChangeViewModel;
             
-            PlayQueue = PlayQueueController.PQ;
-
             InitializeCurrentTrackElement();
 
             TestTrackMethod();

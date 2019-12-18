@@ -10,7 +10,7 @@ namespace Ritmo
 {
     public class Login
     {
-        public static Person User { get; set; }
+        public Person User { get; set; }
         public bool isLoggedin = false;
         AccessLevel access { get; set; }
         public AccessLevel accessdb = AccessLevel.user;
@@ -33,11 +33,11 @@ namespace Ritmo
                 {
 
                     //get the password and role for the given email from the databse
-                    sql = $"SELECT password, role, personID FROM Person WHERE email = '{mail}'";
+                    sql = $"SELECT password, role, idConsumer FROM Person p JOIN Consumer c ON p.personID=c.personID WHERE email = '{mail}'";
                     List<Dictionary<string, object>> PasswordAndRole = Database.DatabaseConnector.SelectQueryDB(sql);
                     string databasePassword = PasswordAndRole.ElementAt(0).ElementAt(0).Value.ToString();//set databasePassword
                     int databaseRole = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(1).Value.ToString());//set databaseRole as a int
-                    int databasePersonID = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(2).Value.ToString());
+                    int databaseConsumerID = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(2).Value.ToString());
 
                     if (!AuthenticateUser(mail, password, databasePassword))//check if the given password match the password from the database
                     {
@@ -49,17 +49,17 @@ namespace Ritmo
                         if (databaseRole == 1)
                         {
                             access = AccessLevel.user;
-                            User = new User(isLoggedin, databasePersonID);
+                            User = new User(isLoggedin, databaseConsumerID);
                         }
                         else if (databaseRole == 2)
                         {
                             this.access = AccessLevel.artist;
-                            User = new Artist(isLoggedin, "naam moet uit db", "Producer moet uit db", databasePersonID);
+                            User = new Artist(isLoggedin, "naam moet uit db", "Producer moet uit db", databaseConsumerID);
                         }
                         else if (databaseRole == 3)
                         {
                             this.access = AccessLevel.admin;
-                            User = new Administrator(isLoggedin, databasePersonID);
+                            User = new Administrator(isLoggedin, databaseConsumerID);
                         }
 
                         isLoggedin = true;
