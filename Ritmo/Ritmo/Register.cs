@@ -31,7 +31,7 @@ namespace Ritmo
             
             if (!mailexists)//if the mail is not in use
             {
-                if(password.Length <= 8 && password.Length >= 20)
+                if(password.Length >= 8 && password.Length <= 20)
                 {
                     string HashedPassword = GenerateHash(password); //Generate a PBKDF2 password hashed
 
