@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
 
 
-        <Label Grid.Row="0" Content="Play Queue&#xA;" HorizontalAlignment="Left" Margin="40,14,0,0" VerticalAlignment="Top" FontSize="48"/>
+        <Label Grid.Row="0" Content="Play Queue&#xA;" HorizontalAlignment="Left" Margin="40,14,0,0" VerticalAlignment="Top" FontSize="48" Foreground="white"/>
         <!-- test -->
         <!--<Button BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
                                                 Name="ButtonMenu" Content="⋯" Grid.Column="0" Background="{x:Null}" 
@@ -34,14 +34,14 @@
         
 
         <!-- test -->
-        <ScrollViewer Grid.Row="1" Style="{StaticResource ScrollViewerStyle}" >
-            <StackPanel x:Name="MainStackPanel" Orientation="Vertical">
+        <ScrollViewer Grid.Row="1" Style="{StaticResource ScrollViewerStyle}">
+            <StackPanel x:Name="MainStackPanel" Orientation="Vertical" Background="{StaticResource MainBlueColor}">
 
                 <!--Stack 1 : Playing Now-->
                 <StackPanel x:Name="PlayingNowStackPanel" Orientation="Vertical" Height="auto">
                     <StackPanel.Style>
                         <!-- DataTrigger to hide the StackPanel if its empty -->
-                        <Style TargetType="{x:Type StackPanel}">
+                        <Style TargetType="{x:Type StackPanel}" >
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding PlayingNowItems, Mode=TwoWay}" Value="{x:Null}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -66,7 +66,7 @@
                         <Label Content="Duration" Grid.Column="4" Style="{StaticResource LabelRowStyle}"/>
                     </Grid>
                     <!-- ListBox with ItemTemplate for each component in the ObservableCollection  -->
-                    <ListBox ItemsSource="{Binding PlayingNowItems}" BorderThickness="0" HorizontalContentAlignment="Stretch">
+                    <ListBox ItemsSource="{Binding PlayingNowItems}" BorderThickness="0" HorizontalContentAlignment="Stretch" Background="{StaticResource MainBlueColor}">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Padding" Value="0"/>
@@ -145,7 +145,7 @@
                         <Label Content="Album" Grid.Column="3" Style="{StaticResource LabelRowStyle}"/>
                         <Label Content="Duration" Grid.Column="4" Style="{StaticResource LabelRowStyle}"/>
                     </Grid>
-                    <ListBox ItemsSource="{Binding NextInQueueItems}" BorderThickness="0" HorizontalContentAlignment="Stretch">
+                    <ListBox ItemsSource="{Binding NextInQueueItems}" BorderThickness="0" HorizontalContentAlignment="Stretch" Background="{StaticResource MainBlueColor}">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Padding" Value="0"/>
@@ -219,7 +219,7 @@
                         <Label Content="Album" Grid.Column="3" Style="{StaticResource LabelRowStyle}"/>
                         <Label Content="Duration" Grid.Column="4" Style="{StaticResource LabelRowStyle}"/>
                     </Grid>
-                    <ListBox ItemsSource="{Binding NextUpItems}" BorderThickness="0" HorizontalContentAlignment="Stretch">
+                    <ListBox ItemsSource="{Binding NextUpItems}" BorderThickness="0" HorizontalContentAlignment="Stretch" Background="{StaticResource MainBlueColor}">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Padding" Value="0"/>

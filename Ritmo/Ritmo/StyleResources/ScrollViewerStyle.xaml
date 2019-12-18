@@ -12,16 +12,20 @@
     <SolidColorBrush x:Key="StandardBorderBrush" Color="#888" />
     <SolidColorBrush x:Key="StandardBackgroundBrush" Color="#FFF" />
     <SolidColorBrush x:Key="HoverBorderBrush" Color="#DDD" />
-    <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="Gray" />
+    <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="#2D4E7C" />
     <SolidColorBrush x:Key="SelectedForegroundBrush" Color="White" />
     <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
-    <SolidColorBrush x:Key="NormalBrush" Color="#888" />
-    <SolidColorBrush x:Key="NormalBorderBrush" Color="#888" />
+    <SolidColorBrush x:Key="NormalBrush" Color="#2D4E7C" />
+    <SolidColorBrush x:Key="NormalBorderBrush" Color="#2D4E7C" />
     <SolidColorBrush x:Key="HorizontalNormalBrush" Color="#888" />
     <SolidColorBrush x:Key="HorizontalNormalBorderBrush" Color="#888" />
-    
-    
-    <LinearGradientBrush x:Key="ListBoxBackgroundBrush"
+
+    <SolidColorBrush x:Key="ListBoxBackgroundBrush" Color="LimeGreen"/>
+    <SolidColorBrush x:Key="StandardBrush" Color="HotPink"/>
+    <SolidColorBrush x:Key="PressedBrush" Color="Gray"/>
+    <SolidColorBrush x:Key="GlyphBrush" Color="AliceBlue"/>
+
+    <!--<LinearGradientBrush x:Key="ListBoxBackgroundBrush"
             StartPoint="0,0" EndPoint="1,0.001">
         <GradientBrush.GradientStops>
             <GradientStopCollection>
@@ -30,7 +34,7 @@
                 <GradientStop Color="#DDDDDD" Offset="1.2"/>
             </GradientStopCollection>
         </GradientBrush.GradientStops>
-    </LinearGradientBrush>
+    </LinearGradientBrush> 
     <LinearGradientBrush x:Key="StandardBrush"
             StartPoint="0,0" EndPoint="0,1">
         <GradientBrush.GradientStops>
@@ -40,7 +44,7 @@
             </GradientStopCollection>
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
-    <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
+    <SolidColorBrush x:Key="GlyphBrush" Color="#444" /> 
     <LinearGradientBrush x:Key="PressedBrush"
             StartPoint="0,0" EndPoint="0,1">
         <GradientBrush.GradientStops>
@@ -51,7 +55,7 @@
                 <GradientStop Color="#FFF" Offset="1.0"/>
             </GradientStopCollection>
         </GradientBrush.GradientStops>
-    </LinearGradientBrush>
+    </LinearGradientBrush> -->
 
     <!-- SrollViewer ScrollBar Repeat Buttons (at each end) -->
     <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
@@ -65,8 +69,8 @@
           Name="Border"
           Margin="1"
           CornerRadius="2"
-          Background="{StaticResource NormalBrush}"
-          BorderBrush="{StaticResource NormalBorderBrush}"
+          Background="{StaticResource LightBlue}"
+          BorderBrush="{StaticResource SecondaryBlueColor}"
           BorderThickness="1">
                         <Path
             HorizontalAlignment="Center"
@@ -99,7 +103,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Border Background="Transparent" />
+                    <Border Background="{StaticResource DarkerBlue}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -117,8 +121,8 @@
                     <Border
                         Name="Border"
                         CornerRadius="2"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
+                        Background="{StaticResource LightBlue}"
+                        BorderBrush="{StaticResource LightBlue}"
                         BorderThickness="1"/>
 
                     <ControlTemplate.Triggers>
@@ -145,7 +149,7 @@
             <Border
                   Grid.RowSpan="3"
                   CornerRadius="2"
-                  Background="#F0F0F0" />   
+                  Background="{StaticResource DarkerBlue}" />   
             <RepeatButton
                   Grid.Row="0"
                   Style="{StaticResource ScrollBarLineButton}"
@@ -196,7 +200,7 @@
             <Border
       Grid.ColumnSpan="3"
       CornerRadius="2"
-      Background="#F0F0F0" />
+      Background="#393846" />
             <RepeatButton
       Grid.Column="0"
       Style="{StaticResource ScrollBarLineButton}"

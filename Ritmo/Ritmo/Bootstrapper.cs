@@ -20,9 +20,9 @@ namespace Ritmo
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             DatabaseConnector.ConnectSSH();
-            if (true)
-                DisplayRootViewFor<LoginViewModel>();
-            else
+            //if (true)
+                //DisplayRootViewFor<LoginViewModel>();
+            //else
                 DisplayRootViewFor<MainWindowViewModel>();
         }
 
