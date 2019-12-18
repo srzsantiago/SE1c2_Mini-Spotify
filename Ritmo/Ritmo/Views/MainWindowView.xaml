@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:Ritmo"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:viewmodels="clr-namespace:Ritmo.ViewModels"
@@ -16,9 +17,26 @@
         ResizeMode="CanResize"
         >
 
+
+
     <Window.Resources>
         <!--#Region Variables -->
         <!--#endregion-->
+
+        <Style TargetType="Slider">
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="Maximum" Value="0.0"/>
+                        <Condition Property="Minimum" Value="0.0"/>
+                        <Condition Property="Value" Value="0.0"/>
+                    </MultiTrigger.Conditions>
+                    <MultiTrigger.Setters>
+                        <Setter Property="IsDirectionReversed" Value="True"/>
+                    </MultiTrigger.Setters>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
 
         <!--#region ViewModel DataTemplates-->
         <DataTemplate x:Name="homeViewTemplate" DataType="{x:Type viewmodels:HomeViewModel}">
@@ -60,6 +78,8 @@
                 <RowDefinition MinHeight="80" MaxHeight="80"/>
             </Grid.RowDefinitions>
 
+
+
             <!-- Window Top Bar -->
             <Grid Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
@@ -76,8 +96,8 @@
                     <ColumnDefinition Width="60"/>
                     <!-- Close -->
                 </Grid.ColumnDefinitions>
-    
-       
+
+
                 <Rectangle Name="TopBar" Width="auto" Height="auto" Fill="Transparent" Grid.ColumnSpan="7" MouseDown="Title_Bar_Drag"/>
                 <Button Name="Previous" Grid.Column="1" Command="{Binding ToPreviousViewModelCommand}" Style="{StaticResource TopBarButtonStyle}">
                     <Image Source="/ImageResources/previouspageicon.png" Width="{StaticResource TopBarIconSize}"/>
@@ -94,12 +114,11 @@
                 <Button Name="Close" Grid.Column="6" Click="Close_Click" Style="{StaticResource TopBarButtonStyle}">
                     <Image Source="/ImageResources/ExitIcon.ico" Width="{StaticResource TopBarIconSize}"/>
                 </Button>
-
             </Grid>
+
 
             <!-- Left panel -->
             <Grid Grid.RowSpan="2" Grid.Column="0">
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="170"/>
                     <RowDefinition MinHeight="160" Height="*"/>
@@ -138,7 +157,26 @@
                 <Image x:Name="AlbumImage" Width="80" HorizontalAlignment="left" Source="{Binding AlbumImage}"/>
                 <Label x:Name="SongName" Content="{Binding SongName}" HorizontalAlignment="Left" Margin="85,10,0,0" VerticalAlignment="Top" Width="115"/>
                 <Label x:Name="ArtistName" Content="{Binding ArtistName}" HorizontalAlignment="Left" Margin="85,41,0,0" VerticalAlignment="Top" Width="115"/>
+            </Grid>
 
+            <Grid Grid.Row="2"  Width="532" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="67,5,223,0" Height="40" Grid.Column="1">
+                <Label Content="{Binding  LabelCurrentTrackTime}" HorizontalAlignment="Left" Height="31" VerticalAlignment="Bottom" Width="40" Margin="26,0,0,-1"/>
+                <Slider x:Name="TrackTimeSlider" Value="{Binding CurrentTrackTime}" Minimum="0" Maximum="{Binding TotalTrackTime}" HorizontalAlignment="Center" Height="20" VerticalAlignment="Top" Width="388" IsSnapToTickEnabled="true" TickFrequency="1" IsMoveToPointEnabled="True" Margin="72,10,72,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseUp">
+                            <i:InvokeCommandAction Command="{Binding MouseUpCommand}" />
+                        </i:EventTrigger>
+
+                        <i:EventTrigger EventName="PreviewMouseDown">
+                            <i:InvokeCommandAction Command="{Binding MouseDownCommand}" />
+                        </i:EventTrigger>
+
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction Command="{Binding ValueChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Slider>
+                <Label Content="{Binding LabelTotalTrackTime}" HorizontalAlignment="Left" Height="31" Margin="458,0,-11,-1" VerticalAlignment="Bottom" Width="85"/>
             </Grid>
 
             <Grid  Grid.Row="2"  Width="124" HorizontalAlignment="Center" Margin="264,32,434,0" Grid.Column="1">
@@ -174,5 +212,6 @@
             </Grid>
         </Grid>
     </Border>
+
 
 </Window>
