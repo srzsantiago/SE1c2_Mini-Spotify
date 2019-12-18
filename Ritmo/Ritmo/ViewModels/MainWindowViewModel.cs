@@ -44,49 +44,15 @@ namespace Ritmo.ViewModels
         #endregion
 
         #region CurrentTrack commands and attributes
-        private ICommand _mouseUpCommand;
-        private ICommand _valueChangedCommand;
-        private ICommand _mouseDownCommand;
-
         public ICommand TrackControlCommand { get; set; }
         public ICommand NextTrackCommand { get; set; }
         public ICommand PrevTrackCommand { get; set; }
         public ICommand MuteTrackCommand { get; set; }
         public ICommand ShuffleWaitinglistCommand { get; set; }
         public ICommand LoopCommand { get; set; }
-
-        public ICommand MouseUpCommand //Method to handle the event of: When the left button of the mouse is up.
-        {
-            get
-            {
-                if (_mouseUpCommand == null)
-                    _mouseUpCommand = new RelayCommand<MouseButtonEventArgs>(MouseUp);
-
-                return _mouseUpCommand;
-            }
-        }
-
-        public ICommand MouseDownCommand //Method to handle the event of: When the left button of the mouse is down.
-        {
-            get
-            {
-                if (_mouseDownCommand == null)
-                    _mouseDownCommand = new RelayCommand<MouseButtonEventArgs>(MouseDown);
-
-                return _mouseDownCommand;
-            }
-        }
-
-        public ICommand ValueChangedCommand //Method to handle the event of: dragging of the thumb
-        {
-            get
-            {
-                if (_valueChangedCommand == null)
-                    _valueChangedCommand = new RelayCommand<RoutedPropertyChangedEventArgs<double>>(TrackTimeSlider_ValueChanged);
-
-                return _valueChangedCommand;
-            }
-        }
+        public ICommand MouseUpCommand { get; set; }
+        public ICommand MouseDownCommand { get; set; }
+        public ICommand ValueChangedCommand { get; set; }
 
         private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual };
         private Uri _currentTrackSource; //Unused
@@ -101,6 +67,8 @@ namespace Ritmo.ViewModels
         private Uri _testLogo = new Uri("/ImageResources/Test_Logo.png", UriKind.RelativeOrAbsolute);
         private DispatcherTimer _timerTick = new DispatcherTimer();
         private bool _mouse_down = false;
+        private string _labelCurrentTrackTime;
+        private string _labelTotalTrackTime;
 
         public MediaElement CurrentTrackElement
         {
@@ -133,6 +101,32 @@ namespace Ritmo.ViewModels
             {
                 _currentTrackTime = value;
                 NotifyOfPropertyChange("CurrentTrackTime");
+            }
+        }
+
+        public string LabelCurrentTrackTime //Label for the currentTrackTime
+        {
+            get
+            {
+                return _labelCurrentTrackTime;
+            }
+            set
+            {
+                _labelCurrentTrackTime = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public string LabelTotalTrackTime //Label for the totalTrackTime
+        {
+            get
+            {
+                return _labelTotalTrackTime;
+            }
+            set
+            {
+                _labelTotalTrackTime = value;
+                NotifyOfPropertyChange();
             }
         }
 
@@ -309,16 +303,23 @@ namespace Ritmo.ViewModels
         {
             if (CurrentTrackElement.NaturalDuration.HasTimeSpan)
             {
-                TotalTrackTime = CurrentTrackElement.NaturalDuration.TimeSpan.TotalSeconds;
+                TotalTrackTime = CurrentTrackElement.NaturalDuration.TimeSpan.TotalSeconds; //Set the totalTrackTime
+                LabelTotalTrackTime = PrintTimeSpan(TotalTrackTime); //Set the label for the totalTrackTime
             }
         }
 
         //When the track has a 'timeSpan' the current tracktime will be set
-        void TimerTick(object sender, EventArgs e)
+        void TimerTick (object sender, EventArgs e)
         {
             if (!_mouse_down && CurrentTrackElement.NaturalDuration.HasTimeSpan)
             {
-                CurrentTrackTime = CurrentTrackElement.Position.Seconds + CurrentTrackElement.Position.Minutes*60; //Current track time in seconds and minutes
+                CurrentTrackTime = CurrentTrackElement.Position.Seconds + CurrentTrackElement.Position.Minutes * 60; //Current track time in seconds and minutes
+                LabelCurrentTrackTime = PrintTimeSpan(CurrentTrackTime); //Set the label for the currentTrackTime(will be updated every second)
+            }
+            else
+            {
+                LabelCurrentTrackTime = PrintTimeSpan(0); //Set the label to 00:00, if there is no CurrentTrack
+                LabelTotalTrackTime = PrintTimeSpan(0); //Set the label to 00:00, if there is no CurrentTrack
             }
         }
 
@@ -347,15 +348,17 @@ namespace Ritmo.ViewModels
 
         //When the left button of the mouse is up and if the track has a timeSpan, the position of the currentTrack will be set to the currentTrackTime.
         //The mouse is not down
-        public void MouseUp(MouseButtonEventArgs e)
+        public void MouseUp (MouseButtonEventArgs e)
         {
             _mouse_down = false;
             if (CurrentTrackElement.NaturalDuration.HasTimeSpan)
+            {
                 CurrentTrackElement.Position = TimeSpan.FromSeconds(CurrentTrackTime); //Value of the slider will be set to the audio file
+            }
         }
 
         //When the left button of the mouse is down, the mouse down is true.
-        public void MouseDown(MouseButtonEventArgs e)
+        public void MouseDown (MouseButtonEventArgs e)
         {
             _mouse_down = true;
         }
@@ -366,7 +369,6 @@ namespace Ritmo.ViewModels
             if (_mouse_down)
             {
                 CurrentTrackElement.Position = TimeSpan.FromSeconds(CurrentTrackTime); //Value of the slider will be set to the audio file
-                
             }
             _mouse_down = false;
         }
@@ -399,6 +401,42 @@ namespace Ritmo.ViewModels
             }
         }
 
+        public string PrintTimeSpan(double secs) //method to print seconds to string in the correct format
+        {
+            TimeSpan t = TimeSpan.FromSeconds(secs);
+            string answer;
+            if (t.TotalMinutes < 1.0) 
+            {
+                if (t.TotalSeconds < 10)
+                {
+                    answer = String.Format("00:0{0}", t.Seconds);
+                }
+                else
+                {
+                    answer = String.Format("00:{0}", t.Seconds);
+                }
+            }
+            else
+            {
+                if (t.TotalSeconds < 10)
+                {
+                    answer = String.Format("{0}:0{1:D2}", t.Minutes, t.Seconds);
+                }
+                else if (t.TotalSeconds < 10 && t.TotalMinutes < 10)
+                {
+                    answer = String.Format("0{0}:0{1:D2}", t.Minutes, t.Seconds);
+                }
+                else if (t.TotalMinutes < 10)
+                {
+                    answer = String.Format("0{0}:{1:D2}", t.Minutes, t.Seconds);
+                }
+                else
+                {
+                    answer = String.Format("{0}:{1:D2}", t.Minutes, t.Seconds);
+                }
+            }
+            return answer; //returns string in format
+        }
 
         #endregion
 
@@ -413,6 +451,9 @@ namespace Ritmo.ViewModels
             MuteTrackCommand = new RelayCommand(MuteVolume);
             LoopCommand = new RelayCommand(LoopWaitinglist);
             ShuffleWaitinglistCommand = new RelayCommand(ShuffleWaitinglist);
+            MouseUpCommand = new RelayCommand<MouseButtonEventArgs>(MouseUp);
+            MouseDownCommand = new RelayCommand<MouseButtonEventArgs>(MouseDown);
+            ValueChangedCommand = new RelayCommand<RoutedPropertyChangedEventArgs<double>>(TrackTimeSlider_ValueChanged);
         }
         public void InitializeViewModels()
         {

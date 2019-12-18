@@ -13,9 +13,26 @@
         WindowStartupLocation="CenterScreen"
         Title="Ritmo" Height="450" Width="800" MinWidth="1000" MinHeight="600">
 
-    <Window.Resources>
+
+
+        <Window.Resources>
         <!--#Region Variables -->
         <!--#endregion-->
+
+        <Style TargetType="Slider">
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Maximum" Value="0.0"/>
+                    <Condition Property="Minimum" Value="0.0"/>
+                    <Condition Property="Value" Value="0.0"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="IsDirectionReversed" Value="True"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+        </Style.Triggers>
+        </Style>
 
         <!--#region ViewModel DataTemplates-->
         <DataTemplate x:Name="homeViewTemplate" DataType="{x:Type viewmodels:HomeViewModel}">
@@ -95,7 +112,7 @@
         <!-- Background color -->
 
         <Grid Grid.Row="1"  Width="532" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="77.4,450,214.6,0" Height="40" Grid.Column="1" Grid.RowSpan="2">
-            <Label Content="{Binding CurrentTrackTime}" HorizontalAlignment="Left" Height="31" VerticalAlignment="Bottom" Width="55"/>
+            <Label Content="{Binding  LabelCurrentTrackTime}" HorizontalAlignment="Left" Height="31" VerticalAlignment="Bottom" Width="40" Margin="26,0,0,-1"/>
             <Slider x:Name="TrackTimeSlider" Value="{Binding CurrentTrackTime}" Minimum="0" Maximum="{Binding TotalTrackTime}" HorizontalAlignment="Center" Height="20" Margin="55,15,58,5" VerticalAlignment="Center" Width="387" IsSnapToTickEnabled="true" TickFrequency="1" IsMoveToPointEnabled="True">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseUp">
@@ -111,8 +128,10 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Slider>
-            <Label Content="{Binding TotalTrackTime}" HorizontalAlignment="Left" Height="31" Margin="458,0,-11,-6" VerticalAlignment="Bottom" Width="85"/>
+            <Label Content="{Binding LabelTotalTrackTime}" HorizontalAlignment="Left" Height="31" Margin="458,0,-11,-1" VerticalAlignment="Bottom" Width="85"/>
         </Grid>
+        
+        
 
 
         <Grid Grid.Row="2"  Width="124" HorizontalAlignment="Center" Margin="264,32,434,0" Grid.Column="1">
