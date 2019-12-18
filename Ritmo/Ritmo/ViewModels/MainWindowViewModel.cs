@@ -154,7 +154,7 @@ namespace Ritmo.ViewModels
 
                 SongName = PlayQueue.CurrentTrack.Name; // set the name of the current track
                 ArtistName = PlayQueue.CurrentTrack.Artist; // set the artist of the current track 
-                AlbumImage = new Uri(@"" + PlayQueue.CurrentTrack.getAlbumCover(PlayQueue.CurrentTrack.TrackId), UriKind.Relative); // set the album image by calling the "getAlbumCover" function 
+                AlbumImage = new Uri(@"" + PlayQueue.CurrentTrack.GetAlbumCover(PlayQueue.CurrentTrack.TrackId), UriKind.Relative); // set the album image by calling the "getAlbumCover" function 
             }
         }
 
