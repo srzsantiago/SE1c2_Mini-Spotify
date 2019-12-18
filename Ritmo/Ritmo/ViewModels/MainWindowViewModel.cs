@@ -438,36 +438,36 @@ namespace Ritmo.ViewModels
 
         public string PrintTimeSpan(double secs) //method to print seconds to string in the correct format
         {
-            TimeSpan t = TimeSpan.FromSeconds(secs);
+            TimeSpan timeSpanFromSeconds = TimeSpan.FromSeconds(secs);
             string answer;
-            if (t.TotalMinutes < 1.0) 
+            if (timeSpanFromSeconds.TotalMinutes < 1.0) 
             {
-                if (t.TotalSeconds < 10)
+                if (timeSpanFromSeconds.TotalSeconds < 10)
                 {
-                    answer = String.Format("00:0{0}", t.Seconds);
+                    answer = String.Format("00:0{0}", timeSpanFromSeconds.Seconds);
                 }
                 else
                 {
-                    answer = String.Format("00:{0}", t.Seconds);
+                    answer = String.Format("00:{0}", timeSpanFromSeconds.Seconds);
                 }
             }
             else
             {
-                if (t.TotalSeconds < 10)
+                if (timeSpanFromSeconds.TotalSeconds < 10)
                 {
-                    answer = String.Format("{0}:0{1:D2}", t.Minutes, t.Seconds);
+                    answer = String.Format("{0}:0{1:D2}", timeSpanFromSeconds.Minutes, timeSpanFromSeconds.Seconds);
                 }
-                else if (t.TotalSeconds < 10 && t.TotalMinutes < 10)
+                else if (timeSpanFromSeconds.TotalSeconds < 10 && timeSpanFromSeconds.TotalMinutes < 10)
                 {
-                    answer = String.Format("0{0}:0{1:D2}", t.Minutes, t.Seconds);
+                    answer = String.Format("0{0}:0{1:D2}", timeSpanFromSeconds.Minutes, timeSpanFromSeconds.Seconds);
                 }
-                else if (t.TotalMinutes < 10)
+                else if (timeSpanFromSeconds.TotalMinutes < 10)
                 {
-                    answer = String.Format("0{0}:{1:D2}", t.Minutes, t.Seconds);
+                    answer = String.Format("0{0}:{1:D2}", timeSpanFromSeconds.Minutes, timeSpanFromSeconds.Seconds);
                 }
                 else
                 {
-                    answer = String.Format("{0}:{1:D2}", t.Minutes, t.Seconds);
+                    answer = String.Format("{0}:{1:D2}", timeSpanFromSeconds.Minutes, timeSpanFromSeconds.Seconds);
                 }
             }
             return answer; //returns string in format
