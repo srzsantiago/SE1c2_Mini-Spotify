@@ -124,9 +124,9 @@ namespace Ritmo.ViewModels
 
         #endregion
 
-        public MainWindowViewModel(Login loggedinUser)
+        public MainWindowViewModel()
         {
-            User = loggedinUser;
+            //User = loggedinUser;
 
             InitializeCommands();
             InitializeViewModels();
