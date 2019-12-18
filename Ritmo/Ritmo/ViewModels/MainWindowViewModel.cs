@@ -17,6 +17,9 @@ namespace Ritmo.ViewModels
 {
     public class MainWindowViewModel : Screen
     {
+        public static Login User { get; set; }
+
+
         public PlaylistController PlaylistController = new PlaylistController("testplaylist");
         public PlayQueueController PlayQueueController = new PlayQueueController();
         public AllPlaylistsController AllPlaylistsController = new AllPlaylistsController();
@@ -121,8 +124,10 @@ namespace Ritmo.ViewModels
 
         #endregion
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(Login loggedinUser)
         {
+            User = loggedinUser;
+
             InitializeCommands();
             InitializeViewModels();
 

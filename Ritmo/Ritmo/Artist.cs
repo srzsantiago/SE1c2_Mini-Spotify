@@ -10,7 +10,7 @@ namespace Ritmo
     {
         public string Name;
         public string Producer;
-        public Artist(bool loggedin, string Name, string Producer) : base(loggedin, AccessLevel.artist)
+        public Artist(bool loggedin, string Name, string Producer, int personID) : base(loggedin, AccessLevel.artist, personID)
         {
             this.Name = Name;
             this.Producer = Producer;
