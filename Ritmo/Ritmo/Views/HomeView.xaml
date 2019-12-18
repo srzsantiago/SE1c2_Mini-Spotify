@@ -9,7 +9,7 @@
              xmlns:viewmodels="clr-namespace:Ritmo.ViewModels">
     <!--d:DataContext="{d:DesignInstance viewmodels:HomeViewModel, IsDesignTimeCreatable=True}">-->
 
-    <Grid Background="GhostWhite" Name="structuregridHome" Margin="0,0,0,0">
+    <Grid Background="{StaticResource MainBlueColor}" Name="structuregridHome" Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="31*"/>
             <ColumnDefinition Width="8*"/>

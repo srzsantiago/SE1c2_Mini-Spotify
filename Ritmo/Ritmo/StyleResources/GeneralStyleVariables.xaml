@@ -6,6 +6,9 @@
     <SolidColorBrush x:Key="MainBlueColor" Color="#393846"/>
     <SolidColorBrush x:Key="SecondaryBlueColor" Color="#2D4E7C"/>
     <SolidColorBrush x:Key="GeneralWhite" Color="#D2D0D4"/>
+    <SolidColorBrush x:Key="DarkerBlue" Color="#2A2937"/>
+    <SolidColorBrush x:Key="LightBlue" Color="#50739d"/>
+    
 
     <SolidColorBrush x:Key="SecondaryBlueMouseOver" Color="#1D3E6C"/>
     <SolidColorBrush x:Key="SecondaryBlueMouseClick" Color="#20315F"/>
