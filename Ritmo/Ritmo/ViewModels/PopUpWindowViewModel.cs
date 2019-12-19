@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using Ritmo.Database;
 using System;
 using System.Collections.Generic;
@@ -267,6 +268,8 @@ namespace Ritmo.ViewModels
                         Database.DatabaseConnector.InsertQueryDB(sql);
                     }
                 }
+                string message = "done";
+                Messenger.Default.Send<string>(message);
                 this.TryClose();
             }
         }

@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -48,6 +49,7 @@ namespace Ritmo.ViewModels
         public AllPlaylistsViewModel(MainWindowViewModel mainWindow)
         {
             InitializeCommands();
+            Messenger.Default.Register<string>(this, (message) => ReceiveMessage(message));
 
             AllPlaylistsController = mainWindow.AllPlaylistsController;
             MainWindow = mainWindow;
@@ -106,6 +108,11 @@ namespace Ritmo.ViewModels
             AllPlaylistsController.AddTrackList(kaas);
             AllPlaylistsController.AddTrackList(hamkaas);
             AllPlaylistsController.AddTrackList(dorito);
+        }
+
+        private void ReceiveMessage(string message)
+        {
+            SetAllPlaylistsCollection();
         }
     }
 }

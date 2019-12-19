@@ -82,9 +82,6 @@ namespace Ritmo.ViewModels
         }
         #endregion
 
-
-
-
         public HomeViewModel(MainWindowViewModel mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
@@ -107,8 +104,6 @@ namespace Ritmo.ViewModels
                 AllPlaylist.Add(item);//add all playlist to the OC
             }
         }
-
-
         private void AddToQueueClick(object sender)//Add clicked track to queue
         {
             _clickedButtonValue = (int)sender;//get trackID
