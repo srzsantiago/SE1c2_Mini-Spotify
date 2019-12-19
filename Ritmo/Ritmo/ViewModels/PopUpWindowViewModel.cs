@@ -163,7 +163,7 @@ namespace Ritmo.ViewModels
         {
             Navigation.ToViewModel(MainWindow.AllPlaylistsViewModel);
             Navigation.RemoveViewModel(playListViewModel); //Removes playlist from navigation
-            AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(Playlist); 
+            AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(Playlist);  //removes the playlist
             TryClose();
         }
         #endregion
@@ -258,16 +258,15 @@ namespace Ritmo.ViewModels
             {
                 Track test = homeViewModel.GetTrackDB(Trackid);
                 Playlist playlist = new Playlist(TextInput) { TrackListID = GetLastID() };
-                AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(playlist); //Create playlist and add it to all playlists
+                AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(playlist); //Create playlist and add it to allplaylists
                 foreach (var _playlist in AllPlaylistsViewModel.AllPlaylistsController.AllPlaylists.Playlists)
                 {
                     if(_playlist.TrackListID == playlist.TrackListID)
                     {
-                        string sql = $"INSERT INTO Track_has_Playlist VALUES ({test.TrackId}, {playlist.TrackListID} )";
+                        string sql = $"INSERT INTO Track_has_Playlist VALUES ({test.TrackId}, {playlist.TrackListID} )"; // inserts the trackid and playlistid into the tabel
                         Database.DatabaseConnector.InsertQueryDB(sql);
                     }
                 }
-                MainWindow.AllPlaylistsViewModel.NotifyOfPropertyChange();
                 this.TryClose();
             }
         }
@@ -276,7 +275,7 @@ namespace Ritmo.ViewModels
 
         #region methods
 
-        public int GetLastID()
+        public int GetLastID() // gets the last id from the playlistid column, then adds one to return the new id of the playlist.
         {
 
             int lastID = 0;
@@ -287,7 +286,7 @@ namespace Ritmo.ViewModels
             {
                 foreach (var key in item)
                 {
-                    lastID = Convert.ToInt32(key.Value) + 1;
+                    lastID = Convert.ToInt32(key.Value) + 1; // adds one to the last id
                 }
             }
             return lastID;

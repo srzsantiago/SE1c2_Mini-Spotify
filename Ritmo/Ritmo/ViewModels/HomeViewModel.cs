@@ -224,7 +224,7 @@ namespace Ritmo.ViewModels
             AllPlaylist.Clear();
         }
 
-        public void TestAllPlayLists()//test methode to gerenate tracks in the homeview.
+        public void TestAllPlayLists()//test method to put all the tracks known in the database on the home page.
         {
             int count = 0;
             string sql = "SELECT idTrack, title, path, genre, date, duration FROM Track";
