@@ -94,15 +94,15 @@ namespace Ritmo.ViewModels
             set { _textMessage = value; }
         }
 
-        public AllPlaylistsViewModel allPlaylistViewModel
+        public AllPlaylistsViewModel AllPlaylistViewModel
         {
             get { return _allplaylistviewModel; }
             set { _allplaylistviewModel = value; }
         }
-        public PlaylistViewModel playListViewModel { get { return _playlistviewmodel; } set { _playlistviewmodel = value; } }
+        public PlaylistViewModel PlayListViewModel { get { return _playlistviewmodel; } set { _playlistviewmodel = value; } }
 
         HomeViewModel _homeviewmodel;
-        public HomeViewModel homeViewModel { get { return _homeviewmodel; } set { _homeviewmodel = value; } }
+        public HomeViewModel HomeViewModel { get { return _homeviewmodel; } set { _homeviewmodel = value; } }
         #endregion
 
         #region PlaylistViewModel constructors + click methods
@@ -117,9 +117,9 @@ namespace Ritmo.ViewModels
             OkButtonWidth = 110;
             OkButtonHeight = 35;
 
-            playListViewModel = viewModel;
+            PlayListViewModel = viewModel;
             PlaylistID = viewModel.PlaylistController.Playlist.TrackListID;
-            OnOkayCommand = new RelayCommand<object>(ChangeNameClick);
+            OnOkayCommand = new RelayCommand<object>(ChangePlaylistNameClick);
         }
 
         //Constructor to set the Delete Playlist functionality
@@ -128,16 +128,15 @@ namespace Ritmo.ViewModels
             ButtonContent = "Delete this playlist";
             Title = "Delete playlist";
             TextMessage = "Are you sure you want to delete this playlist?";
-            playListViewModel = viewModel;
+            PlayListViewModel = viewModel;
             Playlist = playlist;
             MainWindow = mainwindow;
             OkButtonWidth = 140;
             OkButtonHeight = 30;
-
-            OnOkayCommand = new RelayCommand<object>(DeletePlaylistClick);
+            OnOkayCommand = new RelayCommand<object>(DeleteThisPlaylistClick);
         }
 
-        public void ChangeNameClick(object param)
+        public void ChangePlaylistNameClick(object param)
         {
             if (TextInput == null)
             {
@@ -147,7 +146,7 @@ namespace Ritmo.ViewModels
             {
                 PopUpWarning = "Name can't be longer than 32 characters"; // warning appears when the name is 32 characters long
             }
-            else if (TextInput.Equals(playListViewModel.PlaylistName)) //If the name didn't change
+            else if (TextInput.Equals(PlayListViewModel.PlaylistName)) //If the name didn't change
             {
                 PopUpWarning = "The name can't be the same as the old name";
             }
@@ -155,15 +154,15 @@ namespace Ritmo.ViewModels
             {
                 string sqlquery = $"UPDATE Playlist SET name = '{TextInput}' WHERE {PlaylistID} = idPlaylist"; // also updates the database name
                 DatabaseConnector.UpdateQueryDB(sqlquery);
-                playListViewModel.ChangeName(TextInput); // changes the name on the application
+                PlayListViewModel.ChangeName(TextInput); // changes the name on the application
                 TryClose();
             }
         }
 
-        public void DeletePlaylistClick(object param)
+        public void DeleteThisPlaylistClick(object param)
         {
             Navigation.ToViewModel(MainWindow.AllPlaylistsViewModel);
-            Navigation.RemoveViewModel(playListViewModel); //Removes playlist from navigation
+            Navigation.RemoveViewModel(PlayListViewModel); //Removes playlist from navigation
             AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(Playlist);  //removes the playlist
             TryClose();
         }
@@ -179,8 +178,8 @@ namespace Ritmo.ViewModels
             OkButtonWidth = 110;
             OkButtonHeight = 30;
 
-            allPlaylistViewModel = viewModel;
-            OnOkayCommand = new RelayCommand<object>(OnOkayDeleteClick);
+            AllPlaylistViewModel = viewModel;
+            OnOkayCommand = new RelayCommand<object>(DeletePlaylistOnAllPlaylistsClick);
             PlaylistID = playlistID;
         }
 
@@ -194,11 +193,11 @@ namespace Ritmo.ViewModels
             OkButtonWidth = 110;
             OkButtonHeight = 30;
 
-            OnOkayCommand = new RelayCommand<object>(OnOkayAddPlaylistClick);
-            allPlaylistViewModel = viewModel;
+            OnOkayCommand = new RelayCommand<object>(AddNewPlaylistClick);
+            AllPlaylistViewModel = viewModel;
         }
 
-        public void OnOkayDeleteClick(object param) // the method that deletes the playlist
+        public void DeletePlaylistOnAllPlaylistsClick(object param) // the method that deletes the playlist
         {
             Playlist playlist = AllPlaylistsViewModel.AllPlaylistsController.GetPlaylist(PlaylistID); //Removes playlist with playlistID
             AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(playlist); //Removes playlist with playlistID
@@ -206,7 +205,7 @@ namespace Ritmo.ViewModels
             TryClose();
         }
 
-        public void OnOkayAddPlaylistClick(object param) // the method that adds a new playlist
+        public void AddNewPlaylistClick(object param) // the method that adds a new playlist
         { 
             if (TextInput == null)
             {
@@ -240,12 +239,12 @@ namespace Ritmo.ViewModels
             OkButtonWidth = 110;
             OkButtonHeight = 30;
 
-            homeViewModel = ViewModel;
+            HomeViewModel = ViewModel;
             Trackid = trackid;
-            OnOkayCommand = new RelayCommand<object>(OnAddPlaylistClick);
+            OnOkayCommand = new RelayCommand<object>(AddNewPlaylistWithTrackClick);
         }
 
-        public void OnAddPlaylistClick(object param) // the method that adds a new playlist
+        public void AddNewPlaylistWithTrackClick(object param) // the method that adds a new playlist with the song
         {
             if (TextInput == null)
             {
@@ -257,7 +256,7 @@ namespace Ritmo.ViewModels
             }
             else
             {
-                Track test = homeViewModel.GetTrackDB(Trackid);
+                Track test = HomeViewModel.GetTrackDB(Trackid);
                 Playlist playlist = new Playlist(TextInput) { TrackListID = GetLastID() };
                 AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(playlist); //Create playlist and add it to allplaylists
                 foreach (var _playlist in AllPlaylistsViewModel.AllPlaylistsController.AllPlaylists.Playlists)

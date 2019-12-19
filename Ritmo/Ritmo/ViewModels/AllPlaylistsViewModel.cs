@@ -98,18 +98,6 @@ namespace Ritmo.ViewModels
 
             Navigation.ToClickedViewModel(new PlaylistViewModel(MainWindow, playlist));
         }
-
-        private void TestMethod()
-        {
-            Playlist kaas = new Playlist("Kaas") { CreationDate = DateTime.Now, TrackListID = 0, TrackListDuration = 3 };
-            Playlist hamkaas = new Playlist("HamKaas") { CreationDate = DateTime.Now, TrackListID = 1, TrackListDuration = 6 };
-            Playlist dorito = new Playlist("Dorito") { CreationDate = DateTime.Now, TrackListID = 2, TrackListDuration = 4 };
-
-            AllPlaylistsController.AddTrackList(kaas);
-            AllPlaylistsController.AddTrackList(hamkaas);
-            AllPlaylistsController.AddTrackList(dorito);
-        }
-
         private void ReceiveMessage(string message)
         {
             SetAllPlaylistsCollection();

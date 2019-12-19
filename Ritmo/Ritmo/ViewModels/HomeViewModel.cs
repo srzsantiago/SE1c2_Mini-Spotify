@@ -17,12 +17,12 @@ namespace Ritmo.ViewModels
         MainWindowViewModel mainWindowViewModel;
         private int _clickedButtonValue;
 
-        private int _addtonewplaylistheight;
+        private int _addtonewplaylistbuttonheight;
 
-        public int AddToNewPlaylistHeight
+        public int AddToNewPlaylisButtontHeight
         {
-            get { return _addtonewplaylistheight; }
-            set { _addtonewplaylistheight = value; NotifyOfPropertyChange(); }
+            get { return _addtonewplaylistbuttonheight; }
+            set { _addtonewplaylistbuttonheight = value; NotifyOfPropertyChange(); }
         }
 
 
@@ -96,7 +96,7 @@ namespace Ritmo.ViewModels
         {
             //get the trackID of the track clicked, so it can be use in the listbox to identify which tracks is going to be add to the selected item
             _clickedButtonValue = (int)sender;
-            AddToNewPlaylistHeight = 30;
+            AddToNewPlaylisButtontHeight = 30;
             AllPlaylist.Clear();//clear the ObservableCollection of Playlists to avoid repeated playlists
 
             foreach (var item in mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists)
@@ -171,7 +171,7 @@ namespace Ritmo.ViewModels
         {
             IWindowManager windowManager = new WindowManager();
             windowManager.ShowDialog(new PopUpWindowViewModel(this, _clickedButtonValue));
-            AddToNewPlaylistHeight = 0;
+            AddToNewPlaylisButtontHeight = 0;
         }
 
         private void AddTrackToSelectedPlaylist()//This methode is called from the prop SelectedItem. It adds a track to a clicked playlist.
