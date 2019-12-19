@@ -49,7 +49,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Name="AddToNewPlaylist" Content="Add to new Playlist" Command="{Binding AddToNewPlaylisButtontHeight}" HorizontalAlignment="Left" Margin="70,214,0,0" Grid.Row="2" VerticalAlignment="Top" Width="137" Height="20" CommandParameter="{Binding TrackId}"/>
+        <Button Name="AddToNewPlaylist" Content="Add to new Playlist" Command="{Binding AddToNewPlaylistCommand}" HorizontalAlignment="Left" Margin="70,214,0,0" Grid.Row="2" VerticalAlignment="Top" Width="137" Height="20" CommandParameter="{Binding TrackId}"/>
     </Grid>
 
 
