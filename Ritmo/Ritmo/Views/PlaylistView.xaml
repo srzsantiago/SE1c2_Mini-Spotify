@@ -8,28 +8,28 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance ViewModels:PlaylistViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="GhostWhite">
+    <Grid Background="{StaticResource MainBlueColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="97"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Grid Background="LightSlateGray" Height="97" VerticalAlignment="Top">
+        <Grid Background="{StaticResource MainBlueColor}" Height="97" VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="68*"/>
                 <RowDefinition Height="29*"/>
             </Grid.RowDefinitions>
-            <Label Name="NamePlaylist" Content="{Binding PlaylistName}" HorizontalAlignment="Left" Width="172" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="24" Height="44" VerticalAlignment="Top"/>
+            <Label Name="NamePlaylist" Foreground="White" Content="{Binding PlaylistName}" HorizontalAlignment="Left" Width="172" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="24" Height="44" VerticalAlignment="Top"/>
             <StackPanel Grid.RowSpan="2" Margin="0,44,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Horizontal">
-                <Label Content="Duration:"  />
-                <Label Content="{Binding PlaylistDuration}"/>
+                <Label Content="Duration:" Foreground="White" />
+                <Label Content="{Binding PlaylistDuration}" Foreground="White"/>
             </StackPanel>
             <StackPanel Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Orientation="Horizontal">
-                <Label Content="Creation date: "/>
-                <Label Content="{Binding PlaylistCreationDate}"/>
+                <Label Content="Creation date: " Foreground="White"/>
+                <Label Content="{Binding PlaylistCreationDate}" Foreground="White"/>
             </StackPanel>
 
-            <ComboBox Height="33" Margin="0,54,55,0" VerticalAlignment="Top" Grid.RowSpan="2" HorizontalAlignment="Right" Width="145">
+            <ComboBox Height="33" Margin="0,54,55,0" VerticalAlignment="Top" Grid.RowSpan="2" HorizontalAlignment="Right" Width="145" >
                 <ComboBox.Background>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
                 </ComboBox.Background>
@@ -40,39 +40,37 @@
                 <Button  Name="DurationAsc" Command="{Binding AscendingSortCommand}" CommandParameter="Duration" Content="Duration ASC" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
                 <Button Name="DurationDesc" Command="{Binding DescendingSortCommand}" CommandParameter="Duration" Content="Duration DESC" Height="25" Width="135" Background="{x:Null}" BorderBrush="{x:Null}"/>
             </ComboBox>
-            <Button Name="ButtonMenu" Content="≡" Margin="0,49,10,0" Background="{x:Null}" FontSize="30" Height="46" VerticalAlignment="Top" HorizontalAlignment="Right" Width="30" Grid.RowSpan="2"/>
+            <Button Name="ButtonMenu" Content="≡" Margin="0,49,10,0" Foreground="white" FontSize="40" BorderBrush="{StaticResource MainBlueColor}" Background="{StaticResource MainBlueColor}" Height="46" VerticalAlignment="Top" HorizontalAlignment="Right" Width="30" Grid.RowSpan="2"/>
         </Grid>
 
-        <DockPanel LastChildFill="True" HorizontalAlignment="Left" Margin="177,5,0,0" VerticalAlignment="Top" Width="53" Height="44">
+        <DockPanel LastChildFill="True" HorizontalAlignment="Left" Margin="177,5,0,0" VerticalAlignment="Top" Width="53" Height="44" >
             <Menu DockPanel.Dock="Top" Width="auto">
-                <MenuItem Header="_≡" Width="53" Height="44">
+                <MenuItem Header="_≡" Width="53" Height="44" Foreground="white" FontSize="40" BorderBrush="{StaticResource MainBlueColor}" Background="{StaticResource MainBlueColor}">
                     <MenuItem Header="Change Name" Command="{Binding ChangeNameCommand}"/>
                     <MenuItem Header="Delete Playlist" Command="{Binding DeletePlaylistCommand}"/>
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <Grid Name="ItemGrid" Background="GhostWhite" Grid.Row="1" >
+        <Grid Name="ItemGrid" Background="{StaticResource MainBlueColor}" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="88*"/>
-                <ColumnDefinition Width="327*"/>
+                <ColumnDefinition Width="197*"/>
+                <ColumnDefinition Width="130*"/>
                 <ColumnDefinition Width="139*"/>
                 <ColumnDefinition Width="139*"/>
                 <ColumnDefinition Width="107*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" Content="DELETE" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="80" />
-            <Label Grid.Column="1" Content="SONG NAME" HorizontalAlignment="Left" Width="320" />
-            <Label Grid.Column="2" Content="ARTIST" HorizontalAlignment="Right" Width="139" />
-            <Label Grid.Column="3" Content="ALBUM"  HorizontalAlignment="Right" Width="139" />
-            <Label Grid.Column="4" Content="DURATION" HorizontalAlignment="Right" Width="100" />
-
-
-            <Border BorderBrush="Black" BorderThickness="1" Height="2" VerticalAlignment="Top" Grid.ColumnSpan="5" MinWidth="500"/>
+            <Label Grid.Column="0" Content="DELETE" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="80" Foreground="White"/>
+            <Label Grid.Column="1" Content="SONG NAME" HorizontalAlignment="Left" Width="320" Foreground="White" Grid.ColumnSpan="2" />
+            <Label Grid.Column="3" Content="ARTIST" HorizontalAlignment="Right" Width="139" Foreground="White" />
+            <Label Grid.Column="4" Content="ALBUM"  HorizontalAlignment="Right" Width="139" Foreground="White" />
+            <Label Grid.Column="5" Content="DURATION" HorizontalAlignment="Right" Width="100" Foreground="White" />
         </Grid>
-        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding PlayListTracksOC}" Grid.Row="2" Height="Auto">
+        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding PlayListTracksOC}" Grid.Row="2" Height="Auto" Margin="2" BorderBrush="Transparent" Background="{StaticResource MainBlueColor}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Background="{StaticResource SecondaryBlueColor}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80*"/>
                             <ColumnDefinition Width="355*"/>
@@ -80,11 +78,11 @@
                             <ColumnDefinition Width="150*"/>
                             <ColumnDefinition Width="100*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="Delete" Command="{Binding DataContext.DeleteTrackCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding TrackId}" Grid.Column="0"/>
-                        <Label Content="{Binding Name}" Grid.Column="1"/>
-                        <Label Content="{Binding Artist}" Grid.Column="2"/>
-                        <Label Content="{Binding Album}" Grid.Column="3"/>
-                        <Label Content="{Binding Duration}" Grid.Column="4"/>
+                        <Button Content=" X " Command="{Binding DataContext.DeleteTrackCommand,RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding TrackId}" Grid.Column="0" Foreground="White" Background="Transparent" BorderBrush="Transparent"/>
+                        <Label Content="{Binding Name}" Grid.Column="1" Foreground="White"/>
+                        <Label Content="{Binding Artist}" Grid.Column="2" Foreground="White"/>
+                        <Label Content="{Binding Album}" Grid.Column="3" Foreground="White"/>
+                        <Label Content="{Binding Duration}" Grid.Column="4" Foreground="White"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
