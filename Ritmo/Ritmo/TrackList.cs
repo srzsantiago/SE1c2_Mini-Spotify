@@ -11,6 +11,7 @@ namespace Ritmo
         public int TrackListDuration { get; set; } // get from database, dont know if we change to double or keep it a string
         public LinkedList<Track> Tracks { get; set; }
         public int TrackListID { get; set; }
+        public int OwnerID { get; set; }
 
         public TrackList()
         {

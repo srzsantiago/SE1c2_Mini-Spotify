@@ -14,9 +14,9 @@ namespace Ritmo
 
         public AllPlaylists AllPlaylists { get; set; }
 
-        public AllPlaylistsController()
+        public AllPlaylistsController(int userID)
         {
-            this.AllPlaylists = new AllPlaylists();
+            this.AllPlaylists = new AllPlaylists(userID);
         }
 
         public void AddTrackList(Playlist playlist) // adds a playlist to the playlist list.

@@ -14,17 +14,17 @@ namespace Ritmo
         public List<Playlist> Playlists
         { get; set; } // the list where all the playlists go into.
 
-        public AllPlaylists()
+        public AllPlaylists(int userID)
         {
             Playlists = new List<Playlist>();
-            GetPlaylists();
+            GetPlaylists(userID);
         }
-        public void GetPlaylists()
+        public void GetPlaylists(int userID)
         {
             String sqlquery = "";
             int count = 0;
             
-            sqlquery = "SELECT idPlaylist, name, creationDate FROM Playlist"; // the query that is going to get the info from the database
+            sqlquery = $"SELECT idPlaylist, name, creationDate FROM Playlist WHERE consumerID = {userID}"; // the query that is going to get the info from the database
             // Dictionary<string, object> = the string is the key (so [name] and [creationDate] the object is the value bound to the key)
             List<Dictionary<string, object>> playlistNames = Database.DatabaseConnector.SelectQueryDB(sqlquery); // executing the query
             int playlistid = 0;

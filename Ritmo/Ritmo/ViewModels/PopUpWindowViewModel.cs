@@ -161,7 +161,7 @@ namespace Ritmo.ViewModels
         }
 
         // gets called when you want to add a new playlist
-        public PopUpWindowViewModel(AllPlaylistsViewModel viewModel)
+        public PopUpWindowViewModel(AllPlaylistsViewModel viewModel, MainWindowViewModel mainWindow)
         {
             TextBoxHeight = 25;
             ButtonContent = "Add playlist";
@@ -170,6 +170,7 @@ namespace Ritmo.ViewModels
 
             OnOkayCommand = new RelayCommand<object>(OnOkayAddPlaylistClick);
             allPlaylistViewModel = viewModel;
+            MainWindow = mainWindow;
         }
 
         public void OnOkayDeleteClick(object param) // the method that deletes the playlist
@@ -202,7 +203,7 @@ namespace Ritmo.ViewModels
                 PopUpWarning = "Name can't be longer than 32 characters"; // warning appears when the name is 32 characters long
             } else
             {
-                AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(new Playlist(TextInput) { TrackListID = lastID }); //Create playlist and add it to all playlists
+                AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(new Playlist(TextInput) { TrackListID = lastID, OwnerID= MainWindow.User.User.ConsumerID }); //Create playlist and add it to all playlists
                 this.TryClose();
             }
         }

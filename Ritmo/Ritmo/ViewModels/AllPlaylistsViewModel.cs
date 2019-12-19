@@ -71,7 +71,7 @@ namespace Ritmo.ViewModels
         public void AddPlaylist(string name)
         {
             IWindowManager windowManager = new WindowManager();
-            windowManager.ShowDialog(new PopUpWindowViewModel(this));
+            windowManager.ShowDialog(new PopUpWindowViewModel(this, MainWindow));
             SetAllPlaylistsCollection();
         }
 
