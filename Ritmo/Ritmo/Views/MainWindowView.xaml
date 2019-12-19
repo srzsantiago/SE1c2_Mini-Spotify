@@ -158,7 +158,7 @@
                 <Label x:Name="SongName" Content="{Binding SongName}" HorizontalAlignment="Left" Margin="85,10,0,0" VerticalAlignment="Top" Width="115"/>
                 <Label x:Name="ArtistName" Content="{Binding ArtistName}" HorizontalAlignment="Left" Margin="85,41,0,0" VerticalAlignment="Top" Width="115"/>
             </Grid>
-
+             <!-- Slider + labels -->
             <Grid Grid.Row="2"  Width="532" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="67,5,223,0" Height="40" Grid.Column="1">
                 <Label Content="{Binding  LabelCurrentTrackTime}" HorizontalAlignment="Left" Height="31" VerticalAlignment="Bottom" Width="40" Margin="26,0,0,-1"/>
                 <Slider x:Name="TrackTimeSlider" Value="{Binding CurrentTrackTime}" Minimum="0" Maximum="{Binding TotalTrackTime}" HorizontalAlignment="Center" Height="20" VerticalAlignment="Top" Width="388" IsSnapToTickEnabled="true" TickFrequency="1" IsMoveToPointEnabled="True" Margin="72,10,72,0">
