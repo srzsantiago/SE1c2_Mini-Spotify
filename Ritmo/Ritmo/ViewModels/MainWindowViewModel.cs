@@ -183,9 +183,9 @@ namespace Ritmo.ViewModels
 
         #endregion
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(Login loggedinUser)
         {
-            //User = loggedinUser;
+            User = loggedinUser;
 
             PlayQueue = PlayQueueController.PQ;
             AllPlaylistsController = new AllPlaylistsController(User.User.ConsumerID);

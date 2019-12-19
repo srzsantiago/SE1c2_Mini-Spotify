@@ -77,7 +77,7 @@ namespace Ritmo.ViewModels
             if (LoginAttempt.isLoggedin == true)//Authentication is succesful.
             {
                 LoginMessage = "Success";
-                //Manager.ShowWindow(new MainWindowViewModel(LoginAttempt));
+                Manager.ShowWindow(new MainWindowViewModel(LoginAttempt));
                 LoginView.Close();
             }
             else
