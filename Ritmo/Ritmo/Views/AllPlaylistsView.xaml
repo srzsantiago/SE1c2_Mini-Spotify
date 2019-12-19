@@ -28,7 +28,7 @@
         </Style>
     </UserControl.Resources>
 
-    
+
     <!--Main Grid-->
     <Grid Background="{StaticResource MainBlueColor}" Name="MainGrid">
         <!--Top bar-->
@@ -36,7 +36,7 @@
             <Label HorizontalAlignment="Left" Width="172" Foreground="White" Content="My Playlists" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="27" Height="44" VerticalAlignment="Top"/>
 
             <!--Playlists menu-->
-            <Button Width="50" Height="50" HorizontalAlignment="Right" Margin="20, 0" Command="{Binding AddPlaylistCommand}" Background="{StaticResource SecondaryBlueColor}"/>
+            <Button Width="88" HorizontalAlignment="Right" Margin="0,10,10,10" Command="{Binding AddPlaylistCommand}" Background="{StaticResource SecondaryBlueColor}" BorderBrush="Transparent" Content="+ New Playlist" Foreground="White"/>
         </Grid>
 
         <!--Playlist grid-->
