@@ -195,8 +195,9 @@
             <MediaElement x:Name="WaitingListToQueueTrackElement" HorizontalAlignment="Left" Height="35" Margin="545,10,0,0" VerticalAlignment="Top" Width="42" Grid.Column="1" Grid.Row="3"/>
             <ContentControl Content="{Binding CurrentTrackElement}" Margin="326,11,481,60" Grid.Column="1" Grid.Row="1"/>
 
-            <Grid Background="LightGray" HorizontalAlignment="Right" Height="71" Margin="0,0,5.6,4.4" VerticalAlignment="Bottom" Width="162" Grid.Column="1" Grid.Row="2">
-                <TextBlock FontFamily="Aldhabi" FontSize="23" VerticalAlignment="Top" Margin="62,7,24,0" HorizontalAlignment="center" Width="76" Height="31"><Run Text="Volume" /></TextBlock>
+
+            <Grid Background="#383838" HorizontalAlignment="Right" Height="71" Margin="0,0,5.6,4.4" VerticalAlignment="Bottom" Width="162" Grid.Column="1" Grid.Row="2">
+                <TextBlock Foreground="White" FontFamily="Aldhabi" FontSize="23" VerticalAlignment="Top" Margin="62,7,24,0" HorizontalAlignment="center" Width="76" Height="31"><Run Text="Volume" /></TextBlock>
                 <Button Background="Transparent" Command="{Binding MuteTrackCommand}" RenderTransformOrigin="0.56,-0.947" Margin="22,3,109,35" BorderBrush="{x:Null}">
                     <Image x:Name="MuteButtonIcon" Source="{Binding MuteButtonIcon}" />
                 </Button>
