@@ -18,8 +18,6 @@ namespace Ritmo.ViewModels
 
         #region ViewModel attributes
         private Screen _currentViewModel;
-        private Screen LoginViewModel { get; set; } = new LoginViewModel();
-        private Screen ArtistViewModel { get; set; } = new ArtistRegisterViewModel();
         public Screen CurrentViewModel
         {
             get { return _currentViewModel; }
@@ -29,9 +27,9 @@ namespace Ritmo.ViewModels
                 NotifyOfPropertyChange();
             }
         }
-        public void ChangeViewModel(Screen ViewModel)
+        public void ChangeViewModel(Screen viewModel)
         {
-            CurrentViewModel = ViewModel;
+            CurrentViewModel = viewModel;
         }
         #endregion
 
@@ -155,7 +153,7 @@ namespace Ritmo.ViewModels
             return passwordBox.Password == confirmPasswordBox.Password;
         }
 
-        bool IsValidEmail(string email)//check the email format
+        private bool IsValidEmail(string email)//check the email format
         {
             try
             {
