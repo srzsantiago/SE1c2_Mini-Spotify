@@ -33,8 +33,9 @@ namespace Ritmo
 
         public void RemoveTrack(Track track) // removes a track from the playlist.
         {
-                Playlist.Tracks.Remove(track);
-            
+            string sql = $"DELETE FROM Track_has_Playlist WHERE trackID = {track.TrackId}"; // the sql query
+            Database.DatabaseConnector.DeleteQueryDB(sql);
+            Playlist.Tracks.Remove(track);
         }
 
         public void SetName(string name) // changes the name of the playlist

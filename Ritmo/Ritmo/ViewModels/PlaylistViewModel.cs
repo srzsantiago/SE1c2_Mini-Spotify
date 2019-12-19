@@ -113,8 +113,38 @@ namespace Ritmo.ViewModels
         {
             PlayListTracksOC.Clear();
 
-            foreach (var track in PlaylistController.Playlist.Tracks)
-                PlayListTracksOC.Add(track);
+            int count = 0;
+            string sql = $"SELECT idTrack, title, duration FROM Track WHERE idTrack IN (SELECT trackID FROM Track_has_Playlist WHERE playlistID = {PlaylistController.Playlist.TrackListID})";
+            List<Dictionary<string, object>> tracks = Database.DatabaseConnector.SelectQueryDB(sql);
+
+            int trackid = 0;
+            string name = "";
+            int duration = 0;
+
+            foreach (var dictionary in tracks)
+            {
+                foreach (var key in dictionary)
+                {
+                    if(key.Key.Equals("idTrack"))
+                    {
+                        trackid = (int)key.Value;
+                        count++;
+                    }
+                    else if(key.Key.Equals("title"))
+                    {
+                        name = (string)key.Value;
+                        count++;
+                    } else if(key.Key.Equals("duration"))
+                    {
+                        duration = (int)key.Value;
+                        count++;
+                    }
+                }
+                if(count % 3 == 0)
+                {
+                    PlayListTracksOC.Add(new Track() { TrackId = trackid , Name = name, Duration = duration });
+                }
+            }
         }
 
         private void ChangeNameClick(object sender) //Change the name of the playlist
@@ -154,14 +184,15 @@ namespace Ritmo.ViewModels
         public void DeleteTrackClick(object sender)
         {
             int index = (int)sender; //get the ID of the track to be deleted
-            int count = PlaylistController.Playlist.Tracks.Count;
+            //int count = PlaylistController.Playlist.Tracks.Count;
+            int count = PlayListTracksOC.Count;
             for (int i = 0; i < count; i++)
             {
-                if (PlaylistController.Playlist.Tracks.ElementAt(i).TrackId == index)//compare the index to all ID in the playlist collection
+                if (PlayListTracksOC.ElementAt(i).TrackId == index)//compare the index to all ID in the playlist collection
                 {
-                    Track track = PlaylistController.Playlist.Tracks.ElementAt(i);
-                    PlaylistController.RemoveTrack(track);
-                    LoadElements();
+                    Track track = PlayListTracksOC.ElementAt(i);
+                    PlaylistController.RemoveTrack(track); // removes the track out of the database
+                    LoadElements(); // refreshes the GUI
                     break;
                 }
             }

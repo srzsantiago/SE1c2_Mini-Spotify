@@ -28,7 +28,7 @@
                  HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Width="275" TextAlignment="Right" VerticalContentAlignment="Center" Focusable="True" />
 
             <Button Command="{Binding OnOkayCommand}"  Content="{Binding ButtonContent}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" FontSize="16" 
-                Width="auto" Height="auto" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,62,0" Style="{StaticResource PopUpWindowStyle}" Foreground="White" IsDefault="True"/>
+                Width="{Binding OkButtonWidth}" Height="{Binding OkButtonHeight}" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,62,0" Style="{StaticResource PopUpWindowStyle}" Foreground="White" IsDefault="True"/>
 
             <Button Content="Cancel" Click="Button_Click" Style="{StaticResource PopUpWindowStyle}" Foreground="White"
                 Height="auto" Width="auto" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="3" FontSize="16"/>

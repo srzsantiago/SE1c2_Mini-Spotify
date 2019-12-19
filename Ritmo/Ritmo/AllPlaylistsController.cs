@@ -25,18 +25,6 @@ namespace Ritmo
             playlist.AddplaylistQuery();
         }
 
-        public bool IsPlaylistEmpty(int playlistid)
-        {
-            string sql = $"SELECT idTrack FROM Track WHERE idTrack IN (SELECT trackID FROM Track_has_Playlist WHERE playlistID = {playlistid})";
-
-            List<Dictionary<string, object>> idlist = DatabaseConnector.SelectQueryDB(sql);
-
-            if (idlist.Count == 0)
-                return true;
-            else
-                return false;
-        }
-
         public void RemovePlaylist(Playlist playlist) // removes a playlist from the playlist list
         {
             string sqlquery;
@@ -58,6 +46,21 @@ namespace Ritmo
                 throw new Exception("This playlist does not exists.");
         }
 
+        public bool IsPlaylistEmpty(int playlistid)
+        {
+            string sql = $"SELECT idTrack FROM Track WHERE idTrack IN (SELECT trackID FROM Track_has_Playlist WHERE playlistID = {playlistid})";
+
+            List<Dictionary<string, object>> idlist = Database.DatabaseConnector.SelectQueryDB(sql);
+
+            if(idlist.Count == 0)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
         public Playlist GetPlaylist(int playlistID)
         {
             List<Playlist> playlists = AllPlaylists.Playlists;
@@ -66,20 +69,6 @@ namespace Ritmo
                                where (p.TrackListID == playlistID)
                                select p).Single();
             return Result;
-        }
-
-        public bool IsDupliaceName(string name)
-        {
-            //Find name
-            try
-            {
-                bool nameExists = AllPlaylists.Playlists.Find(x => x.Name.Equals(name)).Name.Equals(name);
-                return nameExists;
-            }
-            catch //Catch no name found
-            {
-                return false;
-            }
         }
     }
 }
