@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
 
-        <ListBox BorderBrush="Transparent" ItemsSource='{Binding AllTestTrack }' Background="{StaticResource LightBlue}" Grid.Column="2" Grid.Row="2" Width="250" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <ListBox BorderBrush="Transparent" ItemsSource='{Binding AllTestTrack }' Background="{StaticResource LightBlue}" Grid.Row="2" Width="370" Height="361" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Grid.ColumnSpan="3">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -42,14 +42,14 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox BorderBrush="Transparent" Background="{StaticResource LightBlue}" ItemsSource="{Binding AllPlaylist}" SelectedItem="{Binding SelectedItem}"  Grid.Column="0" HorizontalAlignment="Left" Height="136" Grid.Row="2" VerticalAlignment="Top" Width="307">
+        <ListBox BorderBrush="Transparent" Background="{StaticResource LightBlue}" ItemsSource="{Binding AllPlaylist}" SelectedItem="{Binding SelectedItem}"  Grid.Column="2" HorizontalAlignment="Left" Height="{Binding PlaylistListHeight}" Grid.Row="2" VerticalAlignment="Top" Width="307" Margin="121,5,0,0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Label Content="{Binding Name}" Background="{StaticResource SecondaryBlueColor}" Padding="5"></Label>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button BorderBrush="Transparent" Background="{StaticResource SecondaryBlueColor}" Foreground="White" Name="AddToNewPlaylist" Content="Add to new Playlist" Command="{Binding AddToNewPlaylistCommand}" HorizontalAlignment="Left" Margin="170,141,0,0" Grid.Row="2" VerticalAlignment="Top" Width="137" Height="{Binding AddToNewPlaylisButtontHeight}" CommandParameter="{Binding TrackId}"/>
+        <Button BorderBrush="Transparent" Background="{StaticResource SecondaryBlueColor}" Foreground="White" Name="AddToNewPlaylist" Content="Add to new Playlist" Command="{Binding AddToNewPlaylistCommand}" HorizontalAlignment="Left" Margin="121,346,0,0" Grid.Row="2" VerticalAlignment="Top" Width="137" Height="{Binding AddToNewPlaylisButtontHeight}" CommandParameter="{Binding TrackId}" Grid.Column="2"/>
     </Grid>
 
 
