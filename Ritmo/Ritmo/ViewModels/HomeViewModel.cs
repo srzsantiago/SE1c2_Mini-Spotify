@@ -25,6 +25,15 @@ namespace Ritmo.ViewModels
             set { _addtonewplaylistbuttonheight = value; NotifyOfPropertyChange(); }
         }
 
+        private int _playlistlistheight = 0;
+
+        public int PlaylistListHeight
+        {
+            get { return _playlistlistheight; }
+            set { _playlistlistheight = value; NotifyOfPropertyChange(); }
+        }
+
+
 
         #region observablecollections
         private ObservableCollection<Track> _allTestTrack;
@@ -98,6 +107,7 @@ namespace Ritmo.ViewModels
             //get the trackID of the track clicked, so it can be use in the listbox to identify which tracks is going to be add to the selected item
             _clickedButtonValue = (int)sender;
             AddToNewPlaylisButtontHeight = 30;
+            PlaylistListHeight = 300;
             AllPlaylist.Clear();//clear the ObservableCollection of Playlists to avoid repeated playlists
 
             foreach (var item in mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists)
@@ -173,6 +183,7 @@ namespace Ritmo.ViewModels
             IWindowManager windowManager = new WindowManager();
             windowManager.ShowDialog(new PopUpWindowViewModel(this, _clickedButtonValue, mainWindowViewModel));
             AddToNewPlaylisButtontHeight = 0;
+            PlaylistListHeight = 0;
         }
 
         private void AddTrackToSelectedPlaylist()//This methode is called from the prop SelectedItem. It adds a track to a clicked playlist.
@@ -218,6 +229,8 @@ namespace Ritmo.ViewModels
                 }
             }
             AllPlaylist.Clear();
+            PlaylistListHeight = 0;
+            AddToNewPlaylisButtontHeight = 0;
         }
 
         public void TestAllPlayLists()//test method to put all the tracks known in the database on the home page.
