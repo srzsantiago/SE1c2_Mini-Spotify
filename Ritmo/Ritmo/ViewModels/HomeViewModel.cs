@@ -17,7 +17,7 @@ namespace Ritmo.ViewModels
         MainWindowViewModel mainWindowViewModel;
         private int _clickedButtonValue;
 
-        private int _addtonewplaylistbuttonheight;
+        private int _addtonewplaylistbuttonheight = 0;
 
         public int AddToNewPlaylisButtontHeight
         {
