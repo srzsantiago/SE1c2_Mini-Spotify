@@ -11,26 +11,27 @@ namespace Ritmo.UnitTests
         [TestMethod]
         public void AddPlaylistToDB_CheckIfAdded_ReturnTrue() // not important
         {
-            //Arrange
-            Playlist playlist = new Playlist("playlist1");
-            AllPlaylists allplaylists = new AllPlaylists();
-            bool result = false;
+            //    //Arrange
+            //    Playlist playlist = new Playlist("playlist1");
+            //    AllPlaylists allplaylists = new AllPlaylists();
+            //    bool result = false;
 
-            string sqlquery = "SELECT name FROM Playlist";
-            List<Dictionary<string, object>> playlistNames = Database.DatabaseConnector.SelectQueryDB(sqlquery);
-            //Act
-            foreach (var collections in playlistNames)
-            {
-                foreach (var key in collections)
-                {
-                    if ((string)key.Value == playlist.Name)
-                    {
-                        result = true;
-                    }
-                }
-            }
-            //Assert
-            Assert.AreEqual(result, true); //Returns true
+            //    string sqlquery = "SELECT name FROM Playlist";
+            //    List<Dictionary<string, object>> playlistNames = Database.DatabaseConnector.SelectQueryDB(sqlquery);
+            //    //Act
+            //    foreach (var collections in playlistNames)
+            //    {
+            //        foreach (var key in collections)
+            //        {
+            //            if ((string)key.Value == playlist.Name)
+            //            {
+            //                result = true;
+            //            }
+            //        }
+            //    }
+            //    //Assert
+            //    Assert.AreEqual(result, true); //Returns true
+            //}
         }
 
     }

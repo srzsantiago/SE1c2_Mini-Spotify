@@ -8,109 +8,109 @@ namespace Ritmo.UnitTests
     [TestClass]
     public class AllPlaylistsControllerTest
     {
-        AllPlaylistsController AllPlaylistsController = new AllPlaylistsController();
+        //AllPlaylistsController AllPlaylistsController = new AllPlaylistsController();
 
-        //Method: AddTrackList(Playlist playlist) - Add playlist to list of all playlists, success scenario, returns true.
-        [TestMethod]
-        public void AddTrackList_SuccessScenario_ReturnsTrue()
-        {
-            //Arrange
-            bool result;
-            Playlist playlist = new Playlist("Name"); //Create new playlist with name: 'Name'
-            AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
-            //Act
-            allPlaylistsController.AddTrackList(playlist); //Add a playlist called 'Name'
-            result = allPlaylistsController.AllPlaylists.Playlists.Contains(playlist);
-            //Assert 
-            Assert.AreEqual(result, true); //Checks if the playlist 'Name' is added -> should be true
-        }
+        ////Method: AddTrackList(Playlist playlist) - Add playlist to list of all playlists, success scenario, returns true.
+        //[TestMethod]
+        //public void AddTrackList_SuccessScenario_ReturnsTrue()
+        //{
+        //    //Arrange
+        //    bool result;
+        //    Playlist playlist = new Playlist("Name"); //Create new playlist with name: 'Name'
+        //    AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
+        //    //Act
+        //    allPlaylistsController.AddTrackList(playlist); //Add a playlist called 'Name'
+        //    result = allPlaylistsController.AllPlaylists.Playlists.Contains(playlist);
+        //    //Assert 
+        //    Assert.AreEqual(result, true); //Checks if the playlist 'Name' is added -> should be true
+        //}
 
-        //Method: AddTrackList(Playlist playlist) - Add playlist to list of all playlists, twice with same name, success scenario, returns true.
-        [TestMethod]
-        public void AddTrackListT_Twice_SuccessScenario_ReturnsTrue()
-        {
-            //Arrange
-            bool result;
-            Playlist playlist = new Playlist("Name");
-            Playlist playlist1 = new Playlist("Name");
-            AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
-            //Act
-            allPlaylistsController.AddTrackList(playlist); //Add a playlist called 'Name'
-            allPlaylistsController.AddTrackList(playlist1); //Add a second playlist called 'Name'
-            result = allPlaylistsController.AllPlaylists.Playlists.Contains(playlist) && allPlaylistsController.AllPlaylists.Playlists.Contains(playlist1);
-            //Assert
-            Assert.AreEqual(result, true); //Checks if the list of all playlists contains the playlists called 'Name' twice -> should be true.
-        }
+        ////Method: AddTrackList(Playlist playlist) - Add playlist to list of all playlists, twice with same name, success scenario, returns true.
+        //[TestMethod]
+        //public void AddTrackListT_Twice_SuccessScenario_ReturnsTrue()
+        //{
+        //    //Arrange
+        //    bool result;
+        //    Playlist playlist = new Playlist("Name");
+        //    Playlist playlist1 = new Playlist("Name");
+        //    AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
+        //    //Act
+        //    allPlaylistsController.AddTrackList(playlist); //Add a playlist called 'Name'
+        //    allPlaylistsController.AddTrackList(playlist1); //Add a second playlist called 'Name'
+        //    result = allPlaylistsController.AllPlaylists.Playlists.Contains(playlist) && allPlaylistsController.AllPlaylists.Playlists.Contains(playlist1);
+        //    //Assert
+        //    Assert.AreEqual(result, true); //Checks if the list of all playlists contains the playlists called 'Name' twice -> should be true.
+        //}
 
-        //Method: RemovePlaylist(Playlist playlist) - Remove playlist from list of all playlists, success scenario, returns true.
-        [TestMethod]
-        public void RemovePlaylist_SuccessScenario_ReturnsTrue()
-        {
-            //Arrange
-            bool result;
-            Playlist playlist = new Playlist("Name");
-            AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
-            //Act
-            allPlaylistsController.AddTrackList(playlist); //Add playlist called 'Name'
-            allPlaylistsController.RemovePlaylist(playlist); // Remove playlist called 'Name'
-            result = allPlaylistsController.AllPlaylists.Playlists.Contains(playlist);
-            //Assert
-            Assert.AreEqual(result, false); //Checks if the playlist called 'Name' exists -> returns false
-        }
+        ////Method: RemovePlaylist(Playlist playlist) - Remove playlist from list of all playlists, success scenario, returns true.
+        //[TestMethod]
+        //public void RemovePlaylist_SuccessScenario_ReturnsTrue()
+        //{
+        //    //Arrange
+        //    bool result;
+        //    Playlist playlist = new Playlist("Name");
+        //    AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
+        //    //Act
+        //    allPlaylistsController.AddTrackList(playlist); //Add playlist called 'Name'
+        //    allPlaylistsController.RemovePlaylist(playlist); // Remove playlist called 'Name'
+        //    result = allPlaylistsController.AllPlaylists.Playlists.Contains(playlist);
+        //    //Assert
+        //    Assert.AreEqual(result, false); //Checks if the playlist called 'Name' exists -> returns false
+        //}
 
-        //Method: RemovePlaylist(Playlist playlist) - Remove playlist from list of all playlists, playlist does not exist, returns exception.
-        [TestMethod]
-        [ExpectedException(typeof(Exception))]
-        public void RemovePlaylist_PlaylistDoesNotExists_ReturnsException()
-        {
-            //Arrange
-            Playlist playlist = new Playlist("Name");
-            AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
-            //Act / Assert
-            allPlaylistsController.RemovePlaylist(playlist); //Remove not excisisting playlist -> returns exception
-        }
+        ////Method: RemovePlaylist(Playlist playlist) - Remove playlist from list of all playlists, playlist does not exist, returns exception.
+        //[TestMethod]
+        //[ExpectedException(typeof(Exception))]
+        //public void RemovePlaylist_PlaylistDoesNotExists_ReturnsException()
+        //{
+        //    //Arrange
+        //    Playlist playlist = new Playlist("Name");
+        //    AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
+        //    //Act / Assert
+        //    allPlaylistsController.RemovePlaylist(playlist); //Remove not excisisting playlist -> returns exception
+        //}
 
-        [TestMethod]
-        public void GetPlaylist_GetPlaylist_ReturnsPlaylist()
-        {
-            //Arrange
-            Playlist TestPlaylist = new Playlist("TestPlaylist") { TrackListID = 1 };
-            AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
-            allPlaylistsController.AddTrackList(TestPlaylist);
+        //[TestMethod]
+        //public void GetPlaylist_GetPlaylist_ReturnsPlaylist()
+        //{
+        //    //Arrange
+        //    Playlist TestPlaylist = new Playlist("TestPlaylist") { TrackListID = 1 };
+        //    AllPlaylistsController allPlaylistsController = new AllPlaylistsController();
+        //    allPlaylistsController.AddTrackList(TestPlaylist);
 
-            //Act
-            Playlist ReturnedPlaylist = allPlaylistsController.GetPlaylist(1);
+        //    //Act
+        //    Playlist ReturnedPlaylist = allPlaylistsController.GetPlaylist(1);
 
-            //Assert
-            Assert.AreEqual(TestPlaylist, ReturnedPlaylist);
-        }
+        //    //Assert
+        //    Assert.AreEqual(TestPlaylist, ReturnedPlaylist);
+        //}
 
-        [TestMethod]
-        public void GetPlaylist_FromDatabase_ReturnsPlaylist()
-        {
-            //Arrange
-            AllPlaylistsController.AddTrackList(new Playlist("playlist1")); //Create playlist and add it to all playlists
+        //[TestMethod]
+        //public void GetPlaylist_FromDatabase_ReturnsPlaylist()
+        //{
+        //    //Arrange
+        //    AllPlaylistsController.AddTrackList(new Playlist("playlist1")); //Create playlist and add it to all playlists
 
-            bool result = false;
-            string sql = "SELECT * FROM Playlist";
-            //Act
-            List<Dictionary<string, object>> playlists = Database.DatabaseConnector.SelectQueryDB(sql);
+        //    bool result = false;
+        //    string sql = "SELECT * FROM Playlist";
+        //    //Act
+        //    List<Dictionary<string, object>> playlists = Database.DatabaseConnector.SelectQueryDB(sql);
 
-            foreach (var dictionary in playlists)
-            {
-                foreach (var key in dictionary)
-                {
-                    if(key.Key.Equals("name"))
-                    {
-                        if(key.Value.ToString() == "playlist1")
-                        {
-                            result = true;
-                        }
-                    }
-                }
-            }
-            //Assert
-            Assert.AreEqual(result, true);
-        }
+        //    foreach (var dictionary in playlists)
+        //    {
+        //        foreach (var key in dictionary)
+        //        {
+        //            if(key.Key.Equals("name"))
+        //            {
+        //                if(key.Value.ToString() == "playlist1")
+        //                {
+        //                    result = true;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    //Assert
+        //    Assert.AreEqual(result, true);
+        //}
     }
 }
