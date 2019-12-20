@@ -31,9 +31,9 @@ namespace Ritmo.UnitTests
 
         [TestMethod]
         public void ToViewModel_ChangeViewModel_ViewModelChanged()
-        {   
+        {
             //Act
-            Navigation.ToViewModel(_allPlaylistViewModel); 
+            Navigation.ToViewModel(_allPlaylistViewModel);
             //Assert
             Assert.IsTrue(Navigation.CurrentViewModel is AllPlaylistsViewModel);
         }
@@ -46,7 +46,7 @@ namespace Ritmo.UnitTests
             //CurrentViewModel will be _followingViewModel
             Navigation.ToViewModel(_myQueueViewModel);
             Navigation.ToViewModel(_followingViewModel);
-            
+
             //Act
             //Go back one viewmodel
             Navigation.ToPreviousViewModel();
@@ -140,61 +140,5 @@ namespace Ritmo.UnitTests
             Assert.IsTrue(Navigation.CurrentViewModel is HomeViewModel);
         }
 
-        [TestMethod]
-        public void RemovePlaylistViewModel_RemovePlaylistFromPreviousStackWithPlaylistViewModelAsPreviousViewModel_PlaylistViewModelIsRemovedAndInaccesibleAndCurrentViewModelIsPreviousViewModel()
-        {
-            //Arrange
-            //Go to playlist viewmodel, then go to another viewmodel
-            Playlist testPlaylist = new Playlist("Test") { TrackListID = 1 };
-            Navigation.ToViewModel(new PlaylistViewModel(testPlaylist));
-            Navigation.ToViewModel(_myQueueViewModel);
-
-            //Act
-            Navigation.RemovePlaylistViewModel(1);
-            Navigation.ToPreviousViewModel();
-
-            //Assert
-            Assert.IsTrue(Navigation.CurrentViewModel is HomeViewModel);
-        }
-
-        [TestMethod]
-        public void RemovePlaylistViewModel_RemovePlaylistWithPlaylistViewModelAsCurrentViewModel_PlaylistViewModelRemovedAndInaccesibleAndCurrentViewModelIsPreviousViewModel()
-        {
-            //Arrange
-            //Go to playlist viewmodel
-            Playlist testPlaylist = new Playlist("Test") { TrackListID = 1 };
-            Navigation.ToViewModel(new PlaylistViewModel(testPlaylist));
-
-            //Act
-            Navigation.RemovePlaylistViewModel(1);
-
-            //Assert
-            Assert.IsTrue(Navigation.CurrentViewModel is HomeViewModel);
-        }
-
-        [TestMethod]
-        public void RemovePlaylistViewModel_RemoveEveryPlaylistViewModelsInStack_PlaylistViewModelsRemovedAndInaccesibleAndCurrentViewModelIsFirstViewModel()
-        {
-            //Arrange
-            //Go to playlist viewmodel, then another viewmodel and then open playlist viewmodel again. Repeat 3 times.
-            Playlist testPlaylist = new Playlist("Test") { TrackListID = 1 };
-            Navigation.ToViewModel(_allPlaylistViewModel);
-            for (int i = 0; i < 3; i++)
-            {
-                Navigation.ToViewModel(new PlaylistViewModel(testPlaylist));
-                
-            }
-
-            //Act
-            //Remove playlist from stacks and go to previous viewmodel 3 times
-            Navigation.RemovePlaylistViewModel(1);
-            for (int i = 0; i < 3; i++)
-            {
-                Navigation.ToPreviousViewModel();
-            }
-
-            //Assert
-            Assert.IsTrue(Navigation.CurrentViewModel is HomeViewModel);
-        }
     }
 }
