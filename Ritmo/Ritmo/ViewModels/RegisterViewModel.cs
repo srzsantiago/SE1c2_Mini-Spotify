@@ -126,7 +126,7 @@ namespace Ritmo.ViewModels
             {
                 Register registerAttempt = new Register(Name, Email, passwordBox.Password);
                 string message = registerAttempt.ToString();//get the registerAttempt message
-                if (message.Equals("This email already exists") || message.Equals("Password must be minimum 8 and maximum 20 characters"))
+                if (!message.Equals("Your account has been successfully created"))
                 {
                     ErrorColor = Brushes.LightYellow;
                     ErrorMessage = message;
