@@ -9,7 +9,7 @@ namespace Ritmo
 {
     public class Register
     {
-        public string Message;
+        private string Message;
 
         String sql;
         private bool mailexists = false;

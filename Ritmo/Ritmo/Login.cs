@@ -13,7 +13,7 @@ namespace Ritmo
         public Person User { get; set; }
         public bool isLoggedin = false;
         AccessLevel access { get; set; }
-        public AccessLevel accessdb = AccessLevel.user;
+        
         private string message = "";
 
 
