@@ -16,6 +16,7 @@ namespace Ritmo.ViewModels
     {
         public PlaylistController PlaylistController;
         public MainWindowViewModel MainWindow;
+        bool isLoaded = false;
 
         #region StringForLabels
         private static string _playlistName;
@@ -113,6 +114,8 @@ namespace Ritmo.ViewModels
         {
             PlayListTracksOC.Clear();
 
+            if (!isLoaded)
+            {
             int count = 0;
             string sql = $"SELECT idTrack, title, duration FROM Track WHERE idTrack IN (SELECT trackID FROM Track_has_Playlist WHERE playlistID = {PlaylistController.Playlist.TrackListID})";
             List<Dictionary<string, object>> tracks = Database.DatabaseConnector.SelectQueryDB(sql);
@@ -142,7 +145,23 @@ namespace Ritmo.ViewModels
                 }
                 if(count % 3 == 0)
                 {
-                    PlayListTracksOC.Add(new Track() { TrackId = trackid , Name = name, Duration = duration });
+                    Track track = new Track() { TrackId = trackid, Name = name, Duration = duration };
+                    PlayListTracksOC.Add(track);
+                    PlaylistController.Playlist.Tracks.AddLast(track);
+                }
+            }
+                isLoaded = true;
+            } else
+            {
+                //LinkedList<Track> trackCopy = new LinkedList<Track>();
+                //foreach (var item in PlaylistController.Playlist.Tracks)
+                //{
+                //    trackCopy.AddLast(item);
+                //}
+                //PlaylistController.Playlist.Tracks.Clear();
+                foreach (var item in PlaylistController.Playlist.Tracks)
+                {
+                    PlayListTracksOC.Add(item);
                 }
             }
         }
