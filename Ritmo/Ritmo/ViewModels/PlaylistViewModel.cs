@@ -147,7 +147,11 @@ namespace Ritmo.ViewModels
                 {
                     Track track = new Track() { TrackId = trackid, Name = name, Duration = duration };
                     PlayListTracksOC.Add(track);
-                    PlaylistController.Playlist.Tracks.AddLast(track);
+                    if(!PlaylistController.Playlist.Tracks.Any(item=> item.TrackId == track.TrackId))
+                    {
+                        PlaylistController.Playlist.Tracks.AddLast(track);
+                    }
+                    
                 }
             }
                 isLoaded = true;
@@ -161,7 +165,11 @@ namespace Ritmo.ViewModels
                 //PlaylistController.Playlist.Tracks.Clear();
                 foreach (var item in PlaylistController.Playlist.Tracks)
                 {
-                    PlayListTracksOC.Add(item);
+                    if (!PlayListTracksOC.Contains(item))
+                    {
+                        PlayListTracksOC.Add(item);
+                    }
+                    
                 }
             }
         }
