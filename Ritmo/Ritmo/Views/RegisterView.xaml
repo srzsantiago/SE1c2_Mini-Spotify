@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewmodels:RegisterViewModel, IsDesignTimeCreatable=True}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Ritmo" Height="450" Width="800">
     <Window.Resources>
         <local:ConverterParameter x:Name="ConverterParameter"  x:Key="Converter"/>
     </Window.Resources>
