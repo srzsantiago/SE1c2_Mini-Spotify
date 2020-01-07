@@ -16,7 +16,7 @@ namespace Ritmo.ViewModels
     {
         
         private MainWindowViewModel _mainWindowVM;
-        private int _count; //Used for general counting purposes
+        private int _count; //this count is used to give every item a ID
 
         #region commands
         public ICommand OuterClickCommand { get; set; }
