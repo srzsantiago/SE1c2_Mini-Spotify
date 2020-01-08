@@ -95,26 +95,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AccessLevel.cs" />
-    <Compile Include="Administrator.cs" />
-    <Compile Include="AllPlaylists.cs" />
-    <Compile Include="AllPlaylistsController.cs" />
-    <Compile Include="Artist.cs" />
+    <Compile Include="Models\AccessLevel.cs" />
+    <Compile Include="Models\Administrator.cs" />
+    <Compile Include="Models\AllPlaylists.cs" />
+    <Compile Include="Controllers\AllPlaylistsController.cs" />
+    <Compile Include="Models\Artist.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Navigation.cs" />
     <Compile Include="ConverterParameter.cs" />
     <Compile Include="Database\DatabaseConnector.cs" />
     <Compile Include="Database\QueryType.cs" />
     <Compile Include="Login.cs" />
-    <Compile Include="Person.cs" />
-    <Compile Include="Playlist.cs" />
-    <Compile Include="PlayListController.cs" />
-    <Compile Include="PlayQueueController.cs" />
-    <Compile Include="Search.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Playlist.cs" />
+    <Compile Include="Controllers\PlayListController.cs" />
+    <Compile Include="Controllers\PlayQueueController.cs" />
+    <Compile Include="Models\Search.cs" />
     <Compile Include="Register.cs" />
-    <Compile Include="Track.cs" />
-    <Compile Include="TrackList.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Models\Track.cs" />
+    <Compile Include="Models\TrackList.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="ViewModels\ArtistRegisterViewModel.cs" />
     <Compile Include="ViewModels\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\FollowingViewModel.cs" />
@@ -242,7 +242,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PlayQueue.cs" />
+    <Compile Include="Models\PlayQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -302,5 +302,6 @@
     <Content Include="TestFiles\RingtoneRoundabout.mp3" />
     <Content Include="TestFiles\RingtoneUnatco.mp3" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
