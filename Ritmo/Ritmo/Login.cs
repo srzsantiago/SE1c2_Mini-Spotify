@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Ritmo.Database;
+using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ritmo
 {
@@ -12,9 +11,9 @@ namespace Ritmo
     {
         public Person User { get; set; }
         public bool isLoggedin = false;
-        AccessLevel access { get; set; }
+        AccessLevel Access { get; set; }
         
-        private string message = "";
+        private string _message = "";
 
 
 
@@ -27,17 +26,17 @@ namespace Ritmo
 
                 //GET EMAILADRESSES FROM DATABASE
                 string sql = $"SELECT email FROM Person WHERE email = '{mail}'";
-                List<Dictionary<string, object>> Email = Database.DatabaseConnector.SelectQueryDB(sql);
+                List<Dictionary<string, object>> Email = DatabaseConnector.SelectQueryDB(sql);
 
                 if (Email.Count > 0)//if there is a match with the given email
                 {
 
                     //get the password and role for the given email from the databse
                     sql = $"SELECT password, role, idConsumer FROM Person p JOIN Consumer c ON p.personID=c.personID WHERE email = '{mail}'";
-                    List<Dictionary<string, object>> PasswordAndRole = Database.DatabaseConnector.SelectQueryDB(sql);
+                    List<Dictionary<string, object>> PasswordAndRole = DatabaseConnector.SelectQueryDB(sql);
                     string databasePassword = PasswordAndRole.ElementAt(0).ElementAt(0).Value.ToString();//set databasePassword
-                    int databaseRole = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(1).Value.ToString());//set databaseRole as a int
-                    int databaseConsumerID = Int32.Parse(PasswordAndRole.ElementAt(0).ElementAt(2).Value.ToString());
+                    int databaseRole = int.Parse(PasswordAndRole.ElementAt(0).ElementAt(1).Value.ToString());//set databaseRole as a int
+                    int databaseConsumerID = int.Parse(PasswordAndRole.ElementAt(0).ElementAt(2).Value.ToString());
 
                     if (!AuthenticateUser(mail, password, databasePassword))//check if the given password match the password from the database
                     {
@@ -48,17 +47,17 @@ namespace Ritmo
                         //create a user in the application with the correspondent AccessLevel/Role
                         if (databaseRole == 1)
                         {
-                            access = AccessLevel.user;
+                            Access = AccessLevel.user;
                             User = new User(isLoggedin, databaseConsumerID);
                         }
                         else if (databaseRole == 2)
                         {
-                            this.access = AccessLevel.artist;
+                            Access = AccessLevel.artist;
                             User = new Artist(isLoggedin, "naam moet uit db", "Producer moet uit db", databaseConsumerID);
                         }
                         else if (databaseRole == 3)
                         {
-                            this.access = AccessLevel.admin;
+                            Access = AccessLevel.admin;
                             User = new Administrator(isLoggedin, databaseConsumerID);
                         }
 
@@ -68,14 +67,14 @@ namespace Ritmo
                 else //the given email doesn't exist in our database
                 {
                     isLoggedin = false;
-                    message = "Username does not exist, register below!";
+                    _message = "Username does not exist, register below!";
                 }
             }
         }
 
         public override string ToString()
         {
-            return message; 
+            return _message; 
         }
 
         public bool AuthenticateUser(string username, string password, string databasePassword)
@@ -85,7 +84,7 @@ namespace Ritmo
             char[] delimiter = { ':' };//the databasePassword contains an ItarationNumber, and salt and a hash. These are separated by a :
             var split = databasePassword.Split(delimiter);//split the databasePassword
            
-            var iterations = Int32.Parse(split[0]); 
+            var iterations = int.Parse(split[0]); 
             var salt = Convert.FromBase64String(split[1]);
             var hash = split[2];
 

@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ritmo
 {
@@ -16,7 +14,7 @@ namespace Ritmo
 
         public AllPlaylistsController(int userID)
         {
-            this.AllPlaylists = new AllPlaylists(userID);
+            AllPlaylists = new AllPlaylists(userID);
         }
 
         public void AddTrackList(Playlist playlist) // adds a playlist to the playlist list.
@@ -29,6 +27,7 @@ namespace Ritmo
         {
             string sqlquery;
             string sqlquery2;
+
             if (AllPlaylists.Playlists.Contains(playlist)) // checks if the given playlist exists.
             {
                 if (!IsPlaylistEmpty(playlist.TrackListID))
@@ -50,12 +49,13 @@ namespace Ritmo
         {
             string sql = $"SELECT idTrack FROM Track WHERE idTrack IN (SELECT trackID FROM Track_has_Playlist WHERE playlistID = {playlistid})";
 
-            List<Dictionary<string, object>> idlist = Database.DatabaseConnector.SelectQueryDB(sql);
+            List<Dictionary<string, object>> idlist = DatabaseConnector.SelectQueryDB(sql);
 
-            if(idlist.Count == 0)
+            if (idlist.Count == 0)
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }
@@ -64,7 +64,7 @@ namespace Ritmo
         public Playlist GetPlaylist(int playlistID)
         {
             List<Playlist> playlists = AllPlaylists.Playlists;
-            
+
             Playlist Result = (from p in AllPlaylists.Playlists
                                where (p.TrackListID == playlistID)
                                select p).Single();

@@ -1,10 +1,7 @@
-﻿using UserControl = System.Windows.Controls.UserControl;
+﻿using System.Windows.Controls;
 
 namespace Ritmo.Views
 {
-    /// <summary>
-    /// Interaction logic for AllPlayListsView.xaml
-    /// </summary>
     public partial class AllPlayListsView : UserControl
     {
         public AllPlayListsView()

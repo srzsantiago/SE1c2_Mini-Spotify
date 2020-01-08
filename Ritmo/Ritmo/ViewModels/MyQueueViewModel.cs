@@ -1,20 +1,15 @@
 ﻿using Caliburn.Micro;
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Ritmo.ViewModels
 {
     public class MyQueueViewModel : Screen
     {
-        
+
         private MainWindowViewModel _mainWindowVM;
         private int _count; //this count is used to give every item a ID
 
@@ -34,7 +29,9 @@ namespace Ritmo.ViewModels
         public ObservableCollection<MyQueueItem> PlayingNowItems
         {
             get { return _playingNowItems; }
-            set { _playingNowItems = value;
+            set
+            {
+                _playingNowItems = value;
                 NotifyOfPropertyChange("PlayingNowItems");
             }
         }
@@ -42,7 +39,9 @@ namespace Ritmo.ViewModels
         public ObservableCollection<MyQueueItem> NextInQueueItems
         {
             get { return _nextInQueueItems; }
-            set { _nextInQueueItems = value;
+            set
+            {
+                _nextInQueueItems = value;
                 NotifyOfPropertyChange("NextInQueueItems");
             }
         }
@@ -50,7 +49,9 @@ namespace Ritmo.ViewModels
         public ObservableCollection<MyQueueItem> NextUpItems
         {
             get { return _nextUpItems; }
-            set { _nextUpItems = value;
+            set
+            {
+                _nextUpItems = value;
                 NotifyOfPropertyChange("NextUpItems");
             }
         }
@@ -168,9 +169,9 @@ namespace Ritmo.ViewModels
         //Handles the double click on a track outside of the play button in the queue
         private void OuterClick(Object sender)
         {
-            String item = (string)sender; //get ButtonID (this will be splited in two portions, Type and index)
+            string item = (string)sender; //get ButtonID (this will be splited in two portions, Type and index)
             string type;
-            int index= -1; //if at the end of the if statement it did not change. It means the type is "PlayingNow" and that an index is not needed
+            int index = -1; //if at the end of the if statement it did not change. It means the type is "PlayingNow" and that an index is not needed
 
             if (!item.Equals(""))//If item ButtonID is not empty.
             {
@@ -217,7 +218,7 @@ namespace Ritmo.ViewModels
         //Handles the click on the play button in the queue
         private void InnerClick(object sender)
         {
-            String item = (string)sender; //get ButtonID (this will be splited in two portions, Type and index)
+            string item = (string)sender; //get ButtonID (this will be splited in two portions, Type and index)
             string type;
             int index = -1; //if at the end of the if statement it did not change. It means the type is "PlayingNow" and that a index is not needed
 
@@ -225,7 +226,7 @@ namespace Ritmo.ViewModels
             {
                 string[] buttonId = item.Split(null);//split ButtonID
                 type = buttonId[0];
-                index = Int32.Parse(buttonId[1]);
+                index = int.Parse(buttonId[1]);
             }
             else//if item is blank it means it does not have a ID, so it is a playingNow type.
             {
@@ -264,7 +265,7 @@ namespace Ritmo.ViewModels
 
         private void AddToQueueClick(object sender)
         {
-            String item = (string)sender; //get ButtonID (this will be splited in two portions, Type and index)
+            string item = (string)sender; //get ButtonID (this will be splited in two portions, Type and index)
             string type;
             int index = -1; //if at the end of the if statement it did not change. It means the type is "PlayingNow" and that a index is not needed
 
@@ -272,7 +273,7 @@ namespace Ritmo.ViewModels
             {
                 string[] buttonId = item.Split(null);//split ButtonID
                 type = buttonId[0];
-                index = Int32.Parse(buttonId[1]);
+                index = int.Parse(buttonId[1]);
             }
             else//if item is blank it means it does not have a ID, so it is a playingNow type.
             {
@@ -281,7 +282,7 @@ namespace Ritmo.ViewModels
 
             Track playTrack = _mainWindowVM.PlayQueueController.PQ.TrackWaitingList.ElementAt(index);//gets the element at the given index
             _mainWindowVM.PlayQueueController.AddTrack(playTrack);
-            
+
             LoadElements();
         }
 
@@ -296,10 +297,10 @@ namespace Ritmo.ViewModels
 
     public class MyQueueItem//Helping Class for the Observable Collection
     {
-        public String ButtonID { get; set; } //composition of a type and an Index
-        public String Name { get; set; }
-        public String Artist { get; set; }
-        public String Album { get; set; }
+        public string ButtonID { get; set; } //composition of a type and an Index
+        public string Name { get; set; }
+        public string Artist { get; set; }
+        public string Album { get; set; }
         public int Duration { get; set; }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ritmo
 {
@@ -11,7 +8,7 @@ namespace Ritmo
 
         public enum RepeatModes { Off, TrackRepeat, TrackListRepeat }
 
-        public LinkedList<Track> TrackWaitingList{ get; set; }
+        public LinkedList<Track> TrackWaitingList { get; set; }
         public LinkedList<Track> OriginalTrackWaitingList { get; set; }
         public Queue<Track> TrackQueue { get; set; }
         public Track CurrentTrack { get; set; }
@@ -22,7 +19,7 @@ namespace Ritmo
         public bool TrackWaitingListEnded { get; set; }
         public bool IsPaused { get; set; } = true;
         public RepeatModes RepeatMode { get; set; }
-               
+
 
         public PlayQueue()
         {
@@ -37,6 +34,6 @@ namespace Ritmo
             return TrackQueue.Count > 0;
         }
 
-        
+
     }
 }

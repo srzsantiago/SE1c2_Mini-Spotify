@@ -1,6 +1,5 @@
 ﻿using Ritmo.Database;
 using System;
-using System.Collections.Generic;
 
 namespace Ritmo
 {
@@ -8,7 +7,7 @@ namespace Ritmo
     {
         public Playlist(string name) : base(name)
         {
-            CreationDate = DateTime.Now;//dit klop niet
+            CreationDate = DateTime.Now;
         }
 
         //Adds playlist to the database

@@ -1,7 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ritmo.ViewModels;
-using System;
-using System.Collections.Generic;
 
 namespace Ritmo.UnitTests
 {
@@ -19,7 +17,6 @@ namespace Ritmo.UnitTests
         {
             //Sets up HomeViewModel as CurrentViewModel to simulate application starting up
             Navigation.ChangeViewModel(_homeViewModel);
-
         }
 
         [TestCleanup]

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Shell;
 
 namespace Ritmo.Views
@@ -41,7 +42,7 @@ namespace Ritmo.Views
             WindowState = WindowState.Minimized;
         }
 
-        private void Title_Bar_Drag(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Title_Bar_Drag(object sender, MouseButtonEventArgs e)
         {
             DragMove();
         }

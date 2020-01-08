@@ -4,11 +4,6 @@ using GalaSoft.MvvmLight.Messaging;
 using Ritmo.Database;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Ritmo.ViewModels
@@ -25,31 +20,12 @@ namespace Ritmo.ViewModels
         #endregion
 
         #region Popupwindow Attributes
-        private AllPlaylistsViewModel _allplaylistviewModel;
         public PlaylistViewModel _playlistviewmodel;
-        private string _buttonContent;
-        private string _textMessage;
-        private int _textboxheight;
-        private string _textinput;
-        private int _playlistID;
         private string _popupwarning;
-        private string _title;
-        private int Trackid;
-        private int _okbuttonheight;
-        private int _okbuttonwidth;
 
-        public int OkButtonWidth
-        {
-            get { return _okbuttonwidth; }
-            set { _okbuttonwidth = value; }
-        }
+        public int OkButtonWidth { get; set; }
 
-        public int OkButtonHeight
-        {
-            get { return _okbuttonheight; }
-            set { _okbuttonheight = value; }
-        }
-
+        public int OkButtonHeight { get; set; }
 
         public string PopUpWarning
         {
@@ -64,45 +40,22 @@ namespace Ritmo.ViewModels
             }
         }
 
-        public string Title
-        {
-            get { return _title; }
-            set { _title = value; }
-        }
+        public string Title { get; set; }
 
-        public string TextInput
-        {
-            get { return _textinput; }
-            set { _textinput = value;}
-        }
+        public string TextInput { get; set; }
 
-        public int TextBoxHeight
-        {
-            get { return _textboxheight; }
-            set { _textboxheight = value; }
-        }
+        public int TextBoxHeight { get; set; }
 
-        public string ButtonContent
-        {
-            get { return _buttonContent; }
-            set { _buttonContent = value; }
-        }
+        public string ButtonContent { get; set; }
 
-        public string TextMessage
-        {
-            get { return _textMessage; }
-            set { _textMessage = value; }
-        }
+        public string TextMessage { get; set; }
 
-        public AllPlaylistsViewModel AllPlaylistViewModel
-        {
-            get { return _allplaylistviewModel; }
-            set { _allplaylistviewModel = value; }
-        }
+        public AllPlaylistsViewModel AllPlaylistViewModel { get; set; }
         public PlaylistViewModel PlayListViewModel { get { return _playlistviewmodel; } set { _playlistviewmodel = value; } }
 
-        HomeViewModel _homeviewmodel;
-        public HomeViewModel HomeViewModel { get { return _homeviewmodel; } set { _homeviewmodel = value; } }
+        public HomeViewModel HomeViewModel { get; set; }
+        public int PlaylistID { get; set; }
+        public int Trackid { get; set; }
         #endregion
 
         #region PlaylistViewModel constructors + click methods
@@ -118,7 +71,7 @@ namespace Ritmo.ViewModels
             OkButtonHeight = 35;
 
             PlayListViewModel = viewModel;
-            _playlistID = viewModel.PlaylistController.Playlist.TrackListID;
+            PlaylistID = viewModel.PlaylistController.Playlist.TrackListID;
             OnOkayCommand = new RelayCommand<object>(ChangePlaylistNameClick);
         }
 
@@ -131,7 +84,7 @@ namespace Ritmo.ViewModels
             PlayListViewModel = viewModel;
             Playlist = playlist;
             MainWindow = mainwindow;
-            _playlistID = viewModel.PlaylistController.Playlist.TrackListID;
+            PlaylistID = viewModel.PlaylistController.Playlist.TrackListID;
             OkButtonWidth = 140;
             OkButtonHeight = 30;
             OnOkayCommand = new RelayCommand<object>(DeleteThisPlaylistClick);
@@ -153,7 +106,7 @@ namespace Ritmo.ViewModels
             }
             else
             {
-                string sqlquery = $"UPDATE Playlist SET name = '{TextInput}' WHERE {_playlistID} = idPlaylist"; // also updates the database name
+                string sqlquery = $"UPDATE Playlist SET name = '{TextInput}' WHERE {PlaylistID} = idPlaylist"; // also updates the database name
                 DatabaseConnector.UpdateQueryDB(sqlquery);
                 PlayListViewModel.ChangeName(TextInput); // changes the name on the application
                 TryClose();
@@ -163,15 +116,15 @@ namespace Ritmo.ViewModels
         public void DeleteThisPlaylistClick(object param)
         {
             Navigation.ChangeViewModel(MainWindow.AllPlaylistsViewModel);
-            Navigation.RemovePlaylistViewModel(_playlistID); //Removes playlist from navigation
-            AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(Playlist); 
+            Navigation.RemovePlaylistViewModel(PlaylistID); //Removes playlist from navigation
+            AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(Playlist);
             TryClose();
         }
         #endregion
 
         #region AllPlaylistsViewModel constructors + click methods
         // gets called when you want to delete a playlist
-        public PopUpWindowViewModel(AllPlaylistsViewModel viewModel, int playlistID) 
+        public PopUpWindowViewModel(AllPlaylistsViewModel viewModel, int playlistID)
         {
             ButtonContent = "Delete playlist";
             TextMessage = "Are you sure you want to delete this playlist?";
@@ -181,7 +134,7 @@ namespace Ritmo.ViewModels
 
             AllPlaylistViewModel = viewModel;
             OnOkayCommand = new RelayCommand<object>(DeletePlaylistOnAllPlaylistsClick);
-            _playlistID = playlistID;
+            PlaylistID = playlistID;
         }
 
         // gets called when you want to add a new playlist
@@ -201,24 +154,26 @@ namespace Ritmo.ViewModels
 
         public void DeletePlaylistOnAllPlaylistsClick(object param) // the method that deletes the playlist
         {
-            Playlist playlist = AllPlaylistsViewModel.AllPlaylistsController.GetPlaylist(_playlistID); //Removes playlist with playlistID
+            Playlist playlist = AllPlaylistsViewModel.AllPlaylistsController.GetPlaylist(PlaylistID); //Removes playlist with playlistID
             AllPlaylistsViewModel.AllPlaylistsController.RemovePlaylist(playlist); //Removes playlist with playlistID
-            Navigation.RemovePlaylistViewModel(_playlistID); //Removes playlist from navigationd
+            Navigation.RemovePlaylistViewModel(PlaylistID); //Removes playlist from navigationd
             TryClose();
         }
 
         public void AddNewPlaylistClick(object param) // the method that adds a new playlist
-        { 
+        {
             if (TextInput == null)
             {
                 PopUpWarning = "Please insert a valid name"; // warning appears when the textbox was left empty
-            } else if(TextInput.Length >= 32)
+            }
+            else if (TextInput.Length >= 32)
             {
                 PopUpWarning = "Name can't be longer than 32 characters"; // warning appears when the name is 32 characters long
-            } else
+            }
+            else
             {
                 AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(new Playlist(TextInput) { TrackListID = GetLastID(), OwnerID = MainWindow.User.User.ConsumerID }); //Create playlist and add it to all playlists
-                this.TryClose();
+                TryClose();
             }
         }
         #endregion
@@ -264,15 +219,15 @@ namespace Ritmo.ViewModels
                 AllPlaylistsViewModel.AllPlaylistsController.AddTrackList(playlist); //Create playlist and add it to allplaylists
                 foreach (var _playlist in AllPlaylistsViewModel.AllPlaylistsController.AllPlaylists.Playlists)
                 {
-                    if(_playlist.TrackListID == playlist.TrackListID)
+                    if (_playlist.TrackListID == playlist.TrackListID)
                     {
                         string sql = $"INSERT INTO Track_has_Playlist VALUES ({test.TrackId}, {playlist.TrackListID} )"; // inserts the trackid and playlistid into the tabel
-                        Database.DatabaseConnector.InsertQueryDB(sql);
+                        DatabaseConnector.InsertQueryDB(sql);
                     }
                 }
                 string message = "done";
                 Messenger.Default.Send<string>(message);
-                this.TryClose();
+                TryClose();
             }
         }
 
@@ -285,7 +240,7 @@ namespace Ritmo.ViewModels
 
             int lastID = 0;
             string sqlquery = "SELECT IDENT_CURRENT('Playlist')"; // gets the last PK id from playlist
-            List<Dictionary<string, object>> result = Database.DatabaseConnector.SelectQueryDB(sqlquery); // executing the query
+            List<Dictionary<string, object>> result = DatabaseConnector.SelectQueryDB(sqlquery); // executing the query
 
             foreach (var item in result)
             {

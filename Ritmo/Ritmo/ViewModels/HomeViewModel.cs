@@ -1,19 +1,18 @@
 ﻿using Caliburn.Micro;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.VisualBasic;
+using Ritmo.Database;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Ritmo.ViewModels
 {
     public class HomeViewModel : Screen
     {
-        
+
         MainWindowViewModel mainWindowViewModel;
         private int _clickedButtonValue;
 
@@ -69,7 +68,7 @@ namespace Ritmo.ViewModels
 
         #region commands and selectedItem
         public ICommand LoadListboxPlaylistCommand { get; set; }
-        public ICommand AddToQueueCommand { get; set; }    
+        public ICommand AddToQueueCommand { get; set; }
         public ICommand AddToNewPlaylistCommand { get; set; }
 
         private Playlist _selectedItem; //this is used as a ActionListener for when user click on a item in the listbox of playlists.
@@ -82,8 +81,8 @@ namespace Ritmo.ViewModels
                     return;
 
                 _selectedItem = value;
-                NotifyOfPropertyChange();                
-                if(_selectedItem != null) 
+                NotifyOfPropertyChange();
+                if (_selectedItem != null)
                     AddTrackToSelectedPlaylist(); //Add the track to the selected item in the listbox (Selected item is a playlist)
                 _selectedItem = null;
             }
@@ -96,9 +95,9 @@ namespace Ritmo.ViewModels
         {
             this.mainWindowViewModel = mainWindowViewModel;
             AllPlaylist = new ObservableCollection<Playlist>();
-            LoadListboxPlaylistCommand = new RelayCommand<object>(this.LoadListboxPlaylist);
-            AddToQueueCommand = new RelayCommand<object>(this.AddToQueueClick);
-            AddToNewPlaylistCommand = new RelayCommand<object>(this.AddToNewPlaylistClick);
+            LoadListboxPlaylistCommand = new RelayCommand<object>(LoadListboxPlaylist);
+            AddToQueueCommand = new RelayCommand<object>(AddToQueueClick);
+            AddToNewPlaylistCommand = new RelayCommand<object>(AddToNewPlaylistClick);
             TestAllPlayLists();
 
         }
@@ -138,7 +137,7 @@ namespace Ritmo.ViewModels
             Track track = null;
             int count = 0;
             string sql = $"SELECT idTrack, title, path, duration FROM Track WHERE idTrack = {trackid}";
-            List<Dictionary<string, object>> tracks = Database.DatabaseConnector.SelectQueryDB(sql);
+            List<Dictionary<string, object>> tracks = DatabaseConnector.SelectQueryDB(sql);
 
             int id = 0;
             string title = "";
@@ -172,7 +171,7 @@ namespace Ritmo.ViewModels
                 }
                 if (count % 4 == 0)
                 {
-                    track = new Track() { TrackId = id, Name = title, Duration = duration, AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + path), Artist = "test", Album = "test"};
+                    track = new Track() { TrackId = id, Name = title, Duration = duration, AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + path), Artist = "test", Album = "test" };
                 }
             }
             return track;
@@ -201,13 +200,13 @@ namespace Ritmo.ViewModels
                             Track testTrack = item;
                             int playlistid = mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).TrackListID;
                             string selectsql = $"SELECT idTrack FROM Track WHERE idTrack IN (SELECT trackID FROM Track_has_Playlist WHERE playlistID = {playlistid})";
-                            List<Dictionary<string, object>> ids = Database.DatabaseConnector.SelectQueryDB(selectsql);
+                            List<Dictionary<string, object>> ids = DatabaseConnector.SelectQueryDB(selectsql);
 
                             foreach (var dictionary in ids)
                             {
                                 foreach (var key in dictionary)
                                 {
-                                    if((int)key.Value == testTrack.TrackId)
+                                    if ((int)key.Value == testTrack.TrackId)
                                     {
                                         contains = true;
                                     }
@@ -218,8 +217,9 @@ namespace Ritmo.ViewModels
                             {
                                 mainWindowViewModel.AllPlaylistsController.AllPlaylists.Playlists.ElementAt(i).Tracks.AddLast(testTrack);
                                 string sql = $"INSERT INTO Track_has_Playlist VALUES ({item.TrackId}, {SelectedItem.TrackListID} )";
-                                Database.DatabaseConnector.InsertQueryDB(sql);
-                            } else
+                                DatabaseConnector.InsertQueryDB(sql);
+                            }
+                            else
                             {
                                 IWindowManager windowManager = new WindowManager();
                                 windowManager.ShowDialog(new PopUpWindowViewModel(this));
@@ -237,7 +237,7 @@ namespace Ritmo.ViewModels
         {
             int count = 0;
             string sql = "SELECT idTrack, title, path, genre, date, duration FROM Track";
-            List<Dictionary<string, object>> tracks = Database.DatabaseConnector.SelectQueryDB(sql);
+            List<Dictionary<string, object>> tracks = DatabaseConnector.SelectQueryDB(sql);
 
             int id = 0;
             string title = "";
@@ -276,5 +276,5 @@ namespace Ritmo.ViewModels
             }
         }
     }
-   
+
 }

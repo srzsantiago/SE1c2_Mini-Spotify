@@ -4,27 +4,25 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Security.Authentication;
-using System.Text;
 
 namespace Ritmo.Database
 {
     public static class DatabaseConnector
     {
         //SSH connection and database connection attributes
-        private static SshClient sshClient = new SshClient("145.44.233.191", 22, "student", new PrivateKeyFile(new Uri(@"SSH\id_rsa", UriKind.RelativeOrAbsolute).ToString()));
-        private static SqlConnection dbConn;
+        private static SshClient _sshClient = new SshClient("145.44.233.191", 22, "student", new PrivateKeyFile(new Uri(@"SSH\id_rsa", UriKind.RelativeOrAbsolute).ToString()));
+        private static SqlConnection _dbConn;
 
         //Creates an SSH connection to the server
         public static void ConnectSSH()
         {
             try
             {
-                sshClient.Connect();
-                if (sshClient.IsConnected)
+                _sshClient.Connect();
+                if (_sshClient.IsConnected)
                 {
                     var portForwarded = new ForwardedPortLocal("127.0.0.1", 1433, "127.0.0.1", 1433);
-                    sshClient.AddForwardedPort(portForwarded);
+                    _sshClient.AddForwardedPort(portForwarded);
                     portForwarded.Start();
                     Console.WriteLine("Server reached.");
                 }
@@ -54,12 +52,12 @@ namespace Ritmo.Database
         //Sets up connection with Ritmo database
         public static SqlConnection ConnectDB()
         {
-            dbConn = new SqlConnection("SERVER=127.0.0.1;UID=SA;PASSWORD=IctSe1c_Groep2;DATABASE=Ritmo");
-            dbConn.Open();
-            if (dbConn.State == ConnectionState.Open)
+            _dbConn = new SqlConnection("SERVER=127.0.0.1;UID=SA;PASSWORD=IctSe1c_Groep2;DATABASE=Ritmo");
+            _dbConn.Open();
+            if (_dbConn.State == ConnectionState.Open)
             {
                 Console.WriteLine("Database connection succeeded.");
-                return dbConn;
+                return _dbConn;
             }
             else
             {
@@ -70,14 +68,14 @@ namespace Ritmo.Database
         //Disconnects the SSH connection to the server
         public static void DisconnectSSH()
         {
-            sshClient.Disconnect();
+            _sshClient.Disconnect();
         }
 
         //Disconnects the database connection
         public static void DisconnectDB()
         {
-            dbConn.Close();
-            if (dbConn.State == ConnectionState.Closed)
+            _dbConn.Close();
+            if (_dbConn.State == ConnectionState.Closed)
                 Console.WriteLine("Database connection ended.");
             else
                 throw new Exception("Closing database connection failed");
@@ -90,9 +88,9 @@ namespace Ritmo.Database
         {
             try
             {
-                if (dbConn == null || dbConn.State == ConnectionState.Closed)
+                if (_dbConn == null || _dbConn.State == ConnectionState.Closed)
                     ConnectDB();
-                using (SqlCommand QueryCommand = new SqlCommand(query, dbConn))
+                using (SqlCommand QueryCommand = new SqlCommand(query, _dbConn))
                 {
                     return QueryCommand.ExecuteReader();
                 }
@@ -226,7 +224,7 @@ namespace Ritmo.Database
 
         public static bool IsSSHConnected()
         {
-            return sshClient.IsConnected;
+            return _sshClient.IsConnected;
         }
     }
 }

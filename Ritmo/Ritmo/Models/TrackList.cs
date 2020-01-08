@@ -21,7 +21,7 @@ namespace Ritmo
         {
             Name = name;
             Tracks = new LinkedList<Track>();
-            
+
         }
 
         public void SortTrackList(LinkedList<Track> tracks, string sortOption, bool isAscending)
@@ -29,17 +29,18 @@ namespace Ritmo
             // Track has 3 properties: Name, Artist and Duration. you can give one of to the method as a string and it will sort based on that input.
             var propertyInfo = typeof(Track).GetProperty(sortOption);
             var ordered = isAscending ? tracks.OrderBy(x => propertyInfo.GetValue(x, null)) : tracks.OrderByDescending(x => propertyInfo.GetValue(x, null));
-            
+
             // goes through the ordered linkedlist, removes the items that were in the old one and adds the items from the ordered list named ordered
             foreach (var item in ordered)
             {
                 tracks.AddLast(item);
                 tracks.RemoveFirst();
-            }          
+            }
         }
 
         // testing the SortTrackList
-        public void TestSortTrackList()
+        public void 
+            SortTrackList()
         {
 
             // making tracks with a name, artist and duration in seconds
@@ -59,38 +60,38 @@ namespace Ritmo
             tracklist.AddTrack(track4);
             tracklist.AddTrack(track5);
 
-            System.Console.WriteLine("------------- de playlist voor het sorteren -------------");
+            Console.WriteLine("------------- de playlist voor het sorteren -------------");
 
             // goes through the playlist with tracks before its sorted
             foreach (var item in tracklist.Playlist.Tracks)
             {
-                System.Console.WriteLine(item.Name);
-                
+                Console.WriteLine(item.Name);
+
             }
 
             // calls the method to sort the tracklist
             SortTrackList(tracklist.Playlist.Tracks, "Name", true);
 
-            System.Console.WriteLine("------------- de playlist na het sorteren -------------");
+            Console.WriteLine("------------- de playlist na het sorteren -------------");
 
             // goes through the playlist with tracks after its sorted
             foreach (var item in tracklist.Playlist.Tracks)
             {
-                System.Console.WriteLine(item.Name);
+                Console.WriteLine(item.Name);
             }
 
-            System.Console.WriteLine("------------- de playlist na het sorteren van duration -------------");
+            Console.WriteLine("------------- de playlist na het sorteren van duration -------------");
 
             SortTrackList(tracklist.Playlist.Tracks, "Duration", true);
 
             // goes through the playlist with tracks after it sorted the duration. to test if it also works with another property
             foreach (var item in tracklist.Playlist.Tracks)
             {
-                System.Console.WriteLine(item.Duration);
+                Console.WriteLine(item.Duration);
             }
 
 
         }
     }
-    
-    }
+
+}

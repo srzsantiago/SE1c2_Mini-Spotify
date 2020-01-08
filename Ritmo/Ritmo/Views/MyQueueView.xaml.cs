@@ -4,9 +4,6 @@ using System.Windows.Controls;
 
 namespace Ritmo.Views
 {
-    /// <summary>
-    /// Interaction logic for MyQueueView.xaml
-    /// </summary>
     public partial class MyQueueView : UserControl
     {
         public MyQueueView()

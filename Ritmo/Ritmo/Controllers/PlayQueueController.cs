@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ritmo
 {
@@ -58,7 +56,7 @@ namespace Ritmo
                     catch//If there is no next track
                     {
                         PQ.TrackWaitingListEnded = true;
-                        PQ.IsPaused = true;
+                        PauseTrack();
                         PQ.CurrentTrack = PQ.TrackWaitingList.First.Value;
                         PQ.WaitingListToQueueTrack = PQ.CurrentTrack;
                     }
@@ -175,7 +173,7 @@ namespace Ritmo
                 
             // count the number of tracks that will be shuffled
             int size = currentlist.Count;
-            int cijfer;
+            int number;
 
             // list with random ints to create an random order of tracks
             List<int> randomIntegers = new List<int>();
@@ -183,21 +181,21 @@ namespace Ritmo
             // Generate as much random integers as the number of tracks that will be shuffled, no integer can be repeated
             for (int i = 1; i <= size; i++)
             {
-                cijfer = rand.Next(0, size);
+                number = rand.Next(0, size);
                 // check if random number is not already chosen 
-                if (!randomIntegers.Contains(cijfer))
+                if (!randomIntegers.Contains(number))
                 {
                 // add unique random number to List
-                randomIntegers.Add(cijfer);
+                randomIntegers.Add(number);
                 }
                 else
                 {
                     // generate new random numbers as long as the number already exists
-                    while (randomIntegers.Contains(cijfer))
+                    while (randomIntegers.Contains(number))
                     {
-                        cijfer = rand.Next(0, size);
+                        number = rand.Next(0, size);
                     }
-                randomIntegers.Add(cijfer);
+                randomIntegers.Add(number);
                 }
             }
             // Add tracks from current list with random ElementAt to the randomtracks list. This wil create an random order
@@ -227,7 +225,7 @@ namespace Ritmo
             PQ.CurrentVolume = volume;
         }
 
-        public void SetMute()  //Turn the Mutemode on en off.
+        public void SetMute()  //Turn the Mutemode on or off.
         {
             PQ.IsMute = !PQ.IsMute;
         }

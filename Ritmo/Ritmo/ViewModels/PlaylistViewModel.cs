@@ -1,13 +1,9 @@
 ﻿using Caliburn.Micro;
 using GalaSoft.MvvmLight.Command;
-using System;
+using Ritmo.Database;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Ritmo.ViewModels
@@ -20,32 +16,20 @@ namespace Ritmo.ViewModels
 
         #region StringForLabels
         private static string _playlistName;
-        private string _playlistCreationDate;
-        private string _playlistDuration;
 
         public string PlaylistName
         {
             get { return _playlistName; }
-            set { _playlistName = value;
+            set
+            {
+                _playlistName = value;
                 NotifyOfPropertyChange();
             }
         }
 
+        public string PlaylistDuration { get; set; }
 
-        public string PlaylistDuration
-        {
-            get { return _playlistDuration; }
-            set { _playlistDuration = value; }
-        }
-
-
-        public string PlaylistCreationDate
-        {
-            get { return _playlistCreationDate; }
-            set { _playlistCreationDate = value; }
-        }
-
-
+        public string PlaylistCreationDate { get; set; }
         #endregion
 
         #region ObservableCollections
@@ -57,15 +41,15 @@ namespace Ritmo.ViewModels
             {
                 return _playListTracksOC;
             }
-            set 
-            { 
+            set
+            {
                 _playListTracksOC = value;
                 NotifyOfPropertyChange();
             }
         }
         #endregion
 
-        #region Command
+        #region Commands
 
         public ICommand DeletePlaylistCommand { get; set; }
 
@@ -74,11 +58,11 @@ namespace Ritmo.ViewModels
         public ICommand AscendingSortCommand { get; set; }
 
         public ICommand DescendingSortCommand { get; set; }
-        
+
         public ICommand DeleteTrackCommand { get; set; }
         #endregion
 
-        public PlaylistViewModel(){ }
+        public PlaylistViewModel() { }
 
         public PlaylistViewModel(Playlist playlist)
         {
@@ -90,7 +74,7 @@ namespace Ritmo.ViewModels
             InitializeCommands();
         }
 
-        public PlaylistViewModel(MainWindowViewModel mainWindow ,Playlist playlist) : this(playlist)
+        public PlaylistViewModel(MainWindowViewModel mainWindow, Playlist playlist) : this(playlist)
         {
             MainWindow = mainWindow;
         }
@@ -116,60 +100,56 @@ namespace Ritmo.ViewModels
 
             if (!isLoaded)
             {
-            int count = 0;
-            string sql = $"SELECT idTrack, title, duration FROM Track WHERE idTrack IN (SELECT trackID FROM Track_has_Playlist WHERE playlistID = {PlaylistController.Playlist.TrackListID})";
-            List<Dictionary<string, object>> tracks = Database.DatabaseConnector.SelectQueryDB(sql);
+                int count = 0;
+                string sql = $"SELECT idTrack, title, duration FROM Track WHERE idTrack IN (SELECT trackID FROM Track_has_Playlist WHERE playlistID = {PlaylistController.Playlist.TrackListID})";
+                List<Dictionary<string, object>> tracks = DatabaseConnector.SelectQueryDB(sql);
 
-            int trackid = 0;
-            string name = "";
-            int duration = 0;
+                int trackid = 0;
+                string name = "";
+                int duration = 0;
 
-            foreach (var dictionary in tracks)
-            {
-                foreach (var key in dictionary)
+                foreach (var dictionary in tracks)
                 {
-                    if(key.Key.Equals("idTrack"))
+                    foreach (var key in dictionary)
                     {
-                        trackid = (int)key.Value;
-                        count++;
+                        if (key.Key.Equals("idTrack"))
+                        {
+                            trackid = (int)key.Value;
+                            count++;
+                        }
+                        else if (key.Key.Equals("title"))
+                        {
+                            name = (string)key.Value;
+                            count++;
+                        }
+                        else if (key.Key.Equals("duration"))
+                        {
+                            duration = (int)key.Value;
+                            count++;
+                        }
                     }
-                    else if(key.Key.Equals("title"))
+                    if (count % 3 == 0)
                     {
-                        name = (string)key.Value;
-                        count++;
-                    } else if(key.Key.Equals("duration"))
-                    {
-                        duration = (int)key.Value;
-                        count++;
+                        Track track = new Track() { TrackId = trackid, Name = name, Duration = duration };
+                        PlayListTracksOC.Add(track);
+                        if (!PlaylistController.Playlist.Tracks.Any(item => item.TrackId == track.TrackId))
+                        {
+                            PlaylistController.Playlist.Tracks.AddLast(track);
+                        }
+
                     }
                 }
-                if(count % 3 == 0)
-                {
-                    Track track = new Track() { TrackId = trackid, Name = name, Duration = duration };
-                    PlayListTracksOC.Add(track);
-                    if(!PlaylistController.Playlist.Tracks.Any(item=> item.TrackId == track.TrackId))
-                    {
-                        PlaylistController.Playlist.Tracks.AddLast(track);
-                    }
-                    
-                }
-            }
                 isLoaded = true;
-            } else
+            }
+            else
             {
-                //LinkedList<Track> trackCopy = new LinkedList<Track>();
-                //foreach (var item in PlaylistController.Playlist.Tracks)
-                //{
-                //    trackCopy.AddLast(item);
-                //}
-                //PlaylistController.Playlist.Tracks.Clear();
                 foreach (var item in PlaylistController.Playlist.Tracks)
                 {
                     if (!PlayListTracksOC.Contains(item))
                     {
                         PlayListTracksOC.Add(item);
                     }
-                    
+
                 }
             }
         }
@@ -190,13 +170,13 @@ namespace Ritmo.ViewModels
         public void DeletePlaylistClick(object sender)
         {
             IWindowManager windowManager = new WindowManager();
-            windowManager.ShowDialog(new PopUpWindowViewModel(this, this.PlaylistController.Playlist, MainWindow));
+            windowManager.ShowDialog(new PopUpWindowViewModel(this, PlaylistController.Playlist, MainWindow));
             NotifyOfPropertyChange();
         }
 
         private void AscendingSortClick(object sender)//order playlist Ascending by <sender> as (string) column name
         {
-            string orderBy = (string) sender;
+            string orderBy = (string)sender;
             PlaylistController.Playlist.SortTrackList(PlaylistController.Playlist.Tracks, orderBy, true);
             LoadElements();
         }
@@ -211,7 +191,6 @@ namespace Ritmo.ViewModels
         public void DeleteTrackClick(object sender)
         {
             int index = (int)sender; //get the ID of the track to be deleted
-            //int count = PlaylistController.Playlist.Tracks.Count;
             int count = PlayListTracksOC.Count;
             for (int i = 0; i < count; i++)
             {

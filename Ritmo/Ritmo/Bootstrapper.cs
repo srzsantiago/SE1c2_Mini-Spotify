@@ -2,10 +2,6 @@
 using Ritmo.Database;
 using Ritmo.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Ritmo
@@ -20,7 +16,7 @@ namespace Ritmo
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             DatabaseConnector.ConnectSSH();
-            if (true)
+            if (true) //This is used when the user still has a running session on his device
                 DisplayRootViewFor<LoginViewModel>();
             else
                 DisplayRootViewFor<MainWindowViewModel>();

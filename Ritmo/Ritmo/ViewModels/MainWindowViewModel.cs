@@ -4,19 +4,16 @@ using System;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Ritmo;
-using System.Diagnostics;
 using System.Windows.Threading;
-using System.Windows.Controls.Primitives;
 using System.Windows;
 using System.Collections.Generic;
+using Ritmo.Database;
 
 namespace Ritmo.ViewModels
 {
     public class MainWindowViewModel : Screen
     {
         public Login User { get; set; }
-
 
         public PlaylistController PlaylistController = new PlaylistController("testplaylist");
         public PlayQueueController PlayQueueController = new PlayQueueController();
@@ -69,19 +66,16 @@ namespace Ritmo.ViewModels
         public ICommand MouseDownCommand { get; set; }
         public ICommand ValueChangedCommand { get; set; }
 
-        private MediaElement _currentTrackElement = new MediaElement() { LoadedBehavior = MediaState.Manual };
-        private Uri _currentTrackSource; //Unused
-        private Double _currentTrackVolume;
+        private double _currentTrackVolume;
         private double _currentTrackTime;
         private double _totalTrackTime;
         private double oldVolume = 0;
         private Uri _playButtonIcon = new Uri("/ImageResources/playicon.ico", UriKind.RelativeOrAbsolute);
         private Uri _muteButtonIcon = new Uri("/ImageResources/unmute.png", UriKind.RelativeOrAbsolute);
         private Uri _repeatModeIcon = new Uri("/ImageResources/loopOff.png", UriKind.RelativeOrAbsolute);
-        private Uri _shuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
+        private Uri _shuffleButtonIcon = new Uri("/ImageResources/shuffle.png", UriKind.RelativeOrAbsolute);
         private Uri _ritmoLogo = new Uri("/ImageResources/RitmoLogo.png", UriKind.RelativeOrAbsolute);
 
-        private Uri _testLogo = new Uri("/ImageResources/Test_Logo.png", UriKind.RelativeOrAbsolute);
         private DispatcherTimer _timerTick = new DispatcherTimer();
         private bool _mouse_down = false;
         private string _labelCurrentTrackTime;
@@ -91,17 +85,8 @@ namespace Ritmo.ViewModels
         private string _artistName;
         private string _songName;
 
-        public MediaElement CurrentTrackElement
-        {
-            get { return _currentTrackElement; }
-            set { _currentTrackElement = value; }
-        }
-        public Uri CurrentTrackSource
-        {
-            get { return _currentTrackSource; }
-            set { _currentTrackSource = value; }
-        } //Unused
-        public Double CurrentTrackVolume
+        public MediaElement CurrentTrackElement { get; set; } = new MediaElement() { LoadedBehavior = MediaState.Manual };
+        public double CurrentTrackVolume
         {
             get { return _currentTrackVolume; }
             set
@@ -164,9 +149,9 @@ namespace Ritmo.ViewModels
             }
         }
 
-        public String ArtistName { get { return _artistName; } set { _artistName = value; NotifyOfPropertyChange(); } }
+        public string ArtistName { get { return _artistName; } set { _artistName = value; NotifyOfPropertyChange(); } }
 
-        public String SongName { get { return _songName; } set { _songName = value; NotifyOfPropertyChange(); } }
+        public string SongName { get { return _songName; } set { _songName = value; NotifyOfPropertyChange(); } }
 
         public Uri PlayButtonIcon { get { return _playButtonIcon; } set { _playButtonIcon = value; NotifyOfPropertyChange(); } }
 
@@ -183,9 +168,9 @@ namespace Ritmo.ViewModels
 
         #endregion
 
-        public MainWindowViewModel(Login loggedinUser)
+        public MainWindowViewModel(Login loggedInUser)
         {
-            User = loggedinUser;
+            User = loggedInUser;
 
             PlayQueue = PlayQueueController.PQ;
             AllPlaylistsController = new AllPlaylistsController(User.User.ConsumerID);
@@ -195,18 +180,18 @@ namespace Ritmo.ViewModels
 
             Navigation.InitializeViewModelNavigation();
             Navigation.ViewModelChanged += ChangeViewModel;
-            
+
             InitializeCurrentTrackElement();
 
             TestTrackMethod();
-            PlaylistViewModel = new PlaylistViewModel(this,PlaylistController.Playlist);
+            PlaylistViewModel = new PlaylistViewModel(this, PlaylistController.Playlist);
         }
 
         //The methods that control or interact with the CurrentTrackElement
         #region CurrentTrackElement Methods
         public void PlayTrack()
         {
-            if (CurrentTrackElement.IsLoaded)
+            if (CurrentTrackElement.IsLoaded && CurrentTrackElement.Source != null)
             {
                 CurrentTrackElement.Play();
                 PlayButtonIcon = new Uri(@"\ImageResources\pauseicon.ico", UriKind.Relative);
@@ -242,64 +227,70 @@ namespace Ritmo.ViewModels
         //Changes to next track, set CurrentTrackElement and plays track.
         public void NextTrack()
         {
-            PlayQueueController.NextTrack();
-            MyQueueScreenToViewModel.LoadElements();
-            CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
-
-            //Check if there are repeatmodes selected
-            if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat) //If the mode is TrackRepeat, set mode to TrackListRepeat and set the next track as currentTrack
+            if (CurrentTrackElement.IsLoaded && CurrentTrackElement.Source != null)
             {
-                RepeatModeIcon = new Uri("/ImageResources/LoopTrackWaitingList.png", UriKind.RelativeOrAbsolute);
-                PlayQueueController.PQ.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
-                PlayQueue.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
-                NextTrack();
-            }
-            //else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.Off) //If repeatmode is off, after playlist is played, pause the track
-            //{
-            //    PauseTrackOnWaitingListEnd(); //Overbodig gemaakt
-            //} 
-            else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackListRepeat) //If the repeatmode is TrackListRepeat, set the trackWaitingListEnded to false
-            {
-                PlayQueueController.PQ.TrackWaitingListEnded = false;
-            }
+                PlayQueueController.NextTrack();
+                MyQueueScreenToViewModel.LoadElements();
+                CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
 
-            if (!PlayQueueController.PQ.TrackWaitingListEnded)
-                PlayTrack();
-            else
-                PauseTrack();
+                //Check if there are repeatmodes selected
+                if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat) //If the mode is TrackRepeat, set mode to TrackListRepeat and set the next track as currentTrack
+                {
+                    RepeatModeIcon = new Uri("/ImageResources/LoopTrackWaitingList.png", UriKind.RelativeOrAbsolute);
+                    PlayQueueController.PQ.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
+                    PlayQueue.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
+                    NextTrack();
+                }
+                //else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.Off) //If repeatmode is off, after playlist is played, pause the track
+                //{
+                //    PauseTrackOnWaitingListEnd(); //Overbodig gemaakt
+                //} 
+                else if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackListRepeat) //If the repeatmode is TrackListRepeat, set the trackWaitingListEnded to false
+                {
+                    PlayQueueController.PQ.TrackWaitingListEnded = false;
+                }
+
+                if (!PlayQueueController.PQ.TrackWaitingListEnded)
+                    PlayTrack();
+                else
+                    PauseTrack();
+            }
         }
 
         //Changes to the previous track and set CurrentTrackElement
         public void PrevTrack()
         {
-            TimeSpan timer = new TimeSpan(0, 0, 3); //Set timer for 3 seconds
-            if (CurrentTrackElement.Position <= timer) //If the song is under 3 seconds, go to the previous song
+            if (CurrentTrackElement.IsLoaded && CurrentTrackElement.Source != null)
             {
-                //Checks if CurrentTrack is the first. If it is, the track starts from beginning 
-                if (PlayQueueController.PQ.CurrentTrack.Equals(PlayQueueController.PQ.TrackWaitingList.First.Value)) 
+                TimeSpan timer = new TimeSpan(0, 0, 3); //Set timer for 3 seconds
+                if (CurrentTrackElement.Position <= timer) //If the song is under 3 seconds, go to the previous song
+                {
+                    //Checks if CurrentTrack is the first. If it is, the track starts from beginning 
+                    if (PlayQueueController.PQ.CurrentTrack.Equals(PlayQueueController.PQ.TrackWaitingList.First.Value))
+                    {
+                        CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
+                    }
+                    else
+                    {
+                        if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat) //If repeatMode is TrackRepeat set repeatMode to TrackListRepeat
+                        {
+                            RepeatModeIcon = new Uri("/ImageResources/LoopTrackWaitingList.png", UriKind.RelativeOrAbsolute); //Set icon
+                            PlayQueueController.PQ.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat; //Set repeatmode trackListRepeat
+                            PlayQueue.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
+                        }
+                        PlayQueueController.PreviousTrack();
+                        MyQueueScreenToViewModel.LoadElements();
+                        CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
+                    }
+                }
+                else //Else play the current song from the start (0 sec)
                 {
                     CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
                 }
-                else
+                if (!PlayQueueController.PQ.IsPaused)
                 {
-                    if (PlayQueue.RepeatMode == PlayQueue.RepeatModes.TrackRepeat) //If repeatMode is TrackRepeat set repeatMode to TrackListRepeat
-                    {
-                        RepeatModeIcon = new Uri("/ImageResources/LoopTrackWaitingList.png", UriKind.RelativeOrAbsolute); //Set icon
-                        PlayQueueController.PQ.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat; //Set repeatmode trackListRepeat
-                        PlayQueue.RepeatMode = PlayQueue.RepeatModes.TrackListRepeat;
-                    }
-                    PlayQueueController.PreviousTrack();
-                    MyQueueScreenToViewModel.LoadElements();
-                    CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
+                    PlayTrack();
                 }
-            }
-            else //Else play the current song from the start (0 sec)
-            {
-                CurrentTrackElement.Position = new TimeSpan(0, 0, 0); //Set position of song to 0 sec
-            }
-            if (!PlayQueueController.PQ.IsPaused)
-            {
-                PlayTrack();
             }
         }
 
@@ -309,7 +300,7 @@ namespace Ritmo.ViewModels
             {
                 PlayQueueController.ShuffleTrackWaitingList();
                 ShuffleButtonIcon = new Uri("/ImageResources/unshuffle.png", UriKind.RelativeOrAbsolute);
-            } 
+            }
             else
             {
                 PlayQueueController.UnShuffleTrackWaitingList();
@@ -346,7 +337,7 @@ namespace Ritmo.ViewModels
         }
 
         //When the track has a 'timeSpan' the current tracktime will be set
-        void TimerTick (object sender, EventArgs e)
+        void TimerTick(object sender, EventArgs e)
         {
             if (!_mouse_down && CurrentTrackElement.NaturalDuration.HasTimeSpan)
             {
@@ -385,7 +376,7 @@ namespace Ritmo.ViewModels
 
         //When the left button of the mouse is up and if the track has a timeSpan, the position of the currentTrack will be set to the currentTrackTime.
         //The mouse is not down
-        public void MouseUp (MouseButtonEventArgs e)
+        public void MouseUp(MouseButtonEventArgs e)
         {
             _mouse_down = false;
             if (CurrentTrackElement.NaturalDuration.HasTimeSpan)
@@ -395,7 +386,7 @@ namespace Ritmo.ViewModels
         }
 
         //When the left button of the mouse is down, the mouse down is true.
-        public void MouseDown (MouseButtonEventArgs e)
+        public void MouseDown(MouseButtonEventArgs e)
         {
             _mouse_down = true;
         }
@@ -442,34 +433,34 @@ namespace Ritmo.ViewModels
         {
             TimeSpan timeSpanFromSeconds = TimeSpan.FromSeconds(secs);
             string answer;
-            if (timeSpanFromSeconds.TotalMinutes < 1.0) 
+            if (timeSpanFromSeconds.TotalMinutes < 1.0)
             {
                 if (timeSpanFromSeconds.TotalSeconds < 10)
                 {
-                    answer = String.Format("00:0{0}", timeSpanFromSeconds.Seconds);
+                    answer = string.Format("00:0{0}", timeSpanFromSeconds.Seconds);
                 }
                 else
                 {
-                    answer = String.Format("00:{0}", timeSpanFromSeconds.Seconds);
+                    answer = string.Format("00:{0}", timeSpanFromSeconds.Seconds);
                 }
             }
             else
             {
                 if (timeSpanFromSeconds.TotalSeconds < 10)
                 {
-                    answer = String.Format("{0}:0{1:D2}", timeSpanFromSeconds.Minutes, timeSpanFromSeconds.Seconds);
+                    answer = string.Format("{0}:0{1:D2}", timeSpanFromSeconds.Minutes, timeSpanFromSeconds.Seconds);
                 }
                 else if (timeSpanFromSeconds.TotalSeconds < 10 && timeSpanFromSeconds.TotalMinutes < 10)
                 {
-                    answer = String.Format("0{0}:0{1:D2}", timeSpanFromSeconds.Minutes, timeSpanFromSeconds.Seconds);
+                    answer = string.Format("0{0}:0{1:D2}", timeSpanFromSeconds.Minutes, timeSpanFromSeconds.Seconds);
                 }
                 else if (timeSpanFromSeconds.TotalMinutes < 10)
                 {
-                    answer = String.Format("0{0}:{1:D2}", timeSpanFromSeconds.Minutes, timeSpanFromSeconds.Seconds);
+                    answer = string.Format("0{0}:{1:D2}", timeSpanFromSeconds.Minutes, timeSpanFromSeconds.Seconds);
                 }
                 else
                 {
-                    answer = String.Format("{0}:{1:D2}", timeSpanFromSeconds.Minutes, timeSpanFromSeconds.Seconds);
+                    answer = string.Format("{0}:{1:D2}", timeSpanFromSeconds.Minutes, timeSpanFromSeconds.Seconds);
                 }
             }
             return answer; //returns string in format
@@ -481,7 +472,8 @@ namespace Ritmo.ViewModels
         #region Initializer methods
         public void InitializeCommands()
         {
-            ToClickedViewModelCommand = new RelayCommand<Screen>(Navigation.ToClickedViewModel); //Sets the command to the corresponding method
+            //Sets the command to the corresponding method
+            ToClickedViewModelCommand = new RelayCommand<Screen>(Navigation.ToClickedViewModel); 
             ToPreviousViewModelCommand = new RelayCommand(Navigation.ToPreviousViewModel);
             ToNextViewModelCommand = new RelayCommand(Navigation.ToNextViewModel);
 
@@ -508,7 +500,7 @@ namespace Ritmo.ViewModels
         public void InitializeCurrentTrackElement()
         {
             //CurrentTrackElement.Source = CurrentTrackSource;
-            CurrentTrackElement.MediaOpened+= Track_Opened;
+            CurrentTrackElement.MediaOpened += Track_Opened;
             CurrentTrackElement.MediaEnded += Track_Ended;
 
             //The timer to refresh the time fo the element will start
@@ -526,12 +518,11 @@ namespace Ritmo.ViewModels
 
         public void TestTrackMethod()
         {
-            //test with tracks in database (only tracks from database wil show album images)
-            String sqlQuery = "";
             int count = 0;
 
-            sqlQuery = "SELECT idTrack, title, path, duration FROM Track"; // select query to select all tracks from database
-            List<Dictionary<string, object>> trackNames = Database.DatabaseConnector.SelectQueryDB(sqlQuery);
+            //test with tracks in database (only tracks from database wil show album images)
+            string sqlQuery = "SELECT idTrack, title, path, duration FROM Track";
+            List<Dictionary<string, object>> trackNames = DatabaseConnector.SelectQueryDB(sqlQuery);
             int idTrack = 0;
             string title = "";
             string path = "";
@@ -539,7 +530,7 @@ namespace Ritmo.ViewModels
 
             foreach (var dictionary in trackNames) // loop trough results to get the values
             {
-                foreach(var key in dictionary)
+                foreach (var key in dictionary)
                 {
                     if (key.Key.Equals("idTrack")) // check if the key contains the id
                     {
@@ -562,16 +553,18 @@ namespace Ritmo.ViewModels
                         count++;
                     }
                 }
-                if(count % 4 == 0) // calculate each row of results (the results contain 4 rows)
+                if (count % 4 == 0) // calculate each row of results (the results contain 4 rows)
                 {
-                    Track databaseTrack = new Track() { // create new track with info from the database
+                    Track databaseTrack = new Track()
+                    { // create new track with info from the database
                         TrackId = idTrack,
                         Name = title,
                         Artist = "unknown",
                         Album = "Unknown",
                         Duration = duration,
-                        AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"" + path), };
-                    PlaylistController.AddTrack( databaseTrack); // add track to the queue 
+                        AudioFile = new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"" + path),
+                    };
+                    PlaylistController.AddTrack(databaseTrack); // add track to the queue 
                 }
             }
 
@@ -644,21 +637,21 @@ namespace Ritmo.ViewModels
             PlaylistController.AddTrack(testTrack3);
             PlaylistController.AddTrack(testTrack4);
             PlaylistController.AddTrack(testTrack5);
-            
-          
+
+
             PlayQueueController.AddTrack(testTrack6);
             PlayQueueController.AddTrack(testTrack7);
 
             //PlayQueueController.AddTrack(testTrack3);
             //PlayQueueController.AddTrack(testTrack4);
 
-            
+
             //Speelt track en zet playlist in wachtrij
             PlayQueueController.PlayTrack(PlaylistController.Playlist.Tracks.First.Value, PlaylistController.Playlist);
 
             //Zet de CurrentTrack als audio die afgespeeld wordt
-            CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;             
-            
+            CurrentTrackElement.Source = PlayQueueController.PQ.CurrentTrack.AudioFile;
+
             MyQueueScreenToViewModel.LoadElements();
         }
     }

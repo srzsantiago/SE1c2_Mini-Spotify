@@ -1,11 +1,6 @@
 ﻿using Ritmo.Database;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ritmo
 {
@@ -21,12 +16,11 @@ namespace Ritmo
         }
         public void GetPlaylists(int userID)
         {
-            String sqlquery = "";
             int count = 0;
-            
-            sqlquery = $"SELECT idPlaylist, name, creationDate FROM Playlist WHERE consumerID = {userID}"; // the query that is going to get the info from the database
+
+            string sqlquery = $"SELECT idPlaylist, name, creationDate FROM Playlist WHERE consumerID = {userID}";
             // Dictionary<string, object> = the string is the key (so [name] and [creationDate] the object is the value bound to the key)
-            List<Dictionary<string, object>> playlistNames = Database.DatabaseConnector.SelectQueryDB(sqlquery); // executing the query
+            List<Dictionary<string, object>> playlistNames = DatabaseConnector.SelectQueryDB(sqlquery); // executing the query
             int playlistid = 0;
             string name="";
             string creationDate="";

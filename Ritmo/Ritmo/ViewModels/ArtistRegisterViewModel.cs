@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media;
 using Caliburn.Micro;
 using GalaSoft.MvvmLight.Command;
 
@@ -13,7 +8,7 @@ namespace Ritmo.ViewModels
 {
     public class ArtistRegisterViewModel : Screen
     {
-        IWindowManager Manager = new WindowManager();
+        private IWindowManager _manager = new WindowManager();
 
         #region commands
         public ICommand CancelCommand { get; set; }
@@ -23,25 +18,35 @@ namespace Ritmo.ViewModels
         #endregion
 
         #region labeltext
-        private String _filledMail;
+        private string _filledMail;
         private string _errorMessage;
 
-        public String FilledMail
+        public string FilledMail
         {
-            get { if (_filledMail == null)
+            get
+            {
+                if (_filledMail == null)
                     _filledMail = "Enter your mail here...";
-                return _filledMail; }
-            set { _filledMail = value;
+                return _filledMail;
+            }
+            set
+            {
+                _filledMail = value;
                 NotifyOfPropertyChange("FilledMail");
             }
         }
 
         public string ErrorMessage
         {
-            get { if (_errorMessage == null)
+            get
+            {
+                if (_errorMessage == null)
                     _errorMessage = "";
-                return _errorMessage; }
-            set { _errorMessage = value;
+                return _errorMessage;
+            }
+            set
+            {
+                _errorMessage = value;
                 NotifyOfPropertyChange("ErrorMessage");
             }
         }
@@ -86,7 +91,7 @@ namespace Ritmo.ViewModels
                 ErrorMessage = "Please, enter a valid email.";
             }
 
-            
+
         }
 
         bool IsValidEmail(string email)//check the email format
@@ -105,7 +110,7 @@ namespace Ritmo.ViewModels
 
         private void CancelClick()//cancel button
         {
-            Manager.ShowWindow(new RegisterViewModel());
+            _manager.ShowWindow(new RegisterViewModel());
             TryClose();
         }
     }

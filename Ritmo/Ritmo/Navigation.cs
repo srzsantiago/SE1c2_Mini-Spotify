@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Caliburn.Micro;
 using Ritmo.ViewModels;
 
@@ -27,12 +26,13 @@ namespace Ritmo
             try
             {
                 ViewModelChanged(CurrentViewModel); //Calls event to change view in MainWindow
-            }catch(NullReferenceException e)
+            }
+            catch (NullReferenceException)
             {
                 //MainWindowView is not instantiated
                 //Under normal circumstances impossible. This Try Catch is for testing purposes.
             }
-            
+
         }
 
         //Adds currentviewmodel to previousviewmodelstack and changes viewmodel
@@ -87,6 +87,7 @@ namespace Ritmo
                     }
                 }
             }
+
             if (removalList.Count < initialCount)
                 RebuildListToStack(removalList, viewModelStack);
         }
@@ -97,11 +98,11 @@ namespace Ritmo
             RemovePlaylistViewModelFromStack(_previousViewModelStack, playlistID);
             RemovePlaylistViewModelFromStack(_nextViewModelStack, playlistID);
 
-            if(CurrentViewModel is PlaylistViewModel)
+            if (CurrentViewModel is PlaylistViewModel)
                 ChangeViewModel(_previousViewModelStack.Pop());
         }
 
-        
+
         //Checks if viewmodel is in a stack and call RemoveViewModelFromStack to remove it
         public static void RemoveViewModel(Screen viewModel)
         {
@@ -112,7 +113,7 @@ namespace Ritmo
                 RemoveViewModelFromStack(_previousViewModelStack, viewModel);
         }
 
-        
+
         private static void RemoveViewModelFromStack(Stack<Screen> viewModelStack, Screen viewModel)
         {
             //Creates list from stack and removes viewmodel
@@ -131,7 +132,7 @@ namespace Ritmo
         private static void RebuildListToStack(List<Screen> removalList, Stack<Screen> viewModelStack)
         {
             viewModelStack.Clear(); //Clears stack
-            
+
             //Rebuilds stack with list
             removalList.Reverse();
             removalList.ForEach(vm => viewModelStack.Push(vm));

@@ -20,8 +20,6 @@ namespace Ritmo.ViewModels
         IWindowManager Manager = new WindowManager();
 
         #region XAML Properties
-        private string _filledPassword;
-        private string _filledEmail;
         private string _loginMessage;
         private Brush _errorColor;
         private Uri _ritmoLogo = new Uri("/ImageResources/RitmoLogo.png", UriKind.RelativeOrAbsolute);
@@ -29,7 +27,9 @@ namespace Ritmo.ViewModels
         public Brush ErrorColor
         {
             get { return _errorColor; }
-            set { _errorColor = value;
+            set
+            {
+                _errorColor = value;
                 NotifyOfPropertyChange();
             }
         }
@@ -42,18 +42,18 @@ namespace Ritmo.ViewModels
                 NotifyOfPropertyChange();
             }
         }
-        public string FilledEmail
-        {
-            get { return _filledEmail; }
-            set { _filledEmail = value; }
-        }
-        public string FilledPassword
-        {
-            get { return _filledPassword; }
-            set { _filledPassword = value; }
-        }
+        public string FilledEmail { get; set; }
+        public string FilledPassword { get; set; }
 
-        public Uri RitmoLogo { get { return _ritmoLogo; } set { _ritmoLogo = value; NotifyOfPropertyChange(); } }
+        public Uri RitmoLogo
+        {
+            get { return _ritmoLogo; }
+            set
+            {
+                _ritmoLogo = value;
+                NotifyOfPropertyChange();
+            }
+        }
 
         #endregion
 
@@ -82,14 +82,13 @@ namespace Ritmo.ViewModels
             }
             else
             {
-                
                 string message = LoginAttempt.ToString();
-                if(message.Equals("Username does not exist, register below!"))
+                if (message.Equals("Username does not exist, register below!"))
                     LoginMessage = message;
                 else
                     LoginMessage = "Failed, incorrect email or password";
             }
-                
+
         }
 
         //LoginView is given as argument to close the view in code
@@ -99,6 +98,6 @@ namespace Ritmo.ViewModels
 
             LoginView.Close();
         }
-        
+
     }
 }

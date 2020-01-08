@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -18,8 +15,6 @@ namespace Ritmo.ViewModels
 
         #region ViewModel attributes
         private Screen _currentViewModel;
-        private Screen LoginViewModel { get; set; } = new LoginViewModel();
-        private Screen ArtistViewModel { get; set; } = new ArtistRegisterViewModel();
         public Screen CurrentViewModel
         {
             get { return _currentViewModel; }
@@ -29,9 +24,9 @@ namespace Ritmo.ViewModels
                 NotifyOfPropertyChange();
             }
         }
-        public void ChangeViewModel(Screen ViewModel)
+        public void ChangeViewModel(Screen viewModel)
         {
-            CurrentViewModel = ViewModel;
+            CurrentViewModel = viewModel;
         }
         #endregion
 
@@ -52,7 +47,7 @@ namespace Ritmo.ViewModels
         #region Logo
         private Uri _ritmoLogo = new Uri("/ImageResources/RitmoLogo.png", UriKind.RelativeOrAbsolute);
 
-        public Uri RitmoLogo{ get { return _ritmoLogo; } set { _ritmoLogo = value; NotifyOfPropertyChange(); } }
+        public Uri RitmoLogo { get { return _ritmoLogo; } set { _ritmoLogo = value; NotifyOfPropertyChange(); } }
         #endregion
 
         #region Labels
@@ -62,30 +57,45 @@ namespace Ritmo.ViewModels
 
         public string Name
         {
-            get { if (_name == null)
+            get
+            {
+                if (_name == null)
                     _name = "";
-                return _name; }
-            set { _name = value;
+                return _name;
+            }
+            set
+            {
+                _name = value;
                 NotifyOfPropertyChange("Name");
             }
         }
 
         public string Email
         {
-            get { if (_email == null)
+            get
+            {
+                if (_email == null)
                     _email = "";
-                return _email; }
-            set { _email = value;
+                return _email;
+            }
+            set
+            {
+                _email = value;
                 NotifyOfPropertyChange("Email");
             }
         }
 
         public string ErrorMessage
         {
-            get { if (_errorMessage == null)
+            get
+            {
+                if (_errorMessage == null)
                     _errorMessage = "";
-                return _errorMessage; }
-            set { _errorMessage = value;
+                return _errorMessage;
+            }
+            set
+            {
+                _errorMessage = value;
                 NotifyOfPropertyChange("ErrorMessage");
             }
         }
@@ -146,7 +156,7 @@ namespace Ritmo.ViewModels
                     ErrorMessage = "One or more fields are incorrect";
                 if (!IsPasswordMatch(passwordBox, confirmPasswordBox) && !Name.Equals("") && IsValidEmail(Email))
                     ErrorMessage = "Passwords do not match!";
-                
+
             }
         }
 
